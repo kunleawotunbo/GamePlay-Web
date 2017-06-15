@@ -1,0 +1,11 @@
+<html>
+ 
+    <body>
+        <h3>Dear ${user.firstName}, thank you for registering</h3>
+ 
+        <div>
+            Your email is : ${user.email}.
+        </div>
+        <span>Thank You.</span>
+    </body>
+</html> 

@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kunleawotunbo.gameplay.dao;
+
+import com.kunleawotunbo.gameplay.model.Game;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author olakunle
+ */
+@Repository("gameDao")
+public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    public Game findById(int id) {
+        logger.info("id : {}", id);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+
+        return (Game) crit.uniqueResult();
+    }
+
+    public boolean save(Game game) {
+        boolean success = false;
+        try {
+            persist(game);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public boolean updateGame(Game game) {
+        boolean success = false;
+        try {
+            update(game);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public void deleteGame(Game game) {
+        delete(game);
+    }
+
+    public List<Game> listGames(byte enabled) {
+       Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("enabled", enabled));
+
+        return crit.list();
+    }
+
+    public boolean isGameCodeExist(String gameCode) {
+         Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("gameCode", gameCode));
+
+        int count = crit.list().size();
+        
+        return count > 0;
+    }
+
+}
