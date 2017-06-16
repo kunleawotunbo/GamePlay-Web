@@ -49,6 +49,37 @@ public class WeeklyGamesController {
     @Autowired
     GameService gameService;
     
+    
+        @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String adminDashboard(ModelMap model, HttpServletRequest request) {
+        List<Game> gameList = null;
+        byte status = 1;
+//       
+//        gameList = gameService.listGames(status);
+//
+//        model.addAttribute("urlPath", request.getLocalAddr());
+//        model.addAttribute("gameplaytype", gamePlayTypeService.getGamePlayType());
+//        model.addAttribute("game", new WeeklyGames());
+//        model.addAttribute("gameList", gameList);
+
+        return "/admin/dashboard";
+    }
+    
+       @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(ModelMap model, HttpServletRequest request) {
+        List<Game> gameList = null;
+        byte status = 1;
+//       
+//        gameList = gameService.listGames(status);
+//
+//        model.addAttribute("urlPath", request.getLocalAddr());
+//        model.addAttribute("gameplaytype", gamePlayTypeService.getGamePlayType());
+//        model.addAttribute("game", new WeeklyGames());
+//        model.addAttribute("gameList", gameList);
+
+        return "test";
+    }
+    
       @RequestMapping(value = "/addGame", method = RequestMethod.GET)
     public String addGame(ModelMap model, HttpServletRequest request) {
         List<Game> gameList = null;

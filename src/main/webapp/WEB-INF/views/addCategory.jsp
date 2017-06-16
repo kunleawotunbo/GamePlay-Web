@@ -25,51 +25,6 @@
     <body>
         <h1>Hello World!</h1>
 
-<!--        <form   id="addGame-form">
-
-
-             form-group 
-            <div class="form-group" >
-                <label class="col-sm-4 control-label tooltips" data-toggle="tooltip" title="Enter the total number of records in the file to upload">Game Name</label>
-                <div class="col-sm-3">
-                    <input name="gameName" class="form-control"  id="gameName" required="required" />
-                </div>
-                <div>
-
-                </div>
-            </div> form-group  
-
-            <div class="form-group" >
-                <label class="col-sm-4 control-label tooltips" data-toggle="tooltip" title="Enter the gameCode">Game Code</label>
-                <div class="col-sm-3">
-                    <input name="gameCode" class="form-control"  id="gameCode" required="required" />
-                </div>
-                <div>
-
-                </div>
-            </div>
-
-            <div class="form-group" >
-                <label class="col-sm-4 control-label tooltips" data-toggle="tooltip" title="Enter the createdBy">Created By</label>
-                <div class="col-sm-3">
-                    <input name="createdBy" class="form-control"  id="createdBy" required="required" />
-                </div>
-                <div>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-4 control-label"></label>
-                <div class="col-sm-4">
-
-                    <button type="submit" onclick="register()" class="btn btn-danger mr5" id="uploadBtn">Submit</button>   
-                     <button type="submit" onclick="register()" class="btn btn-danger mr5" id="uploadBtn">Submit</button>   
-
-                </div>
-            </div>
-        </form>
-          -->
         <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
