@@ -5,7 +5,9 @@
  */
 package com.kunleawotunbo.gameplay.service;
 
+import com.kunleawotunbo.gameplay.dao.GamePlayTypeDao;
 import com.kunleawotunbo.gameplay.dao.WeeklyGamesDao;
+import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
 
     @Autowired
     private WeeklyGamesDao weeklyGamesDao;
+    
+    @Autowired GamePlayTypeDao gamePlayTypeDao;
     
     public WeeklyGames findById(int id) {
        return weeklyGamesDao.findById(id);
@@ -45,8 +49,13 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public WeeklyGames getWeekGameByWeekNo(String gameCategory, int weekNo) {
+    public WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo) {
         return weeklyGamesDao.getWeekGameByWeekNo(gameCategory, weekNo);
+    }
+
+    public List<GamePlayType> getGamePlayType() {
+        //return weeklyGamesDao.getGamePlayType();
+        return gamePlayTypeDao.getGamePlayType();
     }
     
 }

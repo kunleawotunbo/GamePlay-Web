@@ -101,6 +101,9 @@ public class WeeklyGames implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "createdBy")
     private String createdBy;
+     
+     @Column(name = "isPicture")
+    private byte isPicture;
 
     /**
      * @return the id
@@ -296,6 +299,20 @@ public class WeeklyGames implements Serializable {
      */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    /**
+     * @return the isPicture
+     */
+    public byte getIsPicture() {
+        return isPicture;
+    }
+
+    /**
+     * @param isPicture the isPicture to set
+     */
+    public void setIsPicture(byte isPicture) {
+        this.isPicture = isPicture;
     }
     
 }

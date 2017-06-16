@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
+import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public interface WeeklyGamesDao {
 
     public boolean isGameCodeExist(String gameCode);
     
-    WeeklyGames getWeekGameByWeekNo(String gameCategory, int weekNo);
+    WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo);
+    
+    List<GamePlayType> getGamePlayType();
 
 }

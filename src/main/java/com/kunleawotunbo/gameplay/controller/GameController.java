@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,18 @@ public class GameController {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
+    
+    @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
+    public String addGame(ModelMap model, HttpServletRequest request) {
+
+        //model.addAttribute("urlPath", request.getLocalAddr());
+        //model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("game", new Game());
+
+        return "addCategory";
+    }
+    
+    
     /**
      * Retrieve all games
      *
@@ -69,11 +82,11 @@ public class GameController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Game> getUser(@PathVariable("id") int id) {
+    public ResponseEntity<Game> getGame(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
         Game game = gameService.findById(id);
         if (game == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("Game with id " + id + " not found");
             return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Game>(game, HttpStatus.OK);
@@ -90,7 +103,7 @@ public class GameController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createGame(@RequestBody Game game, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
         boolean created = false;
-
+        System.out.println("Game Name :: " + game.getGameName());
         if (gameService.isGameCodeExist(game.getGameCode())) {
             logger.error("Game code " + game.getGameCode() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);

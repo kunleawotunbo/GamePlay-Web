@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kunleawotunbo.gameplay.dao;
+package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import java.util.List;
@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author Olakunle Awotunbo
  */
-public interface GamePlayTypeDao {
-    
+public interface GamePlayTypeService {
     List<GamePlayType> getGamePlayType();
 }

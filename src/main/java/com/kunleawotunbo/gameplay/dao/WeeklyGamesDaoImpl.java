@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
+import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -72,7 +73,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public WeeklyGames getWeekGameByWeekNo(String gameCategory, int weekNo) {
+    public WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo) {
             
          logger.info("gameCategory : {}", gameCategory);
          logger.info("weekNo : {}", weekNo);
@@ -82,6 +83,14 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         crit.add(Restrictions.eq("weekNo", weekNo));
 
         return (WeeklyGames) crit.uniqueResult();
+    }
+
+    public List<GamePlayType> getGamePlayType() {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<GamePlayType> gamePlayTypeList = (List<GamePlayType>) criteria.list();
+
+        return gamePlayTypeList;
     }
     
 }

@@ -1,10 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -49,43 +45,6 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-            
-            
-            <section id="listgames">
-                
-                
-             <c:if test="${!empty gameList}">  
-          <div class="media-body">
-             <h4>LIST ALL BANKS</h4>
-          </div>
-	     <table id="bank-list" class="table table-striped table-bordered responsive">  
-		 <thead>
-	      <tr>  
-	       <th>S/N</th>  
-	       <th>COUNTRY</th>
-	   
-	       <th> </th>
-	       <th></th>  
-	      </tr>  
-            </thead>
-            <tbody>
-	      <c:forEach items="${gameList}" var="game" varStatus = "status">  
-	       <tr>  
-		<td><c:out value="${status.index + 1}"/></td>  
-		<td><c:out value="${game.gameName}"/></td>  
-		                
-		<td align="center"><a href="bank/edit/${game.id}">Edit</a></td>  
-                <td><a href="bank/delete/${game.id}">Delete</a></td>
-	       </tr>  
-	      </c:forEach>  
-		  </tbody>
-	     </table>  
-   </c:if>  
-                
-            </section>       
-            
-            
-            
 
     <section id="showcase">
       <div class="container">
