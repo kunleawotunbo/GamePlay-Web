@@ -47,7 +47,7 @@ public class WeeklyGamesController {
     private GamePlayTypeService gamePlayTypeService;
     
     @Autowired
-    GameService gameService;
+    private GameService gameService;
     
     
         @RequestMapping(value = "/dashboard", method = RequestMethod.GET)

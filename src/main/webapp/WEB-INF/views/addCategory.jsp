@@ -146,6 +146,7 @@ function register(){
 		var search = {}
 		search["gameName"] = $("#gameName").val();
 		search["gameCode"] = $("#gameCode").val();
+//                search["createdBy"] = "admin";
                //  var json = {"gameName": gameName, "gameCode": gameCode};
 
 		$.ajax({

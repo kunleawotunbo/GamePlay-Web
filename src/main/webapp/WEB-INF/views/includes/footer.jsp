@@ -56,6 +56,29 @@
 <!-- Custom Theme Scripts -->
 <script src="<c:url value='/resources/js/custom.min.js' />"></script> 
 
+<!-- Datatables -->
+<script src="<c:url value='/resources/js/jquery.dataTables.min.js' />"></script> 
+<script src="<c:url value='/resources/js/dataTables.bootstrap.min.js' />"></script> 
+<script src="<c:url value='/resources/js/dataTables.buttons.min.js' />"></script> 
+<script src="<c:url value='/resources/js/buttons.bootstrap.min.js' />"></script> 
+<script src="<c:url value='/resources/js/buttons.flash.min.js' />"></script> 
+<script src="<c:url value='/resources/js/buttons.html5.min.js' />"></script> 
+<script src="<c:url value='/resources/js/buttons.print.js' />"></script> 
+<script src="<c:url value='/resources/js/dataTables.fixedHeader.min.js' />"></script> 
 
+<script src="<c:url value='/resources/js/dataTables.keyTable.min.js' />"></script> 
+<script src="<c:url value='/resources/js/dataTables.responsive.min.js' />"></script> 
+<script src="<c:url value='/resources/js/responsive.bootstrap.js' />"></script> 
+
+<script src="<c:url value='/resources/js/dataTables.scroller.min.js' />"></script> 
+<script src="<c:url value='/resources/js/jszip.min.js' />"></script> 
+<script src="<c:url value='/resources/js/pdfmake.min.js' />"></script> 
+<script src="<c:url value='/resources/js/vfs_fonts.js' />"></script> 
+
+<!--bootstrap-toggle-->
+<script src="<c:url value='/resources/js/bootstrap-toggle.min.js' />"></script> 
+
+  <!-- Parsley -->
+<script src="<c:url value='/resources/js/parsley.min.js' />"></script> 
 </body>
 </html>

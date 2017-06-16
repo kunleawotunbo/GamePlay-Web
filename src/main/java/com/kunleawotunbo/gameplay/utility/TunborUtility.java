@@ -7,6 +7,9 @@ package com.kunleawotunbo.gameplay.utility;
 
 import com.kunleawotunbo.gameplay.model.User;
 import freemarker.template.Configuration;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,7 +29,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 /**
  *
- * @author olakunle
+ * @author Olakunle Awotunbo
  */
 @Service
 @Repository
@@ -109,5 +112,16 @@ public class TunborUtility {
          User user = (User) object;
          user.setUserName(confirmationUrl);
          sendMail(user);
+    }
+    
+     public int gameWeek() {
+        Calendar calendar = new GregorianCalendar();
+        Date trialTime = new Date();
+        calendar.setTime(trialTime);
+        int weekNo = calendar.get(Calendar.WEEK_OF_YEAR);
+        System.out.println("Week number:"
+                + calendar.get(Calendar.WEEK_OF_YEAR));
+        
+        return weekNo;
     }
 }

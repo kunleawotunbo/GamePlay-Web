@@ -66,7 +66,7 @@ public class AppController {
     private MessageSource messages;
     
      @Autowired
-    GameService gameService;
+    private GameService gameService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
