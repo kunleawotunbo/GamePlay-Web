@@ -53,7 +53,7 @@
                             <h4>Yay!</h4>
                             <p>Everything seems to be ok :)</p>
                         </div>
-                       
+
                         <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
 
@@ -109,6 +109,21 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group" id="gameText">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="gameText" id="gameText1" name="gameText" type="text" class="form-control"  placeholder="Game Text" />                                 
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="gameImage" >
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="gameImage" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -140,21 +155,6 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="3"  placeholder="Game Rules" required ="required" />                                 
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameText" id="gameText" name="gameText" type="text" class="form-control"  placeholder="Game Text" required ="required" />                                 
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameImage" id="gameImage" name="gameImage" type="file" class="form-control"  placeholder="Game Image" required ="required" accept=".png, .jpg, .jpeg" />                                 
                                     </div>
                                 </div>
 
@@ -207,7 +207,8 @@
                     // d.setDate(d.getDate() + 1);
                     $('#gameExpiryDate').datetimepicker({
                         //autoclose: true,
-                        //format: 'dd/mm/yyyy',
+                         format: 'DD-MM-YYYY HH:mm:ss'
+                         //format: 'dd MMM yyyy HH:mm:ss zzz'
                         // startDate: d
 
                     });
@@ -217,6 +218,46 @@
 
 
                 jQuery(document).ready(function ($) {
+                    // Hide gameText div
+                    $('#gameText').hide();
+                    // Remove requred for gameText1
+                    $("#gameText1").prop("required", false);
+                    
+                    // Hide gameImage div
+                    $('#gameImage').hide();
+                    // Remove requred for gameImage1
+                    $("#gameImage1").prop("required", false);
+                    
+                    $("#gameType").change(function (event) {
+                        
+                        
+                        //console.log("else gameText ::" + gameText);
+                        var gameType = $('#gameType').val();
+                        if (gameType == "1") {
+                           // console.log(" gameType is Picture ::" + gameText);
+                           // 
+                           // Since gameType is Picutre, then Hide gameText div and remove required attribute
+                            $('#gameText').hide();
+                             $("#gameText1").prop("required", false);
+                             
+                             // Show gameImage since gameType is picture and sett attribute required = true
+                             $('#gameImage').show();
+                             $("#gameImage1").prop("required", true);                           
+                       
+                        } else {
+                           // console.log(" gameType is Question ::" + gameText);
+                            
+                           // Since gameType is text question, then Hide gameImage div and remove required attribute
+                             $('#gameImage').hide();
+                             $("#gameImage1").prop("required", false);
+                             
+                             // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                             $('#gameText').show();                                                      
+                             $("#gameText1").prop("required", true);
+                            
+                        }
+                    });
+
 
                     $("#addWeeklyGame-form").submit(function (event) {
                         //var formData = $('addGame-form').serialize();
@@ -247,15 +288,12 @@
                     var weekNo = $('#weekNo').val();
                     var prizeOfWinners = $('#prizeOfWinners').val();
                     var noOfWinners = $('#noOfWinners').val();
-                    //var gameExpiryDate = $('#gameExpiryDate').val();
+                    var gameExpiryDate = $('#gameExpiryDate').val();
                     var gameRules = $('#gameRules').val();
                     var gameText = $('#gameText').val();
                     var gameImage = $('#gameImage').val();
                     var createdBy = "test user";
 
-                    // set a variable
-                    var gameExpiryDate = new Date();
-                    console.log("gameExpiryDate ::" + gameExpiryDate);
 
                     /*
                      if (enabled) {
@@ -265,14 +303,15 @@
                      }
                      console.log("enabled ", enabled);
                      */
+                    // Date.parse(gameExpiryDate)  is used to parse the date in string to Date for to consume.
                     var json = {
-                        
+                        "id": id,
                         "gameCategory": gameCategory,
                         "gameType": gameType,
                         "weekNo": weekNo,
                         "prizeOfWinners": prizeOfWinners,
                         "noOfWinners": noOfWinners,
-                        "gameExpiryDate": gameExpiryDate,
+                        "gameExpiryDate": Date.parse(gameExpiryDate) ,
                         "gameRules": gameRules,
                         "gameText": gameText,
                         "gameImage": gameImage,
@@ -300,7 +339,7 @@
                             enableSearchButton(true);
                         }
                     });
-                    
+
                     $("#addWeeklyGame-form")[0].reset();
 
                 }

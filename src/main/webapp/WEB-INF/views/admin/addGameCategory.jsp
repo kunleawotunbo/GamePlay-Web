@@ -14,17 +14,17 @@
             <div class="title_left">
                 <h3>Add Game Category</h3>
             </div>
-<!--
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>-->
+            <!--
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search for...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>-->
         </div>
 
         <div class="clearfix"></div>
@@ -51,9 +51,9 @@
                             <h4>Yay!</h4>
                             <p>Everything seems to be ok :)</p>
                         </div>
-                        
+
                         <div id="feedback"></div>
-                        
+
                         <form:form modelAttribute="game" class="form-horizontal form-label-left" id="gameCategory-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
                             <div class="form-group">
@@ -105,13 +105,13 @@
                             </div>
 
                         </form:form>
-<!--
-                        <button class="btn btn-default source" onclick="new PNotify({
-                                    title: 'Regular Success',
-                                    text: 'That thing that you were trying to do worked!',
-                                    type: 'success',
-                                    styling: 'bootstrap3'
-                                });">Success</button>-->
+                        <!--
+                                                <button class="btn btn-default source" onclick="new PNotify({
+                                                            title: 'Regular Success',
+                                                            text: 'That thing that you were trying to do worked!',
+                                                            type: 'success',
+                                                            styling: 'bootstrap3'
+                                                        });">Success</button>-->
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                                         </td>
                                         <td>
                                             <a href="<c:url value='/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
-                                               <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
+                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
                                             </a>
                                         </td>
                                     </tr>  
@@ -180,12 +180,110 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
-<!--        <script>
+        <!--        <script>
+        
+                    jQuery(document).ready(function ($) {
+        
+                        $("#gameCategory-form").submit(function (event) {
+                           // var formData = $('addGame-form').serialize();
+                            // Disble the search button
+                            enableSearchButton(false);
+        
+                            // Prevent the form from submitting via the browser.
+                            event.preventDefault();
+        
+                            searchViaAjax();
+        
+                        });
+        
+                    });
+        
+                    function searchViaAjax() {
+                      
+                        var id = $('#id').val();
+                        var gameName = $('#gameName').val();
+                        var gameCode = $('#gameCode').val();
+                        var createdBy = "test user";
+                        var enabled = $("#enabled").is(":checked");
+        
+        
+                        if (enabled) {
+                            enabled = 1;
+                        } else {
+                            enabled = 0;
+                        }
+                        console.log("enabled ", enabled);
+        
+                        var json = {
+                            "id": id,
+                            "gameName": gameName,
+                            "gameCode": gameCode,
+                            "createdBy": createdBy,
+                            "enabled": enabled
+        
+                        };
+        
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "${pageContext.request.contextPath}/api/game/create",
+                            data: JSON.stringify(json),
+                            dataType: 'json',
+                            timeout: 100000,
+                            success: function (data) {
+                                console.log("SUCCESS: ", data);
+                                display(data);
+                            },
+                            error: function (e) {
+                                console.log("ERROR: ", e);
+                                display(e);
+                                jQuery("#submitResponse").css("display", "none");
+                            },
+                            done: function (e) {
+                                console.log("DONE");
+                                enableSearchButton(true);
+                            }
+                            
+                            $("#gameCategory-form")[0].reset();
+                        });
+        
+                    }
+        
+                    function enableSearchButton(flag) {
+                        $("#btn-submit").prop("disabled", flag);
+                    }
+        
+                    function display(data) {
+                        var json = "<h4>Ajax Response</h4><pre>"
+                                + JSON.stringify(data, null, 4) + "</pre>";
+                        $('#feedback').html(json);
+                    }
+                </script>
+        -->
+
+
+        <script>
+
+            // Date time picker
+            $(function () {
+                //  var temp = $(this).datepicker('getDate');
+                // var d = new Date(temp);
+                // d.setDate(d.getDate() + 1);
+                $('#gameExpiryDate').datetimepicker({
+                    //autoclose: true,
+                    //format: 'dd/mm/yyyy',
+                    // startDate: d
+
+                });
+            });
+
+
+
 
             jQuery(document).ready(function ($) {
 
                 $("#gameCategory-form").submit(function (event) {
-                   // var formData = $('addGame-form').serialize();
+                    //var formData = $('addGame-form').serialize();
                     // Disble the search button
                     enableSearchButton(false);
 
@@ -199,12 +297,16 @@
             });
 
             function searchViaAjax() {
-              
+               
+               
                 var id = $('#id').val();
                 var gameName = $('#gameName').val();
                 var gameCode = $('#gameCode').val();
                 var createdBy = "test user";
                 var enabled = $("#enabled").is(":checked");
+                // set a variable
+                var gameExpiryDate = new Date();
+                console.log("gameExpiryDate ::" + gameExpiryDate);
 
 
                 if (enabled) {
@@ -232,20 +334,21 @@
                     timeout: 100000,
                     success: function (data) {
                         console.log("SUCCESS: ", data);
-                        display(data);
+                        //  display(data);
+                        //   notify(data);
+                       
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
-                        display(e);
-                        jQuery("#submitResponse").css("display", "none");
+                        //  display(e);
                     },
                     done: function (e) {
                         console.log("DONE");
                         enableSearchButton(true);
                     }
-                    
-                    $("#gameCategory-form")[0].reset();
                 });
+
+                $("#gameCategory-form")[0].reset();
 
             }
 
@@ -258,111 +361,13 @@
                         + JSON.stringify(data, null, 4) + "</pre>";
                 $('#feedback').html(json);
             }
+
+            function notify(message) {
+                new PNotify({
+                    title: 'Regular Success',
+                    text: message,
+                    type: 'success',
+                    styling: 'bootstrap3'
+                });
+            }
         </script>
--->
-
-
-           <script>
-
-                // Date time picker
-                $(function () {
-                    //  var temp = $(this).datepicker('getDate');
-                    // var d = new Date(temp);
-                    // d.setDate(d.getDate() + 1);
-                    $('#gameExpiryDate').datetimepicker({
-                        //autoclose: true,
-                        //format: 'dd/mm/yyyy',
-                        // startDate: d
-
-                    });
-                });
-
-
-
-
-                jQuery(document).ready(function ($) {
-
-                    $("#gameCategory-form").submit(function (event) {
-                        //var formData = $('addGame-form').serialize();
-                        // Disble the search button
-                        enableSearchButton(false);
-
-                        // Prevent the form from submitting via the browser.
-                        event.preventDefault();
-
-                        searchViaAjax();
-
-                    });
-
-                });
-
-                function searchViaAjax() {
-                    /*
-                     var search = {}
-                     search["gameName"] = $("#gameName").val();
-                     search["gameCode"] = $("#gameCode").val();
-                     // search["createdBy"] = $("#createdBy").val();
-                     search["createdBy"] = "test user";
-                     //  search["enabled"] = $("#enabled").val();
-                     */
-                  var id = $('#id').val();
-                var gameName = $('#gameName').val();
-                var gameCode = $('#gameCode').val();
-                var createdBy = "test user";
-                var enabled = $("#enabled").is(":checked");
-                    // set a variable
-                    var gameExpiryDate = new Date();
-                    console.log("gameExpiryDate ::" + gameExpiryDate);
-
-                    
-                     if (enabled) {
-                     enabled = 1;
-                     } else {
-                     enabled = 0;
-                     }
-                     console.log("enabled ", enabled);
-                     
-                    var json = {
-                        "id": id,
-                        "gameName": gameName,
-                        "gameCode": gameCode,
-                        "createdBy": createdBy,
-                        "enabled": enabled
-
-                    };
-
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "${pageContext.request.contextPath}/api/game/create",
-                        data: JSON.stringify(json),
-                        dataType: 'json',
-                        timeout: 100000,
-                        success: function (data) {
-                            console.log("SUCCESS: ", data);
-                          //  display(data);
-                        },
-                        error: function (e) {
-                            console.log("ERROR: ", e);
-                          //  display(e);
-                        },
-                        done: function (e) {
-                            console.log("DONE");
-                            enableSearchButton(true);
-                        }
-                    });
-                    
-                    $("#gameCategory-form")[0].reset();
-
-                }
-
-                function enableSearchButton(flag) {
-                    $("#btn-submit").prop("disabled", flag);
-                }
-
-                function display(data) {
-                    var json = "<h4>Ajax Response</h4><pre>"
-                            + JSON.stringify(data, null, 4) + "</pre>";
-                    $('#feedback').html(json);
-                }
-            </script>
