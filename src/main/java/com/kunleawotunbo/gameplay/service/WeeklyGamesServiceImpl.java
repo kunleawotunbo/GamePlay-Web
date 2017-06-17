@@ -41,8 +41,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
         weeklyGamesDao.deleteGame(game);
     }
 
-    public List<WeeklyGames> listGames(byte enabled) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<WeeklyGames> listWeeklyGames() {
+       return weeklyGamesDao.listWeeklyGames();
     }
 
     public boolean isGameCodeExist(String gameCode) {

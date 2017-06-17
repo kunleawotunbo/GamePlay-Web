@@ -7,7 +7,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        Built with love <a href="https://gameplay.com">GamePlay</a>
     </div>
     <div class="clearfix"></div>
 </footer>
@@ -80,5 +80,14 @@
 
   <!-- Parsley -->
 <script src="<c:url value='/resources/js/parsley.min.js' />"></script> 
+
+<!-- PNotify -->
+<script src="<c:url value='/resources/js/pnotify.js' />"></script> 
+<script src="<c:url value='/resources/js/pnotify.buttons.js' />"></script> 
+<script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> 
+
+
+<!--Boostrap datetime picker-->
+<script src="<c:url value='/resources/js/bootstrap-datetimepicker.min.js' />"></script> 
 </body>
 </html>

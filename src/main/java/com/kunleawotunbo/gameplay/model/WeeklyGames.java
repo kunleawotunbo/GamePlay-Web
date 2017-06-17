@@ -26,6 +26,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "WeeklyGames")
 public class WeeklyGames implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -33,8 +35,7 @@ public class WeeklyGames implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull    
     @Column(name = "weekNo")
     private int weekNo;
 
@@ -46,7 +47,6 @@ public class WeeklyGames implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "noOfWinners")
     private int noOfWinners;
 
@@ -58,32 +58,30 @@ public class WeeklyGames implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size( max = 1000)
     @Column(name = "gameRules")
     private String gameRules;
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "gamePlayType")
     private int gamePlayType;
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "gameCategory")
     private int gameCategory;
     
     
-    @Size(min = 1, max = 50)
+    @Size( max = 50)
     @Column(name = "gameText")
-    private int gameText;
+    private String gameText;
     
-    @Size(min = 1, max = 50)
+    @Size( max = 50)
     @Column(name = "gameImage")
-    private int gameImage;
+    private String gameImage;
    
-    @Size(min = 1, max = 500)
+    //@Size(min = 1, max = 500)
     @Column(name = "gameImgLocation")
     private String gameImgLocation;
     
@@ -98,12 +96,12 @@ public class WeeklyGames implements Serializable {
     
      @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size( max = 100)
     @Column(name = "createdBy")
     private String createdBy;
      
      @Column(name = "isPicture")
-    private byte isPicture;
+    private byte isPicture;  
 
     /**
      * @return the id
@@ -220,28 +218,28 @@ public class WeeklyGames implements Serializable {
     /**
      * @return the gameText
      */
-    public int getGameText() {
+    public String getGameText() {
         return gameText;
     }
 
     /**
      * @param gameText the gameText to set
      */
-    public void setGameText(int gameText) {
+    public void setGameText(String gameText) {
         this.gameText = gameText;
     }
 
     /**
      * @return the gameImage
      */
-    public int getGameImage() {
+    public String getGameImage() {
         return gameImage;
     }
 
     /**
      * @param gameImage the gameImage to set
      */
-    public void setGameImage(int gameImage) {
+    public void setGameImage(String gameImage) {
         this.gameImage = gameImage;
     }
 
@@ -314,5 +312,6 @@ public class WeeklyGames implements Serializable {
     public void setIsPicture(byte isPicture) {
         this.isPicture = isPicture;
     }
-    
+   
+
 }

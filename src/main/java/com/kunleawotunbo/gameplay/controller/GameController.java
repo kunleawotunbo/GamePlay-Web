@@ -103,7 +103,8 @@ public class GameController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createGame(@RequestBody Game game, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
         boolean created = false;
-        System.out.println("Game Name :: " + game.getGameName());
+        
+        System.out.println("Game Id :: " + game.getId());
         if (gameService.isGameCodeExist(game.getGameCode())) {
             logger.error("Game code " + game.getGameCode() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);

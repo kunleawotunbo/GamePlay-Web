@@ -23,7 +23,7 @@ public interface WeeklyGamesDao {
 
     void deleteGame(WeeklyGames game);
 
-    List<WeeklyGames> listGames(byte enabled);
+    List<WeeklyGames> listWeeklyGames();
 
     public boolean isGameCodeExist(String gameCode);
     

@@ -46,5 +46,9 @@ public class GameServiceImpl implements GameService{
     public boolean isGameCodeExist(String gameCode) {
         return gameDao.isGameCodeExist(gameCode);
     }
+
+    public List<Game> listAllGames() {
+        return gameDao.listAllGames();
+    }
     
 }

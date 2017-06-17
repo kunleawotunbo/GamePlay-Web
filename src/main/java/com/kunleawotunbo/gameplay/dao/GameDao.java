@@ -25,4 +25,6 @@ public interface GameDao {
     List<Game> listGames(byte enabled);
 
     public boolean isGameCodeExist(String gameCode);
+    
+    List<Game> listAllGames();
 }

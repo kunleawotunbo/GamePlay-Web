@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.dao;
 import com.kunleawotunbo.gameplay.model.Game;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,8 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
     public boolean save(Game game) {
         boolean success = false;
         try {
-            persist(game);
+            //persist(game);
+            saveOrUpdate(game);
             success = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +76,14 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
         int count = crit.list().size();
         
         return count > 0;
+    }
+
+    public List<Game> listAllGames() {
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Game> gameList = (List<Game>) criteria.list();
+        
+        return gameList;
     }
 
 }

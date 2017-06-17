@@ -1,8 +1,9 @@
 <%-- 
-    Document   : addGameCategory
-    Created on : Jun 16, 2017, 11:30:35 AM
+    Document   : samplePage
+    Created on : Jun 17, 2017, 1:57:19 PM
     Author     : Olakunle Awotunbo
 --%>
+
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/sidebar-menu.jsp" %>
 <%@ include file="../includes/top-navigation.jsp" %>
@@ -154,16 +155,8 @@
                                         <td><c:out value="${item.gameCode}"/></td> 
                                         <td><c:out value="${item.enabled}"/></td> 
                                         <!--<td align="center"><a href="addGameCategory?id=${item.id}">Edit</a></td>-->  
-                                        <td>
-                                            <a href="<c:url value='/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="<c:url value='/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
-                                               <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
-                                            </a>
-                                        </td>
+                                        <td><a href="<c:url value='/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">edit</a></td>
+                                        <td><a href="<c:url value='/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">delete</a></td>
                                     </tr>  
                                 </c:forEach>  
                             </tbody>

@@ -11,7 +11,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>${loggedinuser}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -25,9 +25,14 @@
                 <ul class="nav side-menu">
                     <li><a href="dashboard"><i class="fa fa-home"></i>Dashboard</a></li>   
                     <li><a href="addGameCategory"><i class="fa fa-edit"></i>Add Game Category</a></li>   
-                    <li><a href="addWeeklyGame"><i class="fa fa-edit"></i>Add Weekly Game</a></li>   
+                    <li><a><i class="fa fa-desktop"></i> Weekly Games <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                             <li><a href="addWeeklyGame">Add Weekly Game</a></li>   
+                               <li><a href="listWeeklyGames">Weekly Games List</a></li>
+                        </ul>
+                    </li>
                     
-                    
+<!--                   
                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
@@ -73,9 +78,16 @@
                     </ul>
                   </li>
                 </ul>
+                -->
+                
               </div>
               <div class="menu_section">
-                <h3>Live On</h3>
+                <h3>Others</h3>
+                <ul class="nav side-menu">
+                    <!--<li><a href="/GamePlay"><i class="fa fa-home"></i>Switch to User</a></li>-->   
+                </ul>
+                 
+                <!--                
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -115,9 +127,14 @@
                   </li>                  
                   <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                 </ul>
+                
+                -->
+                
               </div>
 
             </div>
+            
+            
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->

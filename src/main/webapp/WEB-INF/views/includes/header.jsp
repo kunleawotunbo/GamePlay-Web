@@ -12,7 +12,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-    <!--https://colorlib.com/polygon/gentelella/index.html-->
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Meta, title, CSS, favicons, etc. -->
@@ -20,7 +20,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Gentelella Alela! | </title>
+        <title>GamePlay | </title>
         <!-- Bootstrap -->
         <link href="<c:url value='/resources/css/bootstrap.min.css'/>"rel="stylesheet"></link>      
         <!-- Font Awesome -->
@@ -49,7 +49,14 @@
         <!--bootstraptoggle-->
         <link href="<c:url value='/resources/css/bootstrap-toggle.min.css' />"  rel="stylesheet"></link> 
 
+          <!-- PNotify -->
+        <link href="<c:url value='/resources/css/pnotify.css' />"  rel="stylesheet"></link> 
+        <link href="<c:url value='/resources/css/pnotify.buttons.css' />"  rel="stylesheet"></link> 
+        <link href="<c:url value='/resources/css/pnotify.nonblock.css' />"  rel="stylesheet"></link> 
         
+       <!--Boostrap  Datetime picker-->
+       <link href="<c:url value='/resources/css/bootstrap-datetimepicker.min.css' />"  rel="stylesheet"></link> 
+          
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2">
 
@@ -61,7 +68,7 @@
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>GamePlay</span></a>
+                            <a href="dashboard" class="site_title"><i class="fa fa-paw"></i> <span>GamePlay</span></a>
                         </div>
 
                         <div class="clearfix"></div>

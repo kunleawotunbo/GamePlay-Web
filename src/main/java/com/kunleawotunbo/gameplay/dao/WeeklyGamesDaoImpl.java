@@ -37,7 +37,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
     public boolean save(WeeklyGames game) {
       boolean success = false;
         try {
-            persist(game);
+            //persist(game);
+            saveOrUpdate(game);
             success = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,11 +63,13 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
          delete(game);
     }
 
-    public List<WeeklyGames> listGames(byte enabled) {
-         Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("enabled", enabled));
+    public List<WeeklyGames> listWeeklyGames() {
+      
+        Criteria criteria = createEntityCriteria();        
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<WeeklyGames> weeklyGamesList = (List<WeeklyGames>) criteria.list();
 
-        return crit.list();
+        return weeklyGamesList;
     }
 
     public boolean isGameCodeExist(String gameCode) {
