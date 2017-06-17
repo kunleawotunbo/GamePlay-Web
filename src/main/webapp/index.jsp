@@ -182,7 +182,7 @@
     </section>
 
     <footer>
-      <p class="text-center">TechScroll Copyright &copy; 2017</p>
+      <p class="text-center">GamePlay Copyright &copy; 2017</p>
     </footer>
 
       <!--
