@@ -53,66 +53,7 @@
                             <h4>Yay!</h4>
                             <p>Everything seems to be ok :)</p>
                         </div>
-                        <!--                        <form class="form-horizontal form-label-left" id="weeklyGame-form" data-parsley-validate>
-                        
-                                                 
-                        
-                        
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input type="text" class="form-control" readonly="readonly" value="${weekNo}" required>                               
-                                                        </div>
-                                                    </div>
-                        
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">prizeOfWinnerse<span class="required">*</span></label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input id="prizeOfWinners" type="number" class="form-control" name="prizeOfWinners" placeholder="Prize Of Winners" required >                                  
-                                                        </div>
-                                                    </div>
-                        
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">prizeOfWinnerse<span class="required">*</span></label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input id="prizeOfWinners" type="number" class="form-control" name="prizeOfWinners" placeholder="Prize Of Winners" required >                                  
-                                                        </div>
-                                                    </div>
-                        
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Name<span class="required">*</span></label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input id="gameName" type="text" class="form-control" name="gameName" placeholder="Input game Name" required >                                  
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code<span class="required">*</span></label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input id="gameCode" type="text" class="form-control" name="gameCode" placeholder="Game Code" required >                                 
-                                                        </div>
-                                                    </div>
-                        
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                                            <input id="enabled" name="enabled" type="checkbox"  data-toggle="toggle" >                                    
-                                                        </div>
-                                                    </div>
-                        
-                        
-                                                    <input name="createdBy" value="${loggedinuser}" type="hidden"> </input>
-                                                    <div class="ln_solid"></div>
-                        
-                                                    <div class="form-group">
-                                                        <div class="col-md-9 col-md-offset-3">
-                                                            <button type="submit" class="btn btn-primary">Cancel</button>
-                                                            <button type="submit" class="btn btn-success">Submit</button>
-                                                        </div>
-                                                    </div>
-                        
-                                                </form>
-                        -->
-
+                       
                         <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
 
