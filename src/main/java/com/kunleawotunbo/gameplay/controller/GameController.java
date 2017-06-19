@@ -65,7 +65,7 @@ public class GameController {
     public ResponseEntity<List<Game>> listGames() {
         logger.info("Inside listGames()");
         List<Game> gameList = null;
-        byte status = 1;
+        boolean status = true;
         gameWeek();
         gameList = gameService.listGames(status);
 

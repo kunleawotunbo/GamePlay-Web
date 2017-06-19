@@ -48,11 +48,11 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Game Week</th>
-                                    <th>Game Category</th>
-                                    <th>Game PlayType</th>
-                                    <th>Expiry Date</th>
-                                    <th>Action</th>
+                                    <th>GAME WEEK</th>
+                                    <th>GAME CATEGORY</th>
+                                    <th>GAME PLAY TYPE</th>
+                                    <th>EXPIRY DATE</th>
+                                    <th></th>
                                     <th></th>
 
                                 </tr>

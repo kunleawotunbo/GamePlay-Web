@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <form:checkbox path="enabled" id="enabled" name="enabled" value="0" data-toggle="toggle" />                                    
+                                    <form:checkbox path="enabled" id="enabled" name="enabled"  data-toggle="toggle" />                                    
                                 </div>
                             </div>
 
@@ -137,10 +137,10 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Game Name</th>
-                                    <th>Game Code</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>GAME NAME</th>
+                                    <th>GAME CODE</th>
+                                    <th>ENABLED</th>
+                                    <th></th>
                                     <th></th>
 
                                 </tr>
@@ -151,8 +151,15 @@
                                         <td><c:out value="${item.id}"/></td>  
                                         <td><c:out value="${item.gameName}"/></td>  
                                         <td><c:out value="${item.gameCode}"/></td> 
-                                        <td><c:out value="${item.enabled}"/></td> 
-                                        <!--<td align="center"><a href="addGameCategory?id=${item.id}">Edit</a></td>-->  
+                                    <%--   <td><c:out value="${item.enabled}"/></td>  --%>
+                                        <c:choose>
+                                            <c:when test="${item.enabled==true}">
+                                               <td><c:out value="YES"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                               <td><c:out value="NO"/></td>
+                                            </c:otherwise>
+                                        </c:choose> 
                                         <td>
                                             <a href="<c:url value='/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
@@ -297,8 +304,8 @@
             });
 
             function searchViaAjax() {
-               
-               
+
+
                 var id = $('#id').val();
                 var gameName = $('#gameName').val();
                 var gameCode = $('#gameCode').val();
@@ -308,12 +315,13 @@
                 var gameExpiryDate = new Date();
                 console.log("gameExpiryDate ::" + gameExpiryDate);
 
-
-                if (enabled) {
-                    enabled = 1;
-                } else {
-                    enabled = 0;
-                }
+                /*
+                 if (enabled) {
+                 enabled = 1;
+                 } else {
+                 enabled = 0;
+                 }
+                 */
                 console.log("enabled ", enabled);
 
                 var json = {
@@ -336,7 +344,7 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
-                       
+
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);

@@ -75,7 +75,7 @@ public class AppController {
     public String index(ModelMap model, HttpServletRequest request) {
         System.out.println("I am inside index");
         List<Game> gameList = null;
-        byte status = 1;
+        boolean status = true;
         //gameWeek();
         gameList = gameService.listGames(status);
         logger.info("gameList :: " + gameList);
@@ -90,7 +90,8 @@ public class AppController {
     public String homepage(ModelMap model, HttpServletRequest request) {
 
         List<Game> gameList = null;
-        byte status = 1;
+        //byte status = 1;
+        boolean status = true;
         //gameWeek();
         gameList = gameService.listGames(status);
         System.out.println("gameList in hompage:: " + gameList);;

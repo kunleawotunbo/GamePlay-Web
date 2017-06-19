@@ -76,7 +76,8 @@ public class AdminController {
       @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String addWeeklyGame(ModelMap model, HttpServletRequest request) {
         //List<Game> gameList = null;
-        byte status = 1;
+       // byte status = 1;
+        boolean status = true;
       //  gameList = gameService.listGames(status);
         
         model.addAttribute("weeklyGame", new WeeklyGames());
@@ -95,8 +96,8 @@ public class AdminController {
     public String editWeeklyGames(@PathVariable int id, ModelMap model) {
         
         logger.info("Edit  editWeeklyGames id :: " + id);
-        byte status = 1;
-        
+        //byte status = 1;
+        boolean status = true;
         model.addAttribute("weeklyGame", weeklyGamesService.findById(id));        
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());

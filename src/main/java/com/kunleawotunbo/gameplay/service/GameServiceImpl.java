@@ -39,7 +39,7 @@ public class GameServiceImpl implements GameService{
        gameDao.deleteGame(game);
     }
 
-    public List<Game> listGames(byte enabled) {
+    public List<Game> listGames(boolean enabled) {
        return gameDao.listGames(enabled);
     }
 

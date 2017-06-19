@@ -48,7 +48,7 @@ public class Game implements Serializable {
     private String gameCode;
 
     @Column(name = "enabled")
-    private byte enabled;
+    private boolean enabled;
 
     @Column(name="creationDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -69,7 +69,7 @@ public class Game implements Serializable {
 
     public Game() {
         super();
-        this.enabled = 0;
+        this.enabled = false;
         // this.creationDate(new Date());
     }
 
@@ -133,14 +133,14 @@ public class Game implements Serializable {
     /**
      * @return the enabled
      */
-    public byte getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
     /**
      * @param enabled the enabled to set
      */
-    public void setEnabled(byte enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

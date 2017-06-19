@@ -22,7 +22,7 @@ public interface GameService {
 
     void deleteGame(Game game);
 
-    List<Game> listGames(byte enabled);
+    List<Game> listGames(boolean enabled);
 
     public boolean isGameCodeExist(String gameCode);
     

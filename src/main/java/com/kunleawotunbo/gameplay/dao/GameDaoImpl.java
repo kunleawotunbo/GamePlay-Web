@@ -62,7 +62,7 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
         delete(game);
     }
 
-    public List<Game> listGames(byte enabled) {
+    public List<Game> listGames(boolean enabled) {
        Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("enabled", enabled));
 

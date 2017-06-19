@@ -83,10 +83,13 @@
                                     </div>
                             
                                 --%>
+                                
+                                
+                                 <%--
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Category<span class="required">*</span></label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="gameCategory"  name="gameCategory" required>
+                                        <select class="form-control" id="gameCategory" path="gameCategory" name="gameCategory" required>
                                             <option value="">Choose Game Type</option>>
                                             <c:forEach  var="gameCate" items="${gameList}" varStatus="status" >
 
@@ -95,19 +98,42 @@
                                         </select>                                                          
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control" id="gameType"  name="gameType" required>
-                                            <option value="">Choose Game Category</option>>
-                                            <c:forEach  var="gameType" items="${gamePlayTypeList}" varStatus="status" >
+                               
+                                 <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
+                                                                    <div class="col-sm-4">
+                                                                        <select class="form-control" id="gameType"  name="gameType" required>
+                                                                            <option value="">Choose Game Category</option>>
+                                                                            <c:forEach  var="gameType" items="${gamePlayTypeList}" varStatus="status" >
 
                                                 <option value="${gameType.id}">${gameType.typeName}</option>
                                             </c:forEach>
                                         </select>                                                          
                                     </div>
                                 </div>
+                                --%>
+                        
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Category<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:select id="gameCategory" path="gameCategory" title="Choose Game Type" class="form-control">
+                                            <option value="">Choose Game Type</option>
+                                            <form:options items="${gameList}" itemValue="id" itemLabel="gameName"/>
+                                        </form:select>   
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
+                                    <div class="col-sm-4">
+                                        <form:select id="gameType" path="gamePlayType" title=' Game Type' class="form-control">
+                                            <option value="">Choose Game Type</option>
+                                            <form:options items="${gamePlayTypeList}" itemValue="id" itemLabel="typeName"/>
+                                        </form:select>   
+                                        </select>                                                          
+                                    </div>
+                                </div>        
+
 
                                 <div class="form-group" id="gameText">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
@@ -207,9 +233,9 @@
                     // d.setDate(d.getDate() + 1);
                     $('#gameExpiryDate').datetimepicker({
                         //autoclose: true,
-                         format: 'DD-MM-YYYY HH:mm:ss'
-                         //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
+                        format: 'DD-MM-YYYY HH:mm:ss'
+                                //format: 'dd MMM yyyy HH:mm:ss zzz'
+                                // startDate: d
 
                     });
                 });
@@ -222,39 +248,39 @@
                     $('#gameText').hide();
                     // Remove requred for gameText1
                     $("#gameText1").prop("required", false);
-                    
+
                     // Hide gameImage div
                     $('#gameImage').hide();
                     // Remove requred for gameImage1
                     $("#gameImage1").prop("required", false);
-                    
+
                     $("#gameType").change(function (event) {
-                        
-                        
+
+
                         //console.log("else gameText ::" + gameText);
                         var gameType = $('#gameType').val();
                         if (gameType == "1") {
-                           // console.log(" gameType is Picture ::" + gameText);
-                           // 
-                           // Since gameType is Picutre, then Hide gameText div and remove required attribute
+                            // console.log(" gameType is Picture ::" + gameText);
+                            // 
+                            // Since gameType is Picutre, then Hide gameText div and remove required attribute
                             $('#gameText').hide();
-                             $("#gameText1").prop("required", false);
-                             
-                             // Show gameImage since gameType is picture and sett attribute required = true
-                             $('#gameImage').show();
-                             $("#gameImage1").prop("required", true);                           
-                       
+                            $("#gameText1").prop("required", false);
+
+                            // Show gameImage since gameType is picture and sett attribute required = true
+                            $('#gameImage').show();
+                            $("#gameImage1").prop("required", true);
+
                         } else {
-                           // console.log(" gameType is Question ::" + gameText);
-                            
-                           // Since gameType is text question, then Hide gameImage div and remove required attribute
-                             $('#gameImage').hide();
-                             $("#gameImage1").prop("required", false);
-                             
-                             // Show gameText since gameType is picture and sett attribute gameText1 required = true
-                             $('#gameText').show();                                                      
-                             $("#gameText1").prop("required", true);
-                            
+                            // console.log(" gameType is Question ::" + gameText);
+
+                            // Since gameType is text question, then Hide gameImage div and remove required attribute
+                            $('#gameImage').hide();
+                            $("#gameImage1").prop("required", false);
+
+                            // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                            $('#gameText').show();
+                            $("#gameText1").prop("required", true);
+
                         }
                     });
 
@@ -290,11 +316,12 @@
                     var noOfWinners = $('#noOfWinners').val();
                     var gameExpiryDate = $('#gameExpiryDate').val();
                     var gameRules = $('#gameRules').val();
-                    var gameText = $('#gameText').val();
-                    var gameImage = $('#gameImage').val();
+                    var gameText = $('#gameText1').val();
+                    var gameImage = $('#gameImage1').val();
                     var createdBy = "test user";
 
-
+                   // console.log("gamePlayType ::" + gameType);
+                    // console.log("gameText ::" + gameText);
                     /*
                      if (enabled) {
                      enabled = 1;
@@ -307,11 +334,11 @@
                     var json = {
                         "id": id,
                         "gameCategory": gameCategory,
-                        "gameType": gameType,
+                        "gamePlayType": gameType,
                         "weekNo": weekNo,
                         "prizeOfWinners": prizeOfWinners,
                         "noOfWinners": noOfWinners,
-                        "gameExpiryDate": Date.parse(gameExpiryDate) ,
+                        "gameExpiryDate": Date.parse(gameExpiryDate),
                         "gameRules": gameRules,
                         "gameText": gameText,
                         "gameImage": gameImage,
