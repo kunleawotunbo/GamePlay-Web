@@ -1,8 +1,9 @@
 <%-- 
-    Document   : addWeeklyGame
-    Created on : Jun 16, 2017, 9:27:44 PM
+    Document   : setWeeklyAnswer
+    Created on : Jun 22, 2017, 1:08:41 PM
     Author     : Olakunle Awotunbo
 --%>
+
 
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/sidebar-menu.jsp" %>
@@ -38,7 +39,7 @@
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Add Weekly Game</h2>
+                        <h2>Set Weekly Game Answer</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -54,48 +55,32 @@
                             <p>Everything seems to be ok :)</p>
                         </div>
 
-                        <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">
+                        <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="setWeeklyGameAnswer-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
+                            
+                            
 
                             <div class="form-group">
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Category<span class="required">*</span></label>
-                                    <div class="col-sm-4">                                         
-                                        <form:select id="gameCategory" path="gameCategory" title="Choose Game Type" class="form-control">
-                                            <option value="">Choose Game Type</option>
-                                            <form:options items="${gameList}" itemValue="id" itemLabel="gameName"/>
-                                        </form:select>   
-                                    </div>
-                                </div>
                                 
+                                
+                            
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
-                                    <div class="col-sm-4">
-                                        <form:select id="gameType" path="gamePlayType" title=' Game Type' class="form-control">
-                                            <option value="">Choose Game Type</option>
-                                            <form:options items="${gamePlayTypeList}" itemValue="id" itemLabel="typeName"/>
-                                        </form:select>   
-                                        </select>                                                          
-                                    </div>
-                                </div>        
-
-
-                                <div class="form-group" id="gameText">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameText" id="gameText1" name="gameText" type="text" class="form-control"  placeholder="Game Text" />                                 
+                                        <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" value="${weekNo}" required ="required" readonly="readonly" />                                  
+                                    </div>
+                                </div>
+                                    
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Answer <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:textarea path="gameAnswer" id="gameAnswer" name="gameAnswer" type="textarea" rows="3" class="form-control"  placeholder="Game Answer" />                                 
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="gameImage" >
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameImage" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
-                                    </div>
-                                </div>
-
-
+                                    
+                          
+                                    <%--
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -130,7 +115,7 @@
                                     </div>
                                 </div>
 
-
+                                  --%>
                                 <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
                                 <div class="ln_solid"></div>
 
@@ -172,66 +157,7 @@
 
             <script>
 
-                // Date time picker
-                $(function () {
-                    //  var temp = $(this).datepicker('getDate');
-                    // var d = new Date(temp);
-                    // d.setDate(d.getDate() + 1);
-                    $('#gameExpiryDate').datetimepicker({
-                        //autoclose: true,
-                        format: 'DD-MM-YYYY HH:mm:ss'
-                                //format: 'dd MMM yyyy HH:mm:ss zzz'
-                                // startDate: d
-
-                    });
-                });
-
-
-
-
-                jQuery(document).ready(function ($) {
-                    // Hide gameText div
-                    $('#gameText').hide();
-                    // Remove requred for gameText1
-                    $("#gameText1").prop("required", false);
-
-                    // Hide gameImage div
-                    $('#gameImage').hide();
-                    // Remove requred for gameImage1
-                    $("#gameImage1").prop("required", false);
-
-                    $("#gameType").change(function (event) {
-
-
-                        //console.log("else gameText ::" + gameText);
-                        var gameType = $('#gameType').val();
-                        if (gameType == "1") {
-                            // console.log(" gameType is Picture ::" + gameText);
-                            // 
-                            // Since gameType is Picutre, then Hide gameText div and remove required attribute
-                            $('#gameText').hide();
-                            $("#gameText1").prop("required", false);
-
-                            // Show gameImage since gameType is picture and sett attribute required = true
-                            $('#gameImage').show();
-                            $("#gameImage1").prop("required", true);
-
-                        } else {
-                            // console.log(" gameType is Question ::" + gameText);
-
-                            // Since gameType is text question, then Hide gameImage div and remove required attribute
-                            $('#gameImage').hide();
-                            $("#gameImage1").prop("required", false);
-
-                            // Show gameText since gameType is picture and sett attribute gameText1 required = true
-                            $('#gameText').show();
-                            $("#gameText1").prop("required", true);
-
-                        }
-                    });
-
-
-                    $("#addWeeklyGame-form").submit(function (event) {
+                    $("#setWeeklyGameAnswer-form").submit(function (event) {
                         //var formData = $('addGame-form').serialize();
                         // Disble the search button
                         enableSearchButton(false);
@@ -246,48 +172,15 @@
                 });
 
                 function searchViaAjax() {
-                    /*
-                     var search = {}
-                     search["gameName"] = $("#gameName").val();
-                     search["gameCode"] = $("#gameCode").val();
-                     // search["createdBy"] = $("#createdBy").val();
-                     search["createdBy"] = "test user";
-                     //  search["enabled"] = $("#enabled").val();
-                     */
+                 
                     var id = $('#id').val();
-                    var gameCategory = $('#gameCategory').val();
-                    var gameType = $('#gameType').val();
-                    var weekNo = $('#weekNo').val();
-                    var prizeOfWinners = $('#prizeOfWinners').val();
-                    var noOfWinners = $('#noOfWinners').val();
-                    var gameExpiryDate = $('#gameExpiryDate').val();
-                    var gameRules = $('#gameRules').val();
-                    var gameText = $('#gameText1').val();
-                    var gameImage = $('#gameImage1').val();
+                    var gameAnswer = $('#gameAnswer').val();                
                     var createdBy = "test user";
 
-                   // console.log("gamePlayType ::" + gameType);
-                    // console.log("gameText ::" + gameText);
-                    /*
-                     if (enabled) {
-                     enabled = 1;
-                     } else {
-                     enabled = 0;
-                     }
-                     console.log("enabled ", enabled);
-                     */
-                    // Date.parse(gameExpiryDate)  is used to parse the date in string to Date for to consume.
+                 
                     var json = {
                         "id": id,
-                        "gameCategory": gameCategory,
-                        "gamePlayType": gameType,
-                        "weekNo": weekNo,
-                        "prizeOfWinners": prizeOfWinners,
-                        "noOfWinners": noOfWinners,
-                        "gameExpiryDate": Date.parse(gameExpiryDate),
-                        "gameRules": gameRules,
-                        "gameText": gameText,
-                        "gameImage": gameImage,
+                        "gameAnswer": gameAnswer,                      
                         "createdBy": createdBy
 
                     };
@@ -295,7 +188,7 @@
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
-                        url: "${pageContext.request.contextPath}/api/weeklygames/create",
+                        url: "${pageContext.request.contextPath}/api/weeklygamesanswers/setanswer",
                         data: JSON.stringify(json),
                         dataType: 'json',
                         timeout: 100000,
@@ -313,7 +206,7 @@
                         }
                     });
 
-                    $("#addWeeklyGame-form")[0].reset();
+                    $("#setWeeklyGameAnswer-form")[0].reset();
 
                 }
 

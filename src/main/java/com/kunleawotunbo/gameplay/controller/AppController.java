@@ -70,38 +70,6 @@ public class AppController {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
-   
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(ModelMap model, HttpServletRequest request) {
-        System.out.println("I am inside index");
-        List<Game> gameList = null;
-        boolean status = true;
-        //gameWeek();
-        gameList = gameService.listGames(status);
-        logger.info("gameList :: " + gameList);
-        model.addAttribute("urlPath", request.getLocalAddr());
-        model.addAttribute("request", request);
-        model.addAttribute("gameList", gameList);
-
-        return "index";
-    }
-
-    @RequestMapping(value = "/homepage", method = RequestMethod.GET)
-    public String homepage(ModelMap model, HttpServletRequest request) {
-
-        List<Game> gameList = null;
-        //byte status = 1;
-        boolean status = true;
-        //gameWeek();
-        gameList = gameService.listGames(status);
-        System.out.println("gameList in hompage:: " + gameList);;
-        model.addAttribute("urlPath", request.getLocalAddr());
-        model.addAttribute("loggedinuser", getPrincipal());
-         model.addAttribute("gameList", gameList);
-
-        return "homepage";
-    }
-
     /**
      * This method will list all existing users.
      */

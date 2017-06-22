@@ -105,11 +105,12 @@ public class GameController {
         boolean created = false;
         
         System.out.println("Game Id :: " + game.getId());
+        /*
         if (gameService.isGameCodeExist(game.getGameCode())) {
             logger.error("Game code " + game.getGameCode() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-
+        */
         game.setCreationDate(new Date());
         created = gameService.save(game);
 

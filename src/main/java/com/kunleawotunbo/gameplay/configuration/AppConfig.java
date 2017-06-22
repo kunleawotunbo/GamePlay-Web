@@ -1,5 +1,6 @@
 package com.kunleawotunbo.gameplay.configuration;
 
+import com.kunleawotunbo.gameplay.controller.HomeController;
 import com.kunleawotunbo.gameplay.converter.RoleToUserProfileConverter;
 import java.util.Locale;
 import java.util.Properties;
@@ -20,10 +21,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -58,7 +61,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        
+
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/")
                 .setCachePeriod(3600);
@@ -68,24 +71,22 @@ public class AppConfig extends WebMvcConfigurerAdapter {
                 .setCachePeriod(3600);
 
     }
-    
-    
+
     @Override
     public void configureDefaultServletHandling(
             DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-    }  
+    }
 
     /**
      * Configure Converter to be used. In our example, we need a converter to
      * convert string values[Roles] to UserProfiles in newUser.jsp
      */
-    
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(roleToUserProfileConverter);
     }
-    
+
     /**
      * Configure MessageSource to lookup any validation/error message in
      * internationalized property files
@@ -147,7 +148,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return bean;
     }
 
-    
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -156,11 +156,17 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     // beans
-
     @Bean
     public LocaleResolver localeResolver() {
         final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setDefaultLocale(Locale.ENGLISH);
         return cookieLocaleResolver;
     }
+
+    @Bean(name = "/")
+    public Controller getHomeController() {
+        return new HomeController();
+    }
+
+    
 }

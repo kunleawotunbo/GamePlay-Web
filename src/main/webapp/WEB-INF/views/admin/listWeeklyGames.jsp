@@ -52,6 +52,7 @@
                                     <th>GAME CATEGORY</th>
                                     <th>GAME PLAY TYPE</th>
                                     <th>EXPIRY DATE</th>
+                                    <th>SET ANSWER</th>
                                     <th></th>
                                     <th></th>
 
@@ -65,6 +66,10 @@
                                         <td><c:out value="${item.gameCategory}"/></td>  
                                         <td><c:out value="${item.gamePlayType}"/></td> 
                                         <td><c:out value="${item.gameExpiryDate}"/></td> 
+                                          <td><a href="<c:url value='/set-weeklyGames-Answer-${item.id}' />" class="btn btn-success ">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Set Answer
+                                            </a>
+                                        </td>
                                         <td><a href="<c:url value='/edit-weeklyGames-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                             </a>

@@ -5,18 +5,16 @@
  */
 package com.kunleawotunbo.gameplay.bean;
 
-import java.util.List;
-
 /**
  *
  * @author Olakunle Awotunbo
  */
-public class CustomResponseBody {
+public class CustomResponseBody2 {
     
-    private String code;
+     private String code;
     private String message;
-    private List<?> result;
-   
+    private Object result;
+
     /**
      * @return the code
      */
@@ -31,21 +29,6 @@ public class CustomResponseBody {
         this.code = code;
     }
 
-
-    /**
-     * @return the result
-     */
-    public List<?> getResult() {
-        return result;
-    }
-
-    /**
-     * @param result the result to set
-     */
-    public void setResult(List<?> result) {
-        this.result = result;
-    }
-
     /**
      * @return the message
      */
@@ -58,5 +41,19 @@ public class CustomResponseBody {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * @return the result
+     */
+    public Object getResult() {
+        return result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    public void setResult(Object result) {
+        this.result = result;
     }
 }

@@ -80,7 +80,7 @@ public class SampleController {
          */
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-    
+
     //-------------------Retrieve All Users--------------------------------------------------------
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
@@ -132,35 +132,66 @@ public class SampleController {
         user.setUserName(user.getEmail());
         created = userService.saveUser(user);
         logger.info("About to send mail to ::" + user.getEmail());
-        if(created){
+        if (created) {
             appUrl = request.getContextPath();
-            
+
             try {
                 final String token = UUID.randomUUID().toString();
                 verificationTokenService.createVerificationTokenForUser(user, token);
-                
+
                 final String confirmationUrl = getURLBase(request) + "/registrationConfirm.html?token=" + token;
                 user.setUserName(confirmationUrl);
                 tunborUtility.sendMail(user);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             System.out.println("User not created ");
         }
-        
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
-    
+
     public String getURLBase(HttpServletRequest request) throws MalformedURLException {
 
-    URL requestURL = new URL(request.getRequestURL().toString());
-    String port = requestURL.getPort() == -1 ? "" : ":" + requestURL.getPort();
-    //return requestURL.getProtocol() + "://" + requestURL.getHost() + port;
-    return requestURL.getProtocol() + "://" + requestURL.getHost() + port +  request.getContextPath();
+        URL requestURL = new URL(request.getRequestURL().toString());
+        String port = requestURL.getPort() == -1 ? "" : ":" + requestURL.getPort();
+        //return requestURL.getProtocol() + "://" + requestURL.getHost() + port;
+        return requestURL.getProtocol() + "://" + requestURL.getHost() + port + request.getContextPath();
 
-}
+    }
+    /* 
+            https://github.com/cornflourblue/angular2-registration-login-example
+
+            https://www.djamware.com/post-sub-category/5845691a80aca7763489d872/ionic-framework
+
+            https://www.djamware.com/post/587d543080aca723c115beaf/how-to-mixing-side-menu-and-tabs-in-ionic-2
+
+            http://pointdeveloper.com/hide-ionic-2-tab-bar-specific-tabs/
+
+            https://www.joshmorony.com/create-an-animated-login-screen-in-ionic-2/
+
+            https://www.joshmorony.com/using-the-web-animations-api-in-ionic-2/
+
+            https://github.com/Baeldung/spring-security-registration
+
+            http://www.baeldung.com/registration-restful-api
+
+            https://stackoverflow.com/questions/43094830/angular-2-login-with-spring-security
+
+            https://github.com/spring-guides/tut-spring-security-and-angular-js
+
+            https://github.com/spring-guides/tut-spring-security-and-angular-js/tree/master/basic
+
+            file:///home/olakunle/Downloads/gentelella-master/production/calendar.html
+
+            http://coinbasinapilive.jelastic.elastx.net/docs/#!/adverts/getEscrowByUserId
+
+            http://ionicframework.com/docs/theming/css-utilities/
+
+
+
+     */
 }

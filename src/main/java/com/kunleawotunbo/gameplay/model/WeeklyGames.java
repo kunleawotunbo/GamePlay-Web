@@ -102,6 +102,10 @@ public class WeeklyGames implements Serializable {
      
      @Column(name = "isPicture")
     private byte isPicture;  
+     
+     @Size( max = 50)
+    @Column(name = "gameAnswer")
+    private String gameAnswer;
 
     /**
      * @return the id
@@ -311,6 +315,20 @@ public class WeeklyGames implements Serializable {
      */
     public void setIsPicture(byte isPicture) {
         this.isPicture = isPicture;
+    }
+
+    /**
+     * @return the gameAnswer
+     */
+    public String getGameAnswer() {
+        return gameAnswer;
+    }
+
+    /**
+     * @param gameAnswer the gameAnswer to set
+     */
+    public void setGameAnswer(String gameAnswer) {
+        this.gameAnswer = gameAnswer;
     }
    
 

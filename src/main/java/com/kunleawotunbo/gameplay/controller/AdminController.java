@@ -13,6 +13,7 @@ import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,17 +51,30 @@ public class AdminController {
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String adminDashboard(ModelMap model, HttpServletRequest request) {
-        List<Game> gameList = null;
-        byte status = 1;
-//       
-//        gameList = gameService.listGames(status);
-//
-//        model.addAttribute("urlPath", request.getLocalAddr());
-//        model.addAttribute("gameplaytype", gamePlayTypeService.getGamePlayType());
+ 
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("loggedinuser", getPrincipal());
 
         return "/admin/dashboard";
+    }
+    
+       @RequestMapping(value = "/grid", method = RequestMethod.GET)
+    public ModelAndView testGrid(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+        logger.info("inside testGrid");
+        
+        ModelMap model = new ModelMap();
+        
+        String test = "This is a test";
+         boolean status = true;
+         
+        model.addAttribute("urlPath", request.getLocalAddr());
+        model.addAttribute("request", request);
+        model.addAttribute("test", test);
+        model.addAttribute("gameList", gameService.listGames(status));
+        
+        return new ModelAndView("grid", model);
     }
     
       @RequestMapping(value = "/listWeeklyGames", method = RequestMethod.GET)
@@ -75,11 +89,8 @@ public class AdminController {
     
       @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String addWeeklyGame(ModelMap model, HttpServletRequest request) {
-        //List<Game> gameList = null;
-       // byte status = 1;
+  
         boolean status = true;
-      //  gameList = gameService.listGames(status);
-        
         model.addAttribute("weeklyGame", new WeeklyGames());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
@@ -89,7 +100,26 @@ public class AdminController {
         return "/admin/addWeeklyGame";
     }
 
-        /**
+       /**
+     * This method will provide the medium to update an existing user.
+     */
+    @RequestMapping(value = {"/set-weeklyGames-Answer-{id}"}, method = RequestMethod.GET)
+    public String setWeeklyGamesAnswer(@PathVariable int id, ModelMap model) {
+        
+        logger.info("Edit  editWeeklyGames id :: " + id);
+        //byte status = 1;
+        boolean status = true;
+        model.addAttribute("weeklyGame", weeklyGamesService.findById(id));        
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+        model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
+        model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("edit", true);
+        
+        return "/admin/setWeeklyAnswer";
+    }
+    
+     /**
      * This method will provide the medium to update an existing user.
      */
     @RequestMapping(value = {"/edit-weeklyGames-{id}"}, method = RequestMethod.GET)
@@ -131,8 +161,8 @@ public class AdminController {
     }
     
      @RequestMapping(value = "/addGameCategory/{id}",  method = RequestMethod.GET)
-    public ModelAndView editBank(@PathVariable("id") int id, ModelMap map) {
-        logger.info("Edit  game category");
+    public ModelAndView getGameCategory(@PathVariable("id") int id, ModelMap map) {
+        logger.info("getGameCategory");
         map.addAttribute("game", gameService.findById(id));
         //map.addAttribute("countries", countryService.listCountry());
        // map.addAttribute("listAllBanks", bankService.listAllBanks());

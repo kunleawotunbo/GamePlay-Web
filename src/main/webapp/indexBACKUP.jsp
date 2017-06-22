@@ -13,7 +13,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>GamePlay</title>
+    <title>WINGAMEPLAY</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500" rel="stylesheet" type="text/css">
 
     <!--
@@ -35,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">GamePlay</a>
+          <a class="navbar-brand" href="#">WINGAMEPLAY</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -50,41 +50,7 @@
       </div>
     </nav>
             
-            
-            <section id="listgames">
-                
-                
-             <c:if test="${!empty gameList}">  
-          <div class="media-body">
-             <h4>LIST ALL BANKS</h4>
-          </div>
-	     <table id="bank-list" class="table table-striped table-bordered responsive">  
-		 <thead>
-	      <tr>  
-	       <th>S/N</th>  
-	       <th>COUNTRY</th>
-	   
-	       <th> </th>
-	       <th></th>  
-	      </tr>  
-            </thead>
-            <tbody>
-	      <c:forEach items="${gameList}" var="game" varStatus = "status">  
-	       <tr>  
-		<td><c:out value="${status.index + 1}"/></td>  
-		<td><c:out value="${game.gameName}"/></td>  
-		                
-		<td align="center"><a href="bank/edit/${game.id}">Edit</a></td>  
-                <td><a href="bank/delete/${game.id}">Delete</a></td>
-	       </tr>  
-	      </c:forEach>  
-		  </tbody>
-	     </table>  
-   </c:if>  
-                
-            </section>       
-            
-            
+    
             
 
     <section id="showcase">
