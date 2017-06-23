@@ -82,9 +82,9 @@
 <script src="<c:url value='/resources/js/parsley.min.js' />"></script> 
 
 <!-- PNotify -->
-<script src="<c:url value='/resources/js/pnotify.js' />"></script> 
+<!--<script src="<c:url value='/resources/js/pnotify.js' />"></script> 
 <script src="<c:url value='/resources/js/pnotify.buttons.js' />"></script> 
-<script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> 
+<script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> -->
 
 
 <!--Boostrap datetime picker-->

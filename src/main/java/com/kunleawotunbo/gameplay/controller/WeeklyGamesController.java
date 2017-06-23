@@ -144,7 +144,7 @@ public class WeeklyGamesController {
      * @return 
      */
       @PostMapping(value = "/setanswer")
-    public ResponseEntity setWeeklyGameAnswer(@RequestBody WeeklyGames weeklyGames, Errors errors) {
+    public ResponseEntity setWeeklyGameAnswer(@RequestBody WeeklyGames wGames, Errors errors) {
 
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
@@ -155,6 +155,15 @@ public class WeeklyGamesController {
             return ResponseEntity.badRequest().body(result);
 
         }
+        
+        WeeklyGames weeklyGames = weeklyGamesService.findById(wGames.getId());
+
+        if (weeklyGames == null) {
+            return new ResponseEntity("No WeeklyGames found for ID " + wGames.getId(), HttpStatus.NOT_FOUND);
+        }
+        // set the game answer
+        weeklyGames.setGameAnswer(wGames.getGameAnswer());
+        weeklyGames.setModifiedDate(new Date());
         if (weeklyGamesService.save(weeklyGames)) {
             logger.info("Answer set for question id :: "  + weeklyGames.getId());
             result.setCode("" + HttpStatus.OK);

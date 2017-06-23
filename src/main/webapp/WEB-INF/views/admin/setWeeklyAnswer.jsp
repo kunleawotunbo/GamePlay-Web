@@ -4,7 +4,6 @@
     Author     : Olakunle Awotunbo
 --%>
 
-
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/sidebar-menu.jsp" %>
 <%@ include file="../includes/top-navigation.jsp" %>
@@ -16,8 +15,8 @@
             <div class="title_left">
                 <h3>Weekly Games</h3>
             </div>
-
-            <!--            <div class="title_right">
+            <!--
+                        <div class="title_right">
                             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search for...">
@@ -34,7 +33,6 @@
         <div class="row">
             <!-- form input mask -->
             <!--              <div class="col-md-6 col-sm-12 col-xs-12">--> 
-
 
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -55,169 +53,125 @@
                             <p>Everything seems to be ok :)</p>
                         </div>
 
+                        <div id="feedback"></div>
+
                         <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="setWeeklyGameAnswer-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
-                            
-                            
 
                             <div class="form-group">
-                                
-                                
-                            
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" value="${weekNo}" required ="required" readonly="readonly" />                                  
-                                    </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" value="${weekNo}" required ="required" readonly="readonly" />                                  
                                 </div>
-                                    
+                            </div>
+
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Answer <span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:textarea path="gameAnswer" id="gameAnswer" name="gameAnswer" type="textarea" rows="3" class="form-control"  placeholder="Game Answer" />                                 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Week Answer<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:input path="gameAnswer" id="gameAnswer" type="text" class="form-control" name="gameName" placeholder="Input game Name" required ="required" />                                  
+                                </div>
+                            </div>
+
+                            <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
+                            <div class="ln_solid"></div>
+
+
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="reset" class="btn btn-primary">Cancel</button>
+                                        <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
 
-                                    
-                          
-                                    <%--
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" readonly="readonly" value="${weekNo}" required ="required" />                                  
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize Of Winners<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="prizeOfWinners" id="prizeOfWinners" type="number" class="form-control" name="prizeOfWinners" placeholder="" required ="required" />                                 
-                                    </div>
-                                </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">No Of Winners<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="noOfWinners" id="noOfWinners" type="number" class="form-control" name="noOfWinners" placeholder="" required ="required" />                                 
-                                    </div>
-                                </div>    
+                        </form:form>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameExpiryDate" id="gameExpiryDate" name="gameExpiryDate" type="text" class="form-control"  placeholder="Game Expiry date" required ="required" />                                 
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="3"  placeholder="Game Rules" required ="required" />                                 
-                                    </div>
-                                </div>
-
-                                  --%>
-                                <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
-                                <div class="ln_solid"></div>
-
-
-                                <div class="form-group">
-                                    <c:choose>
-                                        <c:when test="${edit}">
-
-                                            <div class="form-group">
-                                                <div class="col-md-9 col-md-offset-3">
-                                                    <button type="reset" class="btn btn-primary">Cancel</button>
-                                                    <input type="submit" bth-search value="Update" class="btn btn-success "/> 
-
-                                                </div>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="form-group">
-                                                <div class="col-md-9 col-md-offset-3">
-                                                    <button type="reset" class="btn btn-primary">Cancel</button>
-                                                    <button type="submit" id="bth-submit" class="btn btn-success">Submit</button>
-                                                </div>
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-
-                            </form:form>    
-
-                        </div>
                     </div>
                 </div>
-                <!-- /form input mask -->
-
             </div>
+            <!-- /form input mask -->
+
+        </div>
 
 
-            <%@ include file="../includes/footer.jsp" %>
 
-            <script>
+        <%@ include file="../includes/footer.jsp" %>
 
-                    $("#setWeeklyGameAnswer-form").submit(function (event) {
-                        //var formData = $('addGame-form').serialize();
-                        // Disble the search button
-                        enableSearchButton(false);
+        <script>
 
-                        // Prevent the form from submitting via the browser.
-                        event.preventDefault();
+            jQuery(document).ready(function ($) {
 
-                        searchViaAjax();
+                $("#setWeeklyGameAnswer-form").submit(function (event) {
+                    //var formData = $('addGame-form').serialize();
+                    // Disble the search button
+                    enableSearchButton(false);
 
-                    });
+                    // Prevent the form from submitting via the browser.
+                    event.preventDefault();
+
+                    searchViaAjax();
 
                 });
 
-                function searchViaAjax() {
-                 
-                    var id = $('#id').val();
-                    var gameAnswer = $('#gameAnswer').val();                
-                    var createdBy = "test user";
+            });
 
-                 
-                    var json = {
-                        "id": id,
-                        "gameAnswer": gameAnswer,                      
-                        "createdBy": createdBy
+            function searchViaAjax() {
 
-                    };
 
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "${pageContext.request.contextPath}/api/weeklygamesanswers/setanswer",
-                        data: JSON.stringify(json),
-                        dataType: 'json',
-                        timeout: 100000,
-                        success: function (data) {
-                            console.log("SUCCESS: ", data);
-                            display(data);
-                        },
-                        error: function (e) {
-                            console.log("ERROR: ", e);
-                            display(e);
-                        },
-                        done: function (e) {
-                            console.log("DONE");
-                            enableSearchButton(true);
-                        }
-                    });
+                var id = $('#id').val();
+                var gameAnswer = $('#gameAnswer').val();
 
-                    $("#setWeeklyGameAnswer-form")[0].reset();
+                var createdBy = "test user";
 
-                }
+                // set a variable
+                var gameExpiryDate = new Date();
+                console.log("gameExpiryDate ::" + gameExpiryDate);
 
-                function enableSearchButton(flag) {
-                    $("#btn-submit").prop("disabled", flag);
-                }
 
-                function display(data) {
-                    var json = "<h4>Ajax Response</h4><pre>"
-                            + JSON.stringify(data, null, 4) + "</pre>";
-                    $('#feedback').html(json);
-                }
-            </script>
+                var json = {
+                    "id": id,
+                    "gameAnswer": gameAnswer,
+                    "createdBy": createdBy
+                };
 
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "${pageContext.request.contextPath}/api/weeklygames/setanswer",
+                    data: JSON.stringify(json),
+                    dataType: 'json',
+                    timeout: 100000,
+                    success: function (data) {
+                        console.log("SUCCESS: ", data);
+                        //  display(data);
+                        //   notify(data);
+
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                        //  display(e);
+                    },
+                    done: function (e) {
+                        console.log("DONE");
+                        enableSearchButton(true);
+                    }
+                });
+
+                $("#setWeeklyGameAnswer-form")[0].reset();
+
+            }
+
+            function enableSearchButton(flag) {
+                $("#btn-submit").prop("disabled", flag);
+            }
+
+            function display(data) {
+                var json = "<h4>Ajax Response</h4><pre>"
+                        + JSON.stringify(data, null, 4) + "</pre>";
+                $('#feedback').html(json);
+            }
+
+
+        </script>
