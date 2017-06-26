@@ -3,11 +3,11 @@
     Created on : Jun 16, 2017, 9:21:09 AM
     Author     : Olakunle Awotunbo
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<c:url value='/resources/images/img.jpg' />" alt="..." class="img-circle profile_img">               
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>

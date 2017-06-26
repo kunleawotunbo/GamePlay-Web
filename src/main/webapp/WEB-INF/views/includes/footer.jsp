@@ -20,9 +20,9 @@
 <!-- Bootstrap -->
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script> 
 <!-- FastClick -->
-<script src="<c:url value='/resources/js/fastclick.js' />"></script> 
+<!--<script src="<c:url value='/resources/js/fastclick.js' />"></script>--> 
 <!-- NProgress -->
-<script src="<c:url value='/resources/js/nprogress.js' />"></script> 
+<!--<script src="<c:url value='/resources/js/nprogress.js' />"></script>--> 
 <!-- Chart.js -->
 <script src="<c:url value='/resources/js/Chart.min.js' />"></script> 
 <!-- gauge.js -->
@@ -46,9 +46,11 @@
 <!-- DateJS -->
 <script src="<c:url value='/resources/js/date.js' />"></script> 
 <!-- JQVMap -->
+<!--
 <script src="<c:url value='/resources/js/query.vmap.js' />"></script> 
 <script src="<c:url value='/resources/js/jquery.vmap.world.js' />"></script> 
-<script src="<c:url value='/resources/js/jquery.vmap.sampledata.js' />"></script> 
+<script src="<c:url value='/resources/js/jquery.vmap.sampledata.js' />"></script>
+-->
 <!-- bootstrap-daterangepicker -->
 <script src="<c:url value='/resources/js/moment.min.js' />"></script> 
 <script src="<c:url value='/resources/js/daterangepicker.js' />"></script> 
@@ -82,9 +84,9 @@
 <script src="<c:url value='/resources/js/parsley.min.js' />"></script> 
 
 <!-- PNotify -->
-<!--<script src="<c:url value='/resources/js/pnotify.js' />"></script> 
+<script src="<c:url value='/resources/js/pnotify.js' />"></script> 
 <script src="<c:url value='/resources/js/pnotify.buttons.js' />"></script> 
-<script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> -->
+<script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> 
 
 
 <!--Boostrap datetime picker-->

@@ -68,7 +68,7 @@
                                         </form:select>   
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
                                     <div class="col-sm-4">
@@ -233,6 +233,33 @@
 
                     $("#addWeeklyGame-form").submit(function (event) {
                         //var formData = $('addGame-form').serialize();
+
+                        var gameCategory = $('#gameCategory').val();
+                        var gameType = $('#gameType').val();
+                        var prizeOfWinners = $('#prizeOfWinners').val();
+                        var noOfWinners = $('#noOfWinners').val();
+                        // Do some validation
+                        if (gameCategory === "") {
+                            alert('Please choose a game category');
+                            $('#gameCategory').focus();
+                            return false;
+                        }
+                        if (gameType === "") {
+                            alert('Please choose a game type');
+                            $('#gameType').focus();
+                            return false;
+                        }
+                        if (prizeOfWinners == 0) {
+                            alert('Prize must be greater than 0');
+                            $('#prizeOfWinners').focus();
+                            return false;
+                        }
+                        if (noOfWinners == 0) {
+                            alert('Number of Winners must be greater than 0');
+                            $('#noOfWinners').focus();
+                            return false;
+                        }
+
                         // Disble the search button
                         enableSearchButton(false);
 
@@ -266,7 +293,7 @@
                     var gameImage = $('#gameImage1').val();
                     var createdBy = "test user";
 
-                   // console.log("gamePlayType ::" + gameType);
+                    // console.log("gamePlayType ::" + gameType);
                     // console.log("gameText ::" + gameText);
                     /*
                      if (enabled) {
@@ -301,11 +328,13 @@
                         timeout: 100000,
                         success: function (data) {
                             console.log("SUCCESS: ", data);
-                            display(data);
+                            //display(data);                      
+                            notification("Notification", "Weekly game added successfully.", "success");
                         },
                         error: function (e) {
                             console.log("ERROR: ", e);
-                            display(e);
+                            //display(e);
+                            notification("Notification", "Failed to add Weekly game.", "error");
                         },
                         done: function (e) {
                             console.log("DONE");
@@ -325,6 +354,16 @@
                     var json = "<h4>Ajax Response</h4><pre>"
                             + JSON.stringify(data, null, 4) + "</pre>";
                     $('#feedback').html(json);
+                }
+                
+                function notification(title, text, type){
+                    
+                     new PNotify({
+                                title: title,
+                                text: text,
+                                type: type,
+                                styling: 'bootstrap3'
+                            });
                 }
             </script>
 

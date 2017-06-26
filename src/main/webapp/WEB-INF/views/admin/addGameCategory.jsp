@@ -343,12 +343,13 @@
                     success: function (data) {
                         console.log("SUCCESS: ", data);
                         //  display(data);
-                        //   notify(data);
+                        notification("Notification", "Game category added successfully.", "success");
 
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
+                        notification("Notification", "Failed to add game category", "error");
                     },
                     done: function (e) {
                         console.log("DONE");
@@ -370,12 +371,13 @@
                 $('#feedback').html(json);
             }
 
-            function notify(message) {
-                new PNotify({
-                    title: 'Regular Success',
-                    text: message,
-                    type: 'success',
-                    styling: 'bootstrap3'
-                });
-            }
+            function notification(title, text, type){
+                    
+                     new PNotify({
+                                title: title,
+                                text: text,
+                                type: type,
+                                styling: 'bootstrap3'
+                            });
+                }
         </script>
