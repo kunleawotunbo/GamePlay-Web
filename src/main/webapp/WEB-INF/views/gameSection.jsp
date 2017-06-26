@@ -21,97 +21,70 @@
 
             <div class="row">
 
-                <%--               
-
-                <form:form method="post" action="doDisburseLoan.htm" commandName="weeklyGame">
-
-
+                <form class="form-horizontal form-label-left">
                     <div class="form-group" id="gameText">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="gameText" value="${weeklyGame.gameText}"  id="gameText1" name="gameText" type="text" class="form-control"  placeholder="Game Text" readonly="true" />                                 
+                            ${weeklyGame.gameText}
                         </div>
                     </div>
 
                     <div class="form-group" id="gameImage" >
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="gameImage"  id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
+                            ${weeklyGame.gameImage}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" required ="required"  readonly="true" />         
-
-
-                        </div>
+                            ${weeklyGame.weekNo}
+                        </div>     
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize Of Winners<span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="prizeOfWinners" id="prizeOfWinners" type="number" class="form-control" name="prizeOfWinners" placeholder="" required ="required"  readonly="true" />                                 
-                        </div>
-                    </div>
+
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">No Of Winners<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="noOfWinners" id="noOfWinners" type="number" class="form-control" name="noOfWinners" placeholder="" required ="required"  readonly="true" />                                 
+                            ${weeklyGame.noOfWinners}
                         </div>
                     </div>  
-                        
-                        
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
-                    <div class="col-md-9 col-sm-9 col-xs-9">
-                        <form:input path="gameExpiryDate" id="gameExpiryDate" name="gameExpiryDate" type="text" class="form-control"  placeholder="Game Expiry date" required ="required" />                                 
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules<span class="required">*</span></label>
-                    <div class="col-md-9 col-sm-9 col-xs-9">
-                        <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="3"  placeholder="Game Rules" required ="required" />                                 
-                    </div>
-                </div>
-                
-                   
-                </form:form>    
-                --%>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-9">
+                            ${weeklyGame.gameExpiryDate}
+                        </div>
+                    </div>                  
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules <span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-9">
+                            ${weeklyGame.gameRules}
+                        </div>
+                    </div>
+
+                </form>
+
+      
                 <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
-                
-
+                     <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
                     <div class="form-group" >
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="number" class="form-control" required ="required" />                                 
                         </div>
                     </div>
-               
+
 
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">userAnswer<span class="required">*</span></label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Answer To Question<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <form:input path="userAnswer" id="userAnswer" type="text" class="form-control" name="userAnswer" required ="required"  />         
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Date<span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="dateAnswered" id="dateAnswered" name="dateAnswered" type="text" class="form-control"  placeholder="Game Expiry date"/>                                 
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            <form:input path="createdDate" id="createdDate" name="createdDate" type="text" class="form-control"  placeholder="Game Expiry date" required ="required" />                                 
                         </div>
                     </div>
 
@@ -163,14 +136,14 @@
                 var id = $('#id').val();
                 var userPhoneNo = $('#userPhoneNo').val();
                 var userAnswer = $('#userAnswer').val();
-                var gameId = "1";
+                var gameId = $('#gameId').val();
 
                 // set a variable
                 var gameExpiryDate = new Date();
                 console.log("userPhoneNo ::" + userPhoneNo);
 
                 var json = {
-                    "id": id,
+                   
                     "userPhoneNo": userPhoneNo,
                     "userAnswer": userAnswer,
                     "gameId": gameId
@@ -181,7 +154,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "${pageContext.request.contextPath}/api/weeklygamesanswers/create",
+                    url: "${pageContext.request.contextPath}/api/weeklygamesanswers/setanswer",
                     data: JSON.stringify(json),
                     dataType: 'json',
                     timeout: 100000,

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface WeeklyGamesAnswersService {
     
-     WeeklyGamesAnswers findById(int id);
+     WeeklyGamesAnswers findById(Long id);
 
     boolean saveWeeklyGamesAnswer(WeeklyGamesAnswers game);
     

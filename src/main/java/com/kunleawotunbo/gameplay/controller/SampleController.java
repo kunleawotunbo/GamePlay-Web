@@ -30,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
- * @author olakunle
+ * @author Olakunle Awotunbo
  */
 @Controller
 @RequestMapping("/test/")

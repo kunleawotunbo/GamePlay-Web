@@ -23,7 +23,7 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     @Autowired
     private WeeklyGamesAnswersDao weeklyGamesAnswersDao;
     
-    public WeeklyGamesAnswers findById(int id) {
+    public WeeklyGamesAnswers findById(Long id) {
         return weeklyGamesAnswersDao.findById(id);
     }
 

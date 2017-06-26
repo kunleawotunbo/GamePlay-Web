@@ -24,7 +24,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
    
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public WeeklyGamesAnswers findById(int id) {
+    public WeeklyGamesAnswers findById(Long id) {
        logger.info("id : {}", id);
 
         Criteria crit = createEntityCriteria();
