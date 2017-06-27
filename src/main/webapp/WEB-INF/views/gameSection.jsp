@@ -21,19 +21,37 @@
 
             <div class="row">
 
+                <!--The choose tag checks if object weeklyGame is null-->
+                <c:choose>
+                    <c:when test="${empty weeklyGame}">  
+                        <h2>No Game available for this category yet.<h2>
+                    </c:when>
+                    <c:otherwise>                    
+                        
                 <form class="form-horizontal form-label-left">
-                    <div class="form-group" id="gameText">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            ${weeklyGame.gameText}
-                        </div>
-                    </div>
 
-                    <div class="form-group" id="gameImage" >
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            ${weeklyGame.gameImage}
-                        </div>
+                    <div class="form-group">
+                        <c:choose>
+                            <c:when test="${isPicture}">
+
+                                <div class="form-group" id="gameImage" >
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="500" height="400">
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+
+                                <div class="form-group" id="gameText">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        ${weeklyGame.gameText}
+                                    </div>
+                                </div>
+
+                            </c:otherwise>
+                        </c:choose>
                     </div>
 
                     <div class="form-group">
@@ -69,9 +87,9 @@
 
                 </form>
 
-      
+
                 <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
-                     <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
+                    <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
                     <div class="form-group" >
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
@@ -95,7 +113,12 @@
                         </div>
                     </div>
 
-                </form:form>    
+                </form:form> 
+                        
+                    </c:otherwise>
+                </c:choose>       
+
+
 
                 <!--Include bottomadverts-->
                 <%@ include file="includes/outside/bottomadverts.jsp" %>
@@ -143,7 +166,7 @@
                 console.log("userPhoneNo ::" + userPhoneNo);
 
                 var json = {
-                   
+
                     "userPhoneNo": userPhoneNo,
                     "userAnswer": userAnswer,
                     "gameId": gameId
@@ -162,11 +185,14 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
+                        notification("Notification", "Congratulations your answer has been submitted.", "success");
 
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
+                        notification("Notification", "Unable to save your answer. Please try again later", "error");
+
                     },
                     done: function (e) {
                         console.log("DONE");
@@ -188,5 +214,13 @@
                 $('#feedback').html(json);
             }
 
+            function notification(title, text, type) {
 
+                new PNotify({
+                    title: title,
+                    text: text,
+                    type: type,
+                    styling: 'bootstrap3'
+                });
+            }
         </script>

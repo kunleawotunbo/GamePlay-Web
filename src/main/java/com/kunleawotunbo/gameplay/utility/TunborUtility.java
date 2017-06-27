@@ -7,6 +7,11 @@ package com.kunleawotunbo.gameplay.utility;
 
 import com.kunleawotunbo.gameplay.model.User;
 import freemarker.template.Configuration;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,6 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
@@ -41,6 +49,8 @@ public class TunborUtility {
 
     @Autowired
     Configuration freemarkerConfiguration;
+    
+    final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Async
     public void sendMail(Object object) {
@@ -124,4 +134,38 @@ public class TunborUtility {
         
         return weekNo;
     }
+    
+    public String imageToBase64tring(String imgPath) {
+        String encodedString = "";
+
+        if (imgPath != null && imgPath != "") {
+            File file = new File(imgPath);
+            FileInputStream fis;
+            ByteArrayOutputStream bos;
+            try {
+                fis = new FileInputStream(file);
+                bos = new ByteArrayOutputStream();
+                int b;
+                byte[] buffer = new byte[1024];
+                while ((b = fis.read(buffer)) != -1) {
+                    bos.write(buffer, 0, b);
+                }
+                byte[] fileBytes = bos.toByteArray();
+                fis.close();
+                bos.close();
+
+                byte[] encoded = Base64.encodeBase64(fileBytes);
+                encodedString = new String(encoded);
+            } catch (FileNotFoundException ex) {
+                //Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                //Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+
+        }
+
+        return encodedString;
+    } 
 }

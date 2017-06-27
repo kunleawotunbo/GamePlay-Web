@@ -1,4 +1,9 @@
 <%-- 
+    Document   : testupload
+    Created on : Jun 27, 2017, 1:40:18 PM
+    Author     : Olakunle Awotunbo
+--%>
+<%-- 
     Document   : addWeeklyGame
     Created on : Jun 16, 2017, 9:27:44 PM
     Author     : Olakunle Awotunbo
@@ -54,7 +59,9 @@
                             <p>Everything seems to be ok :)</p>
                         </div>
 
-                        <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">
+                        <%--<form:form  method="POST" enctype="multipart/form-data" modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">--%>
+                        <form:form method="POST" modelAttribute="weeklyGame" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">
+                            <%--<form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">--%>
                             <form:hidden path="id" id="id" name="id" />
 
                             <div class="form-group">
@@ -91,7 +98,7 @@
                                 <div class="form-group" id="gameImage" >
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameImage" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
+                                        <form:input path="files" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
                                     </div>
                                 </div>
 
@@ -119,7 +126,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="gameExpiryDate" id="gameExpiryDate" name="gameExpiryDate" type="text" class="form-control"  placeholder="Game Expiry date" required ="required" />                                 
+                                        <form:input path="gameExpiryDate" id="gameExpiryDate" name="gameExpiryDate"  type="text" class="form-control"  placeholder="Game Expiry date" required ="required" />                                 
                                     </div>
                                 </div>
 
@@ -152,6 +159,8 @@
                                                 <div class="col-md-9 col-md-offset-3">
                                                     <button type="reset" class="btn btn-primary">Cancel</button>
                                                     <button type="submit" id="bth-submit" class="btn btn-success">Submit</button>
+                                                    <!--<input type="submit" id="bth-submit" class="btn btn-primary" value="Submit" onclick="return submitWeeklyGameForm();"/>-->
+
                                                 </div>
                                             </div>
                                         </c:otherwise>
@@ -238,6 +247,9 @@
                         var gameType = $('#gameType').val();
                         var prizeOfWinners = $('#prizeOfWinners').val();
                         var noOfWinners = $('#noOfWinners').val();
+                        
+                        var file = $('#gameImage1').val();
+                        
                         // Do some validation
                         if (gameCategory === "") {
                             alert('Please choose a game category');
@@ -259,28 +271,32 @@
                             $('#noOfWinners').focus();
                             return false;
                         }
+                        console.log("file length : " + file.length);
+                        
 
                         // Disble the search button
                         enableSearchButton(false);
 
                         // Prevent the form from submitting via the browser.
-                        event.preventDefault();
+                        // event.preventDefault();
 
-                        searchViaAjax();
+                        // searchViaAjax();
+                        var r = confirm("Do you want to Submit?");
+                        if (r == true) {
+                            // frm.submit();
+                            // frm.submit();
+                        } else {
+                            return false;
+                        }
+
+                        return true;
 
                     });
 
                 });
 
                 function searchViaAjax() {
-                    /*
-                     var search = {}
-                     search["gameName"] = $("#gameName").val();
-                     search["gameCode"] = $("#gameCode").val();
-                     // search["createdBy"] = $("#createdBy").val();
-                     search["createdBy"] = "test user";
-                     //  search["enabled"] = $("#enabled").val();
-                     */
+
                     var id = $('#id').val();
                     var gameCategory = $('#gameCategory').val();
                     var gameType = $('#gameType').val();
@@ -293,17 +309,7 @@
                     var gameImage = $('#gameImage1').val();
                     var createdBy = "test user";
 
-                    // console.log("gamePlayType ::" + gameType);
-                     console.log("gameImage ::" + gameImage);
-                    /*
-                     if (enabled) {
-                     enabled = 1;
-                     } else {
-                     enabled = 0;
-                     }
-                     console.log("enabled ", enabled);
-                     */
-                    // Date.parse(gameExpiryDate)  is used to parse the date in string to Date for to consume.
+
                     var json = {
                         "id": id,
                         "gameCategory": gameCategory,
@@ -316,19 +322,16 @@
                         "gameText": gameText,
                         "gameImage": gameImage,
                         "createdBy": createdBy,
-                        "files": gameImage
+                        // "files": gameImage
 
                     };
 
                     $.ajax({
                         type: "POST",
-                        //contentType: "application/json",
+                        contentType: "application/json",
                         url: "${pageContext.request.contextPath}/api/weeklygames/create",
                         data: JSON.stringify(json),
-                        enctype: 'multipart/form-data',
-                        processData: false,  // Important!
-                        contentType: false,
-                        cache: false,
+                        // enctype: 'multipart/form-data',
                         dataType: 'json',
                         timeout: 100000,
                         success: function (data) {
@@ -360,15 +363,108 @@
                             + JSON.stringify(data, null, 4) + "</pre>";
                     $('#feedback').html(json);
                 }
-                
-                function notification(title, text, type){
-                    
-                     new PNotify({
-                                title: title,
-                                text: text,
-                                type: type,
-                                styling: 'bootstrap3'
-                            });
+
+                function notification(title, text, type) {
+
+                    new PNotify({
+                        title: title,
+                        text: text,
+                        type: type,
+                        styling: 'bootstrap3'
+                    });
                 }
             </script>
 
+
+            <script type="text/javascript">
+                function submitWeeklyGameForm() {
+
+                    // getting the user form values
+
+                    var file = $('#gameImage1').val();
+                    // var file2 = $('#file2').val();
+
+                    var id = $('#id').val();
+                    var gameCategory = $('#gameCategory').val();
+                    var gameType = $('#gameType').val();
+                    var weekNo = $('#weekNo').val();
+                    var prizeOfWinners = $('#prizeOfWinners').val();
+                    var noOfWinners = $('#noOfWinners').val();
+                    var gameExpiryDate = $('#gameExpiryDate').val();
+                    var gameRules = $('#gameRules').val();
+                    var gameText = $('#gameText1').val();
+                    var gameImage = $('#gameImage1').val();
+                    //var createdBy = "test user";
+
+                    console.log("file :: " + file);
+
+                    // var gameCategory = $('#gameCategory').val();
+                    ////    var gameType = $('#gameType').val();
+                    //    var prizeOfWinners = $('#prizeOfWinners').val();
+                    //    var noOfWinners = $('#noOfWinners').val();
+                    // Do some validation
+                    if (gameCategory === "") {
+                        alert('Please choose a game category');
+                        $('#gameCategory').focus();
+                        return false;
+                    }
+                    if (gameType === "") {
+                        alert('Please choose a game type');
+                        $('#gameType').focus();
+                        return false;
+                    }
+                    if (prizeOfWinners == 0) {
+                        alert('Prize must be greater than 0');
+                        $('#prizeOfWinners').focus();
+                        return false;
+                    }
+                    if (noOfWinners == 0) {
+                        alert('Number of Winners must be greater than 0');
+                        $('#noOfWinners').focus();
+                        return false;
+                    }
+
+
+                    if (file.length == 0) {
+                        alert('Please upload a picture');
+                        $('#gameText1').focus();
+
+                        return false;
+                    } else {
+
+                        var checkimg = file.toLowerCase();
+                        if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                            console.log("I am insie checking");
+                            alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                            $('#file').focus();
+                            return false;
+                        }
+                        console.log("Outside checking");
+
+                    }
+
+
+                    var r = confirm("Do you want to Submit?");
+                    if (r == true) {
+                        // frm.submit();
+                        // frm.submit();
+                    } else {
+                        return false;
+                    }
+
+                    return true;
+                }
+                ;
+
+                $("#addWeeklyGame-form")[0].reset();
+
+                function phonenumber(inputtxt) {
+                    var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+                    if (inputtxt.value.match(phoneno)) {
+                        return true;
+                    } else {
+
+                        return false;
+                    }
+                }
+            </script>

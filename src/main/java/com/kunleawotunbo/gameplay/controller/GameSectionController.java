@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
@@ -40,14 +41,28 @@ public class GameSectionController {
     private WeeklyGamesService weeklyGamesService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("getGameCategory");
+
+        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
+        boolean isPicture = false;
+        String encodedPictureString = "";
         
-       map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
-        map.addAttribute("weeklyGame", weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek()));
-       
+        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
+           encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+           isPicture = true;
+        }else {
+            logger.info("No image");
+        }
+
+
+        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
+        map.addAttribute("weeklyGame", weeklyGame);
+        map.addAttribute("isPicture", isPicture);
+        map.addAttribute("encodedPictureString", encodedPictureString);
+
         return new ModelAndView("gameSection", map);
     }
 }

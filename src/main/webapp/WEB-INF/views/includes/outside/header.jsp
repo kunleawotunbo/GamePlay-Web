@@ -165,5 +165,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>GamePlay |</title>
         <link href="<c:url value='/resources/css/bootstrap.min.css'/>"rel="stylesheet"></link>   
+          <!-- PNotify -->
+        <link href="<c:url value='/resources/css/pnotify.css' />"  rel="stylesheet"></link> 
+        <link href="<c:url value='/resources/css/pnotify.buttons.css' />"  rel="stylesheet"></link> 
+        <link href="<c:url value='/resources/css/pnotify.nonblock.css' />"  rel="stylesheet"></link> 
+        
     </head>
     <body>

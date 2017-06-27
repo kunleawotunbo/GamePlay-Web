@@ -85,7 +85,9 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("weekNo", weekNo));
 
-        return (WeeklyGames) crit.uniqueResult();
+       // return (WeeklyGames) crit.uniqueResult();
+       //return (WeeklyGames) crit.list().get(0);
+       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
     }
 
     public List<GamePlayType> getGamePlayType() {
