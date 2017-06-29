@@ -66,6 +66,9 @@ public class Game implements Serializable {
     
     @Column(name="lastModifiedBy")
     private String lastModifiedBy;
+    
+    @Column(name = "color")
+    private String color;
 
     public Game() {
         super();
@@ -184,5 +187,19 @@ public class Game implements Serializable {
      */
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    /**
+     * @return the color
+     */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(String color) {
+        this.color = color;
     }
 }

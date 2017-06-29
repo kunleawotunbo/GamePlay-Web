@@ -29,11 +29,14 @@
 
                     <c:forEach var="item" items="${gameList}" >
                         <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />">
-                            <div class="item  col-xs-12 col-md-6">
-                                <div class="thumbnail">
+<!--                            <div class="item  col-xs-12 col-md-6">-->
+                            <div class="item  col-xs-12 col-md-6" >
+                                
+                                <div class="thumbnail" style="height:100px; background-color: ${item.color}">
                                     <!--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />-->
+                                    
                                     <div class="caption">
-                                        <h4 class="group inner list-group-item-heading">
+                                        <h4 class="group inner list-group-item-heading" style=" text-align: center;">
                                             ${item.gameName}</h4>
 
                                         <!--                                            <p class="group inner list-group-item-text">
