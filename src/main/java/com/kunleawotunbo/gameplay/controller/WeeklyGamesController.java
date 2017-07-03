@@ -71,8 +71,8 @@ public class WeeklyGamesController {
             result2.setCode("204");
             result2.setMessage("no weekly games found!");
             result2.setResult(weeklyGames);
-            return new ResponseEntity(result2, HttpStatus.NOT_FOUND);
-            // return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
+            //return new ResponseEntity(result2, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
         } else {
 
             result2.setCode("200");
