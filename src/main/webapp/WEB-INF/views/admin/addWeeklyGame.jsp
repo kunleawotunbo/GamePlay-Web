@@ -232,8 +232,8 @@
 
 
                     $("#addWeeklyGame-form").submit(function (event) {
-                        //var formData = $('addGame-form').serialize();
-
+                        //var formData = $('addGame-form').serialize();                       
+                      
                         var gameCategory = $('#gameCategory').val();
                         var gameType = $('#gameType').val();
                         var prizeOfWinners = $('#prizeOfWinners').val();
@@ -319,12 +319,17 @@
                         "files": gameImage
 
                     };
+                    
+                    //var data = new FormData(json);
+
 
                     $.ajax({
                         type: "POST",
                         //contentType: "application/json",
                         url: "${pageContext.request.contextPath}/api/weeklygames/create",
+                        // url: "${pageContext.request.contextPath}/api/weeklygamesanswers/create2",
                         data: JSON.stringify(json),
+                        // data: data,
                         enctype: 'multipart/form-data',
                         processData: false,  // Important!
                         contentType: false,

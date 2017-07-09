@@ -11,12 +11,19 @@ import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +39,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
-//@RestController
-@Controller
+@RestController
+//@Controller
 @RequestMapping("/api/weeklygames/")
 @Api(value = "Game", description = "Handles the game management")
 public class WeeklyGamesController {
@@ -48,9 +57,11 @@ public class WeeklyGamesController {
     @Autowired
     private WeeklyGamesService weeklyGamesService;
 
+    //@Autowired
+    //private GamePlayTypeService gamePlayTypeService;
+
     @Autowired
-    private GamePlayTypeService gamePlayTypeService;
-   
+    private TunborUtility tunborUtility;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -62,17 +73,37 @@ public class WeeklyGamesController {
         return (List) weeklyGamesService.getWeekGameByWeekNo(1, 1);
     }
 
-    @GetMapping("/getWeekGameByWeekNoAndCat/{gameCategory}/{weekNo}")
-    public ResponseEntity getWeekGameByWeekNoAndCat(@PathVariable int gameCategory, @PathVariable int weekNo) {
+    @GetMapping("/getWeekGameByWeekNoAndCat/{gameCategory}/{dateString}")
+    public ResponseEntity getWeekGameByWeekNoAndCat(@PathVariable int gameCategory, @PathVariable String dateString) {
         WeeklyGames weeklyGames = new WeeklyGames();
+        System.out.println("dateString :: " + dateString);
+      
+        /*
+        DateFormat inputFormat = new SimpleDateFormat(
+                "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
+        */
+         DateFormat inputFormat = new SimpleDateFormat(
+                "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = inputFormat.parse(dateString);
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(date);
+
+        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        //System.out.println(formatter.format(date));
+
+        int weekNo = tunborUtility.gameWeekNoByDate(date);
         weeklyGames = weeklyGamesService.getWeekGameByWeekNo(gameCategory, weekNo);
         if (weeklyGames == null) {
-            
+
             result2.setCode("204");
             result2.setMessage("no weekly games found!");
             result2.setResult(weeklyGames);
             //return new ResponseEntity(result2, HttpStatus.NOT_FOUND);
-            return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
+            //return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
         } else {
 
             result2.setCode("200");
@@ -81,7 +112,6 @@ public class WeeklyGamesController {
         }
         return new ResponseEntity(result2, HttpStatus.OK);
     }
-
 
     @GetMapping("/listWeeklyGames")
     public ResponseEntity<?> listWeeklyGames() {
@@ -136,13 +166,15 @@ public class WeeklyGamesController {
         return ResponseEntity.ok(result);
     }
     
-    */
+     */
     
-    @PostMapping(value = "/create")
-    public ResponseEntity createWeeklyGame(@RequestBody FileBucket fileBucket , Errors errors) {
+     //@RequestMapping(value = "/create", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+    @PostMapping(value = "/create")    
+    public ResponseEntity createWeeklyGame(@RequestBody FileBucket fileBucket, Errors errors) {
         WeeklyGames weeklyGames = new WeeklyGames();
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
+            System.out.println("There is an error");
 
             result.setCode("" + HttpStatus.BAD_REQUEST);
             result.setMessage("" + errors.getAllErrors().toString());
@@ -151,7 +183,7 @@ public class WeeklyGamesController {
 
         }
         FileBucket fb = new FileBucket();
-        
+
         fb = fileUpload(fileBucket);
         weeklyGames.setId(fb.getId());
         weeklyGames.setWeekNo(fb.getWeekNo());
@@ -169,8 +201,7 @@ public class WeeklyGamesController {
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
-        
-   
+
         if (weeklyGamesService.save(weeklyGames)) {
             // result.getResult("WeeklyGames Created");
             result.setCode("" + HttpStatus.OK);
@@ -181,9 +212,9 @@ public class WeeklyGamesController {
         //return new ResponseEntity(weeklyGames, HttpStatus.OK);
         return ResponseEntity.ok(result);
     }
-    
-    public FileBucket fileUpload(FileBucket fileBucket){
-        
+
+    public FileBucket fileUpload(FileBucket fileBucket) {
+
         MultipartFile[] files = fileBucket.getFiles();
         String originalImgPath = "";
         String resizedImgPath = "";
@@ -197,7 +228,7 @@ public class WeeklyGamesController {
         String serverFileName = "";
 
         FileBucket fb = new FileBucket();
-       
+
         if (files != null && files.length > 0) {
             for (int i = 0; i < files.length; i++) {
                 try {
@@ -213,10 +244,8 @@ public class WeeklyGamesController {
                     FilenameUtils fileUTIL = new FilenameUtils();
 
                     //String path = req.getServletContext().getRealPath("/image");
-                    
                     //String ext = fileUTIL.getExtension(file.getOriginalFilename());
                     //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
-
                     imgLocation = dir + File.separator;
                     // get files name in the array
                     if (i == 0) {
@@ -246,7 +275,7 @@ public class WeeklyGamesController {
                     e.printStackTrace();
                 }
             }
-            
+
             fileBucket.setGameImage(gameImage);
             fileBucket.setGameImgLocation(imgLocation);
 
@@ -264,22 +293,23 @@ public class WeeklyGamesController {
 
             saved = userService.saveUser(user);
 
-            */
+             */
         } else {
             System.out.println("File is empty / No image uploaded");
         }
-        
+
         return fileBucket;
-    
+
     }
-    
+
     /**
      * Set weekly game answer
+     *
      * @param weeklyGames
      * @param errors
-     * @return 
+     * @return
      */
-      @PostMapping(value = "/setanswer")
+    @PostMapping(value = "/setanswer")
     public ResponseEntity setWeeklyGameAnswer(@RequestBody WeeklyGames wGames, Errors errors) {
 
         //If error, just return a 400 bad request, along with the error message
@@ -291,7 +321,7 @@ public class WeeklyGamesController {
             return ResponseEntity.badRequest().body(result);
 
         }
-        
+
         WeeklyGames weeklyGames = weeklyGamesService.findById(wGames.getId());
 
         if (weeklyGames == null) {
@@ -301,12 +331,12 @@ public class WeeklyGamesController {
         weeklyGames.setGameAnswer(wGames.getGameAnswer());
         weeklyGames.setModifiedDate(new Date());
         if (weeklyGamesService.save(weeklyGames)) {
-            logger.info("Answer set for question id :: "  + weeklyGames.getId());
+            logger.info("Answer set for question id :: " + weeklyGames.getId());
             result.setCode("" + HttpStatus.OK);
             result.setMessage("WeeklyGames Created");
-           
+
         }
-       
+
         return ResponseEntity.ok(result);
     }
 

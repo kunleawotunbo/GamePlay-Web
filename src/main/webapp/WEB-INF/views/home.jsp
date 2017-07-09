@@ -38,20 +38,7 @@
                                     <div class="caption">
                                         <h4 class="group inner list-group-item-heading" style=" text-align: center;">
                                             ${item.gameName}</h4>
-
-                                        <!--                                            <p class="group inner list-group-item-text">
-                                                                                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                                                                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                                                                                    <div class="row">
-                                                                                        <div class="col-xs-12 col-md-6">
-                                                                                            <p class="lead">
-                                                                                                $21.000</p>
-                                                                                        </div>
-                                                                                        <div class="col-xs-12 col-md-6">
-                                                                                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                                                                                        </div>
-                                                                                    </div>
-                                        -->
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -59,21 +46,12 @@
                     </c:forEach>
 
                 </div>
-                <!--                    
-                                    <div class="col-xs-8 col-lg-4">
-                                        <h2>Heading</h2>
-                                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                                    </div>
-                -->
+       <!--https://jsfiddle.net/9e87kvzp/-->
                 <!--/.col-xs-6.col-lg-4-->
-<!--                <div class=" col-xs-12 ">
-                    <h2>Adverts area</h2>
-                    <p>Adverts area Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                </div>-->
+
                  <!--Include bottomadverts-->
                  <%@ include file="includes/outside/bottomadverts.jsp" %>
-            </div><!--/row-->
+            </div><!--/row-->                            
         </div><!--/.col-xs-12.col-sm-9-->
 
 

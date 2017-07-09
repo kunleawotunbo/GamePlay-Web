@@ -68,6 +68,13 @@
                                     <form:input path="gameCode" id="gameCode" type="text" class="form-control" name="gameCode" placeholder="Game Code" required ="required" />                                 
                                 </div>
                             </div>
+                                
+                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="8"  placeholder="Rules for this game category" required ="required" />                                 
+                                </div>
+                            </div>    
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
@@ -217,6 +224,7 @@
                 var id = $('#id').val();
                 var gameName = $('#gameName').val();
                 var gameCode = $('#gameCode').val();
+                var gameRules = $('#gameRules').val();
                 var createdBy = "test user";
                 var enabled = $("#enabled").is(":checked");
                 // set a variable
@@ -241,6 +249,7 @@
                     "id": id,
                     "gameName": gameName,
                     "gameCode": gameCode,
+                    "gameRules": gameRules,
                     "createdBy": createdBy,
                     "enabled": enabled,
                     "color": color

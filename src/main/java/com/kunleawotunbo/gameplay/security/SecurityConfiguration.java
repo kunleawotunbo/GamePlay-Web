@@ -119,6 +119,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     */
     
+    /*
+    	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/", "/dashboard")
+				.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')").antMatchers("/edit-user-*")
+				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
+				.loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password").and()
+				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+				.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+	}
+    */
+        
        @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -147,7 +160,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password")
                 
-                  .defaultSuccessUrl("/homepage")
+                  .defaultSuccessUrl("/dashboard")
                 .failureUrl("/login?error=true")
                 //.successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
@@ -156,8 +169,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
                 //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
                 .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
-    }
-    
+    }        
+      
     /*
     @Override
     protected void configure(HttpSecurity http) throws Exception {

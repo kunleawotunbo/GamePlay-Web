@@ -27,8 +27,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,6 +40,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 //@RequestMapping("/admin/")
+@SessionAttributes("roles")
 public class AdminController {
 
     @Autowired
@@ -369,7 +373,7 @@ public class AdminController {
         gameService.deleteGame(game);
         return "redirect:/addGameCategory";
     }
-
+ 
     /**
      * This method returns the principal[user-name] of logged-in user.
      */
@@ -382,6 +386,7 @@ public class AdminController {
         } else {
             userName = principal.toString();
         }
+        System.out.println("Logged in user :: " + userName);
         return userName;
     }
 }

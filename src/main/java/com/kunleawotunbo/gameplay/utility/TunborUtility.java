@@ -49,7 +49,7 @@ public class TunborUtility {
 
     @Autowired
     Configuration freemarkerConfiguration;
-    
+
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Async
@@ -95,46 +95,56 @@ public class TunborUtility {
     public String getFreeMarketTemplateContent(Map<String, Object> model) {
         StringBuffer content = new StringBuffer();
 
-       // String template = "fm_mailTemplate.txt";
-       String templateName = "registration_verification.txt";
+        // String template = "fm_mailTemplate.txt";
+        String templateName = "registration_verification.txt";
         try {
 
-        // content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
-        //  freemarkerConfiguration.getTemplate(template), model));
-        
-        //    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
-        //            freemarkerConfiguration.getTemplate("fm_mailTemplate.txt"), model));
-         content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
+            // content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
+            //  freemarkerConfiguration.getTemplate(template), model));
+            //    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
+            //            freemarkerConfiguration.getTemplate("fm_mailTemplate.txt"), model));
+            content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
                     freemarkerConfiguration.getTemplate(templateName), model));
-         System.out.println("templateName ::" + templateName);
+            System.out.println("templateName ::" + templateName);
             return content.toString();
         } catch (Exception e) {
             System.out.println("Exception occured while processing fmtemplate:" + e.getMessage());
         }
         return "";
     }
-    
-    public void createVerificationToken(Object object, String appUrl){
+
+    public void createVerificationToken(Object object, String appUrl) {
         String token = UUID.randomUUID().toString();
         final String confirmationUrl = appUrl + "/registrationConfirm.html?token=" + token;
         // save user and token
         // service.createVerificationTokenForUser(user, token);
-         User user = (User) object;
-         user.setUserName(confirmationUrl);
-         sendMail(user);
+        User user = (User) object;
+        user.setUserName(confirmationUrl);
+        sendMail(user);
     }
-    
-     public int gameWeek() {
+
+    public int gameWeek() {
         Calendar calendar = new GregorianCalendar();
         Date trialTime = new Date();
         calendar.setTime(trialTime);
         int weekNo = calendar.get(Calendar.WEEK_OF_YEAR);
         System.out.println("Week number:"
                 + calendar.get(Calendar.WEEK_OF_YEAR));
-        
+
         return weekNo;
     }
-    
+
+    public int gameWeekNoByDate(Date gameDate) {
+        Calendar calendar = new GregorianCalendar();
+        //Date trialTime = new Date();
+        calendar.setTime(gameDate);
+        int weekNo = calendar.get(Calendar.WEEK_OF_YEAR);
+        System.out.println("Week number:"
+                + calendar.get(Calendar.WEEK_OF_YEAR));
+
+        return weekNo;
+    }
+
     public String imageToBase64tring(String imgPath) {
         String encodedString = "";
 
@@ -167,5 +177,5 @@ public class TunborUtility {
         }
 
         return encodedString;
-    } 
+    }
 }
