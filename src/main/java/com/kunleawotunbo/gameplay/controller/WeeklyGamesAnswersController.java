@@ -85,6 +85,9 @@ public class WeeklyGamesAnswersController {
     
     @PostMapping(value = "/setanswer")
     public ResponseEntity createWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
+        
+        // set answer submitted date
+        weeklyGamesAnswers.setDateAnswered(new Date());
 
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {

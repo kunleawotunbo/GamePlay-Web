@@ -138,8 +138,8 @@ public class AppController {
         return "User successfully created";
     }
 
-    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(final Locale locale, final Model model, @RequestParam("token")
+    @RequestMapping(value = "/registrationConfirm2", method = RequestMethod.GET)
+    public String confirmRegistration2(final Locale locale, final Model model, @RequestParam("token")
             final String token) throws UnsupportedEncodingException {
         /*
         System.out.println("Inside confirmRegistration");

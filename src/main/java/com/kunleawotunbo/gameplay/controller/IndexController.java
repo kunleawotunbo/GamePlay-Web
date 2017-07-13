@@ -70,7 +70,7 @@ public class IndexController {
         if(isCurrentAuthentcationAnanymous()){
             return "login";
         }else {
-            return "redirect:/list";
+            return "redirect:/admin/dashboard";
         }        
     }
     

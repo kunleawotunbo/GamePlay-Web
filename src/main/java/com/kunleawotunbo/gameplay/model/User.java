@@ -6,7 +6,9 @@
 package com.kunleawotunbo.gameplay.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.aerogear.security.otp.api.Base32;
 
 /**
@@ -30,8 +33,7 @@ import org.jboss.aerogear.security.otp.api.Base32;
  */
 @Entity
 @Table(name = "user")
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
+//@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,15 +75,28 @@ public class User implements Serializable {
     private String phoneNumber;
      @Column(name = "enabled")
      private boolean enabled;
+     
        private boolean isUsing2FA;
 
     private String secret;
     
+    @Column(name = "created_by")
+    private String createdBy;
+    
+    @NotEmpty
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "USER_USER_PROFILE", 
+             joinColumns = { @JoinColumn(name = "USER_ID") }, 
+             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+    
+    /*
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_user_profile", joinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "user_profile_id", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_profile_id", referencedColumnName = "id")})    
     private List<UserProfile> userProfile;
+    */
 
     public User() {
         super();
@@ -159,13 +174,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<UserProfile> getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(List<UserProfile> userProfile) {
-        this.userProfile = userProfile;
-    }
+  
 
     @Override
     public int hashCode() {
@@ -232,6 +241,34 @@ public class User implements Serializable {
      */
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    /**
+     * @return the createdBy
+     */
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    /**
+     * @param createdBy the createdBy to set
+     */
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    /**
+     * @return the userProfiles
+     */
+    public Set<UserProfile> getUserProfiles() {
+        return userProfiles;
+    }
+
+    /**
+     * @param userProfiles the userProfiles to set
+     */
+    public void setUserProfiles(Set<UserProfile> userProfiles) {
+        this.userProfiles = userProfiles;
     }
     
 }

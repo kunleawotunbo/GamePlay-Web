@@ -10,6 +10,7 @@ import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
+import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.io.BufferedOutputStream;
@@ -49,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Olakunle Awotunbo
  */
 @Controller
-//@RequestMapping("/admin/")
+@RequestMapping("/admin/")
 @SessionAttributes("roles")
 public class AdminController {
 
@@ -64,6 +65,9 @@ public class AdminController {
 
     @Autowired
     private WeeklyGamesService weeklyGamesService;
+    
+    @Autowired
+    private WeeklyGamesAnswersService weeklyGamesAnswersService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -79,6 +83,8 @@ public class AdminController {
 
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("noOfAnswersSubmitted", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek()));
+        model.addAttribute("lastWeekTotalAnswers", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek() - 1));
 
         return "/admin/dashboard";
     }

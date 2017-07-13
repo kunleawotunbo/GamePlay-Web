@@ -48,7 +48,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public User findById(int id) {
         User user = getByKey(id);
         if (user != null) {
-            Hibernate.initialize(user.getUserProfile());
+            Hibernate.initialize(user.getUserProfiles());
         }
         return user;
     }
@@ -59,23 +59,24 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         crit.add(Restrictions.eq("userName", username));
         User user = (User) crit.uniqueResult();
         if (user != null) {
-            Hibernate.initialize(user.getUserProfile());
-        }
+            Hibernate.initialize(user.getUserProfiles());
+        }        
         return user;
     }
 
     @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<User> users = (List<User>) criteria.list();
 
         // No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
         // Uncomment below lines for eagerly fetching of userProfiles if you want.
-        /*
+        
         for(User user : users){
             Hibernate.initialize(user.getUserProfiles());
-        }*/
+        }
+        
         return users;
     }
 
@@ -114,13 +115,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         User entity = findById(user.getId());
         if (entity != null) {
             entity.setUserName(user.getUserName());
+            /*
             if (!user.getPassword().equals(entity.getPassword())) {
                 entity.setPassword(passwordEncoder.encode(user.getPassword()));
             }
+            */
+            System.out.println("username :: " + entity.getUserName());
+            System.out.println("enabled :: " + entity.isEnabled());
             entity.setFirstName(user.getFirstName());
             entity.setLastName(user.getLastName());
             entity.setEmail(user.getEmail());
-            entity.setUserProfile(user.getUserProfile());
+            entity.setUserProfiles(user.getUserProfiles());
+            entity.setPhoneNumber(user.getPhoneNumber());
         }
     }
 

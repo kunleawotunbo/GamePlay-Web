@@ -23,17 +23,50 @@
             <div class="row">
 
 
-                <div class="alert alert-success lead">
-                                        
-                    Congratulations.
-                </div>
+                <div class="panel-body">
 
-                <span class="well floatRight">
-                    Go to <a href="<c:url value='/GamePlay' />">Homepage</a>
-                </span>
-                 <span class="well floatLeft">
-                    <a href="##" onclick="goBack()">Try another answer</a>
-                </span>
+                    <div class="col-md-6 ">
+
+                        <div class="alert alert-success lead">
+
+                            <h2> Congratulations. </h2> 
+
+                            <p>Your answer has been submitted successfully.</p>
+                        </div>
+
+                        <span class="well floatRight">
+                            Go to <a href="<c:url value='/' />">Homepage</a>
+                        </span>
+                        <span class="well floatLeft">
+                            <a href="##" onclick="goBack()">Try another answer</a>
+                        </span>
+
+                        <!--                        
+                                            Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                        -->
+                    </div>
+                </div>
+                <!--                
+                                <div class="alert alert-success lead">
+                                                        
+                                    Congratulations.
+                                </div>
+                                
+                              
+                -->
+
+
 
 
                 <!--Include bottomadverts-->
@@ -52,9 +85,9 @@
 
 
 
-       
-<script>
-function goBack() {
-    window.history.back();
-}
-</script>
+
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>

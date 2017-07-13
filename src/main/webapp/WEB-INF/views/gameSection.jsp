@@ -100,6 +100,7 @@
 
                                 <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
                                     <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
+                                    <form:hidden path="weekNo" value="${weeklyGame.weekNo}" id="weekNo" name="weekNo" />
                                     <%--              
                                                     <div class="form-group" >
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
@@ -204,21 +205,23 @@
                                 var gameId = $('#gameId').val();
                                 var userPhoneNo = $("#userPhoneNo").intlTelInput("getNumber");
                                 var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
+                                var weekNo = $('#weekNo').val();
 
-                                console.log("countryData  " + countryData);
-                                console.log("countryData.name  " + countryData.name);
-                                console.log("countryData.iso2s  " + countryData.iso2);
-                                console.log("userAnswer:  " + userAnswer)
+                               // console.log("countryData  " + countryData);
+                               // console.log("countryData.name  " + countryData.name);
+                               // console.log("countryData.iso2s  " + countryData.iso2);
+                               // console.log("userAnswer:  " + userAnswer)
 
                                 // set a variable
                                 var gameExpiryDate = new Date();
-                                console.log("userPhoneNo ::" + userPhoneNo);
+                               // console.log("userPhoneNo ::" + userPhoneNo);
 
                                 var json = {
 
                                     "userPhoneNo": userPhoneNo,
                                     "userAnswer": userAnswer,
-                                    "gameId": gameId
+                                    "gameId": gameId,
+                                    "weekNo": weekNo
 
 
                                 };

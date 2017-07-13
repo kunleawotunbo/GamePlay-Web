@@ -26,10 +26,10 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "user_profile")
-@NamedQueries({
-    @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")})
+//@NamedQueries({ @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")})
 public class UserProfile implements Serializable {
 
+    /*
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,71 +41,44 @@ public class UserProfile implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "type")
     private String type;
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "TYPE", length = 15, unique = true, nullable = false)
+    private String type = UserProfileType.USER.getUserProfileType();
+
     /*
     @ManyToMany(mappedBy = "userProfile")
     private List<User> userList;
-    */
-    public UserProfile() {
-    }
+     */
 
-    public UserProfile(Long id) {
-        this.id = id;
-    }
-
-    public UserProfile(Long id, String type) {
-        this.id = id;
-        this.type = type;
-    }
-
-    public Long getId() {
+    /**
+     * @return the id
+     */
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type the type to set
+     */
     public void setType(String type) {
         this.type = type;
     }
-
-    /*
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-    */
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserProfile)) {
-            return false;
-        }
-        UserProfile other = (UserProfile) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.kunleawotunbo.tunbor.model.UserProfile[ id=" + id + " ]";
-    }
-    
 }

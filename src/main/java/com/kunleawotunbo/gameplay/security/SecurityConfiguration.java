@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
@@ -40,19 +41,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
-            
+
     @Autowired
-    PersistentTokenRepository tokenRepository ;
-    
+    PersistentTokenRepository tokenRepository;
+
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
-    
-   // @Autowired
-   // private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
-    
-    
-    
-    private static String REALM="MY_TEST_REALM";
+
+    // @Autowired
+    // private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    private static String REALM = "MY_TEST_REALM";
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -76,9 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
     
-    */
-    
-    /*
+     */
+ /*
       @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -117,9 +114,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
                 .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
-    */
-    
-    /*
+     */
+ /*
     	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/dashboard")
@@ -130,7 +126,101 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
 				.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
-    */
+     */
+    // http://www.baeldung.com/spring-security-multiple-entry-points
+    @Configuration
+    @Order(1)
+    public static class App3ConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+        protected void configure(HttpSecurity http) throws Exception {
+            http.antMatcher("/**").authorizeRequests().anyRequest().permitAll();
+            http.antMatcher("/resources/**").authorizeRequests().anyRequest().permitAll();
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+        protected void configure(HttpSecurity http) throws Exception {
+            /*    
+            http
+                    .antMatcher("/api/**")
+                    .authorizeRequests()
+                    .anyRequest().hasRole("ADMIN")
+                    .and()
+                    .httpBasic();
+             */
+           // http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
+            http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll()
+                    .and()
+            .csrf().disable();
+        }
+    }
+
+    @Configuration
+    @Order(3)
+    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            // http.antMatcher("/**").authorizeRequests().anyRequest().permitAll();
+            //http.antMatcher("/").authorizeRequests().anyRequest().permitAll();
+            //  http.antMatcher("/admin/**").authorizeRequests().anyRequest().hasRole("ADMIN");
+
+            http.authorizeRequests()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/admin/**")
+                    .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                    
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password")
+                    .defaultSuccessUrl("/admin/dashboard");
+        }
+    }
+
+    /*
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("list")
+                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                .antMatchers("/newuser/**", "/delete-user-*")
+                .access("hasRole('ADMIN')")
+                .antMatchers("/edit-user-*")
+                .access("hasRole('ADMIN') or hasRole('DBA')")
+                .antMatchers("/api/**")
+                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                .antMatchers("/test/**").permitAll()
+                // Permit all on api/login
+                .antMatchers("/api/**").permitAll()
+                .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//We don't need sessions to be created.
+                .and()
+                .httpBasic()
+                // Allow anonymous logins
+                //.antMatchers("/auth/**").permitAll()
+
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password")
+                .defaultSuccessUrl("/dashboard")
+                .failureUrl("/login?error=true")
+                //.successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
+                .and()
+                .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+                //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+                .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
+    }
+    
+     */
+
+ /*
         
        @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -169,56 +259,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
                 //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
                 .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
-    }        
-      
-    /*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-         http.csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/user/**").hasRole("ADMIN")
-                 .antMatchers("/api/**")
-                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-        .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
-        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//We don't need sessions to be created.
-         
-               .and()
-            .formLogin()
-                .loginPage("/login")
-                 .usernameParameter("userName").passwordParameter("password")
-                .defaultSuccessUrl("/homepage")
-                .failureUrl("/login?error=true")
-               // .successHandler(myAuthenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler)
-               // .authenticationDetailsSource(authenticationDetailsSource)
-            .permitAll()
-                .and()
-            .sessionManagement()
-                .invalidSessionUrl("/invalidSession.html")
-                .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
-                .sessionFixation().none()
-            .and()
-            .logout()
-               // .logoutSuccessHandler(myLogoutSuccessHandler)
-                .invalidateHttpSession(false)
-                .logoutSuccessUrl("/logout.html?logSucc=true")
-                .deleteCookies("JSESSIONID")
-                .permitAll();
- 
-    }
-    */
+    }      
     
-    /* To allow Pre-flight [OPTIONS] request from browser */
-     @Override
-      public void configure(WebSecurity web) throws Exception {
+     */
+ /* To allow Pre-flight [OPTIONS] request from browser */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-          .antMatchers(HttpMethod.OPTIONS, "/**");
-      }
+                .antMatchers(HttpMethod.OPTIONS, "/**");
+    }
+
     @Bean
-	public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint(){
-		return new CustomBasicAuthenticationEntryPoint();
-	}
-       
+    public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
+        return new CustomBasicAuthenticationEntryPoint();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -244,8 +298,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationTrustResolver getAuthenticationTrustResolver() {
         return new AuthenticationTrustResolverImpl();
     }
-    
-      @Bean
+
+    @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }

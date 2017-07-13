@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +21,12 @@ import org.springframework.stereotype.Repository;
  * @author Olakunle Awotunbo
  */
 @Repository("weeklyGamesAnswersDao")
-public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnswers> implements WeeklyGamesAnswersDao{
-   
+public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnswers> implements WeeklyGamesAnswersDao {
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public WeeklyGamesAnswers findById(Long id) {
-       logger.info("id : {}", id);
+        logger.info("id : {}", id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -35,7 +36,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 
     public boolean saveWeeklyGamesAnswer(WeeklyGamesAnswers game) {
         boolean success = false;
-        try {           
+        try {
             saveOrUpdate(game);
             success = true;
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     }
 
     public void deleteWeeklyGamesAnswer(WeeklyGamesAnswers game) {
-         delete(game);
+        delete(game);
     }
 
     public List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled) {
@@ -69,8 +70,18 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
-        
+
         return weeklyGamesAnswersList;
     }
-    
+
+    public Long submittedAnswersByWeek(int weekNo) {
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+       
+        criteria.add(Restrictions.eq("weekNo", weekNo));
+        criteria.setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        
+        return count;
+    }
+
 }
