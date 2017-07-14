@@ -75,7 +75,7 @@ public class UserController {
         //User user = new User();
         model.addAttribute("user", new User());
         model.addAttribute("edit", false);
-        // model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/user";
     }
@@ -103,7 +103,7 @@ public class UserController {
         }
 
         // For test purpose.
-        user.setPassword("abc125");
+        //user.setPassword("abc125");
 
         user.setUserName(user.getEmail());
         created = userService.saveUser(user);
@@ -125,10 +125,12 @@ public class UserController {
             System.out.println("User not created ");
         }
 
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully. Verification mail has been sent.");
         //model.addAttribute("loggedinuser", getPrincipal());
         //return "success";
-        return "registrationsuccess";
+        //return "registrationsuccess";
+        return "/admin/registrationsuccess";
+        
     }
 
     /**

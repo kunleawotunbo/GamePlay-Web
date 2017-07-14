@@ -82,19 +82,49 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Roles<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control input-sm" />
+                                    <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control input-sm" required ="required"/>
                                 </div>
                             </div>
 
 
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Password<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:input path="password" id="password" type="password" class="form-control" name="password" placeholder="" required ="required" />                                 
+                                </div>
+                            </div>   
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Confirm Password<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <%--<form:input  id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="" required ="required" />--%>     
+                                    <input  id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="" required ="required" />
+                                   <span id='message'></span>
+                                </div>
+                             
+                            </div>   
 
 
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
                             <div class="ln_solid"></div>
 
-                            <%--
-                            <div class="form-group">
+                        <%--
+                            <div class="row">
+                                <div class="form-actions floatRight">
+                                    <c:choose>
+                                        <c:when test="${edit}">
+                                            <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            
+                            --%>
+                             <div class="form-group">
                                 <c:choose>
                                     <c:when test="${edit}">
 
@@ -110,25 +140,13 @@
                                         <div class="form-group">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="reset" class="btn btn-primary">Cancel</button>
-                                                <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                                 <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-success"/>
                                             </div>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                            </div>--%>
-
-                            <div class="row">
-                                <div class="form-actions floatRight">
-                                    <c:choose>
-                                        <c:when test="${edit}">
-                                            <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
                             </div>
+                            
                         </form:form>
 
                     </div>
@@ -142,6 +160,41 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
+
+        <script type="text/javascript">
+            function submitUserForm() {
+
+                var password = $('#password').val();
+                var confirm_password = $('#confirm_password').val();
+                if (password != confirm_password) {
+                    alert('Password does not match');
+                    $('#confirm_password').focus();
+                    return false;
+                }
+
+                /*
+                $('#password, #confirm_password').on('keyup', function () {
+                    if ($('#password').val() == $('#confirm_password').val()) {
+                        $('#message').html('Matching').css('color', 'green');
+                    } else
+                        $('#message').html('Not Matching').css('color', 'red');
+                });
+                
+                var password = $('#password').val();
+                var confirm_password = $('#confirm_password').val();
+                if (password != confirm_password) {
+                    alert('Please enter name');
+                    $('#confirm_password').focus();
+                    return false;
+                }
+                
+                */
+
+            }
+
+
+        </script>
+
         <script>
             // Date time picker
             $(function () {
@@ -154,6 +207,15 @@
                     // startDate: d
                 });
             });
+            
+            
+            $('#password, #confirm_password').on('keyup', function () {
+                    if ($('#password').val() == $('#confirm_password').val()) {
+                        $('#message').html('Matching').css('color', 'green');
+                    } else
+                        $('#message').html('Not Matching').css('color', 'red');
+                });
+                
             jQuery(document).ready(function ($) {
                 $("#user-form").submit(function (event) {
                     //var formData = $('addGame-form').serialize();
@@ -171,7 +233,6 @@
                 var email = $('#email').val();
                 var phoneNumber = $('#phoneNumber').val();
                 var createdBy = $('#createdBy').val();
-
                 var json = {
                     "id": id,
                     "firstName": firstName,
