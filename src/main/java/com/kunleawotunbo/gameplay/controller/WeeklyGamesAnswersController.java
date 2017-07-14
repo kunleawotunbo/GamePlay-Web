@@ -107,6 +107,8 @@ public class WeeklyGamesAnswersController {
         return ResponseEntity.ok(result);
     }
     
+    /*
+    
    @PostMapping(value = "/create2")
     public ResponseEntity createWeeklyGame(@RequestBody FileBucket fileBucket, Errors errors) {
         WeeklyGames weeklyGames = new WeeklyGames();
@@ -150,7 +152,11 @@ public class WeeklyGamesAnswersController {
         //return new ResponseEntity(weeklyGames, HttpStatus.OK);
         return ResponseEntity.ok(result);
     }
-
+    
+    */
+    
+    
+/*
     public FileBucket fileUpload(FileBucket fileBucket) {
 
         MultipartFile[] files = fileBucket.getFiles();
@@ -218,20 +224,7 @@ public class WeeklyGamesAnswersController {
             fileBucket.setGameImgLocation(imgLocation);
 
             //System.out.println("bytes ::" + bytes);
-            /*
-            user.setFirstName(fileBucket.getFirstName());
-            user.setLastName(fileBucket.getLastName());
-            user.setPhoneNumber(fileBucket.getPhoneNumber());
-            user.setItemView(fileBucket.getItemView());
-            user.setAddress(fileBucket.getAddress());
-            user.setPassportPhotograph(photoName);
-            user.setImgLocation(imgLocation);
-            user.setImgName(photoName);
-            user.setImgItemName(itemViewName);
-
-            saved = userService.saveUser(user);
-
-             */
+          
         } else {
             System.out.println("File is empty / No image uploaded");
         }
@@ -239,6 +232,6 @@ public class WeeklyGamesAnswersController {
         return fileBucket;
 
     }
-
+*/
     
 }

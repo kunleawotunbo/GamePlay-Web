@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -136,6 +137,7 @@ public class AdminController {
         return "/admin/testupload";
     }
 
+    /*
     @RequestMapping(value = {"/testupload"}, method = RequestMethod.POST)
     public String createWeeklyGame(@ModelAttribute("weeklyGame") FileBucket fileBucket, BindingResult result,
             ModelMap model, HttpServletRequest req) {
@@ -196,7 +198,9 @@ public class AdminController {
         // return "redirect:/testupload";
         return "redirect:/addWeeklyGame"; 
     }
-
+    
+    */
+/*
     public FileBucket fileUpload(FileBucket fileBucket) {
 
         MultipartFile[] files = fileBucket.getFiles();
@@ -270,7 +274,7 @@ public class AdminController {
         return fileBucket;
 
     }
-
+*/
 
     @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String addWeeklyGame(ModelMap model, HttpServletRequest request) {
@@ -284,6 +288,175 @@ public class AdminController {
         model.addAttribute("loggedinuser", getPrincipal());
 
         return "/admin/addWeeklyGame";
+    }
+    
+           /**
+     * This method will be called on form submission, handling POST request for
+     * saving user in database. It also validates the user input
+     */
+    @RequestMapping(value = {"/addWeeklyGame"}, method = RequestMethod.POST)
+    public String addWeeklyGame( FileBucket fileBucket, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+
+             System.out.println("Inside registerUser :: "  );
+        /*
+             
+        MultipartFile[] files = fileBucket.getFiles();
+        String originalImgPath = "";
+        String resizedImgPath = "";
+        //String serverFileName = "";
+        String photoName = "";
+        String itemViewName = "";
+        String imgLocation = "";
+        int width = 580;
+        int height = 450;
+        boolean saved = false;
+        String serverFileName = "";
+
+        FileBucket fb = new FileBucket();
+        //User user = new User();
+        if (result.hasErrors()) {
+            System.out.println("Error in form:: " +   result.getFieldError());
+
+            return "/admin/addWeeklyGame";
+        }
+        if (files != null && files.length > 0) {
+             System.out.println("Step 3:: " +   files);
+            for (int i = 0; i < files.length; i++) {
+                try {
+                    
+                    System.out.println("Step 4" );
+                    byte[] bytes = null;
+                    // Creating the directory to store file
+                    String rootPath = System.getProperty("catalina.home");
+                    File dir = new File(rootPath + File.separator + "tmpFiles");
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
+
+                    FilenameUtils fileUTIL = new FilenameUtils();
+
+                    String path = req.getServletContext().getRealPath("/image");
+                    //String ext = fileUTIL.getExtension(file.getOriginalFilename());
+                    //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
+
+                    imgLocation = dir + File.separator;
+                    // get files name in the array
+                    if (i == 0) {
+                        photoName = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + photoName;
+                        System.out.println("photoName:: " + photoName);
+                    } else if (i == 1) {
+                        itemViewName = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + itemViewName;
+                        System.out.println("itemViewName:: " + itemViewName);
+                    }
+
+                    System.out.println("serverFileName :: " + serverFileName);
+
+                    // resize image
+                    //utility.resize(originalImgPath, resizedImgPath, width, height);
+                    //create the file on server
+                    File serverFile = new File(serverFileName);
+                    BufferedOutputStream stream = new BufferedOutputStream(
+                            new FileOutputStream(serverFile));
+                    stream.write(bytes);
+                    stream.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+         
+        } else {
+            System.out.println("File is empty / No image uploaded");
+        }
+
+        //model.addAttribute("user", user);
+        model.addAttribute("user", fb);
+        //model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " saved successfully");
+        //model.addAttribute("saved", saved);
+
+        //return "adduser";
+        //return "redirect:/adduser";
+        return "redirect:/admin/addWeeklyGame";
+        
+        */
+        
+         WeeklyGames weeklyGames = new WeeklyGames();
+        //If error, just return a 400 bad request, along with the error message
+        if (result.hasErrors()) {
+            System.out.println("There is an error");
+            
+                        System.out.println("Error in form:: " +   result.getFieldError());
+
+            return "/admin/addWeeklyGame";
+
+            //result.setCode("" + HttpStatus.BAD_REQUEST);
+            //result.setMessage("" + errors.getAllErrors().toString());
+
+           // return ResponseEntity.badRequest().body(result);
+
+        }
+        FileBucket fb = new FileBucket();
+        
+        if (fileBucket.getGamePlayType() == 1) {
+            byte yesPicture = 1;
+            fileBucket.setIsPicture(yesPicture);
+            logger.info("Is picture : " + yesPicture);
+            
+            // Do the upload 
+            fb = fileUpload(fileBucket);
+            
+        }else {
+            logger.info("No image is uploaded, type is question");
+            fb = fileBucket;
+            byte isPicture = 0;
+           
+            fb.setIsPicture(isPicture);
+        }
+        
+
+        //fb = fileUpload(fileBucket);
+      
+        System.out.println("fb.getIsPicture() :: " + fb.getIsPicture());
+        weeklyGames.setId(fb.getId());
+        weeklyGames.setWeekNo(fb.getWeekNo());
+        weeklyGames.setPrizeOfWinners(fb.getPrizeOfWinners());
+        weeklyGames.setNoOfWinners(fb.getNoOfWinners());
+        weeklyGames.setGameExpiryDate(fb.getGameExpiryDate());
+        weeklyGames.setGameRules(fb.getGameRules());
+        weeklyGames.setGameCategory(fb.getGameCategory());
+        weeklyGames.setGamePlayType(fb.getGamePlayType());
+        weeklyGames.setGameText(fb.getGameText());
+        weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImgLocation(fb.getGameImgLocation());
+        weeklyGames.setCreatedDate(fb.getCreatedDate());
+        weeklyGames.setModifiedDate(fb.getModifiedDate());
+        weeklyGames.setCreatedBy(fb.getCreatedBy());
+        weeklyGames.setIsPicture(fb.getIsPicture());
+        weeklyGames.setGameAnswer(fb.getGameAnswer());
+
+        boolean saved = weeklyGamesService.save(weeklyGames);
+        if (saved) {
+            // result.getResult("WeeklyGames Created");
+           // result.setCode("" + HttpStatus.OK);
+           // result.setMessage("WeeklyGames Created");
+            //result.setResult((List<?>) weeklyGames);
+            model.addAttribute("saved", saved);
+            model.addAttribute("success", "Weeklygame Created successfully");
+            //return "admin/addWeeklyGame";
+            
+            return "redirect:/admin/addWeeklyGame";
+        }
+
+        //return new ResponseEntity(weeklyGames, HttpStatus.OK);
+        //return ResponseEntity.ok(result);
+        // return "admin/addWeeklyGame";
+        
+         return "redirect:/admin/addWeeklyGame";
     }
 
     /**
@@ -378,6 +551,83 @@ public class AdminController {
         Game game = gameService.findById(id);
         gameService.deleteGame(game);
         return "redirect:/addGameCategory";
+    }
+    
+    public FileBucket fileUpload(FileBucket fileBucket) {
+
+        MultipartFile[] files = fileBucket.getFiles();
+        String originalImgPath = "";
+        String resizedImgPath = "";
+        //String serverFileName = "";
+        String gameImage = "";
+        String itemViewName = "";
+        String imgLocation = "";
+        int width = 580;
+        int height = 450;
+        boolean saved = false;
+        String serverFileName = "";
+
+        FileBucket fb = new FileBucket();
+
+        System.out.println("files.length :: " + files.length);
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                try {
+
+                    byte[] bytes = null;
+                    // Creating the directory to store file
+                    String rootPath = System.getProperty("catalina.home");
+                    File dir = new File(rootPath + File.separator + "tmpFiles");
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
+
+                    FilenameUtils fileUTIL = new FilenameUtils();
+
+                    //String path = req.getServletContext().getRealPath("/image");
+                    //String ext = fileUTIL.getExtension(file.getOriginalFilename());
+                    //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
+                    imgLocation = dir + File.separator;
+                    // get files name in the array
+                    if (i == 0) {
+                        gameImage = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + gameImage;
+                        System.out.println("gameImage:: " + gameImage);
+                    } else if (i == 1) {
+                        itemViewName = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + itemViewName;
+                        System.out.println("itemViewName:: " + itemViewName);
+                    }
+
+                    System.out.println("serverFileName :: " + serverFileName);
+
+                    // resize image
+                    //utility.resize(originalImgPath, resizedImgPath, width, height);
+                    //create the file on server
+                    File serverFile = new File(serverFileName);
+                    BufferedOutputStream stream = new BufferedOutputStream(
+                            new FileOutputStream(serverFile));
+                    stream.write(bytes);
+                    stream.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            fileBucket.setGameImage(gameImage);
+            fileBucket.setGameImgLocation(imgLocation);
+
+            //System.out.println("bytes ::" + bytes);
+          
+        } else {
+            System.out.println("File is empty / No image uploaded");
+        }
+
+        return fileBucket;
+
     }
  
     /**

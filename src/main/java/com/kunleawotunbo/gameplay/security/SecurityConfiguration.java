@@ -152,9 +152,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .httpBasic();
              */
            // http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
-            http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll()
+           /* 
+           http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll()
                     .and()
             .csrf().disable();
+            
+            */
+           
+           http.csrf().disable()
+                   .antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
+                    
+            ;
         }
     }
 

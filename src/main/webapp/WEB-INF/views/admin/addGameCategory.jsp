@@ -225,7 +225,7 @@
                 var gameName = $('#gameName').val();
                 var gameCode = $('#gameCode').val();
                 var gameRules = $('#gameRules').val();
-                var createdBy = "test user";
+                var createdBy = $('#createdBy').val();
                 var enabled = $("#enabled").is(":checked");
                 // set a variable
                 var gameExpiryDate = new Date();
