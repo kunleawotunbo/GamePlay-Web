@@ -34,7 +34,8 @@ public class FileBucket {
     private String createdBy;
     private byte isPicture;  
     private String gameAnswer;
-     private MultipartFile[] files;
+    private MultipartFile[] files;
+    private MultipartFile file;
 
 
     /**
@@ -262,6 +263,20 @@ public class FileBucket {
     }
 
     /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
      * @return the files
      */
     public MultipartFile[] getFiles() {
@@ -274,4 +289,6 @@ public class FileBucket {
     public void setFiles(MultipartFile[] files) {
         this.files = files;
     }
+
+    
 }

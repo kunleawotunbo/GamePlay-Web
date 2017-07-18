@@ -32,6 +32,12 @@
                                <li><a href="listWeeklyGames">Weekly Games List</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                             <li><a href="adduser">Add User</a></li>   
+                               <li><a href="listUsers">Users List</a></li>
+                        </ul>
+                    </li>
                     
 <!--                   
                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>

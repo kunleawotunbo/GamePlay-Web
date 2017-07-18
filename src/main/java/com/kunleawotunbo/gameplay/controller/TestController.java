@@ -76,9 +76,9 @@ public class TestController {
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
        // List<User> users = null;
-        User user = new User();
-         user.setFirstName("Olakunle");
-        user.setLastName("Awotunbo");
+        //User user = new User();
+        // user.setFirstName("Olakunle");
+       // user.setLastName("Awotunbo");
         //users.add(user);
         logger.info("Inside listAllUsers()");
         if (users.isEmpty()) {

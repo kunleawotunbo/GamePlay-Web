@@ -61,6 +61,11 @@ public class WeeklyGamesAnswers implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "weekNo")
+    private int weekNo;
+    
     
     public Long getId() {
         return id;
@@ -152,6 +157,20 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    /**
+     * @return the weekNo
+     */
+    public int getWeekNo() {
+        return weekNo;
+    }
+
+    /**
+     * @param weekNo the weekNo to set
+     */
+    public void setWeekNo(int weekNo) {
+        this.weekNo = weekNo;
     }
 
 }

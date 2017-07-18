@@ -56,6 +56,6 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     public List<GamePlayType> getGamePlayType() {
         //return weeklyGamesDao.getGamePlayType();
         return gamePlayTypeDao.getGamePlayType();
-    }
+    }   
     
 }

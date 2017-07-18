@@ -69,6 +69,10 @@ public class Game implements Serializable {
     
     @Column(name = "color")
     private String color;
+    
+    @Column(name = "gameRules")
+    private String gameRules;
+
 
     public Game() {
         super();
@@ -201,5 +205,19 @@ public class Game implements Serializable {
      */
     public void setColor(String color) {
         this.color = color;
+    }
+
+    /**
+     * @return the gameRules
+     */
+    public String getGameRules() {
+        return gameRules;
+    }
+
+    /**
+     * @param gameRules the gameRules to set
+     */
+    public void setGameRules(String gameRules) {
+        this.gameRules = gameRules;
     }
 }

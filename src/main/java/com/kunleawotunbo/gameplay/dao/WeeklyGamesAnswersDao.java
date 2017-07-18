@@ -25,4 +25,6 @@ public interface WeeklyGamesAnswersDao {
     List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled);
         
     List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers();
+    
+    Long submittedAnswersByWeek(int weekNo);
 }

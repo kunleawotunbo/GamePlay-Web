@@ -70,13 +70,13 @@ public class IndexController {
         if(isCurrentAuthentcationAnanymous()){
             return "login";
         }else {
-            return "redirect:/list";
+            return "redirect:/admin/dashboard";
         }        
     }
     
     @RequestMapping(value ="/logout", method = RequestMethod.GET)
     public String logoutPage(HttpServletRequest request, HttpServletResponse response){
-        logger.info("Inside logoutPage()");
+        logger.info("Logging Out user :: " + getPrincipal());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             // new SecurityContextLogoutHandler().logout(request, response, auth);

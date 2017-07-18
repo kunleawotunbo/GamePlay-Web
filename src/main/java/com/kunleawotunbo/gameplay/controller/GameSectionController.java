@@ -11,6 +11,7 @@ import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class GameSectionController {
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("getGameCategory");
 
-        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
+        //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
+        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
         boolean isPicture = false;
         String encodedPictureString = "";
         
@@ -64,5 +66,14 @@ public class GameSectionController {
         map.addAttribute("encodedPictureString", encodedPictureString);
 
         return new ModelAndView("gameSection", map);
+    }
+    
+      @RequestMapping(value = {"/congratulations.html"}, method = RequestMethod.GET)
+    public ModelAndView getCongratlations( ModelMap map) {
+        logger.info("congratulations");
+
+      
+
+        return new ModelAndView("congratulations", map);
     }
 }
