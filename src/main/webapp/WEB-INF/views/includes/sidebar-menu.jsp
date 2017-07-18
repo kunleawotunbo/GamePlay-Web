@@ -24,7 +24,8 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="dashboard"><i class="fa fa-home"></i>Dashboard</a></li>   
-                    <li><a href="addGameCategory"><i class="fa fa-edit"></i>Add Game Category</a></li>   
+                    <li><a href="addGameCategory"><i class="fa fa-edit"></i>Add Game Category</a></li>  
+                    <li><a href="setupGameCategory"><i class="fa fa-edit"></i>Setup Game</a></li>
                     <li><a><i class="fa fa-desktop"></i> Weekly Games <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                              <li><a href="addWeeklyGame">Add Weekly Game</a></li>   
