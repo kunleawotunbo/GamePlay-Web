@@ -28,7 +28,7 @@
                 <c:choose>
                     <c:when test="${empty weeklyGame}">  
                         <h2>No Game available for this category yet.<h2>
-                            </c:when>
+                    </c:when>
                             <c:otherwise>                    
 
                                 <form class="form-horizontal form-label-left">
@@ -49,7 +49,7 @@
                                                 <div class="form-group" id="gameText">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
                                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                                        ${weeklyGame.gameText}
+                                                        <p class="form-control-static">${weeklyGame.gameText}</p>
                                                     </div>
                                                 </div>
 
@@ -59,15 +59,15 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                            ${weeklyGame.weekNo}
+                                        <div class="col-md-9 col-sm-9 col-xs-9">                                            
+                                            <p class="form-control-static">${weeklyGame.weekNo}</p>
                                         </div>     
                                     </div>
 
                                      <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize to Win<span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            &#x20a6; ${weeklyGame.prizeOfWinners}
+                                            <p class="form-control-static"> &#x20a6; ${weeklyGame.prizeOfWinners}</p>
                                         </div>
                                     </div>  
 
@@ -75,7 +75,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">No Of Winners<span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            ${weeklyGame.noOfWinners}
+                                            <p class="form-control-static">${weeklyGame.noOfWinners}</p>
                                         </div>
                                     </div>  
 
@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            ${weeklyGame.gameExpiryDate}
+                                           <p class="form-control-static"> ${weeklyGame.gameExpiryDate}</p>
                                         </div>
                                     </div>                  
 
@@ -91,7 +91,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules <span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            ${weeklyGame.gameRules}
+                                            <p class="form-control-static"> ${weeklyGame.gameRules}</p>
                                         </div>
                                     </div>
 

@@ -68,6 +68,13 @@
                                     <form:input path="gameCode" id="gameCode" type="text" class="form-control" name="gameCode" placeholder="Game Code" required ="required" />                                 
                                 </div>
                             </div>
+                                
+                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="8"  placeholder="Rules for this game category" required ="required" />                                 
+                                </div>
+                            </div>    
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
@@ -75,6 +82,14 @@
                                     <form:checkbox path="enabled" id="enabled" name="enabled"  data-toggle="toggle" />                                    
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Background Color<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <form:input path="color" id="color" name="color"  type="text"  class="jscolor" required ="required" />                                 
+                                </div>
+                            </div>
+
 
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
@@ -105,13 +120,7 @@
                             </div>
 
                         </form:form>
-                        <!--
-                                                <button class="btn btn-default source" onclick="new PNotify({
-                                                            title: 'Regular Success',
-                                                            text: 'That thing that you were trying to do worked!',
-                                                            type: 'success',
-                                                            styling: 'bootstrap3'
-                                                        });">Success</button>-->
+
                     </div>
                 </div>
             </div>
@@ -151,13 +160,13 @@
                                         <td><c:out value="${item.id}"/></td>  
                                         <td><c:out value="${item.gameName}"/></td>  
                                         <td><c:out value="${item.gameCode}"/></td> 
-                                    <%--   <td><c:out value="${item.enabled}"/></td>  --%>
+                                        <%--   <td><c:out value="${item.enabled}"/></td>  --%>
                                         <c:choose>
                                             <c:when test="${item.enabled==true}">
-                                               <td><c:out value="YES"/></td>
+                                                <td><c:out value="YES"/></td>
                                             </c:when>
                                             <c:otherwise>
-                                               <td><c:out value="NO"/></td>
+                                                <td><c:out value="NO"/></td>
                                             </c:otherwise>
                                         </c:choose> 
                                         <td>
@@ -187,88 +196,8 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
-        <!--        <script>
-        
-                    jQuery(document).ready(function ($) {
-        
-                        $("#gameCategory-form").submit(function (event) {
-                           // var formData = $('addGame-form').serialize();
-                            // Disble the search button
-                            enableSearchButton(false);
-        
-                            // Prevent the form from submitting via the browser.
-                            event.preventDefault();
-        
-                            searchViaAjax();
-        
-                        });
-        
-                    });
-        
-                    function searchViaAjax() {
-                      
-                        var id = $('#id').val();
-                        var gameName = $('#gameName').val();
-                        var gameCode = $('#gameCode').val();
-                        var createdBy = "test user";
-                        var enabled = $("#enabled").is(":checked");
-        
-        
-                        if (enabled) {
-                            enabled = 1;
-                        } else {
-                            enabled = 0;
-                        }
-                        console.log("enabled ", enabled);
-        
-                        var json = {
-                            "id": id,
-                            "gameName": gameName,
-                            "gameCode": gameCode,
-                            "createdBy": createdBy,
-                            "enabled": enabled
-        
-                        };
-        
-                        $.ajax({
-                            type: "POST",
-                            contentType: "application/json",
-                            url: "${pageContext.request.contextPath}/api/game/create",
-                            data: JSON.stringify(json),
-                            dataType: 'json',
-                            timeout: 100000,
-                            success: function (data) {
-                                console.log("SUCCESS: ", data);
-                                display(data);
-                            },
-                            error: function (e) {
-                                console.log("ERROR: ", e);
-                                display(e);
-                                jQuery("#submitResponse").css("display", "none");
-                            },
-                            done: function (e) {
-                                console.log("DONE");
-                                enableSearchButton(true);
-                            }
-                            
-                            $("#gameCategory-form")[0].reset();
-                        });
-        
-                    }
-        
-                    function enableSearchButton(flag) {
-                        $("#btn-submit").prop("disabled", flag);
-                    }
-        
-                    function display(data) {
-                        var json = "<h4>Ajax Response</h4><pre>"
-                                + JSON.stringify(data, null, 4) + "</pre>";
-                        $('#feedback').html(json);
-                    }
-                </script>
-        -->
-
-
+        <!-- JSColor.js -->
+        <script src="<c:url value='/resources/js/jscolor.min.js' />"></script> 
         <script>
             // Date time picker
             $(function () {
@@ -295,10 +224,18 @@
                 var id = $('#id').val();
                 var gameName = $('#gameName').val();
                 var gameCode = $('#gameCode').val();
-                var createdBy = "test user";
+                var gameRules = $('#gameRules').val();
+                var createdBy = $('#createdBy').val();
                 var enabled = $("#enabled").is(":checked");
                 // set a variable
                 var gameExpiryDate = new Date();
+                var color = '#' + $('#color').val();
+
+                if (color === "#FFFFFF") {
+                    alert('Please choose another color');
+                    $('#color').focus();
+                    return false;
+                }
                 console.log("gameExpiryDate ::" + gameExpiryDate);
                 /*
                  if (enabled) {
@@ -312,8 +249,10 @@
                     "id": id,
                     "gameName": gameName,
                     "gameCode": gameCode,
+                    "gameRules": gameRules,
                     "createdBy": createdBy,
-                    "enabled": enabled
+                    "enabled": enabled,
+                    "color": color
                 };
                 $.ajax({
                     type: "POST",
@@ -330,7 +269,7 @@
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
-                        notification("Notification", "Failed to add game category", "error");
+                        //notification("Notification", "Failed to add game category", "error");
                     },
                     done: function (e) {
                         console.log("DONE");
@@ -347,13 +286,15 @@
                         + JSON.stringify(data, null, 4) + "</pre>";
                 $('#feedback').html(json);
             }
-            function notification(title, text, type){
-                    
-                     new PNotify({
-                                title: title,
-                                text: text,
-                                type: type,
-                                styling: 'bootstrap3'
-                            });
-                }
+            function notification(title, text, type) {
+
+                new PNotify({
+                    title: title,
+                    text: text,
+                    type: type,
+                    styling: 'bootstrap3'
+                });
+            }
         </script>
+
+

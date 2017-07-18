@@ -102,8 +102,11 @@ public class WeeklyGamesController {
         //System.out.println(formatter.format(date));
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         weeklyGames = weeklyGamesService.getWeekGameByWeekNo(gameCategory, weekNo);
-        if (weeklyGames == null) {
-
+        
+        String encodedPictureString = "";
+        
+        if (weeklyGames == null) {           
+            
             result2.setCode("204");
             result2.setMessage("no weekly games found!");
             result2.setResult(weeklyGames);
@@ -111,6 +114,9 @@ public class WeeklyGamesController {
             //return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
         } else {
 
+            encodedPictureString = tunborUtility.imageToBase64tring(weeklyGames.getGameImgLocation() + weeklyGames.getGameImage());
+            weeklyGames.setGameImgLocation(encodedPictureString);
+            
             result2.setCode("200");
             result2.setMessage("success");
             result2.setResult(weeklyGames);
