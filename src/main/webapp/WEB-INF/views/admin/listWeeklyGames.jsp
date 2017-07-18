@@ -66,15 +66,15 @@
                                         <td><c:out value="${item.gameCategory}"/></td>  
                                         <td><c:out value="${item.gamePlayType}"/></td> 
                                         <td><c:out value="${item.gameExpiryDate}"/></td> 
-                                          <td><a href="<c:url value='/set-weeklyGames-Answer-${item.id}' />" class="btn btn-success ">
+                                          <td><a href="<c:url value='/admin/set-weeklyGames-Answer-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Set Answer
                                             </a>
                                         </td>
-                                        <td><a href="<c:url value='/edit-weeklyGames-${item.id}' />" class="btn btn-success custom-width">
+                                        <td><a href="<c:url value='/admin/edit-weeklyGames-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                             </a>
                                         </td>
-                                        <td><a href="<c:url value='/delete-weeklyGames-${item.id}' />" class="btn btn-danger custom-width"> 
+                                        <td><a href="<c:url value='/admin/delete-weeklyGames-${item.id}' />" class="btn btn-danger custom-width"> 
                                                 <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
                                             </a>
                                         </td>

@@ -50,7 +50,8 @@
 
                     <!--                            <div class="item  col-xs-12 col-md-6">-->
                     <div class="item  col-xs-6 col-md-4" >
-
+                                    <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >                   ${item.gameName}
+</a>
                         <div class="frontpage_square"  >
                             <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
                                 <!--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />-->
@@ -58,7 +59,6 @@
                                 <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"  width="300" height="188" data-toggle="tooltip" title="${item.gameName}">
                             </a>
                         </div>
-
 
                         <%--<p>${item.gameName}</p>--%>
                     </div>

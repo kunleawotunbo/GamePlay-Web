@@ -5,12 +5,15 @@
 --%>
 
 <!-- footer content -->
+<!--
 <footer>
     <div class="pull-right">
         Built with love <a href="https://gameplay.com">GamePlay</a>
     </div>
     <div class="clearfix"></div>
 </footer>
+-->
+
 <!-- /footer content -->
 </div>
 </div>

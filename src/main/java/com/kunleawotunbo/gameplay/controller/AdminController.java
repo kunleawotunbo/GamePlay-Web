@@ -284,7 +284,7 @@ public class AdminController {
         WeeklyGames weeklyGames = weeklyGamesService.findById(id);
         weeklyGamesService.deleteGame(weeklyGames);
 
-        return "redirect:/listWeeklyGames";
+        return "redirect:/admin/listWeeklyGames";
     }
 
     @RequestMapping(value = "/addGameCategory", method = RequestMethod.GET)

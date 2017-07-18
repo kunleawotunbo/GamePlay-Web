@@ -27,10 +27,11 @@
 
                     <div class="col-md-6 ">
 
+                             <img src="<c:url value='/resources/images/congrats.jpg' />" alt="congrats">
                         <div class="alert alert-success lead">
-
-                            <h2> Congratulations. </h2> 
-
+                           
+                            <!--<h2> Congratulations. </h2>--> 
+                            
                             <p>Your answer has been submitted successfully.</p>
                         </div>
 

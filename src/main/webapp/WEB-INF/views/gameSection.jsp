@@ -27,7 +27,18 @@
                 <!--The choose tag checks if object weeklyGame is null-->
                 <c:choose>
                     <c:when test="${empty weeklyGame}">  
-                        <h2>No Game available for this category yet.<h2>
+                        <form class="form-horizontal form-label-left">
+                            <!--<h2>No Game available for this category yet.<h2>-->
+                             
+                                     <img src="<c:url value='/resources/images/notavailable.png' />" alt="notavailable">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">                                            
+                                            <p class="form-control-static">No Game available for this category yet.</p>
+                                        </div>     
+                                    </div>
+                        </form>
+<!--                        <h2>No Game available for this category yet.<h2>-->
                     </c:when>
                             <c:otherwise>                    
 
