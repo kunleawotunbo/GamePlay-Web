@@ -265,14 +265,120 @@ public class AdminController {
         logger.info("Edit  editWeeklyGames id :: " + id);
         //byte status = 1;
         boolean status = true;
-        model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
+        WeeklyGames weeklyGame = weeklyGamesService.findById(id);
+         String encodedPictureString = "";
+        encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+        FileBucket fbWeeklyGame = new FileBucket();
+        
+        fbWeeklyGame.setId(weeklyGame.getId());
+        fbWeeklyGame.setGameCategory(weeklyGame.getGameCategory());
+        fbWeeklyGame.setGamePlayType(weeklyGame.getGamePlayType());
+        fbWeeklyGame.setGameText(weeklyGame.getGameText());
+        fbWeeklyGame.setGameImage(weeklyGame.getGameImage());
+        fbWeeklyGame.setWeekNo(weeklyGame.getWeekNo());
+        fbWeeklyGame.setPrizeOfWinners(weeklyGame.getPrizeOfWinners());
+        fbWeeklyGame.setNoOfWinners(weeklyGame.getNoOfWinners());
+        fbWeeklyGame.setGameExpiryDate(weeklyGame.getGameExpiryDate());
+        fbWeeklyGame.setGameRules(weeklyGame.getGameRules());
+        fbWeeklyGame.setCreatedBy(weeklyGame.getCreatedBy());
+        fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
+        //fbWeeklyGame.se
+        
+        //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
+        model.addAttribute("weeklyGame", fbWeeklyGame);
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
         model.addAttribute("gameList", gameService.listGames(status));
         model.addAttribute("loggedinuser", getPrincipal());
         model.addAttribute("edit", true);
+        model.addAttribute("encodedPictureString", encodedPictureString);
 
         return "/admin/addWeeklyGame";
+    }
+    
+            /**
+     * This method will be called on form submission, handling POST request for
+     * saving addWeeklyGame in database. 
+     */
+    @RequestMapping(value = {"/edit-weeklyGames-{id}"}, method = RequestMethod.POST)
+    public String updateWeeklyGames( FileBucket fileBucket, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+
+             System.out.println("Inside registerUser :: "  );       
+        
+         WeeklyGames weeklyGames = new WeeklyGames();
+        //If error, just return a 400 bad request, along with the error message
+        if (result.hasErrors()) {
+            System.out.println("There is an error");
+            
+                        System.out.println("Error in form:: " +   result.getFieldError());
+
+            return "/admin/addWeeklyGame";
+
+            //result.setCode("" + HttpStatus.BAD_REQUEST);
+            //result.setMessage("" + errors.getAllErrors().toString());
+
+           // return ResponseEntity.badRequest().body(result);
+
+        }
+        FileBucket fb = new FileBucket();
+        
+        if (fileBucket.getGamePlayType() == 1) {
+            byte yesPicture = 1;
+            fileBucket.setIsPicture(yesPicture);
+            logger.info("Is picture : " + yesPicture);
+            
+            // Do the upload 
+            fb = fileUpload(fileBucket);
+            
+        }else {
+            logger.info("No image is uploaded, type is question");
+            fb = fileBucket;
+            byte isPicture = 0;
+           
+            fb.setIsPicture(isPicture);
+        }
+        
+
+        //fb = fileUpload(fileBucket);
+      
+        System.out.println("fb.getIsPicture() :: " + fb.getIsPicture());
+        weeklyGames.setId(fb.getId());
+        weeklyGames.setWeekNo(fb.getWeekNo());
+        weeklyGames.setPrizeOfWinners(fb.getPrizeOfWinners());
+        weeklyGames.setNoOfWinners(fb.getNoOfWinners());
+        weeklyGames.setGameExpiryDate(fb.getGameExpiryDate());
+        weeklyGames.setGameRules(fb.getGameRules());
+        weeklyGames.setGameCategory(fb.getGameCategory());
+        weeklyGames.setGamePlayType(fb.getGamePlayType());
+        weeklyGames.setGameText(fb.getGameText());
+        weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImgLocation(fb.getGameImgLocation());
+        weeklyGames.setCreatedDate(fb.getCreatedDate());
+        weeklyGames.setModifiedDate(fb.getModifiedDate());
+        weeklyGames.setCreatedBy(fb.getCreatedBy());
+        weeklyGames.setIsPicture(fb.getIsPicture());
+        weeklyGames.setGameAnswer(fb.getGameAnswer());
+
+        //boolean saved = weeklyGamesService.save(weeklyGames);
+        boolean saved = weeklyGamesService.updateWeeklyGame(weeklyGames);
+        if (saved) {
+            // result.getResult("WeeklyGames Created");
+           // result.setCode("" + HttpStatus.OK);
+           // result.setMessage("WeeklyGames Created");
+            //result.setResult((List<?>) weeklyGames);
+            model.addAttribute("saved", saved);
+            model.addAttribute("success", "Weeklygame Created successfully");
+            //return "admin/addWeeklyGame";
+            
+            return "redirect:/admin/addWeeklyGame";
+        }
+
+        //return new ResponseEntity(weeklyGames, HttpStatus.OK);
+        //return ResponseEntity.ok(result);
+        // return "admin/addWeeklyGame";
+        
+         return "redirect:/admin/addWeeklyGame";
     }
 
     /**
@@ -414,7 +520,7 @@ public class AdminController {
      * saving addWeeklyGame in database. 
      */
     @RequestMapping(value = {"/edit-gameCategory-{id}"}, method = RequestMethod.POST)
-    public String editgameCategory( GameBean gameBean, BindingResult result,
+    public String updategameCategory( GameBean gameBean, BindingResult result,
             ModelMap model, HttpServletRequest req) {
 
              System.out.println("Inside editgameCategory :: "  );       
