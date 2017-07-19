@@ -54,7 +54,8 @@
 
                         <div id="feedback"></div>
 
-                        <form:form modelAttribute="game" class="form-horizontal form-label-left" id="gameCategory-form" data-parsley-validate="">
+                        <%--<form:form modelAttribute="game" class="form-horizontal form-label-left" id="gameCategory-form" data-parsley-validate="">--%>
+                        <form:form modelAttribute="game" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">  
                             <form:hidden path="id" id="id" name="id" />
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Name<span class="required">*</span></label>
@@ -89,6 +90,13 @@
                                     <form:input path="color" id="color" name="color"  type="text"  class="jscolor" required ="required" />                                 
                                 </div>
                             </div>
+                                
+                                 <div class="form-group" id="gameImage" >
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="file" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
+                                    </div>
+                                </div>
 
 
 
@@ -103,7 +111,7 @@
                                         <div class="form-group">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="reset" class="btn btn-primary">Cancel</button>
-                                                <input type="submit" bth-search value="Update" class="btn btn-success "/> 
+                                                <input type="submit" bth-search value="Update" class="btn btn-success " onclick="return submitForm();"/> 
 
                                             </div>
                                         </div>
@@ -112,7 +120,8 @@
                                         <div class="form-group">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="reset" class="btn btn-primary">Cancel</button>
-                                                <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                                <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
+                                                <input type="submit" id="bth-submit" class="btn btn-primary" value="Submit" onclick="return submitForm();"/> 
                                             </div>
                                         </div>
                                     </c:otherwise>
@@ -170,12 +179,12 @@
                                             </c:otherwise>
                                         </c:choose> 
                                         <td>
-                                            <a href="<c:url value='/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
+                                            <a href="<c:url value='/admin/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="<c:url value='/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
+                                            <a href="<c:url value='/admin/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
                                                 <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
                                             </a>
                                         </td>
@@ -298,3 +307,65 @@
         </script>
 
 
+<script type="text/javascript">
+                function submitForm() {
+
+                // getting the user form values
+                //var gameCategory = $('#gameCategory').val();
+                //var gameType = $('#gameType').val();
+                //var prizeOfWinners = $('#prizeOfWinners').val();
+               // var noOfWinners = $('#noOfWinners').val();
+                var file = $('#gameImage1').val();
+                // Do some validation
+                if (gameCategory === "") {
+                alert('Please choose a game category');
+                $('#gameCategory').focus();
+                return false;
+                }
+                if (gameType === "") {
+                alert('Please choose a game type');
+                $('#gameType').focus();
+                return false;
+                }
+                if (prizeOfWinners == 0) {
+                alert('Prize must be greater than 0');
+                $('#prizeOfWinners').focus();
+                return false;
+                }
+                if (noOfWinners == 0) {
+                alert('Number of Winners must be greater than 0');
+                $('#noOfWinners').focus();
+                return false;
+                }
+
+
+                }
+
+                if (file.length == 0) {
+                alert('Please upload a passport');
+                $('#file').focus();
+                return false;
+                } else {
+
+                var checkimg = image.toLowerCase();
+                if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                console.log("I am insie checking");
+                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                $('#file').focus();
+                return false;
+                }
+                console.log("Outside checking");
+                }
+
+                var r = confirm("Do you want to Submit?");
+                if (r == true) {
+                frm.submit();
+                } else {
+                return false;
+                }
+
+                return true;
+                }
+                ;
+
+</script>

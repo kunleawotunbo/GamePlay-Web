@@ -147,11 +147,12 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
-
+                        notification("Notification", "Answer added successfully.", "success");
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
+                        notification("Notification", "Failed to set answer game.", "error");
                     },
                     done: function (e) {
                         console.log("DONE");
@@ -172,6 +173,16 @@
                         + JSON.stringify(data, null, 4) + "</pre>";
                 $('#feedback').html(json);
             }
+            
+              function notification(title, text, type) {
+
+                new PNotify({
+                title: title,
+                        text: text,
+                        type: type,
+                        styling: 'bootstrap3'
+                });
+                }
 
 
         </script>

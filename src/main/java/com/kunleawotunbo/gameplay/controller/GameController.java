@@ -11,15 +11,19 @@ import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -51,10 +55,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class GameController {
 
     @Autowired
-    GameService gameService;
-    
+    GameService gameService;    
+     
      @Autowired
-    private WeeklyGamesService weeklyGamesService;
+    private TunborUtility tunborUtility;
 
     
     CustomResponseBody result = new CustomResponseBody();
@@ -82,14 +86,48 @@ public class GameController {
     public ResponseEntity<List<Game>> listGames() {
         logger.info("Inside listGames()");
         List<Game> gameList = null;
+        List<Game> gameListFinal = null;
         boolean status = true;
         gameWeek();
         gameList = gameService.listGames(status);
-
+        String imageEncodedString = "";
+        
         if (gameList.isEmpty()) {
             return new ResponseEntity<List<Game>>(HttpStatus.NO_CONTENT); //You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<Game>>(gameList, HttpStatus.OK);
+        
+        Game game = null;
+         gameListFinal = new ArrayList<Game>();
+          for (Game item : gameList) {
+              
+              if (item.getGameImgLocation() != null && item.getGameImage() != null){
+                  imageEncodedString = tunborUtility.imageToBase64tring(item.getGameImgLocation() + item.getGameImage());
+                  String path = item.getGameImgLocation() + item.getGameImage();
+                  try {
+                      System.out.println( "URL :: " +   new File(path).toURI().toURL());
+                  } catch (MalformedURLException ex) {
+                      java.util.logging.Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+              }
+            
+            game = new Game();
+
+            game.setId(item.getId());
+            game.setGameName(item.getGameName());
+            game.setGameCode(item.getGameCode());
+            game.setEnabled(item.getEnabled());
+            game.setCreationDate(item.getCreationDate());
+            game.setLastModificationDate(item.getLastModificationDate());           
+            game.setLastModifiedBy(item.getLastModifiedBy());
+            game.setColor(item.getColor());
+            game.setGameRules(item.getGameRules());
+            game.setGameImage(item.getGameImage());
+             game.setGameImgLocation(imageEncodedString);
+
+            gameListFinal.add(game);
+        }
+        //return new ResponseEntity<List<Game>>(gameList, HttpStatus.OK);
+        return new ResponseEntity<List<Game>>(gameListFinal, HttpStatus.OK);
     }
 
     /**

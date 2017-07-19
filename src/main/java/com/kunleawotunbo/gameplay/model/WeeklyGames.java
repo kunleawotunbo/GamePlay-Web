@@ -77,7 +77,7 @@ public class WeeklyGames implements Serializable {
     @Column(name = "gameText")
     private String gameText;
     
-    @Size( max = 50)
+    //@Size( max = 100)
     @Column(name = "gameImage")
     private String gameImage;
    

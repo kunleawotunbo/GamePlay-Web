@@ -5,12 +5,16 @@
  */
 package com.kunleawotunbo.gameplay.utility;
 
+import com.kunleawotunbo.gameplay.bean.FileBucket;
+import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.model.User;
 import freemarker.template.Configuration;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +24,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -196,4 +202,103 @@ public class TunborUtility {
 		}
 		return userName;
 	}
+        
+        
+    public GameBean fileUpload(GameBean fileBucket) {
+
+        // MultipartFile[] files = fileBucket.getFiles();
+        MultipartFile file = fileBucket.getFile();
+        String originalImgPath = "";
+        String resizedImgPath = "";
+        //String serverFileName = "";
+        String gameImage = "";
+        String itemViewName = "";
+        String imgLocation = "";
+        int width = 580;
+        int height = 450;
+        boolean saved = false;
+        String serverFileName = "";
+
+        FileBucket fb = new FileBucket();
+
+        if (file != null && !file.isEmpty()  ) {
+            // for (int i = 0; i < files.length; i++) {
+            try {
+
+                byte[] bytes = null;
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                FilenameUtils fileUTIL = new FilenameUtils();
+
+                //String path = req.getServletContext().getRealPath("/image");
+                //String ext = fileUTIL.getExtension(file.getOriginalFilename());
+                //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
+                imgLocation = dir + File.separator;
+                // get files name in the array
+
+                gameImage = file.getOriginalFilename();
+                bytes = file.getBytes();
+                serverFileName = imgLocation + gameImage;
+                System.out.println("gameImage:: " + gameImage);
+                /*    
+                    if (i == 0) {
+                        gameImage = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + gameImage;
+                        System.out.println("gameImage:: " + gameImage);
+                    } else if (i == 1) {
+                        itemViewName = files[i].getOriginalFilename();
+                        bytes = files[i].getBytes();
+                        serverFileName = imgLocation + itemViewName;
+                        System.out.println("itemViewName:: " + itemViewName);
+                    }
+                    
+                 */
+                System.out.println("serverFileName :: " + serverFileName);
+
+                // resize image
+                //utility.resize(originalImgPath, resizedImgPath, width, height);
+                //create the file on server
+                File serverFile = new File(serverFileName);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // }
+
+            fileBucket.setGameImage(gameImage);
+            fileBucket.setGameImgLocation(imgLocation);
+
+            //System.out.println("bytes ::" + bytes);
+            /*
+            user.setFirstName(fileBucket.getFirstName());
+            user.setLastName(fileBucket.getLastName());
+            user.setPhoneNumber(fileBucket.getPhoneNumber());
+            user.setItemView(fileBucket.getItemView());
+            user.setAddress(fileBucket.getAddress());
+            user.setPassportPhotograph(photoName);
+            user.setImgLocation(imgLocation);
+            user.setImgName(photoName);
+            user.setImgItemName(itemViewName);
+
+            saved = userService.saveUser(user);
+
+             */
+        } else {
+            System.out.println("File is empty / No image uploaded");
+        }
+
+        return fileBucket;
+
+    }
+    
 }

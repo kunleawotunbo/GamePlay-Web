@@ -5,7 +5,14 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.service.GameService;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -29,6 +36,9 @@ public class HomeController implements Controller {
     
     @Autowired
     private GameService gameService;
+    
+     @Autowired
+    private TunborUtility tunborUtility;
 
     public ModelAndView handleRequest(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -38,12 +48,48 @@ public class HomeController implements Controller {
         ModelMap model = new ModelMap();
         
         String test = "This is a test";
+        List<Game> gameList = null;
+        List<Game> gameListFinal = null;
          boolean status = true;
+         gameList = gameService.listGames(status);
+         String imageEncodedString = "";
+         
+         Game game = null;
+         gameListFinal = new ArrayList<Game>();
+          for (Game item : gameList) {
+              
+              if (item.getGameImgLocation() != null && item.getGameImage() != null){
+                  imageEncodedString = tunborUtility.imageToBase64tring(item.getGameImgLocation() + item.getGameImage());
+                  String path = item.getGameImgLocation() + item.getGameImage();
+                  try {
+                      System.out.println( "URL :: " +   new File(path).toURI().toURL());
+                  } catch (MalformedURLException ex) {
+                      java.util.logging.Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+              }
+            
+            game = new Game();
+
+            game.setId(item.getId());
+            game.setGameName(item.getGameName());
+            game.setGameCode(item.getGameCode());
+            game.setEnabled(item.getEnabled());
+            game.setCreationDate(item.getCreationDate());
+            game.setLastModificationDate(item.getLastModificationDate());           
+            game.setLastModifiedBy(item.getLastModifiedBy());
+            game.setColor(item.getColor());
+            game.setGameRules(item.getGameRules());
+            game.setGameImage(item.getGameImage());
+             game.setGameImgLocation(imageEncodedString);
+
+            gameListFinal.add(game);
+        }
          
         model.addAttribute("urlPath", request.getLocalAddr());
         model.addAttribute("request", request);
         model.addAttribute("test", test);
-        model.addAttribute("gameList", gameService.listGames(status));
+        //model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("gameList", gameListFinal);
         
         return new ModelAndView("home", model);
     }
