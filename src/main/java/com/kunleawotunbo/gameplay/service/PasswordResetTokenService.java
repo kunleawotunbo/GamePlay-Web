@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kunleawotunbo.gameplay.dao;
+package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.model.PasswordResetToken;
 import com.kunleawotunbo.gameplay.model.User;
 import java.util.Date;
 import java.util.stream.Stream;
-import org.springframework.ldap.repository.Query;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
-public interface PasswordResetTokenDao {
+public interface PasswordResetTokenService {
     
     boolean save(PasswordResetToken passwordResetToken);
     
@@ -30,9 +29,7 @@ public interface PasswordResetTokenDao {
 
     void deleteByExpiryDateLessThan(Date now);
 
-    //@Modifying
-    @Query("delete from PasswordResetToken t where t.expiryDate <= ?1")
     void deleteAllExpiredSince(Date now);
     
-      String validatePasswordResetToken(long id, String token);
+    String validatePasswordResetToken(long id, String token);
 }

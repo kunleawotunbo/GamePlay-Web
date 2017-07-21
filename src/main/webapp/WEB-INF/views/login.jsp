@@ -37,7 +37,7 @@
         <div>
             <a class="hiddenanchor" id="signup"></a>
             <a class="hiddenanchor" id="signin"></a>
-            <a class="hiddenanchor" id="forgotpassword"></a>
+            <!--<a class="hiddenanchor" id="forgotpassword"></a>-->
 
             <div class="login_wrapper">
                 <div class="animate form login_form">
@@ -48,7 +48,8 @@
                                 <h1>Login Form</h1>
                                 <c:if test="${param.error != null}">
                                     <div class="alert alert-danger">
-                                        <p>Invalid username or password.</p>                                                                    
+                                        <p>Invalid username or password.</p>  
+                                        
                                     </div>
                                 </c:if>
                                 <c:if test="${param.logout != null}">
@@ -73,7 +74,7 @@
 <!--                                    <a class="btn btn-default submit" type="submit">Log in</a>
                                    
                                     <a class="btn btn-default submit" href="index.html">Log in</a>-->
-                                    <a class="reset_pass" href="#forgotpassword">Lost your password?</a>
+                                    <a class="reset_pass" href="forgotPassword.html">Lost your password?</a>
                                 </div>
 
                                 <div class="clearfix"></div>
@@ -133,7 +134,7 @@
                     </section>
                 </div>
                                 
-                   <div id="forgotpassword" class="animate form registration_form">
+<!--                   <div id="forgotpassword" class="animate form registration_form">
                     <section class="login_content">
                         <form>
                             <h1>Forgot Password</h1>
@@ -163,7 +164,7 @@
                         </form>
                     </section>
                 </div>    
-                                
+                                -->
             </div>
         </div>
 

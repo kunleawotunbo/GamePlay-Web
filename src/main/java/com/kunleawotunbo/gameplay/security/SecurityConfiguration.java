@@ -180,6 +180,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/").permitAll()
                     .antMatchers("/admin/**")
                     .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                    .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     
                     .and()
                     .formLogin()
