@@ -49,11 +49,20 @@
                             <p>This form seems to be invalid :(</p>
                         </div>
 
-                        <c:if test="${saved}">          
-                            <div class="alert alert-success lead">
-                                ${success}
+
+                        <c:if test="${error}">                                  
+                            <div class="alert alert-danger" id="success-error">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
                             </div>
-                        </c:if>
+                        </c:if>  
+
+                        <c:if test="${saved}">        
+                            <div class="alert alert-success" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
+                            </div>
+                        </c:if>  
 
 
                         <%--<form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">--%>
@@ -165,7 +174,7 @@
                                                 <div class="col-md-9 col-md-offset-3">
                                                     <button type="reset" class="btn btn-primary">Cancel</button>
                                                     <!--<button type="submit" id="bth-submit" class="btn btn-success">Submit</button>-->
-                                                    <input type="submit" id="bth-submit" class="btn btn-primary" value="Submit" onclick="return submitForm();"/> 
+                                                    <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
                                                 </div>
                                             </div>
                                         </c:otherwise>
@@ -200,6 +209,17 @@
                 });
                 });
                 jQuery(document).ready(function ($) {
+
+                // success alert
+                $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#success-alert").slideUp(500);
+                });
+                // error alert
+                $("#success-error").fadeTo(2000, 500).slideUp(500, function(){
+                $("#success-error").slideUp(500);
+                });
+                
+                
                 // Hide gameText div
                 $('#gameText').hide();
                 // Remove requred for gameText1
@@ -208,25 +228,7 @@
                 $('#gameImage').hide();
                 // Remove requred for gameImage1
                 $("#gameImage1").prop("required", false);
-                /*
-                 $("#gameType2").change(function (event) {
-                 var gameType2 = $('#gameType2').val();
-                 console.log(" gameType2 ::" + gameType2);
-                 if (gameType2 == "2")  {
-                 // console.log(" gameType is Question ::" + gameText);
-                 console.log(" gameType ::" + gameType);
-                 // Since gameType is text question, then Hide gameImage div and remove required attribute
-                 $('#gameImage').hide();
-                 $("#gameImage1").prop("required", false);
-                 
-                 // Show gameText since gameType is picture and sett attribute gameText1 required = true
-                 $('#gameText').show();
-                 $("#gameText1").prop("required", true);
-                 
-                 }
-                 });
-                 
-                 */
+            
                 $("#gameType").change(function (event) {
 
 
@@ -255,46 +257,7 @@
 
 
                 });
-                /*
-                 $("#addWeeklyGame-formTEST").submit(function (event) {
-                 //var formData = $('addGame-form').serialize();                       
-                 
-                 var gameCategory = $('#gameCategory').val();
-                 var gameType = $('#gameType').val();
-                 var prizeOfWinners = $('#prizeOfWinners').val();
-                 var noOfWinners = $('#noOfWinners').val();
-                 // Do some validation
-                 if (gameCategory === "") {
-                 alert('Please choose a game category');
-                 $('#gameCategory').focus();
-                 return false;
-                 }
-                 if (gameType === "") {
-                 alert('Please choose a game type');
-                 $('#gameType').focus();
-                 return false;
-                 }
-                 if (prizeOfWinners == 0) {
-                 alert('Prize must be greater than 0');
-                 $('#prizeOfWinners').focus();
-                 return false;
-                 }
-                 if (noOfWinners == 0) {
-                 alert('Number of Winners must be greater than 0');
-                 $('#noOfWinners').focus();
-                 return false;
-                 }
-                 
-                 // Disble the search button
-                 enableSearchButton(false);
-                 
-                 // Prevent the form from submitting via the browser.
-                 event.preventDefault();
-                 
-                 searchViaAjax();
-                 
-                 });
-                 */
+          
                 });
                 function searchViaAjax() {
 

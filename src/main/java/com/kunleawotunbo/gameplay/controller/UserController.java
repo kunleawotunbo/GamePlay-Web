@@ -85,7 +85,7 @@ public class UserController {
      * saving user in database. It also validates the user input
      */
     @RequestMapping(value = {"/adduser"}, method = RequestMethod.POST)
-    public String saveUser(User user, BindingResult result,
+    public String createUser(User user, BindingResult result,
             ModelMap model, HttpServletRequest request) {
 
         if (result.hasErrors()) {
@@ -99,15 +99,27 @@ public class UserController {
 
         if (userService.isUserExist(user)) {
             System.out.println("A User with name " + user.getEmail() + " already exist");
-            return "registration";
+            model.addAttribute("error", true);
+            model.addAttribute("message", "A User with email " + user.getEmail() + " already exist");
+            // populate field with the current object
+            model.addAttribute("user", user);
+            return "/admin/user";
         }
 
-        // For test purpose.
-        //user.setPassword("abc125");
-
+        
         user.setUserName(user.getEmail());
         created = userService.saveUser(user);
         logger.info("About to send mail to ::" + user.getEmail());
+        
+        if(!created){
+            // Something went wrong
+            
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Unable to create user " + user.getFirstName());
+            model.addAttribute("user", new User());
+            return "/admin/user";
+        }
+        
         if (created) {
             appUrl = request.getContextPath();
 
@@ -125,12 +137,12 @@ public class UserController {
             System.out.println("User not created ");
         }
 
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully. Verification mail has been sent.");
-        //model.addAttribute("loggedinuser", getPrincipal());
-        //return "success";
-        //return "registrationsuccess";
-        return "/admin/registrationsuccess";
+        model.addAttribute("message", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully. Verification mail has been sent.");
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+        model.addAttribute("saved", created);
+        //return "/admin/registrationsuccess";
         
+        return "/admin/user";
     }
 
     /**
@@ -178,18 +190,23 @@ public class UserController {
     @RequestMapping(value = {"/edit-user-{id}"}, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
             ModelMap model, @PathVariable int id) {
-        /*
+        
         if (result.hasErrors()) {
             logger.info("Error occurred while trying to update user with id :: " +  + id);
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Unable to update user");
              return "/admin/user";
         }
-        */
+        
       
         userService.updateUser(user);
         logger.info("Updated user:: " +  + id);
         
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
+        model.addAttribute("message", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+        model.addAttribute("saved", true);
+        model.addAttribute("user", new User());
+        
          return "/admin/user";
     }
 
@@ -202,52 +219,7 @@ public class UserController {
         return "redirect:/list";
     }
 
-    /**
-     * Create new User
-     *
-     * @param user
-     * @param ucBuilder
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/register/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
-        System.out.println("Creating User " + user.getFirstName());
-        boolean created = false;
-        String appUrl = "";
-
-        if (userService.isUserExist(user)) {
-            System.out.println("A User with name " + user.getEmail() + " already exist");
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-
-        // For test purpose.
-        user.setPassword("abc125");
-
-        user.setUserName(user.getEmail());
-        created = userService.saveUser(user);
-        logger.info("About to send mail to ::" + user.getEmail());
-        if (created) {
-            appUrl = request.getContextPath();
-
-            try {
-                final String token = UUID.randomUUID().toString();
-                verificationTokenService.createVerificationTokenForUser(user, token);
-
-                final String confirmationUrl = getURLBase(request) + "/registrationConfirm.html?token=" + token;
-                user.setUserName(confirmationUrl);
-                tunborUtility.sendMail(user);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("User not created ");
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    }
+ 
 
     public String getURLBase(HttpServletRequest request) throws MalformedURLException {
 

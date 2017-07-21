@@ -34,6 +34,7 @@ public class FileBucket {
     private String createdBy;
     private byte isPicture;  
     private String gameAnswer;
+    private Date gameStartDate;
     private MultipartFile[] files;
     private MultipartFile file;
 
@@ -288,6 +289,20 @@ public class FileBucket {
      */
     public void setFiles(MultipartFile[] files) {
         this.files = files;
+    }
+
+    /**
+     * @return the gameStartDate
+     */
+    public Date getGameStartDate() {
+        return gameStartDate;
+    }
+
+    /**
+     * @param gameStartDate the gameStartDate to set
+     */
+    public void setGameStartDate(Date gameStartDate) {
+        this.gameStartDate = gameStartDate;
     }
 
     
