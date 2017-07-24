@@ -296,7 +296,7 @@ public class TunborUtility {
 
     }
 
-    private SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, final VerificationToken newToken, final User user) {
+    public SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, final VerificationToken newToken, final User user) {
         final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
         final String message = messages.getMessage("message.resendToken", null, locale);
         return constructEmail("Resend Registration Token", message + " \r\n" + confirmationUrl, user.getEmail());
@@ -308,17 +308,6 @@ public class TunborUtility {
         return constructEmail("Reset Password", message + " \r\n" + url, user.getEmail());
     }
 
-    /*
-    private SimpleMailMessage constructEmail(String subject, String body, User user) {
-        final SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(user.getEmail());
-        //email.setFrom(env.getProperty("support.email"));
-        email.setFrom("info@tunbor.com");
-        return email;
-    }
-*/
     
        private SimpleMailMessage constructEmail(String subject, String body, String recipientEmail) {
         final SimpleMailMessage email = new SimpleMailMessage();
@@ -340,6 +329,7 @@ public class TunborUtility {
         email.setFrom("info@tunbor.com");
         return email;
     }
+    
     
      @Async
     public void mailSender(SimpleMailMessage simpleMailMessage) {
