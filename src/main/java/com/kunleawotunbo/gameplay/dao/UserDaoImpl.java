@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
+import com.kunleawotunbo.gameplay.service.PasswordResetTokenService;
 import com.kunleawotunbo.gameplay.service.VerificationTokenService;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -42,6 +43,9 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     @Autowired
     private VerificationTokenService verificationTokenService;
+    
+    @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -152,7 +156,9 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     }
 
     public void changeUserPassword(User user, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       user.setPassword(passwordEncoder.encode(password));
+        //persist(user);
+        update(user);
     }
 
     public boolean checkIfValidOldPassword(User user, String password) {
@@ -188,6 +194,22 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     public List<String> getUsersFromSessionRegistry() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public User findUserByEmail(String email) {
+        logger.info("findUserByEmail : {}", email);
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("email", email));
+        User user = (User) crit.uniqueResult();
+        if (user != null) {
+            Hibernate.initialize(user.getUserProfiles());
+        }        
+        return user;
+    }
+
+    public void createPasswordResetTokenForUser(User user, String token) {
+        final PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordResetTokenService.save(myToken);
     }
 
 }

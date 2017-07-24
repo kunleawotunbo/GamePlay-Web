@@ -106,6 +106,10 @@ public class WeeklyGames implements Serializable {
      @Size( max = 50)
     @Column(name = "gameAnswer")
     private String gameAnswer;
+     
+     @Column(name = "gameStartDate")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date gameStartDate;
 
     /**
      * @return the id
@@ -329,6 +333,20 @@ public class WeeklyGames implements Serializable {
      */
     public void setGameAnswer(String gameAnswer) {
         this.gameAnswer = gameAnswer;
+    }
+
+    /**
+     * @return the gameStartDate
+     */
+    public Date getGameStartDate() {
+        return gameStartDate;
+    }
+
+    /**
+     * @param gameStartDate the gameStartDate to set
+     */
+    public void setGameStartDate(Date gameStartDate) {
+        this.gameStartDate = gameStartDate;
     }
    
 

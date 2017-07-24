@@ -44,7 +44,19 @@
                     <div class="x_content">
                         <br />
 
+                        <c:if test="${error}">                                  
+                            <div class="alert alert-danger" id="success-error">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
+                            </div>
+                        </c:if>  
 
+                        <c:if test="${saved}">        
+                            <div class="alert alert-success" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
+                            </div>
+                        </c:if>  
                         <div id="feedback"></div>
 
                         <%--<form:form modelAttribute="user" class="form-horizontal form-label-left" id="user-form" data-parsley-validate="">--%>
@@ -99,32 +111,33 @@
                                 <div class="col-md-9 col-sm-9 col-xs-9">
                                     <%--<form:input  id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="" required ="required" />--%>     
                                     <input  id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="" required ="required" />
-                                   <span id='message'></span>
+                                    <span id='message'></span>
                                 </div>
-                             
+
                             </div>   
 
 
 
+                            <form:input path="userName" name="userName"  type="hidden" /> 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
                             <div class="ln_solid"></div>
 
-                        <%--
-                            <div class="row">
-                                <div class="form-actions floatRight">
-                                    <c:choose>
-                                        <c:when test="${edit}">
-                                            <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
-                                        </c:otherwise>
-                                    </c:choose>
+                            <%--
+                                <div class="row">
+                                    <div class="form-actions floatRight">
+                                        <c:choose>
+                                            <c:when test="${edit}">
+                                                <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
-                            </div>
-                            
+                                
                             --%>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <c:choose>
                                     <c:when test="${edit}">
 
@@ -140,13 +153,13 @@
                                         <div class="form-group">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="reset" class="btn btn-primary">Cancel</button>
-                                                 <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-success"/>
+                                                <input type="submit" value="Register" onclick="return submitUserForm();" class ="btn btn-success"/>
                                             </div>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            
+
                         </form:form>
 
                     </div>
@@ -173,22 +186,22 @@
                 }
 
                 /*
-                $('#password, #confirm_password').on('keyup', function () {
-                    if ($('#password').val() == $('#confirm_password').val()) {
-                        $('#message').html('Matching').css('color', 'green');
-                    } else
-                        $('#message').html('Not Matching').css('color', 'red');
-                });
-                
-                var password = $('#password').val();
-                var confirm_password = $('#confirm_password').val();
-                if (password != confirm_password) {
-                    alert('Please enter name');
-                    $('#confirm_password').focus();
-                    return false;
-                }
-                
-                */
+                 $('#password, #confirm_password').on('keyup', function () {
+                 if ($('#password').val() == $('#confirm_password').val()) {
+                 $('#message').html('Matching').css('color', 'green');
+                 } else
+                 $('#message').html('Not Matching').css('color', 'red');
+                 });
+                 
+                 var password = $('#password').val();
+                 var confirm_password = $('#confirm_password').val();
+                 if (password != confirm_password) {
+                 alert('Please enter name');
+                 $('#confirm_password').focus();
+                 return false;
+                 }
+                 
+                 */
 
             }
 
@@ -207,16 +220,26 @@
                     // startDate: d
                 });
             });
-            
-            
+
+
             $('#password, #confirm_password').on('keyup', function () {
-                    if ($('#password').val() == $('#confirm_password').val()) {
-                        $('#message').html('Matching').css('color', 'green');
-                    } else
-                        $('#message').html('Not Matching').css('color', 'red');
-                });
-                
+                if ($('#password').val() == $('#confirm_password').val()) {
+                    $('#message').html('Matching').css('color', 'green');
+                } else
+                    $('#message').html('Not Matching').css('color', 'red');
+            });
+
             jQuery(document).ready(function ($) {
+
+                // success alert
+                $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#success-alert").slideUp(500);
+                });
+
+                // error alert
+                $("#success-error").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#success-error").slideUp(500);
+                });
                 $("#user-form").submit(function (event) {
                     //var formData = $('addGame-form').serialize();
                     // Disble the search button

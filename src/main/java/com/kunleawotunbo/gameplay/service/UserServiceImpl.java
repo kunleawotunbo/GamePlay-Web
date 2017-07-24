@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author olakunle
  */
 @Service("userService")
-//@Component
 @Transactional
 public class UserServiceImpl implements UserService{
  
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public void changeUserPassword(User user, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        userDao.changeUserPassword(user, password);
     }
 
     public boolean checkIfValidOldPassword(User user, String password) {
@@ -114,6 +113,14 @@ public class UserServiceImpl implements UserService{
 
     public List<String> getUsersFromSessionRegistry() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    public void createPasswordResetTokenForUser(User user, String token) {
+         userDao.createPasswordResetTokenForUser(user, token);
     }
      
 }

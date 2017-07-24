@@ -46,5 +46,9 @@ public interface UserService {
     User updateUser2FA(boolean use2FA);
 
     List<String> getUsersFromSessionRegistry();
+    
+    User findUserByEmail(String email);
+    
+    void createPasswordResetTokenForUser(User user, String token);
  
 }

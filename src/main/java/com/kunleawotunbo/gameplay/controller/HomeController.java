@@ -57,18 +57,25 @@ public class HomeController implements Controller {
          Game game = null;
          gameListFinal = new ArrayList<Game>();
           for (Game item : gameList) {
+              game = new Game();
               
               if (item.getGameImgLocation() != null && item.getGameImage() != null){
                   imageEncodedString = tunborUtility.imageToBase64tring(item.getGameImgLocation() + item.getGameImage());
                   String path = item.getGameImgLocation() + item.getGameImage();
+                  
+                  game.setGameImgLocation(imageEncodedString);
+                  
                   try {
                       System.out.println( "URL :: " +   new File(path).toURI().toURL());
                   } catch (MalformedURLException ex) {
                       java.util.logging.Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
                   }
+                  
+              }else {
+                  System.out.println("item.getGameImgLocation() is null" );
               }
             
-            game = new Game();
+            
 
             game.setId(item.getId());
             game.setGameName(item.getGameName());
@@ -80,7 +87,7 @@ public class HomeController implements Controller {
             game.setColor(item.getColor());
             game.setGameRules(item.getGameRules());
             game.setGameImage(item.getGameImage());
-             game.setGameImgLocation(imageEncodedString);
+            //game.setGameImgLocation(imageEncodedString);
 
             gameListFinal.add(game);
         }
