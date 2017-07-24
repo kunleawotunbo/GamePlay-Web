@@ -32,6 +32,17 @@
                                <li><a href="listWeeklyGames">Weekly Games List</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-desktop"></i> Games Answers <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                             <li><a href="listWeeklyGames">Active Week Correct Answers List</a></li>
+                             <li><a href="listWeeklyGames">Active Week Correct Answers List By Game Category</a></li>
+                             <li><a href="listWeeklyGames">Game Answer By Category</a></li>
+                             <li><a href="listWeeklyGames">Games Answer By Week</a></li>
+                             <li><a href="listallanswer">List All Game Answers </a></li>   
+                               
+                        </ul>
+                    </li>
+              
                     <li><a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                              <li><a href="adduser">Add User</a></li>   

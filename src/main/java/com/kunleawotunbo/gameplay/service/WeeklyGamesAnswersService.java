@@ -24,7 +24,9 @@ public interface WeeklyGamesAnswersService {
 
     List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled);
         
-    List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers();    
+    List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers(); 
+    
+    public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String Ans );
          
     Long submittedAnswersByWeek(int weekNo);
 }

@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
@@ -17,6 +18,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +68,12 @@ public class GameSetupController {
 
     @Autowired
     private WeeklyGamesService weeklyGamesService;
+    
+    
+    
+    @Autowired
+    private WeeklyGamesAnswersService weeklyGamesAnswersService;
+
 
     final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -100,6 +108,76 @@ public class GameSetupController {
 
         return "/admin/setupThisGameCategory";
     }
+    
+     @RequestMapping(value = "/listallanswer", method = RequestMethod.GET)
+   // public ResponseEntity listWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
+    
+    public String listAllAnswers(ModelMap model, HttpServletRequest request) {  
+           logger.info("ListAllAnswer");
+          List<String> AnswerStatus = new ArrayList<String>();
+          //String AnswerStatus;
+                      
+         List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
+         int WeeklyGameAnswerLength = listWeeklyGamesAnswers.size();
+         // String[] AnswerStatus = new String[WeeklyGameAnswerLength];
+         for(int i=0; i < WeeklyGameAnswerLength; i++){
+            //listWeeklyGamesAnswers.get(i).getGameId();
+           // int j=0;
+            String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
+            int answerid = listWeeklyGamesAnswers.get(i).getGameId();
+         WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
+        
+         String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         
+          if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
+             
+            //listWeeklyGamesAnswers.add(i, element);
+            AnswerStatus.add("CORRECT");
+         //    AnswerStatus[i] = "CORRECT";
+             
+                        }else {
+             
+            AnswerStatus.add("WRONG"); 
+        //    AnswerStatus[i] = "WRONG";
+           
+                      }
+         
+        // logger.info("Weekly Answer Game ID:" + String.valueOf(listWeeklyGamesAnswers.get(i).getGameId()));
+         //logger.info("Weekly Game ID:" + String.valueOf(weeklyGamesAnswer.getId()));
+         logger.info("Game Answer:"+ gameanswer);
+         logger.info("User Answer:" + useranswer);
+         
+       
+            logger.info(AnswerStatus.get(i));
+          
+         }
+         //WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(WeeklyGameAnswerLength);
+         //String.valueOf(WeeklyGameAnswerLength)
+         //logger.info(String.valueOf(WeeklyGameAnswerLength));
+         //model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
+         //model.addAttribute("gameanswerlist", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
+         //logger.info("Answer Status Length:" +String.valueOf(AnswerStatus.size()));
+         model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
+         model.addAttribute("answerstatus", AnswerStatus);
+         model.addAttribute("loggedinuser", getPrincipal());
+
+         return "/admin/listallanswers";
+    }
+    
+    @RequestMapping(value = "/listallcorrectanswer", method = RequestMethod.GET)
+   // public ResponseEntity listWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
+    
+    public String listAllCorrectAnswers(ModelMap model, HttpServletRequest request) {  
+           logger.info("ListAllAnswer");
+          
+       // List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
+
+         //model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
+         model.addAttribute("gameanswerlist", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
+        model.addAttribute("loggedinuser", getPrincipal());
+
+        return "/admin/listallanswers";
+    }
 
     
     
@@ -115,5 +193,16 @@ public class GameSetupController {
         System.out.println("Logged in user :: " + userName);
         return userName;
     }
+    
+}
+
+class AnswerStatusInfo {
+    
+    public String answerstatusinfo;
+    
+    public void setanswerstatusinfo(String answer) {
+        this.answerstatusinfo = answer;
+    }
+    
     
 }

@@ -57,7 +57,7 @@
                                         <td><c:out value="${item.gameName}"/></td>  
                                         
                                         <td>
-                                            <a href="<c:url value='/setup-gameType-${item.id}' />" class="btn btn-success custom-width">
+                                            <a href="<c:url value='/admin/setup-gameType-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Setup
                                             </a>
                                         </td>
