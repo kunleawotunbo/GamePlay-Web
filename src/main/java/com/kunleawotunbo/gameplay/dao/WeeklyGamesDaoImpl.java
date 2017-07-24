@@ -9,6 +9,7 @@ import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeeklyGames() {
       
-        Criteria criteria = createEntityCriteria();        
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));  
+        
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGames> weeklyGamesList = (List<WeeklyGames>) criteria.list();
 
@@ -89,6 +91,36 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
        //return (WeeklyGames) crit.list().get(0);
        return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
     }
+    
+    public WeeklyGames getWeekGameAnswers(int gameCategory, int weekNo) {
+            
+         logger.info("gameCategory : {}", gameCategory);
+         logger.info("weekNo : {}", weekNo);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("gameCategory", gameCategory));
+        crit.add(Restrictions.eq("weekNo", weekNo));
+
+       // return (WeeklyGames) crit.uniqueResult();
+       //return (WeeklyGames) crit.list().get(0);
+       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
+    }
+    
+    public WeeklyGames getWeekGameAnswersbyId(int id) {
+            
+       // logger.info("id : {}", id); 
+       // logger.info("gameCategory : {}", gameCategory);
+       // logger.info("weekNo : {}", weekNo);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+        //crit.add(Restrictions.eq("weekNo", weekNo));
+
+       // return (WeeklyGames) crit.uniqueResult();
+       //return (WeeklyGames) crit.list().get(0);
+       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
+    }
+
 
     public List<GamePlayType> getGamePlayType() {
         Criteria criteria = createEntityCriteria();

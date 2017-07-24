@@ -6,6 +6,7 @@
 package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -67,12 +68,23 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     }
 
     public List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers() {
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+         Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
 
         return weeklyGamesAnswersList;
     }
+    
+     public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String Ans ) {
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+         Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+
+        return weeklyGamesAnswersList;
+    }
+
 
     public Long submittedAnswersByWeek(int weekNo) {
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));

@@ -26,5 +26,7 @@ public interface WeeklyGamesAnswersDao {
         
     List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers();
     
+    List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String ans);
+    
     Long submittedAnswersByWeek(int weekNo);
 }

@@ -29,5 +29,7 @@ public interface WeeklyGamesService {
     
     WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo);
     
+    WeeklyGames getWeekGameAnswersbyId(int id);
+    
      List<GamePlayType> getGamePlayType();
 }

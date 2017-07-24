@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
@@ -29,7 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -50,6 +55,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 //@Controller
 @RequestMapping("/api/weeklygamesanswers/")
 @Api(value = "Game", description = "Handles the game management")
+@SessionAttributes("roles")
+
+
+
 public class WeeklyGamesAnswersController {
     
     @Autowired
@@ -107,6 +116,15 @@ public class WeeklyGamesAnswersController {
         return ResponseEntity.ok(result);
     }
     
+    
+   
+
+                    
+
+                
+   
+         
+        
     /*
     
    @PostMapping(value = "/create2")
@@ -234,4 +252,18 @@ public class WeeklyGamesAnswersController {
     }
 */
     
+  private String getPrincipal() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        System.out.println("Logged in user :: " + userName);
+        return userName;
+    }
+      
+      
 }

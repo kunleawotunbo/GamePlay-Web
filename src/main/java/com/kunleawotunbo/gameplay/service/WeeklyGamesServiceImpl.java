@@ -52,6 +52,10 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     public WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo) {
         return weeklyGamesDao.getWeekGameByWeekNo(gameCategory, weekNo);
     }
+    
+     public WeeklyGames getWeekGameAnswersbyId(int id){
+          return weeklyGamesDao.getWeekGameAnswersbyId(id);
+     }
 
     public List<GamePlayType> getGamePlayType() {
         //return weeklyGamesDao.getGamePlayType();
