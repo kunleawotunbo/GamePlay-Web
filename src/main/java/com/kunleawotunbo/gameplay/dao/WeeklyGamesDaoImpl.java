@@ -122,8 +122,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         // return (WeeklyGames) crit.uniqueResult();
         //return (WeeklyGames) crit.list().get(0);
         return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
-    }
-
+    }   
+   
     public List<GamePlayType> getGamePlayType() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
