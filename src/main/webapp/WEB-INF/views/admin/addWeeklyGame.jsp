@@ -121,7 +121,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" readonly="readonly" value="${weekNo}" required ="required" />                                  
+                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weekNo}">
+                                        <form:hidden path="weekNo" id="weekNo" class="form-control" name="weekNo"  value="${weekNo}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -135,6 +136,13 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">No Of Winners<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="noOfWinners" id="noOfWinners" type="number" class="form-control" name="noOfWinners" placeholder="" required ="required" />                                 
+                                    </div>
+                                </div>  
+                                    
+                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Start Date<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="gameStartDate" id="gameStartDate" name="gameStartDate" type="text" class="form-control"  placeholder="Game Start date" required ="required" />                                 
                                     </div>
                                 </div>    
 
@@ -151,6 +159,13 @@
                                         <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="3"  placeholder="Game Rules" required ="required" />                                 
                                     </div>
                                 </div>
+                                    
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:checkbox path="enabled" id="enabled" name="enabled"  data-toggle="toggle" />                                    
+                                    </div>
+                                 </div>    
 
 
                                 <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
@@ -207,6 +222,15 @@
                         // startDate: d
 
                 });
+                
+                  $('#gameStartDate').datetimepicker({
+                //autoclose: true,
+                format: 'DD-MM-YYYY HH:mm:ss'
+                        //format: 'dd MMM yyyy HH:mm:ss zzz'
+                        // startDate: d
+
+                });
+                
                 });
                 jQuery(document).ready(function ($) {
 

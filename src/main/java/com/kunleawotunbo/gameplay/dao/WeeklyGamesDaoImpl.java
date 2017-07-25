@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -22,12 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("weeklyGamesDao")
 @Transactional
-public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implements WeeklyGamesDao{
+public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implements WeeklyGamesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     public WeeklyGames findById(int id) {
-         logger.info("id : {}", id);
+        logger.info("id : {}", id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -36,7 +37,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
     }
 
     public boolean save(WeeklyGames game) {
-      boolean success = false;
+        boolean success = false;
         try {
             //persist(game);
             saveOrUpdate(game);
@@ -61,13 +62,13 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
     }
 
     public void deleteGame(WeeklyGames game) {
-         delete(game);
+        delete(game);
     }
 
     public List<WeeklyGames> listWeeklyGames() {
-      
-        Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));  
-        
+
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
+
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGames> weeklyGamesList = (List<WeeklyGames>) criteria.list();
 
@@ -78,49 +79,50 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo) {
-            
-         logger.info("gameCategory : {}", gameCategory);
-         logger.info("weekNo : {}", weekNo);
+    public WeeklyGames getWeekGameByWeekNo(int id, int weekNo) {
+
+        logger.info("gameId : {}", id);
+        logger.info("weekNo : {}", weekNo);
+
+        boolean enabled = true;
 
         Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("gameCategory", gameCategory));
+        crit.add(Restrictions.eq("id", id));
         crit.add(Restrictions.eq("weekNo", weekNo));
+        crit.add(Restrictions.eq("enabled", enabled));
 
-       // return (WeeklyGames) crit.uniqueResult();
-       //return (WeeklyGames) crit.list().get(0);
-       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
+        // return (WeeklyGames) crit.uniqueResult();
+        //return (WeeklyGames) crit.list().get(0);
+        return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
     }
-    
+
     public WeeklyGames getWeekGameAnswers(int gameCategory, int weekNo) {
-            
-         logger.info("gameCategory : {}", gameCategory);
-         logger.info("weekNo : {}", weekNo);
+
+        logger.info("gameCategory : {}", gameCategory);
+        logger.info("weekNo : {}", weekNo);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("weekNo", weekNo));
 
-       // return (WeeklyGames) crit.uniqueResult();
-       //return (WeeklyGames) crit.list().get(0);
-       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
+        // return (WeeklyGames) crit.uniqueResult();
+        //return (WeeklyGames) crit.list().get(0);
+        return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
     }
-    
-    public WeeklyGames getWeekGameAnswersbyId(int id) {
-            
-       // logger.info("id : {}", id); 
-       // logger.info("gameCategory : {}", gameCategory);
-       // logger.info("weekNo : {}", weekNo);
 
+    public WeeklyGames getWeekGameAnswersbyId(int id) {
+
+        // logger.info("id : {}", id); 
+        // logger.info("gameCategory : {}", gameCategory);
+        // logger.info("weekNo : {}", weekNo);
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
         //crit.add(Restrictions.eq("weekNo", weekNo));
 
-       // return (WeeklyGames) crit.uniqueResult();
-       //return (WeeklyGames) crit.list().get(0);
-       return  crit.list().size()== 0 ? null : (WeeklyGames)crit.list().get(0);
+        // return (WeeklyGames) crit.uniqueResult();
+        //return (WeeklyGames) crit.list().get(0);
+        return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
     }
-
 
     public List<GamePlayType> getGamePlayType() {
         Criteria criteria = createEntityCriteria();
@@ -129,5 +131,29 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         return gamePlayTypeList;
     }
-    
+
+    public List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date) {
+        logger.info("gameCategory : {}", gameCategory);
+        logger.info("date : {}", date);
+
+        boolean enabled = true;
+
+        Criteria crit = createEntityCriteria();
+        /*
+        crit.add(Restrictions.eq("gameCategory", gameCategory));        
+        crit.add(Restrictions.eq("enabled", enabled));
+       // crit.add(Restrictions.ge("gameStartDate", date));
+       // crit.add(Restrictions.lt("gameExpiryDate", date));
+         crit.add(Restrictions.eq("weekNo", 30));
+
+         */
+
+        crit.add(Restrictions.eq("gameCategory", gameCategory));
+        crit.add(Restrictions.eq("enabled", enabled));
+        crit.add(Restrictions.le("gameStartDate", date));
+        crit.add(Restrictions.ge("gameExpiryDate", date));
+
+        return crit.list();
+    }
+
 }

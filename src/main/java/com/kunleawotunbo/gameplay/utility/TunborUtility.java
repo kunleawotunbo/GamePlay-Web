@@ -163,7 +163,8 @@ public class TunborUtility {
         return weekNo;
     }
 
-    public String imageToBase64tring(String imgPath) {
+    public String imageToBase64String(String imgPath) {
+        //logger.info("Converting path to imagestring");
         String encodedString = "";
 
         if (imgPath != null && imgPath != "") {

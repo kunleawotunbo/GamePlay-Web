@@ -60,7 +60,7 @@ public class HomeController implements Controller {
               game = new Game();
               
               if (item.getGameImgLocation() != null && item.getGameImage() != null){
-                  imageEncodedString = tunborUtility.imageToBase64tring(item.getGameImgLocation() + item.getGameImage());
+                  imageEncodedString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
                   String path = item.getGameImgLocation() + item.getGameImage();
                   
                   game.setGameImgLocation(imageEncodedString);
@@ -101,22 +101,6 @@ public class HomeController implements Controller {
         return new ModelAndView("home", model);
     }
 
-    /*
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(ModelMap model, HttpServletRequest request) {
-        System.out.println("I am inside index");
-        List<Game> gameList = null;
-        boolean status = true;
-        //gameWeek();
-        //gameList = gameService.listGames(status);
-       // logger.info("gameList :: " + gameList);
-        model.addAttribute("urlPath", request.getLocalAddr());
-        model.addAttribute("request", request);
-     //   model.addAttribute("gameList", gameList);
-
-        return "index";
-    }
-     */
     
   
 }

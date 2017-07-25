@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +28,12 @@ public interface WeeklyGamesService {
 
     public boolean isGameCodeExist(String gameCode);
     
-    WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo);
+    WeeklyGames getWeekGameByWeekNo(int id, int weekNo);
     
     WeeklyGames getWeekGameAnswersbyId(int id);
     
      List<GamePlayType> getGamePlayType();
+     
+      List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date);
+      
 }

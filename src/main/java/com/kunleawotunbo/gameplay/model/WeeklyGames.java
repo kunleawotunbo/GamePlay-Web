@@ -73,11 +73,11 @@ public class WeeklyGames implements Serializable {
     private int gameCategory;
     
     
-    @Size( max = 50)
+    @Size( max = 100)
     @Column(name = "gameText")
     private String gameText;
     
-    //@Size( max = 100)
+    @Size( max = 255)
     @Column(name = "gameImage")
     private String gameImage;
    
@@ -103,13 +103,16 @@ public class WeeklyGames implements Serializable {
      @Column(name = "isPicture")
     private byte isPicture;  
      
-     @Size( max = 50)
+     @Size( max = 1000)
     @Column(name = "gameAnswer")
     private String gameAnswer;
      
      @Column(name = "gameStartDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date gameStartDate;
+     
+     @Column(name = "enabled")
+    private boolean enabled;
 
     /**
      * @return the id
@@ -347,6 +350,20 @@ public class WeeklyGames implements Serializable {
      */
     public void setGameStartDate(Date gameStartDate) {
         this.gameStartDate = gameStartDate;
+    }
+
+    /**
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled the enabled to set
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
    
 

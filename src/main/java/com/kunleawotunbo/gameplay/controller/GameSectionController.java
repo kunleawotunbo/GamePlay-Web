@@ -12,6 +12,7 @@ import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.util.Date;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,11 @@ public class GameSectionController {
     private TunborUtility tunborUtility;
 
     @Autowired
-    private GamePlayTypeService gamePlayTypeService;
-
-    @Autowired
     private WeeklyGamesService weeklyGamesService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /*
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("getGameCategory");
@@ -53,7 +52,7 @@ public class GameSectionController {
         String encodedPictureString = "";
         
         if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
-           encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+           encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
            isPicture = true;
         }else {
             logger.info("No image");
@@ -68,11 +67,121 @@ public class GameSectionController {
         return new ModelAndView("gameSection", map);
     }
     
-      @RequestMapping(value = {"/congratulations.html"}, method = RequestMethod.GET)
-    public ModelAndView getCongratlations( ModelMap map) {
-        logger.info("congratulations");
+     */
+    @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
+    public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
+        logger.info("getGameCategory");
 
-      
+        List<WeeklyGames> weeklyGameList = null;
+        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());
+
+        // check if weeklyGameList is greater than 1
+        if (null != weeklyGameList && weeklyGameList.size() > 1) {
+            // Show list of games on the page
+            map.addAttribute("weeklyGameList", weeklyGameList);
+            map.addAttribute("gameCode", gameCode);
+
+            return new ModelAndView("gameSectionList", map);
+
+        } else {
+            WeeklyGames weeklyGame;
+            
+            /*
+            for (WeeklyGames item : weeklyGameList) {
+                weeklyGame.setId(item.getId());
+                weeklyGame.setWeekNo(item.getWeekNo());
+                weeklyGame.setPrizeOfWinners(item.getPrizeOfWinners());
+                weeklyGame.setNoOfWinners(item.getNoOfWinners());
+                weeklyGame.setGameExpiryDate(item.getGameExpiryDate());
+                weeklyGame.setGameRules(item.getGameRules());
+                weeklyGame.setGameCategory(item.getGameCategory());
+                weeklyGame.setGamePlayType(item.getGamePlayType());
+                weeklyGame.setGameText(item.getGameText());
+                weeklyGame.setGameImage(item.getGameImage());
+                weeklyGame.setGameImgLocation(item.getGameImgLocation());
+                weeklyGame.setCreatedDate(item.getCreatedDate());
+                weeklyGame.setModifiedDate(item.getModifiedDate());
+                weeklyGame.setCreatedBy(item.getCreatedBy());
+                weeklyGame.setIsPicture(item.getIsPicture());
+                weeklyGame.setGameAnswer(item.getGameAnswer());
+                weeklyGame.setGameStartDate(item.getGameStartDate());
+                weeklyGame.setEnabled(item.isEnabled());
+            }
+             */
+            //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+           weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
+           System.out.println("weeklyGame :: " + weeklyGame);
+            boolean isPicture = false;
+            String encodedPictureString = "";
+
+            if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
+                encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+                isPicture = true;
+            } else {
+                logger.info("No image");
+            }
+
+            map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
+            map.addAttribute("weeklyGame", weeklyGame);
+            map.addAttribute("isPicture", isPicture);
+            map.addAttribute("encodedPictureString", encodedPictureString);
+            map.addAttribute("gameCode", gameCode);
+
+            return new ModelAndView("gameSection", map);
+        }
+            
+
+        /*
+        
+        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+        boolean isPicture = false;
+        String encodedPictureString = "";
+
+        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
+            encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+            isPicture = true;
+        } else {
+            logger.info("No image");
+        }
+
+        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
+        map.addAttribute("weeklyGame", weeklyGame);
+        map.addAttribute("isPicture", isPicture);
+        map.addAttribute("encodedPictureString", encodedPictureString);
+
+        return new ModelAndView("gameSection", map);
+        
+        */
+    }
+    
+        @RequestMapping(value = {"/gameSectionx-{id}-{gameCode}"}, method = RequestMethod.GET)
+    public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
+        logger.info("getGameCategory");
+
+        //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
+        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+        boolean isPicture = false;
+        String encodedPictureString = "";
+        
+        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
+           encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+           isPicture = true;
+        }else {
+            logger.info("No image");
+        }
+
+
+        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
+        map.addAttribute("weeklyGame", weeklyGame);
+        map.addAttribute("isPicture", isPicture);
+        map.addAttribute("encodedPictureString", encodedPictureString);
+
+        return new ModelAndView("gameSection", map);
+    }
+
+    @RequestMapping(value = {"/congratulations.html"}, method = RequestMethod.GET)
+    public ModelAndView getCongratlations(ModelMap map) {
+        logger.info("congratulations");
 
         return new ModelAndView("congratulations", map);
     }

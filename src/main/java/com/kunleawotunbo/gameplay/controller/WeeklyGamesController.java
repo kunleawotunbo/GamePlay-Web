@@ -114,7 +114,7 @@ public class WeeklyGamesController {
             //return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
         } else {
 
-            encodedPictureString = tunborUtility.imageToBase64tring(weeklyGames.getGameImgLocation() + weeklyGames.getGameImage());
+            encodedPictureString = tunborUtility.imageToBase64String(weeklyGames.getGameImgLocation() + weeklyGames.getGameImage());
             weeklyGames.setGameImgLocation(encodedPictureString);
             
             result2.setCode("200");
