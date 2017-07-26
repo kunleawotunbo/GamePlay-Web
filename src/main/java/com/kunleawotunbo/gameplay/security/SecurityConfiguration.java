@@ -27,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -45,8 +46,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     PersistentTokenRepository tokenRepository;
 
+    //@Autowired
+    //private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    //@Autowired
+    //private LogoutSuccessHandler myLogoutSuccessHandler;
+
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
+
 
     // @Autowired
     // private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
@@ -151,42 +159,99 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     .httpBasic();
              */
-           // http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
-           /* 
+            // http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
+            /* 
            http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll()
                     .and()
             .csrf().disable();
             
-            */
-           
-           http.csrf().disable()
-                   .antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
-                    
+             */
+
+            http.csrf().disable()
+                    .antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
             ;
         }
     }
 
     @Configuration
     @Order(3)
-    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    public class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            // http.antMatcher("/**").authorizeRequests().anyRequest().permitAll();
-            //http.antMatcher("/").authorizeRequests().anyRequest().permitAll();
-            //  http.antMatcher("/admin/**").authorizeRequests().anyRequest().hasRole("ADMIN");
+        protected void configure(HttpSecurity http) throws Exception {          
+            
+            /*
+            
+              http.authorizeRequests()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/admin/**")
+                    .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                    .antMatchers("/user/updatePassword*", "/user/savePassword*", "/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password")
+                    .defaultSuccessUrl("/admin/dashboard")
+                    
+            
+            */
 
             http.authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/admin/**")
                     .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-                    .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
-                    
+                    .antMatchers("/user/updatePassword*", "/user/savePassword*", "/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     .and()
                     .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/login").usernameParameter("userName").passwordParameter("password")
-                    .defaultSuccessUrl("/admin/dashboard");
+                    .defaultSuccessUrl("/admin/dashboard")
+                    
+                    .and()
+                    .sessionManagement()
+                    //.invalidSessionUrl("/invalidSession.html")
+                   // .invalidSessionUrl("/invalidSession")
+                    .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
+                    .sessionFixation().none()
+                    .and()
+                    .logout()
+                    //.logoutSuccessHandler(myLogoutSuccessHandler)
+                    //.invalidateHttpSession(false)
+                    //.logoutSuccessUrl("/login?logSucc=true")
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()    
+                    
+                    .and()
+                    .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+                   //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+                   .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
+                    
+                /*    
+                    .failureUrl("/login?error=true")
+                    .successHandler(myAuthenticationSuccessHandler)
+                    .failureHandler(authenticationFailureHandler)
+                    .and()
+                    .sessionManagement()
+                    //.invalidSessionUrl("/invalidSession.html")
+                    .invalidSessionUrl("/invalidSession.html")
+                    .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
+                    .sessionFixation().none()
+                    .and()
+                    .logout()
+                    .logoutSuccessHandler(myLogoutSuccessHandler)
+                    .invalidateHttpSession(false)
+                    .logoutSuccessUrl("/logout.html?logSucc=true")
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()    
+                    
+                    .and()
+                    .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+                   //.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+                   .tokenValiditySeconds(86400).and().csrf().disable().exceptionHandling().accessDeniedPage("/Access_Denied");
+            
+            */
+            
+            
         }
     }
 

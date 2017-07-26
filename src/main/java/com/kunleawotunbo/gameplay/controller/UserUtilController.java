@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.PasswordBean;
 import com.kunleawotunbo.gameplay.model.User;
+import com.kunleawotunbo.gameplay.model.VerificationToken;
 import com.kunleawotunbo.gameplay.service.MailService;
 import com.kunleawotunbo.gameplay.service.PasswordResetTokenService;
 import com.kunleawotunbo.gameplay.service.UserProfileService;
@@ -222,5 +223,27 @@ public class UserUtilController {
         }
         userService.changeUserPassword(user, passwordDto.getNewPassword());
         return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
+    }
+    
+    // user activation - verification
+
+    @RequestMapping(value = "/user/resendRegistrationToken", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
+        final VerificationToken newToken = verificationTokenService.generateNewVerificationToken(existingToken);
+        final User user = userService.getUser(newToken.getToken());
+       
+        String appUrl = "";
+        //  mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
+        try {
+            appUrl = tunborUtility.getURLBase(request);
+            } catch (MalformedURLException ex) {
+                java.util.logging.Logger.getLogger(UserUtilController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+      
+            tunborUtility.mailSender(tunborUtility.constructResendVerificationTokenEmail(appUrl, request.getLocale(), newToken, user));
+            
+            
+        return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
     }
 }

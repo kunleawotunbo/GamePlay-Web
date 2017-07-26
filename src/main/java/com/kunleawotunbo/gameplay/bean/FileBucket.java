@@ -35,6 +35,7 @@ public class FileBucket {
     private byte isPicture;  
     private String gameAnswer;
     private Date gameStartDate;
+    private boolean enabled;
     private MultipartFile[] files;
     private MultipartFile file;
 
@@ -303,6 +304,20 @@ public class FileBucket {
      */
     public void setGameStartDate(Date gameStartDate) {
         this.gameStartDate = gameStartDate;
+    }
+
+    /**
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled the enabled to set
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     

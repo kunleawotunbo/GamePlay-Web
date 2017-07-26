@@ -101,7 +101,7 @@ public class GameController {
           for (Game item : gameList) {
               
               if (item.getGameImgLocation() != null && item.getGameImage() != null){
-                  imageEncodedString = tunborUtility.imageToBase64tring(item.getGameImgLocation() + item.getGameImage());
+                  imageEncodedString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
                   String path = item.getGameImgLocation() + item.getGameImage();
                   try {
                       System.out.println( "URL :: " +   new File(path).toURI().toURL());

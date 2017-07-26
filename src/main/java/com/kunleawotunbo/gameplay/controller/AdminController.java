@@ -19,27 +19,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -107,24 +99,6 @@ public class AdminController {
         return "/admin/listWeeklyGames";
     }
 
-    /**
-     * This method will provide the medium to add a new user on the home page.
-     */
-    @RequestMapping(value = {"/testupload"}, method = RequestMethod.GET)
-    public String getHome(ModelMap model) {
-
-        FileBucket weeklyGame = new FileBucket();
-
-        boolean status = true;
-        // model.addAttribute("weeklyGame", new WeeklyGames());
-        model.addAttribute("weeklyGame", new FileBucket());
-        model.addAttribute("weekNo", tunborUtility.gameWeek());
-        model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
-        model.addAttribute("gameList", gameService.listGames(status));
-        model.addAttribute("loggedinuser", getPrincipal());
-
-        return "/admin/testupload";
-    }
 
     @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String getaddWeeklyGame(ModelMap model, HttpServletRequest request) {
@@ -196,6 +170,8 @@ public class AdminController {
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
+        weeklyGames.setGameStartDate(fb.getGameStartDate());
+        weeklyGames.setEnabled(fb.isEnabled());
 
         boolean saved = weeklyGamesService.save(weeklyGames);
         // If not saved
@@ -252,8 +228,14 @@ public class AdminController {
         boolean status = true;
         WeeklyGames weeklyGame = weeklyGamesService.findById(id);
         String encodedPictureString = "";
-        encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+        //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         FileBucket fbWeeklyGame = new FileBucket();
+        
+        // If type is picture
+        if(weeklyGame.getIsPicture() == 1){
+            
+            encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+        }
 
         fbWeeklyGame.setId(weeklyGame.getId());
         fbWeeklyGame.setGameCategory(weeklyGame.getGameCategory());
@@ -267,7 +249,9 @@ public class AdminController {
         fbWeeklyGame.setGameRules(weeklyGame.getGameRules());
         fbWeeklyGame.setCreatedBy(weeklyGame.getCreatedBy());
         fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
-        //fbWeeklyGame.se
+        fbWeeklyGame.setGameStartDate(weeklyGame.getGameStartDate());
+        fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
+        
 
         //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
         model.addAttribute("weeklyGame", fbWeeklyGame);
@@ -341,6 +325,8 @@ public class AdminController {
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
+        weeklyGames.setGameStartDate(fb.getGameStartDate());
+        weeklyGames.setEnabled(fb.isEnabled());
 
         boolean saved = weeklyGamesService.updateWeeklyGame(weeklyGames);
         if (!saved) {
@@ -467,7 +453,7 @@ public class AdminController {
 
         Game game = gameService.findById(id);
         String encodedPictureString = "";
-        encodedPictureString = tunborUtility.imageToBase64tring(game.getGameImgLocation() + game.getGameImage());
+        encodedPictureString = tunborUtility.imageToBase64String(game.getGameImgLocation() + game.getGameImage());
 
         GameBean gameBean = new GameBean();
 

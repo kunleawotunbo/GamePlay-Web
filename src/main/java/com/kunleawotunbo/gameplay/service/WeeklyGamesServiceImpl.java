@@ -9,6 +9,7 @@ import com.kunleawotunbo.gameplay.dao.GamePlayTypeDao;
 import com.kunleawotunbo.gameplay.dao.WeeklyGamesDao;
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,8 +50,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public WeeklyGames getWeekGameByWeekNo(int gameCategory, int weekNo) {
-        return weeklyGamesDao.getWeekGameByWeekNo(gameCategory, weekNo);
+    public WeeklyGames getWeekGameByWeekNo(int id, int weekNo) {
+        return weeklyGamesDao.getWeekGameByWeekNo(id, weekNo);
     }
     
      public WeeklyGames getWeekGameAnswersbyId(int id){
@@ -61,5 +62,9 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
         //return weeklyGamesDao.getGamePlayType();
         return gamePlayTypeDao.getGamePlayType();
     }   
+
+    public List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date) {
+       return weeklyGamesDao.listWeekGamesByCateAndDate(gameCategory, date);
+    }
     
 }
