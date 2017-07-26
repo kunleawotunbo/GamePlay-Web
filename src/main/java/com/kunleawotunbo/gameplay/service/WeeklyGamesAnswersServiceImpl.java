@@ -50,6 +50,14 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
      public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String ans) {
       return weeklyGamesAnswersDao.listAllWeeklyGamesCorrectAnswers(ans);
     }
+     
+     public List<WeeklyGamesAnswers> listAllActiveWeekGamesAnswers(int weekNo){
+         return weeklyGamesAnswersDao.listAllActiveWeekGamesAnswers(weekNo);
+     }
+     
+     public List<WeeklyGamesAnswers> ActiveWeekGamesAnswersByCategory(int GameWeek, int id){
+          return weeklyGamesAnswersDao.ActiveWeekGamesAnswersByCategory(GameWeek,id);
+     }
 
     public Long submittedAnswersByWeek(int weekNo) {
         return weeklyGamesAnswersDao.submittedAnswersByWeek(weekNo);

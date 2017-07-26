@@ -76,8 +76,34 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return weeklyGamesAnswersList;
     }
     
+    public List<WeeklyGamesAnswers> listAllActiveWeekGamesAnswers(int weekNo) {
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        
+         Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
+         criteria.add(Restrictions.eq("weekNo", weekNo));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+
+        return weeklyGamesAnswersList;
+    }
+    
+    public List<WeeklyGamesAnswers> ActiveWeekGamesAnswersByCategory(int weekNo, int category) {
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        
+         Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
+         criteria.add(Restrictions.eq("weekNo", weekNo));
+         criteria.add(Restrictions.eq("gameId", category));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+
+        return weeklyGamesAnswersList;
+    }
+    
+    
+    
      public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String Ans ) {
         //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        
          Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
