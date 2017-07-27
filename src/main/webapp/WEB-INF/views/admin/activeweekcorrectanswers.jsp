@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listallanswers
-    Created on : 21-Jul-2017, 03:24:19
+    Document   : activeweekcorrectanswers
+    Created on : 25-Jul-2017, 03:07:11
     Author     : BELLO
 --%>
 
@@ -32,7 +32,19 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Submitted Answers</h2>
+                        <c:set var = "gameanswertype" scope = "session" value = "CategoryActiveWeekAnswer"/>
+                                  <c:choose>
+                                            <c:when test = "${answertype == gameanswertype}">
+                                                <h2><p>Current Active Week is <c:out value="${activeweek}"/>   </p>
+                                                 <p>Correct Answers List and Winners
+                                                    for <c:out value="${gamecategory}"/> Game</p></h2>
+                                            </c:when>
+                                            <c:otherwise>
+                                                 <h2>Active Week:<c:out value="${activeweek}"/>  Correct Answers List and Winners
+                                                 </h2>
+                                             </c:otherwise>
+                                        </c:choose>
+                       
 
                         <div class="clearfix"></div>
                     </div>
@@ -41,8 +53,7 @@
 
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             
-                                <tr>
-                                    <td><table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="80%">
+                               
                                            <thead>
                                         <tr>
                                      <th>S/N</th>
@@ -50,6 +61,7 @@
                                     <th>GAME ID</th>
                                     <th>USER ANSWER</th>
                                     <th>USER PHONE NUMBER</th>
+                                     <th>USER ANSWER IS:</th>
                                     
                                     
                                     
@@ -57,19 +69,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <c:set var = "useranswer" scope = "session" value = "0"/>
+                               <c:set var = "useranswer" scope = "session" value = "CORRECT"/>
                                 <c:forEach items="${gameanswerlist}" var="item" varStatus="status"  > 
                                     
-                                 
+                                 <c:if test = "${answerstatus[status.getIndex()] == useranswer}">  
                                     <tr>  
                                         
                                          
-                                         <td>&nbsp;</td>
+                                         <td><c:out value="${status.getIndex()}"/> </td>
                                         <td><c:out value="${item.weekNo}"/></td>
                                          <td><c:out value="${item.gameId}"/></td> 
                                         <td><c:out value="${item.userAnswer}"/></td>  
                                         <td><c:out value="${item.userPhoneNo}"/></td>
-                                        <!--<td><c:out value="${answerstatus[status.getIndex()]}"/></td>-->
+                                        <td style="color:green"><c:out value="${answerstatus[status.getIndex()]}"/></td>
                                         
                                        
                                         <!--<td>
@@ -79,46 +91,10 @@
                                         </td>-->
                                         
                                     </tr>  
-                                     
+                                     </c:if> 
                                 </c:forEach>  
                                      
-                            </tbody></table></td><td><table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="20%">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>USER ANSWER IS:</th>
-                                    
-                                    
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                               
-                                   <c:forEach items="${answerstatus}" var="item2"  >  
-                                    <tr>  
-                                        <c:set var = "useranswer" scope = "session" value = "WRONG"/>
-                                        <c:choose>
-                                            <c:when test = "${item2 == useranswer}">
-                                                <td style="color:red"><c:out value="${item2}"/></td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td style="color:green"><c:out value="${item2}"/></td>
-                                                
-                                             </c:otherwise>
-                                        </c:choose>
-                                        
-                                        <!--<td>
-                                            <a href="<c:url value='/admin/setup-gameType' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Setup
-                                            </a>
-                                        </td>-->
-                                        
-                                    </tr>  
-                                    
-                                  </c:forEach>
-                                     
                             </tbody>
-                        </table> </td> </tr>
                         </table>
                            
                         
@@ -131,4 +107,5 @@
 
         </div>       
     <%@ include file="../includes/footer.jsp" %>
+
 

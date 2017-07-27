@@ -27,4 +27,6 @@ public interface GameDao {
     public boolean isGameCodeExist(String gameCode);
     
     List<Game> listAllGames();
+    
+    public List<Game> GamesCategory(int id);
 }

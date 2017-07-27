@@ -85,5 +85,14 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
         
         return gameList;
     }
+    
+    public List<Game> GamesCategory(int id) {
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        criteria.add(Restrictions.eq("id", id));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Game> gameList = (List<Game>) criteria.list();
+        
+        return gameList;
+    }
 
 }

@@ -51,4 +51,8 @@ public class GameServiceImpl implements GameService{
         return gameDao.listAllGames();
     }
     
+    public List<Game> GamesCategory(int id) {
+       return gameDao.GamesCategory(id); 
+    }
+    
 }
