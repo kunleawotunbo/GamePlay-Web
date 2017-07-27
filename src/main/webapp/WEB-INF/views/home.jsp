@@ -37,12 +37,7 @@
             <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
-            <!--        
-            <div class="jumbotron">
-                        <h1>Hello, world!</h1>
-                        <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
-            </div>
-            -->
+          
             <div class="row">
 
 
@@ -54,8 +49,6 @@
 </a>
                         <div class="frontpage_square"  >
                             <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
-                                <!--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />-->
-                                <%--<img src="<c:url value='/resources/images/09.jpg' />" class="img img-responsive full-width" />--%>
                                 <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"  width="300" height="188" data-toggle="tooltip" title="${item.gameName}">
                             </a>
                         </div>
@@ -68,32 +61,7 @@
 
 
                 <!--https://codepen.io/ajaypatelaj/pen/zIBjJ -->    
-                <%-- 
-                                <div id="games" class="row list-group">
-                                       
-
-                    <c:forEach var="item" items="${gameList}" >
-                        <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />">
-                            <div class="item  col-xs-6 col-md-4" >
-                        
-                                
-                                <div class="thumbnail" style="height:100px; background-color: ${item.color}">                                   
-                                    
-                                    <div class="caption">
-                                        <h4 class="group inner list-group-item-heading" style=" text-align: center;">
-                                            ${item.gameName}</h4>
-                                     
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </c:forEach>
-
-                </div>
- 
-                --%>
-
-                <!--https://jsfiddle.net/9e87kvzp/-->
+          
                 <!--/.col-xs-6.col-lg-4-->
 
                 <!--Include bottomadverts-->
