@@ -85,9 +85,9 @@ public class User implements Serializable {
     
     @NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "USER_USER_PROFILE", 
-             joinColumns = { @JoinColumn(name = "USER_ID") }, 
-             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
+	@JoinTable(name = "user_user_profile", 
+             joinColumns = { @JoinColumn(name = "user_id") }, 
+             inverseJoinColumns = { @JoinColumn(name = "user_profile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
     
     /*
