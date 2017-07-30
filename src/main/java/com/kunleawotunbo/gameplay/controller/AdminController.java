@@ -165,7 +165,7 @@ public class AdminController {
         weeklyGames.setGameText(fb.getGameText());
         weeklyGames.setGameImage(fb.getGameImage());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
-        weeklyGames.setCreatedDate(fb.getCreatedDate());
+        weeklyGames.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
         weeklyGames.setModifiedDate(fb.getModifiedDate());
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
@@ -321,7 +321,7 @@ public class AdminController {
         weeklyGames.setGameImage(fb.getGameImage());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(fb.getCreatedDate());
-        weeklyGames.setModifiedDate(fb.getModifiedDate());
+        weeklyGames.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
@@ -412,7 +412,8 @@ public class AdminController {
         game.setGameRules(fb.getGameRules());
         game.setGameImage(fb.getGameImage());
         game.setGameImgLocation(fb.getGameImgLocation());
-        game.setCreationDate(fb.getCreationDate());
+        //game.setCreationDate(fb.getCreationDate());
+        game.setCreationDate(tunborUtility.getDate("Africa/Nigeria"));
         game.setLastModificationDate(fb.getLastModificationDate());
         game.setCreatedBy(fb.getCreatedBy());
 
@@ -510,7 +511,7 @@ public class AdminController {
         game.setGameImage(fb.getGameImage());
         game.setGameImgLocation(fb.getGameImgLocation());
         game.setCreationDate(fb.getCreationDate());
-        game.setLastModificationDate(fb.getLastModificationDate());
+        game.setLastModificationDate(tunborUtility.getDate("Africa/Nigeria"));
         game.setCreatedBy(fb.getCreatedBy());
 
         boolean saved = gameService.updateGame(game);

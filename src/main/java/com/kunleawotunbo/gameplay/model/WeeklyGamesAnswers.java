@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "Weekly_Games_Answers")
+@Table(name = "weekly_games_answers")
 public class WeeklyGamesAnswers implements Serializable {
 
     @Id

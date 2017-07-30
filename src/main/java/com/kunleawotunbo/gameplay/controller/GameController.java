@@ -102,12 +102,8 @@ public class GameController {
               
               if (item.getGameImgLocation() != null && item.getGameImage() != null){
                   imageEncodedString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
-                  String path = item.getGameImgLocation() + item.getGameImage();
-                  try {
-                      System.out.println( "URL :: " +   new File(path).toURI().toURL());
-                  } catch (MalformedURLException ex) {
-                      java.util.logging.Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                  }
+                  //String path = item.getGameImgLocation() + item.getGameImage();
+                 
               }
             
             game = new Game();
@@ -166,7 +162,8 @@ public class GameController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
         */
-        game.setCreationDate(new Date());
+        game.setCreationDate(tunborUtility.getDate("Africa/Nigeria"));
+        //game.setCreationDate(new Date());
         created = gameService.save(game);
 
         if (created) {

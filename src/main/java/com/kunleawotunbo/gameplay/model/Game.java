@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "Game")
+@Table(name = "game")
 public class Game implements Serializable {
 
     private static final long serialVersionUID = 1L;

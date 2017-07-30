@@ -19,12 +19,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -309,8 +311,7 @@ public class TunborUtility {
         return constructEmail("Reset Password", message + " \r\n" + url, user.getEmail());
     }
 
-    
-       private SimpleMailMessage constructEmail(String subject, String body, String recipientEmail) {
+    private SimpleMailMessage constructEmail(String subject, String body, String recipientEmail) {
         final SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject(subject);
         email.setText(body);
@@ -330,9 +331,8 @@ public class TunborUtility {
         email.setFrom("info@tunbor.com");
         return email;
     }
-    
-    
-     @Async
+
+    @Async
     public void mailSender(SimpleMailMessage simpleMailMessage) {
         //User user = (User) object;
         //MimeMessagePreparator preparator = getMessagePreparator(user);
@@ -342,6 +342,13 @@ public class TunborUtility {
         } catch (MailException ex) {
             System.err.println(ex.getMessage());
         }
+    }
+
+    public Date getDate(String timeZone) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
+        Date currentDate = calendar.getTime();
+        
+        return currentDate;
     }
 
 }

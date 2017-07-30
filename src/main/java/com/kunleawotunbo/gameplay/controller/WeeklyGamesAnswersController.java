@@ -109,7 +109,7 @@ public class WeeklyGamesAnswersController {
         }
         if (weeklyGamesAnswersService.saveWeeklyGamesAnswer(weeklyGamesAnswers)) {           
             result.setCode("" + HttpStatus.OK);
-            result.setMessage("WeeklyGamesAnswers Created");
+            result.setMessage("Answer submitted");
             //result.setResult((List<?>) weeklyGames);
         }
        

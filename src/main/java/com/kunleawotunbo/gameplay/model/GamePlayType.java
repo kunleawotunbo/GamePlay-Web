@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "GamePlayType")
+@Table(name = "gameplaytype")
 public class GamePlayType implements Serializable{
     
     private static final long serialVersionUID = 1L;

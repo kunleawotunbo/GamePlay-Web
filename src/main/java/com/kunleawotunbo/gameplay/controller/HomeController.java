@@ -11,6 +11,7 @@ import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class HomeController implements Controller {
             HttpServletResponse response) throws Exception {
         
         logger.info("inside HomeController");
-        
+      
         ModelMap model = new ModelMap();
         
         String test = "This is a test";
@@ -64,12 +65,7 @@ public class HomeController implements Controller {
                   String path = item.getGameImgLocation() + item.getGameImage();
                   
                   game.setGameImgLocation(imageEncodedString);
-                  
-                  try {
-                      System.out.println( "URL :: " +   new File(path).toURI().toURL());
-                  } catch (MalformedURLException ex) {
-                      java.util.logging.Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                  }
+             
                   
               }else {
                   System.out.println("item.getGameImgLocation() is null" );

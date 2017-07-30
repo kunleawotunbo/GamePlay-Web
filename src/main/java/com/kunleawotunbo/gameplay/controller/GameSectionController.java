@@ -70,10 +70,11 @@ public class GameSectionController {
      */
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
-        logger.info("getGameCategory");
+        logger.info("gameCatSection- id ::  " + id);
 
         List<WeeklyGames> weeklyGameList = null;
-        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());
+        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());
+        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria"));
 
         // check if weeklyGameList is greater than 1
         if (null != weeklyGameList && weeklyGameList.size() > 1) {
@@ -85,30 +86,7 @@ public class GameSectionController {
 
         } else {
             WeeklyGames weeklyGame;
-            
-            /*
-            for (WeeklyGames item : weeklyGameList) {
-                weeklyGame.setId(item.getId());
-                weeklyGame.setWeekNo(item.getWeekNo());
-                weeklyGame.setPrizeOfWinners(item.getPrizeOfWinners());
-                weeklyGame.setNoOfWinners(item.getNoOfWinners());
-                weeklyGame.setGameExpiryDate(item.getGameExpiryDate());
-                weeklyGame.setGameRules(item.getGameRules());
-                weeklyGame.setGameCategory(item.getGameCategory());
-                weeklyGame.setGamePlayType(item.getGamePlayType());
-                weeklyGame.setGameText(item.getGameText());
-                weeklyGame.setGameImage(item.getGameImage());
-                weeklyGame.setGameImgLocation(item.getGameImgLocation());
-                weeklyGame.setCreatedDate(item.getCreatedDate());
-                weeklyGame.setModifiedDate(item.getModifiedDate());
-                weeklyGame.setCreatedBy(item.getCreatedBy());
-                weeklyGame.setIsPicture(item.getIsPicture());
-                weeklyGame.setGameAnswer(item.getGameAnswer());
-                weeklyGame.setGameStartDate(item.getGameStartDate());
-                weeklyGame.setEnabled(item.isEnabled());
-            }
-             */
-            //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+       
            weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
            System.out.println("weeklyGame :: " + weeklyGame);
             boolean isPicture = false;
