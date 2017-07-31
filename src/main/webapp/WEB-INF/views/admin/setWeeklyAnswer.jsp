@@ -43,27 +43,44 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <div class="bs-callout bs-callout-warning hidden">
-                            <h4>Oh snap!</h4>
-                            <p>This form seems to be invalid :(</p>
-                        </div>
-
-                        <div class="bs-callout bs-callout-info hidden">
-                            <h4>Yay!</h4>
-                            <p>Everything seems to be ok :)</p>
-                        </div>
-
+                       
                         <div id="feedback"></div>
 
                         <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="setWeeklyGameAnswer-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
 
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <form:input path="weekNo" id="weekNo" type="text" class="form-control" name="weekNo" value="${weekNo}" required ="required" readonly="readonly" />                                  
-                                </div>
-                            </div>
+                           
+                              <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weekNo}">
+                                        <form:hidden path="weekNo" id="weekNo" class="form-control" name="weekNo"  value="${weekNo}" />
+                                    </div>
+                                </div>   
+                            
+                               <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Category<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${gameCategoryName}">
+                                        <form:hidden path="gameCategory" id="gameCategory" class="form-control" name="gameCategory"  value="${gameCategory}" />
+                                    </div>
+                                </div>    
+                                    
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Date Created<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weeklyGame.createdDate}">
+                                        <form:hidden path="createdDate" id="createdDate" class="form-control" name="createdDate"  value="${createdDate}" />
+                                    </div>
+                                </div>           
+                                    
+                             <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize Of Winners<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weeklyGame.prizeOfWinners}">
+                                        <form:hidden path="prizeOfWinners" id="prizeOfWinners" class="form-control" name="prizeOfWinners"  value="${prizeOfWinners}" />
+                                    </div>
+                                </div>               
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Week Answer<span class="required">*</span></label>
@@ -123,7 +140,7 @@
                 var id = $('#id').val();
                 var gameAnswer = $('#gameAnswer').val();
 
-                var createdBy = "test user";
+                var createdBy = $('#createdBy').val();
 
                 // set a variable
                 var gameExpiryDate = new Date();
@@ -148,6 +165,8 @@
                         //  display(data);
                         //   notify(data);
                         notification("Notification", "Answer added successfully.", "success");
+                        //window.location = "/admin/listWeeklyGames";
+                        location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);

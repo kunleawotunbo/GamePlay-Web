@@ -9,7 +9,9 @@ import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.model.Game;
+import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
@@ -19,6 +21,7 @@ import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,13 +57,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/api/weeklygames/")
 @Api(value = "WeeklyGames", description = "Handles the game management")
 public class WeeklyGamesController {
-
-    // http://viralpatel.net/blogs/spring-4-mvc-rest-example-json/
+    
     @Autowired
     private WeeklyGamesService weeklyGamesService;
 
     @Autowired
     private TunborUtility tunborUtility;
+
+    @Autowired
+    private GameAnswerService gameAnswerService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -72,55 +77,10 @@ public class WeeklyGamesController {
         return (List) weeklyGamesService.getWeekGameByWeekNo(1, 1);
     }
 
-    /*
-
     @GetMapping("/getWeekGameByWeekNoAndCat/{gameCategory}/{dateString}")
     public ResponseEntity getWeekGameByWeekNoAndCat(@PathVariable int gameCategory, @PathVariable String dateString) {
-        WeeklyGames weeklyGames = new WeeklyGames();
-        System.out.println("dateString :: " + dateString);
-
-       
-        DateFormat inputFormat = new SimpleDateFormat(
-                "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = inputFormat.parse(dateString);
-        } catch (ParseException ex) {
-            java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(date);
-
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        //System.out.println(formatter.format(date));
-        int weekNo = tunborUtility.gameWeekNoByDate(date);
-        weeklyGames = weeklyGamesService.getWeekGameByWeekNo(gameCategory, weekNo);
-        
-        String encodedPictureString = "";
-        
-        if (weeklyGames == null) {           
-            
-            result2.setCode("204");
-            result2.setMessage("no weekly games found!");
-            result2.setResult(weeklyGames);
-            //return new ResponseEntity(result2, HttpStatus.NOT_FOUND);
-            //return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
-        } else {
-
-            encodedPictureString = tunborUtility.imageToBase64String(weeklyGames.getGameImgLocation() + weeklyGames.getGameImage());
-            weeklyGames.setGameImgLocation(encodedPictureString);
-            
-            result2.setCode("200");
-            result2.setMessage("success");
-            result2.setResult(weeklyGames);
-        }
-        return new ResponseEntity(result2, HttpStatus.OK);
-    }
-    
-     */
-    @GetMapping("/getWeekGameByWeekNoAndCat/{gameCategory}/{dateString}")
-    public ResponseEntity getWeekGameByWeekNoAndCat(@PathVariable int gameCategory, @PathVariable String dateString) {
-        WeeklyGames weeklyGame = new WeeklyGames();
         List<WeeklyGames> weeklyGameList = null;
+        List<WeeklyGames> weeklyGameListFinal = null;
 
         System.out.println("dateString :: " + dateString);
 
@@ -132,10 +92,7 @@ public class WeeklyGamesController {
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(date);
-
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        //System.out.println(formatter.format(date));
+        System.out.println("date :: " +  date);
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
         weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
@@ -147,43 +104,48 @@ public class WeeklyGamesController {
             result2.setCode("204");
             result2.setMessage("No weekly games found!");
             result2.setResult(weeklyGameList);
-            //return new ResponseEntity(result2, HttpStatus.NOT_FOUND);
             return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
-        } else  {
-            System.out.println("Here ..");
-            //weeklyGameList.isEmpty();
-            result2.setCode("200");
-            result2.setMessage("success");
-            result2.setResult(weeklyGameList);
-            return new ResponseEntity(result2, HttpStatus.OK);
-        } 
-        /*
-        else {
+        } else {
+            WeeklyGames weeklyGame = null;
+            weeklyGameListFinal = new ArrayList<WeeklyGames>();
+            for (WeeklyGames item : weeklyGameList) {
+                weeklyGame = new WeeklyGames();
+                if (item.getGameImgLocation() != null && item.getGameImage() != null) {
+                    encodedPictureString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
+                    weeklyGame.setGameImgLocation(encodedPictureString);
 
-            weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
-            System.out.println("weeklyGame :: " + weeklyGame);
-            boolean isPicture = false;
-            //String encodedPictureString = "";
+                }
 
-            if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
-                encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
-                isPicture = true;
-                weeklyGame.setGameImgLocation(encodedPictureString);
-            } else {
-                logger.info("No image");
+                weeklyGame.setId(item.getId());
+                weeklyGame.setWeekNo(item.getWeekNo());
+                weeklyGame.setPrizeOfWinners(item.getPrizeOfWinners());
+                weeklyGame.setNoOfWinners(item.getNoOfWinners());
+                weeklyGame.setGameExpiryDate(item.getGameExpiryDate());
+                weeklyGame.setGameRules(item.getGameRules());
+                weeklyGame.setGameCategory(item.getGameCategory());
+                weeklyGame.setGamePlayType(item.getGamePlayType());
+                weeklyGame.setGameText(item.getGameText());
+                weeklyGame.setGameImage(item.getGameImage());
+                // weeklyGame.setGameImgLocation(item.getGameImgLocation());
+                weeklyGame.setCreatedDate(item.getCreatedDate());
+                weeklyGame.setModifiedDate(item.getModifiedDate());
+                weeklyGame.setCreatedBy(item.getCreatedBy());
+                weeklyGame.setIsPicture(item.getIsPicture());
+                weeklyGame.setGameAnswer(item.getGameAnswer());
+                // weeklyGame.setGameImgLocation(imageEncodedString);
+
+                weeklyGameListFinal.add(weeklyGame);
             }
-            //weeklyGame.setGameImgLocation(encodedPictureString);
 
             result2.setCode("200");
             result2.setMessage("success");
-            result2.setResult(weeklyGame);
+            //result2.setResult(weeklyGameList);
+            result2.setResult(weeklyGameListFinal);
             return new ResponseEntity(result2, HttpStatus.OK);
         }
-        */
-        
-        
+
     }
-    
+
     @GetMapping("/getWeekGameByWeekNoAndId/{weeklyGameId}/{dateString}")
     public ResponseEntity getWeekGameByWeekNoAndId(@PathVariable int weeklyGameId, @PathVariable String dateString) {
         WeeklyGames weeklyGame = new WeeklyGames();
@@ -203,8 +165,9 @@ public class WeeklyGamesController {
 
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
-       // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
-         weeklyGame = weeklyGamesService.getWeekGameByWeekNo(weeklyGameId, tunborUtility.gameWeekNoByDate(new Date()));
+        // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
+        //weeklyGame = weeklyGamesService.getWeekGameByWeekNo(weeklyGameId, tunborUtility.gameWeekNoByDate(new Date()));
+        weeklyGame = weeklyGamesService.findById(weeklyGameId);
 
         String encodedPictureString = "";
 
@@ -217,10 +180,8 @@ public class WeeklyGamesController {
             return new ResponseEntity(result2, HttpStatus.NO_CONTENT);
         } else {
 
-            //weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
             System.out.println("weeklyGame :: " + weeklyGame);
             boolean isPicture = false;
-            //String encodedPictureString = "";
 
             if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
                 encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
@@ -229,15 +190,14 @@ public class WeeklyGamesController {
             } else {
                 logger.info("No image");
             }
-            //weeklyGame.setGameImgLocation(encodedPictureString);
 
             result2.setCode("200");
             result2.setMessage("success");
             result2.setResult(weeklyGame);
-            
+
             return new ResponseEntity(result2, HttpStatus.OK);
         }
-        
+
     }
 
     @GetMapping("/listWeeklyGames")
@@ -269,31 +229,6 @@ public class WeeklyGamesController {
         return new ResponseEntity(weeklyGames, HttpStatus.OK);
     }
 
-    /*
-    @PostMapping(value = "/create")
-    public ResponseEntity createWeeklyGame(@RequestBody WeeklyGames weeklyGames, Errors errors) {
-
-        //If error, just return a 400 bad request, along with the error message
-        if (errors.hasErrors()) {
-
-            result.setCode("" + HttpStatus.BAD_REQUEST);
-            result.setMessage("" + errors.getAllErrors().toString());
-
-            return ResponseEntity.badRequest().body(result);
-
-        }
-        if (weeklyGamesService.save(weeklyGames)) {
-            // result.getResult("WeeklyGames Created");
-            result.setCode("" + HttpStatus.OK);
-            result.setMessage("WeeklyGames Created");
-            //result.setResult((List<?>) weeklyGames);
-        }
-
-        //return new ResponseEntity(weeklyGames, HttpStatus.OK);
-        return ResponseEntity.ok(result);
-    }
-    
-     */
     //@PostMapping(value = "/test")    
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public String testpost() {
@@ -310,7 +245,6 @@ public class WeeklyGamesController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(game.getId()).toUri());
-        //return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
 
@@ -318,23 +252,7 @@ public class WeeklyGamesController {
     @PostMapping(value = "/create")
     public ResponseEntity createWeeklyGame(@RequestBody FileBucket fileBucket, Errors errors) {
         System.out.println("I am here oooo");
-        /*     
-        {
-"createdBy":"sam",
-"file":"C:\fakepath\Screenshot_20170407_091143.png",
-"gameCategory":"2",
-"gameExpiryDate":"2017-07-26T22:29:16.000Z",
-"gameImage":"C:\fakepath\Screenshot_20170407_091143.png",
-"gamePlayType":"1",
-"gameRules":"ok",
-"gameText":"",
-"id": ""
-"noOfWinners":"10",
-"prizeOfWinners":"5000",
-"weekNo":"28"
-}
-        
-         */
+    
         WeeklyGames weeklyGames = new WeeklyGames();
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
@@ -367,13 +285,11 @@ public class WeeklyGamesController {
         weeklyGames.setGameAnswer(fb.getGameAnswer());
 
         if (weeklyGamesService.save(weeklyGames)) {
-            // result.getResult("WeeklyGames Created");
             result.setCode("" + HttpStatus.OK);
             result.setMessage("WeeklyGames Created");
-            //result.setResult((List<?>) weeklyGames);
+            
         }
 
-        //return new ResponseEntity(weeklyGames, HttpStatus.OK);
         return ResponseEntity.ok(result);
     }
 
@@ -408,9 +324,6 @@ public class WeeklyGamesController {
 
                 FilenameUtils fileUTIL = new FilenameUtils();
 
-                //String path = req.getServletContext().getRealPath("/image");
-                //String ext = fileUTIL.getExtension(file.getOriginalFilename());
-                //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
                 imgLocation = dir + File.separator;
                 // get files name in the array
 
@@ -418,20 +331,7 @@ public class WeeklyGamesController {
                 bytes = file.getBytes();
                 serverFileName = imgLocation + gameImage;
                 System.out.println("gameImage:: " + gameImage);
-                /*    
-                    if (i == 0) {
-                        gameImage = files[i].getOriginalFilename();
-                        bytes = files[i].getBytes();
-                        serverFileName = imgLocation + gameImage;
-                        System.out.println("gameImage:: " + gameImage);
-                    } else if (i == 1) {
-                        itemViewName = files[i].getOriginalFilename();
-                        bytes = files[i].getBytes();
-                        serverFileName = imgLocation + itemViewName;
-                        System.out.println("itemViewName:: " + itemViewName);
-                    }
-                    
-                 */
+            
                 System.out.println("serverFileName :: " + serverFileName);
 
                 // resize image
@@ -451,21 +351,6 @@ public class WeeklyGamesController {
             fileBucket.setGameImage(gameImage);
             fileBucket.setGameImgLocation(imgLocation);
 
-            //System.out.println("bytes ::" + bytes);
-            /*
-            user.setFirstName(fileBucket.getFirstName());
-            user.setLastName(fileBucket.getLastName());
-            user.setPhoneNumber(fileBucket.getPhoneNumber());
-            user.setItemView(fileBucket.getItemView());
-            user.setAddress(fileBucket.getAddress());
-            user.setPassportPhotograph(photoName);
-            user.setImgLocation(imgLocation);
-            user.setImgName(photoName);
-            user.setImgItemName(itemViewName);
-
-            saved = userService.saveUser(user);
-
-             */
         } else {
             System.out.println("File is empty / No image uploaded");
         }
@@ -474,83 +359,6 @@ public class WeeklyGamesController {
 
     }
 
-    /*
-    public FileBucket fileUpload(FileBucket fileBucket) {
-
-        MultipartFile[] files = fileBucket.getFiles();
-        String originalImgPath = "";
-        String resizedImgPath = "";
-        //String serverFileName = "";
-        String gameImage = "";
-        String itemViewName = "";
-        String imgLocation = "";
-        int width = 580;
-        int height = 450;
-        boolean saved = false;
-        String serverFileName = "";
-
-        FileBucket fb = new FileBucket();
-
-        if (files != null && files.length > 0) {
-            for (int i = 0; i < files.length; i++) {
-                try {
-
-                    byte[] bytes = null;
-                    // Creating the directory to store file
-                    String rootPath = System.getProperty("catalina.home");
-                    File dir = new File(rootPath + File.separator + "tmpFiles");
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-
-                    FilenameUtils fileUTIL = new FilenameUtils();
-
-                    //String path = req.getServletContext().getRealPath("/image");
-                    //String ext = fileUTIL.getExtension(file.getOriginalFilename());
-                    //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
-                    imgLocation = dir + File.separator;
-                    // get files name in the array
-                    if (i == 0) {
-                        gameImage = files[i].getOriginalFilename();
-                        bytes = files[i].getBytes();
-                        serverFileName = imgLocation + gameImage;
-                        System.out.println("gameImage:: " + gameImage);
-                    } else if (i == 1) {
-                        itemViewName = files[i].getOriginalFilename();
-                        bytes = files[i].getBytes();
-                        serverFileName = imgLocation + itemViewName;
-                        System.out.println("itemViewName:: " + itemViewName);
-                    }
-
-                    System.out.println("serverFileName :: " + serverFileName);
-
-                    // resize image
-                    //utility.resize(originalImgPath, resizedImgPath, width, height);
-                    //create the file on server
-                    File serverFile = new File(serverFileName);
-                    BufferedOutputStream stream = new BufferedOutputStream(
-                            new FileOutputStream(serverFile));
-                    stream.write(bytes);
-                    stream.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            fileBucket.setGameImage(gameImage);
-            fileBucket.setGameImgLocation(imgLocation);
-
-            //System.out.println("bytes ::" + bytes);
-          
-        } else {
-            System.out.println("File is empty / No image uploaded");
-        }
-
-        return fileBucket;
-
-    }
-     */
     /**
      * Set weekly game answer
      *
@@ -560,7 +368,7 @@ public class WeeklyGamesController {
      */
     @PostMapping(value = "/setanswer")
     public ResponseEntity setWeeklyGameAnswer(@RequestBody WeeklyGames wGames, Errors errors) {
-
+        boolean saved;
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
 
@@ -576,17 +384,49 @@ public class WeeklyGamesController {
         if (weeklyGames == null) {
             return new ResponseEntity("No WeeklyGames found for ID " + wGames.getId(), HttpStatus.NOT_FOUND);
         }
-        // set the game answer
-        weeklyGames.setGameAnswer(wGames.getGameAnswer());
-        weeklyGames.setModifiedDate(new Date());
-        if (weeklyGamesService.save(weeklyGames)) {
-            logger.info("Answer set for question id :: " + weeklyGames.getId());
-            result.setCode("" + HttpStatus.OK);
-            result.setMessage("WeeklyGames Created");
+
+        GameAnswer gameAnswer = new GameAnswer();
+        GameAnswer findGame = gameAnswerService.findByGameId(wGames.getId());
+        if (findGame != null) {
+            logger.info("Updating answer for game :: " + wGames.getId());
+            gameAnswer.setId(findGame.getId());
+            gameAnswer.setGameId(weeklyGames.getId());
+            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
+            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
+            gameAnswer.setGameAnswer(wGames.getGameAnswer());
+            gameAnswer.setCreatedBy(wGames.getCreatedBy());
+            gameAnswer.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
+            //gameAnswer.setModifiedBy(modifiedBy);
+            //gameAnswer.setModifiedDate(modifiedDate);
+            saved = gameAnswerService.updateGame(gameAnswer);
+
+        } else {
+            // set weekly answer for games/question
+
+            gameAnswer.setGameId(weeklyGames.getId());
+            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
+            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
+            gameAnswer.setGameAnswer(wGames.getGameAnswer());
+            gameAnswer.setCreatedBy(wGames.getCreatedBy());
+            gameAnswer.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
+            //gameAnswer.setModifiedBy(modifiedBy);
+            //gameAnswer.setModifiedDate(modifiedDate);
+            saved = gameAnswerService.save(gameAnswer);
 
         }
 
-        return ResponseEntity.ok(result);
+        if (saved) {
+            logger.info("Answer set for question id :: " + weeklyGames.getId());
+            result.setCode("" + HttpStatus.OK);
+            result.setMessage("Answer set for question");
+
+            return ResponseEntity.ok(result);
+        } else {
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Answer set for question");
+            return ResponseEntity.ok(result);
+        }
+
     }
 
     @DeleteMapping("/deleteWeeklyGameById/{id}")

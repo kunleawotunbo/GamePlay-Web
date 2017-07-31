@@ -207,12 +207,14 @@ public class AdminController {
         logger.info("Edit  editWeeklyGames id :: " + id);
         //byte status = 1;
         boolean status = true;
-        model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
+        WeeklyGames weeklyGame = weeklyGamesService.findById(id);
+        model.addAttribute("weeklyGame", weeklyGame);
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
         model.addAttribute("gameList", gameService.listGames(status));
         model.addAttribute("loggedinuser", getPrincipal());
-        model.addAttribute("edit", true);
+         model.addAttribute("gameCategoryName", gameService.findById(weeklyGame.getGameCategory()).getGameName());
+        //model.addAttribute("edit", true);
 
         return "/admin/setWeeklyAnswer";
     }

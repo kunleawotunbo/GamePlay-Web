@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author olakunle
+ * @author Olakunle Awotunbo
  */
 @Repository("gameDao")
 public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
