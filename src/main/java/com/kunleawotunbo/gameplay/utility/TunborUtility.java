@@ -19,6 +19,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -343,12 +346,24 @@ public class TunborUtility {
             System.err.println(ex.getMessage());
         }
     }
-
-    public Date getDate(String timeZone) {
+     @DateTimeFormat(pattern = "dd/MM/yyyy")
+       public Date getDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
+        
         Date currentDate = calendar.getTime();
         
         return currentDate;
+    }
+    
+     public String getFormattedDate(String timeZone) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
+        
+        Date currentDate = calendar.getTime();
+       DateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY HH:mm:ss"); 
+       
+       
+       
+        return dateFormat.format(currentDate);
     }
 
 }

@@ -150,8 +150,34 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-        crit.add(Restrictions.le("gameStartDate", date));
-        crit.add(Restrictions.ge("gameExpiryDate", date));
+        crit.add(Restrictions.ge("gameStartDate", date));
+        crit.add(Restrictions.le("gameExpiryDate", date));
+        
+
+        return crit.list();
+    }
+    
+     public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
+        //logger.info("gameCategory : {}", gameCategory);
+        logger.info("date : {}", date);
+
+        boolean enabled = true;
+
+        Criteria crit = createEntityCriteria();
+        /*
+        crit.add(Restrictions.eq("gameCategory", gameCategory));        
+        crit.add(Restrictions.eq("enabled", enabled));
+       // crit.add(Restrictions.ge("gameStartDate", date));
+       // crit.add(Restrictions.lt("gameExpiryDate", date));
+         crit.add(Restrictions.eq("weekNo", 30));
+
+         */
+
+       // crit.add(Restrictions.eq("gameCategory", gameCategory));
+        crit.add(Restrictions.eq("enabled", enabled));
+        crit.add(Restrictions.ge("gameStartDate", date));
+        crit.add(Restrictions.lt("gameExpiryDate", date));
+        
 
         return crit.list();
     }
