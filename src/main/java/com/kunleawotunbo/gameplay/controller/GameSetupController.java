@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -128,12 +129,26 @@ public class GameSetupController {
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
             //int answerid = listWeeklyGamesAnswers.get(i).getGameId();
             try {
-            String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
+            //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
+            String useranswer2 = listWeeklyGamesAnswers.get(i).getUserAnswer();
+             String useranswer = "";
+            if(useranswer2 == null){
+               useranswer = "NO ENTRY" ;
+            }else{
+            useranswer = useranswer2.toUpperCase(Locale.ENGLISH);
+            }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
-         String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         //String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
+         String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
+         String gameanswer = "";
+          if(gameanswer2 == null){
+               gameanswer = "NOT SET";
+            }else{
+         gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+          }
          AdminGameAnswer.add(gameanswer);
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
@@ -189,7 +204,7 @@ public class GameSetupController {
                       
          List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
          int WeeklyGameAnswerLength = listWeeklyGamesAnswers.size();
-          logger.info("Weekly Answer Game ID:" + String.valueOf(WeeklyGameAnswerLength));
+          logger.info("Weekly Answer Game Total Length:" + String.valueOf(WeeklyGameAnswerLength));
          // String[] AnswerStatus = new String[WeeklyGameAnswerLength];
         // for(int i=0; i < WeeklyGameAnswerLength; i++){
             int i = 0;
@@ -200,12 +215,27 @@ public class GameSetupController {
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
             //int answerid = listWeeklyGamesAnswers.get(i).getGameId();
           //  try {
-            String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
+            //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
+            
+            String useranswer2 = listWeeklyGamesAnswers.get(i).getUserAnswer();
+             String useranswer = "";
+            if(useranswer2 == null){
+               useranswer = "NO ENTRY" ;
+            }else{
+            useranswer = useranswer2.toUpperCase(Locale.ENGLISH);
+            }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
-         String gameanswer = weeklyGamesAnswer.getGameAnswer();
+        // String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
+        String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
+         String gameanswer = "";
+          if(gameanswer2 == null){
+               gameanswer = "NOT SET";
+            }else{
+         gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+          }
          AdminGameAnswer.add(gameanswer);
          
          int gamecategory = weeklyGamesAnswer.getGameCategory();
@@ -236,6 +266,7 @@ public class GameSetupController {
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
+              AdminGameAnswer.remove(i);
                i--;
               }else{
                
@@ -287,12 +318,27 @@ public class GameSetupController {
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
             //int answerid = listWeeklyGamesAnswers.get(i).getGameId();
             try {
-            String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
+           // String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
+           
+           String useranswer2 = listWeeklyGamesAnswers.get(i).getUserAnswer();
+             String useranswer = "";
+            if(useranswer2 == null){
+               useranswer = "NO ENTRY" ;
+            }else{
+            useranswer = useranswer2.toUpperCase(Locale.ENGLISH);
+            }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
-         String gameanswer = weeklyGamesAnswer.getGameAnswer();
+        // String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
+        String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
+         String gameanswer = "";
+          if(gameanswer2 == null){
+               gameanswer = "NOT SET";
+            }else{
+         gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+          }
          AdminGameAnswer.add(gameanswer);
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
@@ -366,9 +412,21 @@ public class GameSetupController {
        int GameWeek = tunborUtility.gameWeek();
        List<String> AnswerStatus = new ArrayList<String>();
         List<String> AdminGameAnswer = new ArrayList<String>();
-          
-     // List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, id);
-      List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
+        List<WeeklyGamesAnswers> listWeeklyGamesAnswers = new ArrayList();
+          //Date todaysDate = new Date();
+          List<WeeklyGames> activeWeeklyGameById = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria")); 
+         
+           logger.info("Active Week ID List Length:" + String.valueOf(activeWeeklyGameById.size()));
+            logger.info("Todays date:" + String.valueOf(tunborUtility.getDate("Africa/Nigeria")));
+           
+          for(int i=0; i < activeWeeklyGameById.size(); i++){
+              
+              
+       // listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, activeWeeklyGameById.get(i).getId());
+              
+          }
+     //List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, id);
+      listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
       int WeeklyGameAnswerLength = listWeeklyGamesAnswers.size();
          // String[] AnswerStatus = new String[WeeklyGameAnswerLength];
          //for(int i=0; i < WeeklyGameAnswerLength; i++){
@@ -377,15 +435,29 @@ public class GameSetupController {
              while(i < listWeeklyGamesAnswers.size() && listWeeklyGamesAnswers.size()!=0 ){
           
             try {
-            String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
+            //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
+            String useranswer2 = listWeeklyGamesAnswers.get(i).getUserAnswer();
+             String useranswer = "";
+            if(useranswer2 == null){
+               useranswer = "NO ENTRY" ;
+            }else{
+            useranswer = useranswer2.toUpperCase(Locale.ENGLISH);
+            }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            //function to list category id of the aanswerid
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
-         String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         //String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
+         String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
+         String gameanswer = "";
+          if(gameanswer2 == null){
+               gameanswer = "NOT SET";
+            }else{
+         gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+          }
          AdminGameAnswer.add(gameanswer);
          
-         int gamecategory = weeklyGamesAnswer.getGameCategory();
+          int gamecategory = weeklyGamesAnswer.getGameCategory();
          
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
