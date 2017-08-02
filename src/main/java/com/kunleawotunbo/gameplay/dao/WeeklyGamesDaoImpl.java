@@ -88,7 +88,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
-        crit.add(Restrictions.eq("weekNo", weekNo));
+        //crit.add(Restrictions.eq("weekNo", weekNo));
         crit.add(Restrictions.eq("enabled", enabled));
 
         // return (WeeklyGames) crit.uniqueResult();
@@ -150,8 +150,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-        crit.add(Restrictions.ge("gameStartDate", date));
-        crit.add(Restrictions.le("gameExpiryDate", date));
+       // crit.add(Restrictions.ge("gameStartDate", date));
+        //crit.add(Restrictions.le("gameExpiryDate", date));
         
 
         return crit.list();

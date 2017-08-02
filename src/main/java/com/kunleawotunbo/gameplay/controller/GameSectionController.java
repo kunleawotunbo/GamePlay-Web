@@ -138,6 +138,7 @@ public class GameSectionController {
 
         //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
         WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria"));
         boolean isPicture = false;
         String encodedPictureString = "";
         
