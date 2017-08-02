@@ -29,7 +29,7 @@
          <div class="row">
             <!-- form input mask -->
             <!--              <div class="col-md-6 col-sm-12 col-xs-12">--> 
-            <div class="col-md-10 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Submitted Answers</h2>
@@ -41,15 +41,17 @@
 
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             
-                                <tr>
-                                    <td><table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="80%">
-                                           <thead>
+                                
+  
+                                 <thead>
                                         <tr>
                                      <th>S/N</th>
                                     <th>Week No</th>
                                     <th>GAME ID</th>
+                                    <th>GAME ANSWER</th>
                                     <th>USER ANSWER</th>
                                     <th>USER PHONE NUMBER</th>
+                                    <th>USER ANSWER IS:</th>
                                     
                                     
                                     
@@ -57,19 +59,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <c:set var = "useranswer" scope = "session" value = "0"/>
+                               <c:set var = "useranswer" scope = "session" value = "CORRECT"/>
                                 <c:forEach items="${gameanswerlist}" var="item" varStatus="status"  > 
                                     
                                  
                                     <tr>  
                                         
                                          
-                                         <td>&nbsp;</td>
+                                         <td><c:out value="${status.getIndex()}"/></td>
                                         <td><c:out value="${item.weekNo}"/></td>
                                          <td><c:out value="${item.gameId}"/></td> 
-                                        <td><c:out value="${item.userAnswer}"/></td>  
+                                        <td><c:out value="${admingameanswer[status.getIndex()]}"/></td>  
+                                        <td><c:out value="${item.userAnswer}"/></td>
                                         <td><c:out value="${item.userPhoneNo}"/></td>
-                                        <!--<td><c:out value="${answerstatus[status.getIndex()]}"/></td>-->
+                                        <c:choose>
+                                            <c:when test = "${answerstatus[status.getIndex()] != useranswer}">
+                                                <td style="color:red"><c:out value="${answerstatus[status.getIndex()]}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                        <td style="color:green"><c:out value="${answerstatus[status.getIndex()]}"/></td>
+                                          </c:otherwise>
+                                        </c:choose>
                                         
                                        
                                         <!--<td>
@@ -82,43 +92,7 @@
                                      
                                 </c:forEach>  
                                      
-                            </tbody></table></td><td><table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="20%">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>USER ANSWER IS:</th>
-                                    
-                                    
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                               
-                                   <c:forEach items="${answerstatus}" var="item2"  >  
-                                    <tr>  
-                                        <c:set var = "useranswer" scope = "session" value = "WRONG"/>
-                                        <c:choose>
-                                            <c:when test = "${item2 == useranswer}">
-                                                <td style="color:red"><c:out value="${item2}"/></td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td style="color:green"><c:out value="${item2}"/></td>
-                                                
-                                             </c:otherwise>
-                                        </c:choose>
-                                        
-                                        <!--<td>
-                                            <a href="<c:url value='/admin/setup-gameType' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Setup
-                                            </a>
-                                        </td>-->
-                                        
-                                    </tr>  
-                                    
-                                  </c:forEach>
-                                     
                             </tbody>
-                        </table> </td> </tr>
                         </table>
                            
                         
