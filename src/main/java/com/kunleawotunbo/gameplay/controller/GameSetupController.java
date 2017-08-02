@@ -116,6 +116,7 @@ public class GameSetupController {
     public String listAllAnswers(ModelMap model, HttpServletRequest request) {  
            logger.info("ListAllAnswer");
           List<String> AnswerStatus = new ArrayList<String>();
+          List<String> AdminGameAnswer = new ArrayList<String>();
           //String AnswerStatus;
                       
          List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
@@ -133,6 +134,7 @@ public class GameSetupController {
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
          String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         AdminGameAnswer.add(gameanswer);
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
              
@@ -169,6 +171,7 @@ public class GameSetupController {
          //logger.info("Answer Status Length:" +String.valueOf(AnswerStatus.size()));
          model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
          model.addAttribute("answerstatus", AnswerStatus);
+         model.addAttribute("admingameanswer", AdminGameAnswer);
          model.addAttribute("loggedinuser", getPrincipal());
 
          return "/admin/listallanswers";
@@ -181,6 +184,7 @@ public class GameSetupController {
     public String listAllCategoryAnswer(@PathVariable int id, ModelMap model) {  
            logger.info("ListCategoryAnswer");
           List<String> AnswerStatus = new ArrayList<String>();
+           List<String> AdminGameAnswer = new ArrayList<String>();
           //String AnswerStatus;
                       
          List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
@@ -202,6 +206,7 @@ public class GameSetupController {
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
          String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         AdminGameAnswer.add(gameanswer);
          
          int gamecategory = weeklyGamesAnswer.getGameCategory();
          
@@ -254,6 +259,7 @@ public class GameSetupController {
          model.addAttribute("answerstatus", AnswerStatus);
          model.addAttribute("loggedinuser", getPrincipal());
           model.addAttribute("answertype", "CategoryAnswer");
+          model.addAttribute("admingameanswer", AdminGameAnswer);
           model.addAttribute("gamecategory", gameService.GamesCategory(id).get(0).getGameName());
 
          return "/admin/listanswerbycategory";
@@ -267,7 +273,9 @@ public class GameSetupController {
     public String listActiveWeekCorrectAnswers(ModelMap model, HttpServletRequest request) {  
            logger.info("ListAllAnswer");
            int GameWeek = tunborUtility.gameWeek();
+           //int GameWeek = 31;
            List<String> AnswerStatus = new ArrayList<String>();
+            List<String> AdminGameAnswer = new ArrayList<String>();
           
        List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek);
           
@@ -285,6 +293,7 @@ public class GameSetupController {
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
          String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         AdminGameAnswer.add(gameanswer);
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
              
@@ -317,6 +326,8 @@ public class GameSetupController {
          //model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
          model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
          model.addAttribute("answerstatus", AnswerStatus);
+         //model.addAttribute("answerstype", AnswerStatus);
+         model.addAttribute("admingameanswer", AdminGameAnswer);
          model.addAttribute("loggedinuser", getPrincipal());
          model.addAttribute("activeweek", GameWeek);
 
@@ -354,6 +365,7 @@ public class GameSetupController {
        // WeeklyGames weeklyGames = weeklyGamesService.findById(id);
        int GameWeek = tunborUtility.gameWeek();
        List<String> AnswerStatus = new ArrayList<String>();
+        List<String> AdminGameAnswer = new ArrayList<String>();
           
      // List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, id);
       List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
@@ -371,6 +383,7 @@ public class GameSetupController {
          WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
         
          String gameanswer = weeklyGamesAnswer.getGameAnswer();
+         AdminGameAnswer.add(gameanswer);
          
          int gamecategory = weeklyGamesAnswer.getGameCategory();
          
@@ -395,6 +408,7 @@ public class GameSetupController {
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
+              AdminGameAnswer.remove(i);
                i--;
               }else{
                
@@ -417,6 +431,7 @@ public class GameSetupController {
          model.addAttribute("gamecategory", gameService.GamesCategory(id).get(0).getGameName());
          model.addAttribute("activeweek", GameWeek);
          model.addAttribute("answertype", "CategoryActiveWeekAnswer");
+         model.addAttribute("admingameanswer", AdminGameAnswer);
 
         return "/admin/activeweekcorrectanswers";
     }
