@@ -9,6 +9,7 @@ import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
@@ -62,6 +63,9 @@ public class AdminController {
 
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
+    
+    @Autowired
+    private GameAnswerService gameAnswerService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -215,6 +219,8 @@ public class AdminController {
         model.addAttribute("loggedinuser", getPrincipal());
          model.addAttribute("gameCategoryName", gameService.findById(weeklyGame.getGameCategory()).getGameName());
         //model.addAttribute("edit", true);
+        
+        model.addAttribute("gameAnswerObject", gameAnswerService.findByGameId(id));
 
         return "/admin/setWeeklyAnswer";
     }

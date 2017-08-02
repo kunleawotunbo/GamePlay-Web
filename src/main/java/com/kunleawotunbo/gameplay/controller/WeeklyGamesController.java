@@ -394,7 +394,7 @@ public class WeeklyGamesController {
             gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
             gameAnswer.setWeekNo(weeklyGames.getWeekNo());
             gameAnswer.setGameAnswer(wGames.getGameAnswer());
-            //gameAnswer.setCreatedBy(wGames.getCreatedBy());
+            gameAnswer.setCreatedBy(findGame.getCreatedBy());
             //gameAnswer.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
             gameAnswer.setModifiedBy(wGames.getCreatedBy());
             gameAnswer.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));

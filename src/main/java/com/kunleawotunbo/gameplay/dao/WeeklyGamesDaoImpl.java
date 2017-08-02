@@ -67,7 +67,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeeklyGames() {
 
-        Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("id"));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<WeeklyGames> weeklyGamesList = (List<WeeklyGames>) criteria.list();
