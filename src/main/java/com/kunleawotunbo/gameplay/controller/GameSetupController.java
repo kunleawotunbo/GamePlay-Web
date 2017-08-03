@@ -10,10 +10,12 @@ import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -71,10 +73,11 @@ public class GameSetupController {
     @Autowired
     private WeeklyGamesService weeklyGamesService;
     
-    
-    
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
+    
+    @Autowired
+    private GameAnswerService gamesAnswerService;
 
 
     final Logger logger = LoggerFactory.getLogger(getClass());
@@ -139,8 +142,8 @@ public class GameSetupController {
             }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
-         WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
-        
+        // WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
+            GameAnswer  weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
          //String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
          String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
          String gameanswer = "";
@@ -226,7 +229,16 @@ public class GameSetupController {
             }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
-         WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
+        // WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
+         GameAnswer  weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
+         
+        /* try{
+         
+           weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
+           }
+            catch(Exception e){
+                System.err.println( e.getMessage());
+            }*/
         
         // String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
         String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
@@ -238,7 +250,9 @@ public class GameSetupController {
           }
          AdminGameAnswer.add(gameanswer);
          
-         int gamecategory = weeklyGamesAnswer.getGameCategory();
+         //int gamecategory = weeklyGamesAnswer.getGameCategory();
+         int gamecategory = weeklyGamesAnswer.getGameCategoryId();
+         
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
              
@@ -254,7 +268,7 @@ public class GameSetupController {
                       }
          
          logger.info("Weekly Answer Game ID:" + String.valueOf(listWeeklyGamesAnswers.get(i).getGameId()));
-         logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategory()));
+         logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategoryId()));
          logger.info("Week Category Name:" + gameService.GamesCategory(id).get(0).getGameName());
          logger.info("Game Answer:"+ gameanswer);
          logger.info("User Answer:" + useranswer);
@@ -262,7 +276,7 @@ public class GameSetupController {
          logger.info(AnswerStatus.get(i));
          
          //listWeeklyGamesAnswers.remove(i);
-         if(gamecategory != id){
+        /* if(gamecategory != id && i>0){
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
@@ -270,7 +284,7 @@ public class GameSetupController {
                i--;
               }else{
                
-             }
+             }*/
             i++;
           logger.info("value of weeklygameanswer length iterator:" + String.valueOf(i));  
         /*   }
@@ -329,7 +343,8 @@ public class GameSetupController {
             }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
-         WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
+        // WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid); 
+         GameAnswer  weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
         
         // String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
         String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
@@ -419,12 +434,12 @@ public class GameSetupController {
            logger.info("Active Week ID List Length:" + String.valueOf(activeWeeklyGameById.size()));
             logger.info("Todays date:" + String.valueOf(tunborUtility.getDate("Africa/Nigeria")));
            
-          for(int i=0; i < activeWeeklyGameById.size(); i++){
+         // for(int i=0; i < activeWeeklyGameById.size(); i++){
               
               
        // listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, activeWeeklyGameById.get(i).getId());
               
-          }
+         // }
      //List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, id);
       listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
       int WeeklyGameAnswerLength = listWeeklyGamesAnswers.size();
@@ -434,7 +449,7 @@ public class GameSetupController {
             // for(int i=0; i < listWeeklyGamesAnswers.size(); i++){
              while(i < listWeeklyGamesAnswers.size() && listWeeklyGamesAnswers.size()!=0 ){
           
-            try {
+           // try {
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
             String useranswer2 = listWeeklyGamesAnswers.get(i).getUserAnswer();
              String useranswer = "";
@@ -445,8 +460,18 @@ public class GameSetupController {
             }
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            //function to list category id of the aanswerid
-         WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
-        
+         //WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid); 
+          GameAnswer weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid); 
+         // if(weeklyGamesAnswer = void){
+              
+         // }
+        /* try{
+         
+           weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
+           }
+            catch(Exception e){
+                System.err.println( e.getMessage());
+            }*/
          //String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
          String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
          String gameanswer = "";
@@ -457,7 +482,7 @@ public class GameSetupController {
           }
          AdminGameAnswer.add(gameanswer);
          
-          int gamecategory = weeklyGamesAnswer.getGameCategory();
+          int gamecategory = weeklyGamesAnswer.getGameCategoryId();
          
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
@@ -471,7 +496,7 @@ public class GameSetupController {
                       }
          
          logger.info("Weekly Answer Game ID:" + String.valueOf(listWeeklyGamesAnswers.get(i).getGameId()));
-         logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategory()));
+         logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategoryId()));
          logger.info("Week Category Name:" + gameService.GamesCategory(id).get(0).getGameName());
          logger.info("Game Answer:"+ gameanswer);
          logger.info("User Answer:" + useranswer);
@@ -489,10 +514,10 @@ public class GameSetupController {
          
        
             logger.info(AnswerStatus.get(i));
-           }
+          /* }
             catch(Exception e){
                 System.err.println( e.getMessage());
-            }
+            }*/
             
          }
       
