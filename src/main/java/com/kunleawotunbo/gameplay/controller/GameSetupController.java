@@ -544,8 +544,8 @@ public class GameSetupController {
          logger.info("Week Category Name:" + gameService.GamesCategory(id).get(0).getGameName());
          logger.info("Game Answer:"+ gameanswer);
          logger.info("User Answer:" + useranswer);
-         
-         if(gamecategory != id && i > 0){
+         logger.info(AnswerStatus.get(i));
+          if(gamecategory != id && i > 0){
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
@@ -557,7 +557,7 @@ public class GameSetupController {
             i++;
          
        
-            logger.info(AnswerStatus.get(i));
+          
           /* }
             catch(Exception e){
                 System.err.println( e.getMessage());
@@ -567,7 +567,7 @@ public class GameSetupController {
              
               try{
                  
-         /* if(listWeeklyGamesAnswers.size() == 1 && (gameCategoryID.get(0) != id)) {
+          if(listWeeklyGamesAnswers.size() == 1 && (gameCategoryID.get(0) != id)) {
                 
                 listWeeklyGamesAnswers.get(0).setUserAnswer("No Answer");
                  AdminGameAnswer.set(0, "No Answer");
@@ -582,7 +582,7 @@ public class GameSetupController {
               listWeeklyGamesAnswers.remove(0);
               AnswerStatus.remove(0);
               AdminGameAnswer.remove(0);
-          }*/
+          }
                   }catch(Exception e){
                 System.err.println( e.getMessage());
             }
