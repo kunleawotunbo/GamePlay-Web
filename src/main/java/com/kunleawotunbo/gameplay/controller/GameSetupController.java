@@ -203,6 +203,7 @@ public class GameSetupController {
            logger.info("ListCategoryAnswer");
           List<String> AnswerStatus = new ArrayList<String>();
            List<String> AdminGameAnswer = new ArrayList<String>();
+           List<Integer> gameCategoryID = new ArrayList<Integer>();
           //String AnswerStatus;
                       
          List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllWeeklyGamesAnswers();
@@ -212,7 +213,7 @@ public class GameSetupController {
         // for(int i=0; i < WeeklyGameAnswerLength; i++){
             int i = 0;
             // for(int i=0; i < listWeeklyGamesAnswers.size(); i++){
-             while(i < listWeeklyGamesAnswers.size() && listWeeklyGamesAnswers.size()!=0 ){
+             while(i < listWeeklyGamesAnswers.size() && !listWeeklyGamesAnswers.isEmpty() ){
             //listWeeklyGamesAnswers.get(i).getGameId();
            // int j=0;
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer();
@@ -252,6 +253,7 @@ public class GameSetupController {
          
          //int gamecategory = weeklyGamesAnswer.getGameCategory();
          int gamecategory = weeklyGamesAnswer.getGameCategoryId();
+         gameCategoryID.add(gamecategory);
          
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
@@ -276,7 +278,7 @@ public class GameSetupController {
          logger.info(AnswerStatus.get(i));
          
          //listWeeklyGamesAnswers.remove(i);
-        /* if(gamecategory != id && i>0){
+         if(gamecategory != id && i > 0){
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
@@ -284,7 +286,7 @@ public class GameSetupController {
                i--;
               }else{
                
-             }*/
+             }
             i++;
           logger.info("value of weeklygameanswer length iterator:" + String.valueOf(i));  
         /*   }
@@ -293,10 +295,49 @@ public class GameSetupController {
             }*/
             
          }
-            
+             
+           //  if(listWeeklyGamesAnswers.size() == 1 && (gameCategoryID.get(0) != id)) {
+               
+                //List<GameAnswer> GamesAnswers = gamesAnswerService.getByGamesCategory(id);
+                
+              //  listWeeklyGamesAnswers.get(0).setUserAnswer("No Answer");
+               // listWeeklyGamesAnswers.get(0).setUserAnswer(userAnswer);
+                // AdminGameAnswer.set(0, GamesAnswers.get(0).getGameAnswer());
+              //   AdminGameAnswer.set(0, "No Answer");
+              //   AnswerStatus.set(0, "No Answer");
+                 // listWeeklyGamesAnswers.remove(0);
+                 // AnswerStatus.remove(0);
+                 // AdminGameAnswer.remove(0);
+                 
+              //   }
+             try{
+                 
+          if(listWeeklyGamesAnswers.size() == 1 && (gameCategoryID.get(0) != id)) {
+               
+                //List<GameAnswer> GamesAnswers = gamesAnswerService.getByGamesCategory(id);
+                
+                listWeeklyGamesAnswers.get(0).setUserAnswer("No Answer");
+                // AdminGameAnswer.set(0, GamesAnswers.get(0).getGameAnswer());
+                 AdminGameAnswer.set(0, "No Answer");
+                 AnswerStatus.set(0, "No Answer");
+                  listWeeklyGamesAnswers.remove(0);
+                  AnswerStatus.remove(0);
+                  AdminGameAnswer.remove(0);
+                 
+                 }
+          
+          if(listWeeklyGamesAnswers.size() > 1 && (gameCategoryID.get(0) != id)){
+              listWeeklyGamesAnswers.remove(0);
+              AnswerStatus.remove(0);
+              AdminGameAnswer.remove(0);
+          }
+                  }catch(Exception e){
+                System.err.println( e.getMessage());
+            }
          //WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(WeeklyGameAnswerLength);
          //String.valueOf(WeeklyGameAnswerLength)
-         logger.info(String.valueOf(listWeeklyGamesAnswers.size()));
+         logger.info("WeeklyGameAnswer final list size" + String.valueOf(listWeeklyGamesAnswers.size()));
+         logger.info("GameCategory First Value ID" + String.valueOf(gameCategoryID.get(0)));
          //model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
          //model.addAttribute("gameanswerlist", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
          //logger.info("Answer Status Length:" +String.valueOf(AnswerStatus.size()));
@@ -427,12 +468,13 @@ public class GameSetupController {
        int GameWeek = tunborUtility.gameWeek();
        List<String> AnswerStatus = new ArrayList<String>();
         List<String> AdminGameAnswer = new ArrayList<String>();
-        List<WeeklyGamesAnswers> listWeeklyGamesAnswers = new ArrayList();
+        //List<WeeklyGamesAnswers> listWeeklyGamesAnswers = new ArrayList();
+         List<Integer> gameCategoryID = new ArrayList<Integer>();
           //Date todaysDate = new Date();
-          List<WeeklyGames> activeWeeklyGameById = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria")); 
+         // List<WeeklyGames> activeWeeklyGameById = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria")); 
          
-           logger.info("Active Week ID List Length:" + String.valueOf(activeWeeklyGameById.size()));
-            logger.info("Todays date:" + String.valueOf(tunborUtility.getDate("Africa/Nigeria")));
+         //  logger.info("Active Week ID List Length:" + String.valueOf(activeWeeklyGameById.size()));
+         //   logger.info("Todays date:" + String.valueOf(tunborUtility.getDate("Africa/Nigeria")));
            
          // for(int i=0; i < activeWeeklyGameById.size(); i++){
               
@@ -441,13 +483,14 @@ public class GameSetupController {
               
          // }
      //List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.ActiveWeekGamesAnswersByCategory(GameWeek, id);
-      listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
+     List<WeeklyGamesAnswers> listWeeklyGamesAnswers = weeklyGamesAnswersService.listAllActiveWeekGamesAnswers(GameWeek); 
       int WeeklyGameAnswerLength = listWeeklyGamesAnswers.size();
+       logger.info("Weekly Answer Game Total Length:" + String.valueOf(WeeklyGameAnswerLength));
          // String[] AnswerStatus = new String[WeeklyGameAnswerLength];
          //for(int i=0; i < WeeklyGameAnswerLength; i++){
              int i = 0;
             // for(int i=0; i < listWeeklyGamesAnswers.size(); i++){
-             while(i < listWeeklyGamesAnswers.size() && listWeeklyGamesAnswers.size()!=0 ){
+             while(i < listWeeklyGamesAnswers.size() && !listWeeklyGamesAnswers.isEmpty() ){
           
            // try {
             //String useranswer = listWeeklyGamesAnswers.get(i).getUserAnswer().toUpperCase();
@@ -474,7 +517,7 @@ public class GameSetupController {
             }*/
          //String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
          String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
-         String gameanswer = "";
+         String gameanswer = " ";
           if(gameanswer2 == null){
                gameanswer = "NOT SET";
             }else{
@@ -483,6 +526,7 @@ public class GameSetupController {
          AdminGameAnswer.add(gameanswer);
          
           int gamecategory = weeklyGamesAnswer.getGameCategoryId();
+          gameCategoryID.add(gamecategory);
          
          
           if( gameanswer == null ? useranswer == null : gameanswer.equals(useranswer)){
@@ -501,7 +545,7 @@ public class GameSetupController {
          logger.info("Game Answer:"+ gameanswer);
          logger.info("User Answer:" + useranswer);
          
-        if(gamecategory != id){
+         if(gamecategory != id && i > 0){
             
               listWeeklyGamesAnswers.remove(i);
               AnswerStatus.remove(i);
@@ -520,6 +564,32 @@ public class GameSetupController {
             }*/
             
          }
+             
+              try{
+                 
+         /* if(listWeeklyGamesAnswers.size() == 1 && (gameCategoryID.get(0) != id)) {
+                
+                listWeeklyGamesAnswers.get(0).setUserAnswer("No Answer");
+                 AdminGameAnswer.set(0, "No Answer");
+                 AnswerStatus.set(0, "No Answer");
+                  listWeeklyGamesAnswers.remove(0);
+                  AnswerStatus.remove(0);
+                  AdminGameAnswer.remove(0);
+                 
+                 }
+          
+          if(listWeeklyGamesAnswers.size() > 1 && (gameCategoryID.get(0) != id)){
+              listWeeklyGamesAnswers.remove(0);
+              AnswerStatus.remove(0);
+              AdminGameAnswer.remove(0);
+          }*/
+                  }catch(Exception e){
+                System.err.println( e.getMessage());
+            }
+         //WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(WeeklyGameAnswerLength);
+         //String.valueOf(WeeklyGameAnswerLength)
+         logger.info("WeeklyGameAnswer final list size" + String.valueOf(listWeeklyGamesAnswers.size()));
+         //logger.info("GameCategory First Value ID" + String.valueOf(gameCategoryID.get(0)));
       
       
          model.addAttribute("gameanswerlist", listWeeklyGamesAnswers);
