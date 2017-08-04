@@ -60,9 +60,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${weeklyGamesList}" var="item">  
+                                <c:forEach items="${weeklyGamesList}" var="item" varStatus = "status">  
                                     <tr>  
-                                        <td><c:out value="${item.id}"/></td>  
+                                        <td><c:out value="${status.index + 1}"/></td>  
                                         <td><c:out value="${item.weekNo}"/></td>  
                                         <td><c:out value="${item.gameCategory}"/></td>  
                                         <td><c:out value="${item.gamePlayType}"/></td> 
