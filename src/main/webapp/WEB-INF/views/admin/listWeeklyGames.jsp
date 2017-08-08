@@ -49,8 +49,8 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>GAME WEEK</th>
                                     <th>GAME CATEGORY</th>
+                                    <th>GAME WEEK</th>                                    
                                     <th>GAME PLAY TYPE</th>
                                     <th>EXPIRY DATE</th>
                                     <th>SET ANSWER</th>
@@ -62,10 +62,10 @@
                             <tbody>
                                 <c:forEach items="${weeklyGamesList}" var="item" varStatus = "status">  
                                     <tr>  
-                                        <td><c:out value="${status.index + 1}"/></td>  
-                                        <td><c:out value="${item.weekNo}"/></td>  
-                                        <td><c:out value="${item.gameCategory}"/></td>  
-                                        <td><c:out value="${item.gamePlayType}"/></td> 
+                                        <td><c:out value="${status.index + 1}"/></td> 
+                                        <td><c:out value="${item.gameCatName}"/></td>  
+                                        <td><c:out value="${item.weekNo}"/></td>                                          
+                                        <td><c:out value="${item.gameTypeName}"/></td> 
                                         <td><c:out value="${item.gameExpiryDate}"/></td> 
                                           <td><a href="<c:url value='/admin/set-weeklyGames-Answer-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Set Answer

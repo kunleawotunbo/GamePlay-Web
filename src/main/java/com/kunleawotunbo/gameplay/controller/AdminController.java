@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
+import com.kunleawotunbo.gameplay.bean.WeeklyGamesBean;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
@@ -19,7 +20,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -63,7 +66,7 @@ public class AdminController {
 
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
-    
+
     @Autowired
     private GameAnswerService gameAnswerService;
 
@@ -97,18 +100,67 @@ public class AdminController {
     @RequestMapping(value = "/listWeeklyGames", method = RequestMethod.GET)
     public String listWeeklyGames(ModelMap model, HttpServletRequest request) {
 
-        model.addAttribute("weeklyGamesList", weeklyGamesService.listWeeklyGames());
+        List<WeeklyGames> gameList = null;
+        List<WeeklyGamesBean> weeklyGamesBeanList = null;
+        String gameCategoryCode = "";
+        String gameCatName = "";
+        String gameTypeName = "";
+
+        gameList = weeklyGamesService.listWeeklyGames();
+
+        WeeklyGamesBean weeklyGamesBean = null;
+        weeklyGamesBeanList = new ArrayList<WeeklyGamesBean>();
+        for (WeeklyGames item : gameList) {
+
+            if (item.getGameCategory() != 0) {
+                gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
+                gameCatName = gameService.findById(item.getGameCategory()).getGameName();
+                
+            }
+            if (item.getGamePlayType() == 1) {
+                gameTypeName = "Image Based";
+            }else {
+                gameTypeName = "Text Based";
+            }
+
+            weeklyGamesBean = new WeeklyGamesBean();
+
+            weeklyGamesBean.setId(item.getId());
+            weeklyGamesBean.setWeekNo(item.getWeekNo());
+            weeklyGamesBean.setPrizeOfWinners(item.getPrizeOfWinners());
+            weeklyGamesBean.setNoOfWinners(item.getNoOfWinners());
+            weeklyGamesBean.setGameExpiryDate(item.getGameExpiryDate());
+            weeklyGamesBean.setGameRules(item.getGameRules());
+            weeklyGamesBean.setGameCategory(item.getGameCategory());
+            weeklyGamesBean.setGamePlayType(item.getGamePlayType());
+            weeklyGamesBean.setGameText(item.getGameText());
+            weeklyGamesBean.setGameImage(item.getGameImage());
+            weeklyGamesBean.setGameImgLocation(item.getGameImgLocation());
+            weeklyGamesBean.setCreatedDate(item.getCreatedDate());
+            weeklyGamesBean.setModifiedDate(item.getModifiedDate());
+            weeklyGamesBean.setCreatedBy(item.getCreatedBy());
+            weeklyGamesBean.setIsPicture(item.getIsPicture());
+            weeklyGamesBean.setGameAnswer(item.getGameAnswer());
+            weeklyGamesBean.setGameStartDate(item.getGameStartDate());
+            weeklyGamesBean.setEnabled(item.isEnabled());
+            weeklyGamesBean.setGameCatCode(gameCategoryCode);
+            weeklyGamesBean.setGameCatName(gameCatName);
+            weeklyGamesBean.setGameTypeName(gameTypeName);
+
+            weeklyGamesBeanList.add(weeklyGamesBean);
+        }
+
+        model.addAttribute("weeklyGamesList", weeklyGamesBeanList);
         model.addAttribute("loggedinuser", getPrincipal());
 
         return "/admin/listWeeklyGames";
     }
 
-
+   
     @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String getaddWeeklyGame(ModelMap model, HttpServletRequest request) {
 
         boolean status = true;
-        //model.addAttribute("weeklyGame", new WeeklyGames());
         model.addAttribute("weeklyGame", new FileBucket());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
@@ -217,9 +269,9 @@ public class AdminController {
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
         model.addAttribute("gameList", gameService.listGames(status));
         model.addAttribute("loggedinuser", getPrincipal());
-         model.addAttribute("gameCategoryName", gameService.findById(weeklyGame.getGameCategory()).getGameName());
+        model.addAttribute("gameCategoryName", gameService.findById(weeklyGame.getGameCategory()).getGameName());
         //model.addAttribute("edit", true);
-        
+
         model.addAttribute("gameAnswerObject", gameAnswerService.findByGameId(id));
 
         return "/admin/setWeeklyAnswer";
@@ -238,10 +290,10 @@ public class AdminController {
         String encodedPictureString = "";
         //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         FileBucket fbWeeklyGame = new FileBucket();
-        
+
         // If type is picture
-        if(weeklyGame.getIsPicture() == 1){
-            
+        if (weeklyGame.getIsPicture() == 1) {
+
             encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         }
 
@@ -259,7 +311,6 @@ public class AdminController {
         fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
         fbWeeklyGame.setGameStartDate(weeklyGame.getGameStartDate());
         fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
-        
 
         //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
         model.addAttribute("weeklyGame", fbWeeklyGame);
@@ -507,7 +558,7 @@ public class AdminController {
             return "admin/addGameCategory";
         }
         GameBean fb = new GameBean();
-        
+
         fb = tunborUtility.fileUpload(gameBean);
 
         game.setId(fb.getId());
@@ -524,7 +575,7 @@ public class AdminController {
 
         boolean saved = gameService.updateGame(game);
         if (!saved) {
-           
+
             model.addAttribute("error", true);
             model.addAttribute("message", " Unable to  Update game category");
             return "admin/addGameCategory";
@@ -623,10 +674,7 @@ public class AdminController {
         return fileBucket;
 
     }
-    
-    
 
- 
     /**
      * This method returns the principal[user-name] of logged-in user.
      */

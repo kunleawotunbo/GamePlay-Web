@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Week Answer<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <form:input path="gameAnswer" id="gameAnswer" type="text" class="form-control" name="gameName" placeholder="Input game Name" required ="required" />                                  
+                                    <form:input path="gameAnswer" id="gameAnswer" type="text" class="form-control" name="gameName" placeholder="Set game answer here" required ="required" />                                  
                                 </div>
                             </div>
 

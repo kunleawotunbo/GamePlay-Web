@@ -117,6 +117,20 @@
                                     </div>
                                 </div>
 
+                                <c:if test="${edit}">          
+
+                                    <div class="form-group " id="gameImage2" >
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="200" height="200">
+
+                                        </div>
+                                    </div>  
+
+
+
+                                </c:if>  
+
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
@@ -138,8 +152,8 @@
                                         <form:input path="noOfWinners" id="noOfWinners" type="number" class="form-control" name="noOfWinners" placeholder="" required ="required" />                                 
                                     </div>
                                 </div>  
-                                    
-                                 <div class="form-group">
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Start Date<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="gameStartDate" id="gameStartDate" name="gameStartDate" type="text" class="form-control"  placeholder="Game Start date" required ="required" />                                 
@@ -159,13 +173,13 @@
                                         <form:textarea path="gameRules" id="gameRules" name="gameRules" type="textarea" class="form-control" rows="3"  placeholder="Game Rules" required ="required" />                                 
                                     </div>
                                 </div>
-                                    
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:checkbox path="enabled" id="enabled" name="enabled"  data-toggle="toggle" />                                    
                                     </div>
-                                 </div>    
+                                </div>    
 
 
                                 <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
@@ -222,15 +236,13 @@
                         // startDate: d
 
                 });
-                
-                  $('#gameStartDate').datetimepicker({
+                $('#gameStartDate').datetimepicker({
                 //autoclose: true,
                 format: 'DD-MM-YYYY HH:mm:ss'
                         //format: 'dd MMM yyyy HH:mm:ss zzz'
                         // startDate: d
 
                 });
-                
                 });
                 jQuery(document).ready(function ($) {
 
@@ -243,45 +255,81 @@
                 $("#success-error").slideUp(500);
                 });
                 
-                
+                /*
                 // Hide gameText div
                 $('#gameText').hide();
+                $('#gameText2').hide();
                 // Remove requred for gameText1
                 $("#gameText1").prop("required", false);
+               
                 // Hide gameImage div
                 $('#gameImage').hide();
+                $('#gameImage2').hide();
                 // Remove requred for gameImage1
                 $("#gameImage1").prop("required", false);
-            
+                
+                */
+               
+                var gameType1 = $('#gameType').val();
+                //console.log(" gameType1 ::" + gameType);
+                if (gameType1 == "1") {
+                    // Since gameType is Picutre, then Hide gameText div and remove required attribute
+                $('#gameText').hide();
+                $('#gameText2').hide();
+                $("#gameText1").prop("required", false);
+                // Show gameImage since gameType is picture and sett attribute required = true
+                $('#gameImage').show();
+                $('#gameImage2').show();
+                $("#gameImage1").prop("required", true);
+                }else {
+                // console.log(" gameType is Question ::" + gameText);
+
+                // Since gameType is text question, then Hide gameImage div and remove required attribute
+                $('#gameImage').hide();
+                $('#gameImage2').hide();
+                $("#gameImage1").prop("required", false);
+                // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                $('#gameText').show();
+                //$('#gameText2').show();
+                //$('#gameText2').hide();
+                $("#gameText1").prop("required", true);
+                }
+               
+               
+               
+                
                 $("#gameType").change(function (event) {
 
 
                 //console.log("else gameText ::" + gameText);
                 var gameType = $('#gameType').val();
-                console.log(" gameType ::" + gameType);
+                //console.log(" gameType ::" + gameType);
                 if (gameType == "1") {
                 // console.log(" gameType is Picture ::" + gameText);
                 // 
                 // Since gameType is Picutre, then Hide gameText div and remove required attribute
                 $('#gameText').hide();
+                $('#gameText2').hide();
                 $("#gameText1").prop("required", false);
                 // Show gameImage since gameType is picture and sett attribute required = true
                 $('#gameImage').show();
+                $('#gameImage2').show();
                 $("#gameImage1").prop("required", true);
                 } else {
                 // console.log(" gameType is Question ::" + gameText);
 
                 // Since gameType is text question, then Hide gameImage div and remove required attribute
                 $('#gameImage').hide();
+                $('#gameImage2').hide();
                 $("#gameImage1").prop("required", false);
                 // Show gameText since gameType is picture and sett attribute gameText1 required = true
                 $('#gameText').show();
+                //$('#gameText2').show();
                 $("#gameText1").prop("required", true);
                 }
 
 
                 });
-          
                 });
                 function searchViaAjax() {
 
