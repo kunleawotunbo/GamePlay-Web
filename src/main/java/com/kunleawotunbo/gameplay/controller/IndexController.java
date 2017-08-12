@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.UserProfile;
 import com.kunleawotunbo.gameplay.service.UserProfileService;
 import com.kunleawotunbo.gameplay.service.UserService;
@@ -69,7 +70,7 @@ public class IndexController {
         logger.info("Inside loginPage()");
         if(isCurrentAuthentcationAnanymous()){
             return "login";
-        }else {
+        }else {                     
             return "redirect:/admin/dashboard";
         }        
     }

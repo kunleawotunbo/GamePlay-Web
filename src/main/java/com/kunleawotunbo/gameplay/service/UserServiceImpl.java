@@ -95,8 +95,8 @@ public class UserServiceImpl implements UserService{
         userDao.changeUserPassword(user, password);
     }
 
-    public boolean checkIfValidOldPassword(User user, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean checkIfValidOldPassword(User user, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
     public String validateVerificationToken(String token) {

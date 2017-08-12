@@ -229,15 +229,7 @@ public class WeeklyGamesController {
         return new ResponseEntity(weeklyGames, HttpStatus.OK);
     }
 
-    //@PostMapping(value = "/test")    
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String testpost() {
-
-        System.out.println("testpost");
-
-        return "OK";
-    }
-
+ 
     @RequestMapping(value = "/createGametest", method = RequestMethod.POST)
     public ResponseEntity<Void> createGametest(@RequestBody Game game, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
 

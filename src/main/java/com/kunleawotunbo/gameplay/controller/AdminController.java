@@ -9,10 +9,12 @@ import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.WeeklyGamesBean;
 import com.kunleawotunbo.gameplay.model.Game;
+import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
+import com.kunleawotunbo.gameplay.service.UserService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
@@ -70,6 +72,9 @@ public class AdminController {
     @Autowired
     private GameAnswerService gameAnswerService;
 
+    @Autowired
+    private UserService userService;
+
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @InitBinder
@@ -81,6 +86,12 @@ public class AdminController {
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String adminDashboard(ModelMap model, HttpServletRequest request) {
+
+        // set user object in session
+        String userName = getPrincipal();
+        System.out.println("userName :: " + userName);
+        User user = userService.findUserByEmail(userName);
+        request.getSession().setAttribute("userObject", user);
 
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("loggedinuser", getPrincipal());
@@ -115,11 +126,11 @@ public class AdminController {
             if (item.getGameCategory() != 0) {
                 gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
                 gameCatName = gameService.findById(item.getGameCategory()).getGameName();
-                
+
             }
             if (item.getGamePlayType() == 1) {
                 gameTypeName = "Image Based";
-            }else {
+            } else {
                 gameTypeName = "Text Based";
             }
 
@@ -156,7 +167,6 @@ public class AdminController {
         return "/admin/listWeeklyGames";
     }
 
-   
     @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String getaddWeeklyGame(ModelMap model, HttpServletRequest request) {
 

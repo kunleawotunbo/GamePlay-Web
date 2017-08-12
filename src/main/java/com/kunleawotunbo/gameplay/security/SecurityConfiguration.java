@@ -151,21 +151,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         protected void configure(HttpSecurity http) throws Exception {
-            /*    
-            http
-                    .antMatcher("/api/**")
-                    .authorizeRequests()
-                    .anyRequest().hasRole("ADMIN")
-                    .and()
-                    .httpBasic();
-             */
-            // http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();
-            /* 
-           http.antMatcher("/api/**").authorizeRequests().anyRequest().permitAll()
-                    .and()
-            .csrf().disable();
-            
-             */
+       
 
             http.csrf().disable()
                     .antMatcher("/api/**").authorizeRequests().anyRequest().permitAll();

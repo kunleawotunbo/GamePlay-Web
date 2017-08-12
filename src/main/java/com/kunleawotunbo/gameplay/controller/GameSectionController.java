@@ -41,33 +41,7 @@ public class GameSectionController {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /*
-    @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
-    public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
-        logger.info("getGameCategory");
-
-        //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
-        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
-        boolean isPicture = false;
-        String encodedPictureString = "";
-        
-        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
-           encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
-           isPicture = true;
-        }else {
-            logger.info("No image");
-        }
-
-
-        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
-        map.addAttribute("weeklyGame", weeklyGame);
-        map.addAttribute("isPicture", isPicture);
-        map.addAttribute("encodedPictureString", encodedPictureString);
-
-        return new ModelAndView("gameSection", map);
-    }
-    
-     */
+ 
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("gameCatSection- id ::  " + id);
@@ -109,27 +83,6 @@ public class GameSectionController {
         }
             
 
-        /*
-        
-        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
-        boolean isPicture = false;
-        String encodedPictureString = "";
-
-        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
-            encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
-            isPicture = true;
-        } else {
-            logger.info("No image");
-        }
-
-        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
-        map.addAttribute("weeklyGame", weeklyGame);
-        map.addAttribute("isPicture", isPicture);
-        map.addAttribute("encodedPictureString", encodedPictureString);
-
-        return new ModelAndView("gameSection", map);
-        
-        */
     }
     
         @RequestMapping(value = {"/gameSectionx-{id}-{gameCode}"}, method = RequestMethod.GET)

@@ -14,11 +14,12 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<c:url value='/resources/images/img.jpg' />" alt="">${loggedinuser}                   
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">                    
+                    <img src="<c:url value='/resources/images/img.jpg' />" alt="">${userObject.firstName}        
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="<%=request.getContextPath()%>/admin/changeMyPassword">Change Password</a></li>
                     <li><a href="javascript:;"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
