@@ -32,6 +32,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -365,5 +366,15 @@ public class TunborUtility {
        
         return dateFormat.format(currentDate);
     }
+     
+     public void logoutUser(HttpServletRequest request){
+        HttpSession session= request.getSession(false);
+        SecurityContextHolder.clearContext();
+        if(session != null) {
+            session.invalidate();
+        }
+
+    }
+
 
 }

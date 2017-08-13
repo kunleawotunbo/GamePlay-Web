@@ -1,9 +1,8 @@
 <%-- 
-    Document   : changeMyPassword
-    Created on : Aug 10, 2017, 1:04:04 PM
+    Document   : changeMyPasswordBACKUP_13082017
+    Created on : Aug 13, 2017, 5:32:56 PM
     Author     : Olakunle Awotunbo
 --%>
-
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/sidebar-menu.jsp" %>
 <%@ include file="../includes/top-navigation.jsp" %>
@@ -136,18 +135,17 @@
 
 
                 var json = {
-                    "newPassword": pass,
+                    "newpassword": pass,
                     
-                    "oldPassword": oldpassword,
+                    "oldpassword": oldpassword,
                    // "createdBy": createdBy
                 };
 
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                   // url: "${pageContext.request.contextPath}/api/weeklygames/doPasschange",
-                    url: "${pageContext.request.contextPath}/admin/changeMyPassword",
-                            
+                   
+                            url: "${pageContext.request.contextPath}/changeMyPassword2",
                    
                     data: JSON.stringify(json),
                     dataType: 'json',

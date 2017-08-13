@@ -7,12 +7,10 @@ package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
-import com.kunleawotunbo.gameplay.bean.FileBucket;
-import com.kunleawotunbo.gameplay.model.User;
-import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
 import java.util.Date;
 import org.slf4j.Logger;
@@ -51,6 +49,9 @@ public class WeeklyGamesAnswersController {
     
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
+    
+    @Autowired
+    private TunborUtility tunborUtility;
     
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();
@@ -101,7 +102,7 @@ public class WeeklyGamesAnswersController {
         return ResponseEntity.ok(result);
     }   
     
-
+    
     
   private String getPrincipal() {
         String userName = null;

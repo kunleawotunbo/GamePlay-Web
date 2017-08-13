@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.PasswordBean;
 import com.kunleawotunbo.gameplay.model.User;
@@ -31,7 +32,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +60,8 @@ public class UserUtilController {
 
     @Autowired
     private MessageSource messages;
+    
+    CustomResponseBody2 result2 = new CustomResponseBody2();
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -241,5 +243,5 @@ public class UserUtilController {
         tunborUtility.mailSender(tunborUtility.constructResendVerificationTokenEmail(appUrl, request.getLocale(), newToken, user));
 
         return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
-    }
+    }   
 }

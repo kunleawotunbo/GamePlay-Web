@@ -441,10 +441,7 @@ public class WeeklyGamesController {
         // weeklyGames =
         weeklyGamesService.updateWeeklyGame(weeklyGames);
 
-        //if (null == customer) {
-        //    return new ResponseEntity("No Customer found for ID " + id, HttpStatus.NOT_FOUND);
-        // }
         return new ResponseEntity(id, HttpStatus.OK);
-    }
+    }    
 
 }

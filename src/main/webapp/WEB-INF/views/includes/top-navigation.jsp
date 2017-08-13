@@ -20,7 +20,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="<%=request.getContextPath()%>/admin/changeMyPassword">Change Password</a></li>
-                    <li><a href="javascript:;"> Profile</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/updateProfile"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>

@@ -9,7 +9,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -35,10 +37,14 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @EnableAsync
 @ComponentScan(basePackages = "com.kunleawotunbo")
+@PropertySource(value = { "classpath:application.properties" })
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     RoleToUserProfileConverter roleToUserProfileConverter;
+    
+    @Autowired
+    private Environment environment;
 
     /**
      * Configure ViewResolvers to deliver preferred views.
@@ -116,11 +122,36 @@ public class AppConfig extends WebMvcConfigurerAdapter {
      * @return
      * http://websystique.com/spring/spring-4-email-using-velocity-freemaker-template-library/
      */
+    
+    /*
     @Bean
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
         //Using gmail
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("okstar45@gmail.com");
+        mailSender.setPassword("1@Yemisi");
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
+        javaMailProperties.put("mail.transport.protocol", "smtp");
+        //javaMailProperties.put("mail.debug", "true");
+
+        mailSender.setJavaMailProperties(javaMailProperties);
+
+        return mailSender;
+    }
+    
+    */
+        @Bean
+    public JavaMailSender getMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        //Using gmail
+        
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("okstar45@gmail.com");
