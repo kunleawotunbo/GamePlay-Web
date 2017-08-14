@@ -86,6 +86,20 @@ public class IndexController {
         }
         return "redirect:/login?logout";
     }
+    
+    
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String aboutPage() {
+          
+        return "about";
+    }
+    
+     @RequestMapping(value = "/contact", method = RequestMethod.GET)
+    public String contactPage() {
+          
+        return "contact";
+    }
+    
 
     /**
      * This method returns the principal[user-name] of logged-in user.
