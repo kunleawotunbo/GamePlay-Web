@@ -124,7 +124,7 @@
                                     <div class="form-group" >
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" />                                 
+                                            <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                             <p>Your phone number will be used to contact you if you win.</p> 
                                         </div>
                                        

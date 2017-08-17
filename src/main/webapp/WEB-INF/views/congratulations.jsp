@@ -39,7 +39,7 @@
                             Go to <a href="<c:url value='/' />">Homepage</a>
                         </span>
                         <span class="well floatLeft">
-                            <a href="##" onclick="goBack()">Try another answer</a>
+                            <a href="##" onclick="window.history.back()">Try another answer</a>
                         </span>
 
                         <!--                        
@@ -88,7 +88,7 @@
 
 
         <script>
-            function goBack() {
-                window.history.back();
-            }
+//            function goBack() {
+//                window.history.back();
+//            }
         </script>
