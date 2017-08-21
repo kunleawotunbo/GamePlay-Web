@@ -25,6 +25,7 @@ public class GameBean {
     private String color;
     private String gameRules;
     private String gameImage;
+    private String gameImage2;
     private String gameImgLocation;
      private MultipartFile[] files;
     private MultipartFile file;
@@ -223,5 +224,19 @@ public class GameBean {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the gameImage2
+     */
+    public String getGameImage2() {
+        return gameImage2;
+    }
+
+    /**
+     * @param gameImage2 the gameImage2 to set
+     */
+    public void setGameImage2(String gameImage2) {
+        this.gameImage2 = gameImage2;
     }
 }

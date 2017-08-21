@@ -230,6 +230,7 @@ public class AdminController {
         weeklyGames.setGamePlayType(fb.getGamePlayType());
         weeklyGames.setGameText(fb.getGameText());
         weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
         weeklyGames.setModifiedDate(fb.getModifiedDate());
@@ -298,6 +299,7 @@ public class AdminController {
         boolean status = true;
         WeeklyGames weeklyGame = weeklyGamesService.findById(id);
         String encodedPictureString = "";
+        String encodedGameImage2 = "";
         //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         FileBucket fbWeeklyGame = new FileBucket();
 
@@ -305,6 +307,11 @@ public class AdminController {
         if (weeklyGame.getIsPicture() == 1) {
 
             encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+            
+            if (weeklyGame.getGameImage2() != null){
+                encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
+            }
+            
         }
 
         fbWeeklyGame.setId(weeklyGame.getId());
@@ -330,6 +337,7 @@ public class AdminController {
         model.addAttribute("loggedinuser", getPrincipal());
         model.addAttribute("edit", true);
         model.addAttribute("encodedPictureString", encodedPictureString);
+        model.addAttribute("encodedGameImage2", encodedGameImage2);
 
         return "/admin/addWeeklyGame";
     }
@@ -388,6 +396,7 @@ public class AdminController {
         weeklyGames.setGamePlayType(fb.getGamePlayType());
         weeklyGames.setGameText(fb.getGameText());
         weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(fb.getCreatedDate());
         weeklyGames.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));
@@ -616,7 +625,7 @@ public class AdminController {
         String resizedImgPath = "";
         //String serverFileName = "";
         String gameImage = "";
-        String itemViewName = "";
+        String gameImage2 = "";
         String imgLocation = "";
         int width = 580;
         int height = 450;
@@ -651,10 +660,10 @@ public class AdminController {
                         serverFileName = imgLocation + gameImage;
                         System.out.println("gameImage:: " + gameImage);
                     } else if (i == 1) {
-                        itemViewName = files[i].getOriginalFilename();
+                        gameImage2 = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        serverFileName = imgLocation + itemViewName;
-                        System.out.println("itemViewName:: " + itemViewName);
+                        serverFileName = imgLocation + gameImage2;
+                        System.out.println("gameImage2:: " + gameImage2);
                     }
 
                     System.out.println("serverFileName :: " + serverFileName);
@@ -675,8 +684,9 @@ public class AdminController {
 
             fileBucket.setGameImage(gameImage);
             fileBucket.setGameImgLocation(imgLocation);
+            fileBucket.setGameImage2(gameImage2);
 
-            //System.out.println("bytes ::" + bytes);
+            System.out.println("fileBucket.get ::" + fileBucket.getGameImage2());
         } else {
             System.out.println("File is empty / No image uploaded");
         }

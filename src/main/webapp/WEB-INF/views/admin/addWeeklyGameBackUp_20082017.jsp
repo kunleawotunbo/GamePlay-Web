@@ -1,4 +1,10 @@
 <%-- 
+    Document   : addWeeklyGameBackUp_20082017
+    Created on : Aug 20, 2017, 3:44:41 PM
+    Author     : Olakunle Awotunbo
+--%>
+
+<%-- 
     Document   : addWeeklyGame
     Created on : Jun 16, 2017, 9:27:44 PM
     Author     : Olakunle Awotunbo
@@ -116,9 +122,10 @@
                                         <form:input path="files" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
                                     </div>
                                 </div>
+
                                 <c:if test="${edit}">          
 
-                                    <div class="form-group " id="gameImage1edit" >
+                                    <div class="form-group " id="gameImage2" >
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
                                             <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="200" height="200">
@@ -129,27 +136,6 @@
 
 
                                 </c:if>  
-
-                                <!--secocnd image-->
-                                <div class="form-group" id="gameImage2" >
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage 2<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="files" id="gameImage2" name="gameImage2" type="file" class="form-control"  placeholder="Game Image 2"  accept=".png, .jpg, .jpeg" />                                 
-                                    </div>
-                                </div>    
-
-                                <c:if test="${edit}">          
-
-                                    <div class="form-group " id="gameImage2edit" >
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
-                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                            <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="200" height="200">
-
-                                        </div>
-                                    </div>  
-
-                                </c:if>  
-
 
 
                                 <div class="form-group">
@@ -274,57 +260,50 @@
                 $("#success-error").fadeTo(2000, 500).slideUp(500, function(){
                 $("#success-error").slideUp(500);
                 });
+                
                 /*
-                 // Hide gameText div
-                 $('#gameText').hide();
-                 $('#gameText2').hide();
-                 // Remove requred for gameText1
-                 $("#gameText1").prop("required", false);
-                 
-                 // Hide gameImage div
-                 $('#gameImage').hide();
-                 $('#gameImage1edit').hide();
-                 // Remove requred for gameImage1
-                 $("#gameImage1").prop("required", false);
-                 
-                 */
-
+                // Hide gameText div
+                $('#gameText').hide();
+                $('#gameText2').hide();
+                // Remove requred for gameText1
+                $("#gameText1").prop("required", false);
+               
+                // Hide gameImage div
+                $('#gameImage').hide();
+                $('#gameImage2').hide();
+                // Remove requred for gameImage1
+                $("#gameImage1").prop("required", false);
+                
+                */
+               
                 var gameType1 = $('#gameType').val();
                 //console.log(" gameType1 ::" + gameType);
                 if (gameType1 == "1") {
-                // Since gameType is Picutre, then Hide gameText div and remove required attribute
+                    // Since gameType is Picutre, then Hide gameText div and remove required attribute
                 $('#gameText').hide();
                 $('#gameText2').hide();
                 $("#gameText1").prop("required", false);
                 // Show gameImage since gameType is picture and sett attribute required = true
                 $('#gameImage').show();
-                $('#gameImage1edit').show();
-                $("#gameImage1").prop("required", true);
-                //show the second image upload field
                 $('#gameImage2').show();
-                $('#gameImage2edit').show();
-                $("#gameImage2").prop("required", true);
-                } else {
+                $("#gameImage1").prop("required", true);
+                }else {
                 // console.log(" gameType is Question ::" + gameText);
 
                 // Since gameType is text question, then Hide gameImage div and remove required attribute
                 $('#gameImage').hide();
-                $('#gameImage1edit').hide();
-                $("#gameImage1").prop("required", false);
-                // Hide the second image upload field
                 $('#gameImage2').hide();
-                $('#gameImage2edit').hide();
-                $("#gameImage2").prop("required", false);
+                $("#gameImage1").prop("required", false);
                 // Show gameText since gameType is picture and sett attribute gameText1 required = true
                 $('#gameText').show();
                 //$('#gameText2').show();
                 //$('#gameText2').hide();
                 $("#gameText1").prop("required", true);
                 }
-
-
-
-
+               
+               
+               
+                
                 $("#gameType").change(function (event) {
 
 
@@ -340,23 +319,15 @@
                 $("#gameText1").prop("required", false);
                 // Show gameImage since gameType is picture and sett attribute required = true
                 $('#gameImage').show();
-                $('#gameImage1edit').show();
-                $("#gameImage1").prop("required", true);
-                // Show the second image upload field on drop down changed to text based
                 $('#gameImage2').show();
-                $('#gameImage2edit').show();
-                $("#gameImage2").prop("required", true);
+                $("#gameImage1").prop("required", true);
                 } else {
                 // console.log(" gameType is Question ::" + gameText);
 
                 // Since gameType is text question, then Hide gameImage div and remove required attribute
                 $('#gameImage').hide();
-                $('#gameImage1edit').hide();
-                $("#gameImage1").prop("required", false);
-                // Hide the second image field
                 $('#gameImage2').hide();
-                $('#gameImage2edit').hide();
-                $("#gameImage2").prop("required", false);
+                $("#gameImage1").prop("required", false);
                 // Show gameText since gameType is picture and sett attribute gameText1 required = true
                 $('#gameText').show();
                 //$('#gameText2').show();
@@ -471,7 +442,6 @@
                 var prizeOfWinners = $('#prizeOfWinners').val();
                 var noOfWinners = $('#noOfWinners').val();
                 var file = $('#gameImage1').val();
-                var file2 = $('#gameImage2').val();
                 // Do some validation
                 if (gameCategory === "") {
                 alert('Please choose a game category');
@@ -508,22 +478,6 @@
                 console.log("I am insie checking");
                 alert("Please upload Image File Extensions .jpg,.png,.jpeg");
                 $('#file').focus();
-                return false;
-                }
-                console.log("Outside checking");
-                }
-
-                if (file2.length == 0) {
-                alert('Please upload an item');
-                $('#file2').focus();
-                return false;
-                } else {
-
-                var checkimg = image.toLowerCase();
-                if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
-                console.log("I am insie checking");
-                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
-                $('#file2').focus();
                 return false;
                 }
                 console.log("Outside checking");

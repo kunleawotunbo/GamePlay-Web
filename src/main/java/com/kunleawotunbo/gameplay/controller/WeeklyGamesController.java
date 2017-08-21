@@ -98,6 +98,7 @@ public class WeeklyGamesController {
         weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
 
         String encodedPictureString = "";
+        String encodedGameImage2 = "";
 
         if (weeklyGameList.isEmpty() || weeklyGameList == null) {
             logger.info("No weekly games found! ");
@@ -113,6 +114,11 @@ public class WeeklyGamesController {
                 if (item.getGameImgLocation() != null && item.getGameImage() != null) {
                     encodedPictureString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
                     weeklyGame.setGameImgLocation(encodedPictureString);
+                    if (item.getGameImage2() != null) {                      
+                    encodedGameImage2 = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage2());
+                    
+                    }
+                    weeklyGame.setGameImage2(encodedGameImage2);
 
                 }
 
@@ -170,6 +176,7 @@ public class WeeklyGamesController {
         weeklyGame = weeklyGamesService.findById(weeklyGameId);
 
         String encodedPictureString = "";
+        String encodedGameImage2 = "";
 
         if (weeklyGame == null) {
 
@@ -187,6 +194,10 @@ public class WeeklyGamesController {
                 encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
                 isPicture = true;
                 weeklyGame.setGameImgLocation(encodedPictureString);
+                if (weeklyGame.getGameImage2() != null) {
+                    encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
+                    }
+                    weeklyGame.setGameImage2(encodedGameImage2);
             } else {
                 logger.info("No image");
             }
@@ -230,15 +241,7 @@ public class WeeklyGamesController {
     }
 
  
-    @RequestMapping(value = "/createGametest", method = RequestMethod.POST)
-    public ResponseEntity<Void> createGametest(@RequestBody Game game, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
 
-        System.out.println("createGame");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(game.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.OK);
-    }
 
     //@RequestMapping(value = "/create", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
     @PostMapping(value = "/create")
