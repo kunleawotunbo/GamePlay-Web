@@ -1,8 +1,9 @@
 <%-- 
-    Document   : home
-    Created on : Jun 19, 2017, 7:28:38 PM
+    Document   : homenew
+    Created on : Aug 21, 2017, 10:08:46 PM
     Author     : Olakunle Awotunbo
 --%>
+
 
 <!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
@@ -45,8 +46,7 @@
 
                     <!--                            <div class="item  col-xs-12 col-md-6">-->
                     <div class="item  col-xs-6 col-md-4" >
-                                    <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >        <h3>${item.gameName}</h3> 
-</a>
+                        <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
                         <div class="frontpage_square"  >
                             <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
                                 <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"  width="300" height="188" data-toggle="tooltip" title="${item.gameName}">

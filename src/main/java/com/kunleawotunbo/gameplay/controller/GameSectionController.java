@@ -63,6 +63,7 @@ public class GameSectionController {
             weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
             System.out.println("weeklyGame :: " + weeklyGame);
             boolean isPicture = false;
+            boolean hasGameImage2 = false;
             String encodedPictureString = "";
             String encodedGameImage2 = "";
 
@@ -70,6 +71,7 @@ public class GameSectionController {
                 encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
                 if (weeklyGame.getGameImage2() != null) {
                     encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
+                    hasGameImage2 = true;
                 }
                 isPicture = true;
             } else {
@@ -81,6 +83,7 @@ public class GameSectionController {
             map.addAttribute("isPicture", isPicture);
             map.addAttribute("encodedPictureString", encodedPictureString);
             map.addAttribute("encodedGameImage2", encodedGameImage2);
+            map.addAttribute("hasGameImage2", hasGameImage2);
             map.addAttribute("gameCode", gameCode);
 
             return new ModelAndView("gameSection", map);

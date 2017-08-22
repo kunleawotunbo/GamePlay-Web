@@ -54,13 +54,18 @@
                                                         <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="400" height="400">
                                                     </div>
                                                 </div>
-                                                    
+                                                  
+                                                <c:if test="${hasGameImage2}">          
+
                                                 <div class="form-group" id="gameImage" >
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage 2<span class="required">*</span></label>
                                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                                         <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="400" height="400">
                                                     </div>
-                                                </div>    
+                                                </div>  
+                                                 
+                                                </c:if> 
+                                                    
                                             </c:when>
                                             <c:otherwise>
 
