@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.PasswordBean;
 import com.kunleawotunbo.gameplay.model.User;
@@ -31,7 +32,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,12 +54,14 @@ public class UserUtilController {
     VerificationTokenService verificationTokenService;
     @Autowired
     UserProfileService userProfileService;
-    
+
     @Autowired
     PasswordResetTokenService passwordResetTokenService;
 
     @Autowired
     private MessageSource messages;
+    
+    CustomResponseBody2 result2 = new CustomResponseBody2();
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -103,29 +105,27 @@ public class UserUtilController {
 
         return "forgotPassword";
     }
-    
-      @RequestMapping(value = "/updatePassword.html", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/updatePassword.html", method = RequestMethod.GET)
     public String updatePassword(ModelMap model, HttpServletRequest request) {
 
-       
         return "updatePassword";
     }
-    
+
     @RequestMapping(value = {"/updatePassword.html"}, method = RequestMethod.POST)
     public String updatePassword(@Valid PasswordBean passwordBean,
             ModelMap model, HttpServletRequest request) {
-        
+
         final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
+                .getAuthentication()
+                .getPrincipal();
         userService.changeUserPassword(user, passwordBean.getNewPassword());
         System.out.println("Updating password for email :: " + user.getEmail());
-        
-         model.addAttribute("saved", true);
-            model.addAttribute("message", "Password reset is successful");
-            
+
+        model.addAttribute("saved", true);
+        model.addAttribute("message", "Password reset is successful");
+
         //return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
-        
         return "login";
     }
 
@@ -166,8 +166,8 @@ public class UserUtilController {
         return "forgotPassword";
 
     }
-    
-      @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
     public String showChangePasswordPage(final Locale locale, final Model model, @RequestParam("id") final long id, @RequestParam("token") final String token) {
         final String result = passwordResetTokenService.validatePasswordResetToken(id, token);
         if (result != null) {
@@ -199,51 +199,49 @@ public class UserUtilController {
         }
         return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
     }
-    
-      @RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse savePassword(final Locale locale, @Valid PasswordBean passwordBean) {
         final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
+                .getAuthentication()
+                .getPrincipal();
         userService.changeUserPassword(user, passwordBean.getNewPassword());
         return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
     }
-    
-        // change user password
+
+    // change user password
     @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordBean passwordDto) {
         final User user = userService.findUserByEmail(((User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal()).getEmail());
+                .getAuthentication()
+                .getPrincipal()).getEmail());
         if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
             //throw new InvalidOldPasswordException();
-            System.out.println("Invalid Ola Passworod");
+            System.out.println("Invalid Old Passworod");
         }
         userService.changeUserPassword(user, passwordDto.getNewPassword());
         return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
     }
-    
-    // user activation - verification
 
+    // user activation - verification
     @RequestMapping(value = "/user/resendRegistrationToken", method = RequestMethod.GET)
     @ResponseBody
     public GenericResponse resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
         final VerificationToken newToken = verificationTokenService.generateNewVerificationToken(existingToken);
         final User user = userService.getUser(newToken.getToken());
-       
+
         String appUrl = "";
         //  mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
         try {
             appUrl = tunborUtility.getURLBase(request);
-            } catch (MalformedURLException ex) {
-                java.util.logging.Logger.getLogger(UserUtilController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-      
-            tunborUtility.mailSender(tunborUtility.constructResendVerificationTokenEmail(appUrl, request.getLocale(), newToken, user));
-            
-            
+        } catch (MalformedURLException ex) {
+            java.util.logging.Logger.getLogger(UserUtilController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        tunborUtility.mailSender(tunborUtility.constructResendVerificationTokenEmail(appUrl, request.getLocale(), newToken, user));
+
         return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
-    }
+    }   
 }

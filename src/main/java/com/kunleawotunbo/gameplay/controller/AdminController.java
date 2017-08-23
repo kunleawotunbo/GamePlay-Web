@@ -9,10 +9,12 @@ import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.WeeklyGamesBean;
 import com.kunleawotunbo.gameplay.model.Game;
+import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
+import com.kunleawotunbo.gameplay.service.UserService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
@@ -70,6 +72,9 @@ public class AdminController {
     @Autowired
     private GameAnswerService gameAnswerService;
 
+    @Autowired
+    private UserService userService;
+
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @InitBinder
@@ -81,6 +86,12 @@ public class AdminController {
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String adminDashboard(ModelMap model, HttpServletRequest request) {
+
+        // set user object in session
+        String userName = getPrincipal();
+        System.out.println("userName :: " + userName);
+        User user = userService.findUserByEmail(userName);
+        request.getSession().setAttribute("userObject", user);
 
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("loggedinuser", getPrincipal());
@@ -115,11 +126,11 @@ public class AdminController {
             if (item.getGameCategory() != 0) {
                 gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
                 gameCatName = gameService.findById(item.getGameCategory()).getGameName();
-                
+
             }
             if (item.getGamePlayType() == 1) {
                 gameTypeName = "Image Based";
-            }else {
+            } else {
                 gameTypeName = "Text Based";
             }
 
@@ -156,7 +167,6 @@ public class AdminController {
         return "/admin/listWeeklyGames";
     }
 
-   
     @RequestMapping(value = "/addWeeklyGame", method = RequestMethod.GET)
     public String getaddWeeklyGame(ModelMap model, HttpServletRequest request) {
 
@@ -220,6 +230,7 @@ public class AdminController {
         weeklyGames.setGamePlayType(fb.getGamePlayType());
         weeklyGames.setGameText(fb.getGameText());
         weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
         weeklyGames.setModifiedDate(fb.getModifiedDate());
@@ -288,6 +299,7 @@ public class AdminController {
         boolean status = true;
         WeeklyGames weeklyGame = weeklyGamesService.findById(id);
         String encodedPictureString = "";
+        String encodedGameImage2 = "";
         //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         FileBucket fbWeeklyGame = new FileBucket();
 
@@ -295,6 +307,11 @@ public class AdminController {
         if (weeklyGame.getIsPicture() == 1) {
 
             encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+            
+            if (weeklyGame.getGameImage2() != null){
+                encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
+            }
+            
         }
 
         fbWeeklyGame.setId(weeklyGame.getId());
@@ -320,6 +337,7 @@ public class AdminController {
         model.addAttribute("loggedinuser", getPrincipal());
         model.addAttribute("edit", true);
         model.addAttribute("encodedPictureString", encodedPictureString);
+        model.addAttribute("encodedGameImage2", encodedGameImage2);
 
         return "/admin/addWeeklyGame";
     }
@@ -378,6 +396,7 @@ public class AdminController {
         weeklyGames.setGamePlayType(fb.getGamePlayType());
         weeklyGames.setGameText(fb.getGameText());
         weeklyGames.setGameImage(fb.getGameImage());
+        weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(fb.getCreatedDate());
         weeklyGames.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));
@@ -606,7 +625,7 @@ public class AdminController {
         String resizedImgPath = "";
         //String serverFileName = "";
         String gameImage = "";
-        String itemViewName = "";
+        String gameImage2 = "";
         String imgLocation = "";
         int width = 580;
         int height = 450;
@@ -641,10 +660,10 @@ public class AdminController {
                         serverFileName = imgLocation + gameImage;
                         System.out.println("gameImage:: " + gameImage);
                     } else if (i == 1) {
-                        itemViewName = files[i].getOriginalFilename();
+                        gameImage2 = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        serverFileName = imgLocation + itemViewName;
-                        System.out.println("itemViewName:: " + itemViewName);
+                        serverFileName = imgLocation + gameImage2;
+                        System.out.println("gameImage2:: " + gameImage2);
                     }
 
                     System.out.println("serverFileName :: " + serverFileName);
@@ -665,8 +684,9 @@ public class AdminController {
 
             fileBucket.setGameImage(gameImage);
             fileBucket.setGameImgLocation(imgLocation);
+            fileBucket.setGameImage2(gameImage2);
 
-            //System.out.println("bytes ::" + bytes);
+            System.out.println("fileBucket.get ::" + fileBucket.getGameImage2());
         } else {
             System.out.println("File is empty / No image uploaded");
         }

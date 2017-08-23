@@ -37,7 +37,7 @@ public interface UserService {
 
     void changeUserPassword(User user, String password);
 
-    boolean checkIfValidOldPassword(User user, String password);
+    boolean checkIfValidOldPassword(User user, String oldPassword);
 
     String validateVerificationToken(String token);
 

@@ -73,14 +73,18 @@ public class WeeklyGames implements Serializable {
     private int gameCategory;
     
     
-    @Size( max = 100)
+    @Size( max = 1000)
     @Column(name = "gameText")
     private String gameText;
     
-    @Size( max = 255)
+    //@Size( max = 500)
     @Column(name = "gameImage")
     private String gameImage;
    
+    //@Size( max = 500)
+    @Column(name = "gameImage2")
+    private String gameImage2;
+    
     //@Size(min = 1, max = 500)
     @Column(name = "gameImgLocation")
     private String gameImgLocation;
@@ -364,6 +368,20 @@ public class WeeklyGames implements Serializable {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * @return the gameImage2
+     */
+    public String getGameImage2() {
+        return gameImage2;
+    }
+
+    /**
+     * @param gameImage2 the gameImage2 to set
+     */
+    public void setGameImage2(String gameImage2) {
+        this.gameImage2 = gameImage2;
     }
    
 

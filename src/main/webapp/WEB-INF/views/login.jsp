@@ -57,6 +57,21 @@
                                         <p>You have been logged out successfully.</p>
                                     </div>
                                 </c:if>
+                                
+                                <c:if test="${error}">                                  
+                            <div class="alert alert-danger" id="success-error">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
+                            </div>
+                        </c:if>  
+
+                        <c:if test="${saved}">        
+                            <div class="alert alert-success" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>${message} </strong>
+                            </div>
+                        </c:if>  
+                                
                                 <div>
                                     <input type="text" class="form-control" placeholder="Username" id="username" name="userName" required="" />
                                 </div>

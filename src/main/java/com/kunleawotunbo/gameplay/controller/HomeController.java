@@ -8,12 +8,8 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -62,7 +58,7 @@ public class HomeController implements Controller {
               
               if (item.getGameImgLocation() != null && item.getGameImage() != null){
                   imageEncodedString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
-                  String path = item.getGameImgLocation() + item.getGameImage();
+                  //String path = item.getGameImgLocation() + item.getGameImage();
                   
                   game.setGameImgLocation(imageEncodedString);
              
@@ -97,6 +93,6 @@ public class HomeController implements Controller {
         return new ModelAndView("home", model);
     }
 
-    
+            
   
 }

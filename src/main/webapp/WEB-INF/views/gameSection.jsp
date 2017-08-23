@@ -54,6 +54,18 @@
                                                         <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="400" height="400">
                                                     </div>
                                                 </div>
+                                                  
+                                                <c:if test="${hasGameImage2}">          
+
+                                                <div class="form-group" id="gameImage" >
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage 2<span class="required">*</span></label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                                        <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="400" height="400">
+                                                    </div>
+                                                </div>  
+                                                 
+                                                </c:if> 
+                                                    
                                             </c:when>
                                             <c:otherwise>
 
@@ -124,7 +136,7 @@
                                     <div class="form-group" >
                                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                            <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" />                                 
+                                            <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                             <p>Your phone number will be used to contact you if you win.</p> 
                                         </div>
                                        

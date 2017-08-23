@@ -11,7 +11,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>${loggedinuser}</h2>
+                <h2>${userObject.firstName}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->

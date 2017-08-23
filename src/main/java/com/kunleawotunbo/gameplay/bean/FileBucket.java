@@ -26,6 +26,7 @@ public class FileBucket {
     private int gameCategory;
     private String gameText;
     private String gameImage;
+    private String gameImage2;
     private String gameImgLocation;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdDate;
@@ -318,6 +319,20 @@ public class FileBucket {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * @return the gameImage2
+     */
+    public String getGameImage2() {
+        return gameImage2;
+    }
+
+    /**
+     * @param gameImage2 the gameImage2 to set
+     */
+    public void setGameImage2(String gameImage2) {
+        this.gameImage2 = gameImage2;
     }
 
     
