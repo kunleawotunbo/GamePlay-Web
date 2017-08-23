@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -347,11 +348,25 @@ public class TunborUtility {
             System.err.println(ex.getMessage());
         }
     }
-     @DateTimeFormat(pattern = "dd/MM/yyyy")
+     @DateTimeFormat(pattern = "yyyy/MM/dd")
        public Date getDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
         
         Date currentDate = calendar.getTime();
+        
+        logger.info("date : {}" + currentDate);
+        
+       String startDateString = "2017/08/09";
+       DateFormat df = new SimpleDateFormat("yyyy/MM/dd"); 
+       Date startDate;
+          try {
+               startDate = df.parse(startDateString);
+                String newDateString = df.format(currentDate);
+              System.out.println(newDateString);
+               logger.info("date : {}" + newDateString);
+          } catch (ParseException e) {
+                 e.printStackTrace();
+               }
         
         return currentDate;
     }

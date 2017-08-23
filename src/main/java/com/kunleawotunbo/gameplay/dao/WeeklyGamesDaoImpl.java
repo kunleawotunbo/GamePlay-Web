@@ -7,6 +7,8 @@ package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -134,11 +136,28 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date) {
         logger.info("gameCategory : {}", gameCategory);
-        logger.info("date : {}", date);
+        //logger.info("date : {}", date);
+        
+        SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+
+        String strdate2 = "2017-08-08 11:35:42";
+
+        try {
+            Date newdate = dateformat2.parse(strdate2);
+            date = dateformat2.parse(strdate2);
+            System.out.println(newdate);
+           
+            
+        } catch (ParseException e) {
+            
+                e.printStackTrace();
+                }
 
         boolean enabled = true;
 
         Criteria crit = createEntityCriteria();
+        
+         logger.info("date : {}", date);
         /*
         crit.add(Restrictions.eq("gameCategory", gameCategory));        
         crit.add(Restrictions.eq("enabled", enabled));
@@ -150,8 +169,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-       // crit.add(Restrictions.ge("gameStartDate", date));
-        //crit.add(Restrictions.le("gameExpiryDate", date));
+      // crit.add(Restrictions.ge("gameStartDate", date));
+      //  crit.add(Restrictions.le("gameExpiryDate", date));
         
 
         return crit.list();
