@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,12 +38,12 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @EnableAsync
 @ComponentScan(basePackages = "com.kunleawotunbo")
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = {"classpath:application.properties"})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     RoleToUserProfileConverter roleToUserProfileConverter;
-    
+
     @Autowired
     private Environment environment;
 
@@ -122,7 +123,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
      * @return
      * http://websystique.com/spring/spring-4-email-using-velocity-freemaker-template-library/
      */
-    
     /*
     @Bean
     public JavaMailSender getMailSender() {
@@ -145,13 +145,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return mailSender;
     }
     
-    */
-        @Bean
+     */
+    @Bean
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
         //Using gmail
-        
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("okstar45@gmail.com");
@@ -199,11 +198,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public Controller getHomeController() {
         return new HomeController();
     }
-    
+
     @Bean(name = "multipartResolver")
     public StandardServletMultipartResolver resolver() {
         return new StandardServletMultipartResolver();
     }
 
-    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
 }
