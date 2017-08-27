@@ -110,6 +110,21 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 
         return weeklyGamesAnswersList;
     }
+     
+      public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId(String Ans, int id, int NoOfWinners ) {
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        
+         Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans));
+         criteria.add(Restrictions.eq("gameId", id));
+         criteria.setMaxResults(NoOfWinners);
+         //criteria.setFirstResult(20);
+         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+         List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+
+        return weeklyGamesAnswersList;
+    }
+     
+     
 
 
     public Long submittedAnswersByWeek(int weekNo) {

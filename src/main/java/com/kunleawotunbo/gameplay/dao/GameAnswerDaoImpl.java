@@ -78,6 +78,15 @@ public class GameAnswerDaoImpl extends AbstractDao<Integer, GameAnswer> implemen
         
         return gameGameAnswerList;
     }
+    
+    public List<GameAnswer> getByGamesIdandAnswer(int id, String answer) {
+       Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+        criteria.add(Restrictions.eq("id", id));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<GameAnswer> gameGameAnswerList = (List<GameAnswer>) criteria.list();
+        
+        return gameGameAnswerList;
+    }
 
     public GameAnswer findByGameId(int gameId) {
          logger.info("gameId : {}", gameId);

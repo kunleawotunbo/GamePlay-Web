@@ -200,5 +200,17 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         return crit.list();
     }
+     
+     public WeeklyGames getWeekGameNoOfWinners(int id) {
+
+        //
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+        //crit.add(Restrictions.eq("weekNo", weekNo));
+
+        // return (WeeklyGames) crit.uniqueResult();
+        //return (WeeklyGames) crit.list().get(0);
+        return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
+    }
 
 }
