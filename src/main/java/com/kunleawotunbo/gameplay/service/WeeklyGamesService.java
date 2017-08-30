@@ -36,4 +36,6 @@ public interface WeeklyGamesService {
      
       List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date);
       
+      public List<WeeklyGames> listWeekActiveGamesByDate(Date date) ;
+      
 }

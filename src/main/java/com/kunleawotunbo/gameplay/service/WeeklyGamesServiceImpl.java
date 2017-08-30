@@ -67,4 +67,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
        return weeklyGamesDao.listWeekGamesByCateAndDate(gameCategory, date);
     }
     
+    public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
+    
+          return weeklyGamesDao.listWeekActiveGamesByDate(date);
+    }
 }

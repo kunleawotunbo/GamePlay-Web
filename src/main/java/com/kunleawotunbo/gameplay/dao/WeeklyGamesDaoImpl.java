@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -28,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implements WeeklyGamesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private TunborUtility tunborUtility;
 
     public WeeklyGames findById(int id) {
         logger.info("id : {}", id);
@@ -138,9 +145,9 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         logger.info("gameCategory : {}", gameCategory);
         //logger.info("date : {}", date);
         
-        SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+       // SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
 
-        String strdate2 = "2017-08-08 11:35:42";
+      /*  String strdate2 = "2017-08-08 11:35:42";
 
         try {
             Date newdate = dateformat2.parse(strdate2);
@@ -151,7 +158,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         } catch (ParseException e) {
             
                 e.printStackTrace();
-                }
+                }*/
 
         boolean enabled = true;
 
@@ -168,9 +175,15 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
          */
 
         crit.add(Restrictions.eq("gameCategory", gameCategory));
+        //crit.add(Restrictions.eq("enabled", enabled));
+      // crit.add(Restrictions.le("gameExpiryDate", date));
+       // Date newDate = subtractDays(date, 7);
+        // crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-      // crit.add(Restrictions.ge("gameStartDate", date));
-      //  crit.add(Restrictions.le("gameExpiryDate", date));
+        //crit.add(Restrictions.ge("gameStartDate", date));
+       crit.add(Restrictions.ge("gameExpiryDate", date));
+      // crit.add(Restrictions.le("gameExpiryDate", date));
+      // crit.add(Restrictions.ge("gameExpiryDate", newDate));
         
 
         return crit.list();
@@ -179,6 +192,10 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
      public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
         //logger.info("gameCategory : {}", gameCategory);
         logger.info("date : {}", date);
+        
+        //Date date  = tunborUtility.getDate("Africa/Nigeria");
+        
+        Date newDate = subtractDays(date, 7);
 
         boolean enabled = true;
 
@@ -194,12 +211,15 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
        // crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-        crit.add(Restrictions.ge("gameStartDate", date));
-        crit.add(Restrictions.lt("gameExpiryDate", date));
+        //crit.add(Restrictions.ge("gameStartDate", date));
+       crit.add(Restrictions.le("gameExpiryDate", date));
+        crit.add(Restrictions.ge("gameExpiryDate", newDate));
         
 
         return crit.list();
     }
+     
+    
      
      public WeeklyGames getWeekGameNoOfWinners(int id) {
 
@@ -213,4 +233,33 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
     }
 
+      /**
+	 * add days to date in java
+	 * @param date
+	 * @param days
+	 * @return
+	 */
+	public static Date addDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days);
+				
+		return cal.getTime();
+	}
+	
+	/**
+	 * subtract days to date in java
+	 * @param date
+	 * @param days
+	 * @return
+	 */
+	public static Date subtractDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -days);
+				
+		return cal.getTime();
+	}
+
 }
+

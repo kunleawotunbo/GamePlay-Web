@@ -42,7 +42,12 @@
                                
                         </ul>
                     </li>
-                    <li><a href="genrandomwinners"><i class="fa fa-edit"></i>Generate Random Winners</a></li> 
+                    <li><a><i class="fa fa-desktop"></i> Random Winners <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                    <li><a href="genrandomwinners">Active Random Winners By Weekly Game</a></li> 
+                    <li><a href="latestrandomwinners">All Weekly Game Latest Random Winners</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                              <li><a href="adduser">Add User</a></li>   

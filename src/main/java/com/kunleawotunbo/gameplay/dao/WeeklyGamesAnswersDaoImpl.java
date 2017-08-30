@@ -16,6 +16,9 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -25,6 +28,9 @@ import org.springframework.stereotype.Repository;
 public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnswers> implements WeeklyGamesAnswersDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    
+    @Autowired
+    private TunborUtility tunborUtility;
 
     public WeeklyGamesAnswers findById(Long id) {
         logger.info("id : {}", id);
@@ -113,10 +119,10 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
      
       public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId(String Ans, int id, int NoOfWinners ) {
         //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
-        
+         Date todaydate = tunborUtility.getDate("Africa/Nigeria");
          Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans));
          criteria.add(Restrictions.eq("gameId", id));
-         criteria.setMaxResults(NoOfWinners);
+         //criteria.setMaxResults(NoOfWinners);
          //criteria.setFirstResult(20);
          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
          List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
