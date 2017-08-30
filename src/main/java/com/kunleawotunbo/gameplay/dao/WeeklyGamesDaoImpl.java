@@ -151,28 +151,23 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
         try {
             Date newdate = dateformat2.parse(strdate2);
-            date = dateformat2.parse(strdate2);
-            System.out.println(newdate);
+             newDate = dateformat2.format(date);
+            //date2 = dateformat2.parse(strdate2);
+            System.out.println("D date :: " +  newdate);
+            System.out.println("newDate :: " +  newDate);
            
             
         } catch (ParseException e) {
             
                 e.printStackTrace();
+
                 }*/
+       
+
 
         boolean enabled = true;
 
-        Criteria crit = createEntityCriteria();
-        
-         logger.info("date : {}", date);
-        /*
-        crit.add(Restrictions.eq("gameCategory", gameCategory));        
-        crit.add(Restrictions.eq("enabled", enabled));
-       // crit.add(Restrictions.ge("gameStartDate", date));
-       // crit.add(Restrictions.lt("gameExpiryDate", date));
-         crit.add(Restrictions.eq("weekNo", 30));
-
-         */
+        Criteria crit = createEntityCriteria();    
 
         crit.add(Restrictions.eq("gameCategory", gameCategory));
         //crit.add(Restrictions.eq("enabled", enabled));
@@ -180,12 +175,16 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
        // Date newDate = subtractDays(date, 7);
         // crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
-        //crit.add(Restrictions.ge("gameStartDate", date));
-       crit.add(Restrictions.ge("gameExpiryDate", date));
-      // crit.add(Restrictions.le("gameExpiryDate", date));
-      // crit.add(Restrictions.ge("gameExpiryDate", newDate));
-        
 
+      // crit.add(Restrictions.ge("gameStartDate", date));
+      // crit.add(Restrictions.le("gameExpiryDate", date));
+      
+      // To get game based on the game expiry date
+       crit.add(Restrictions.ge("gameExpiryDate", date));
+
+
+      // System.out.println("crit.toString() :: " + crit.toString());
+       
         return crit.list();
     }
     

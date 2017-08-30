@@ -204,9 +204,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return new StandardServletMultipartResolver();
     }
 
+    
+   /*
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
+    
+    */
+    
+    
 
 }
