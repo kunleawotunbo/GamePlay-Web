@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.utility;
 
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
+import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
 import freemarker.template.Configuration;
@@ -40,8 +41,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -55,6 +59,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -74,7 +81,10 @@ public class TunborUtility {
 
     @Autowired
     private MessageSource messages;
-
+      
+    @Autowired
+    private SMSConfigBean smsConfigBean;
+    
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Async
@@ -123,11 +133,7 @@ public class TunborUtility {
         // String template = "fm_mailTemplate.txt";
         String templateName = "registration_verification.txt";
         try {
-
-            // content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
-            //  freemarkerConfiguration.getTemplate(template), model));
-            //    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
-            //            freemarkerConfiguration.getTemplate("fm_mailTemplate.txt"), model));
+          
             content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
                     freemarkerConfiguration.getTemplate(templateName), model));
             System.out.println("templateName ::" + templateName);
@@ -388,6 +394,56 @@ public class TunborUtility {
         if(session != null) {
             session.invalidate();
         }
+
+    }
+     
+     public void sendSMS2(){
+         
+         System.out.println("Uri :: " + smsConfigBean.getUri());
+         System.out.println("getUsername :: " + smsConfigBean.getUsername());
+         
+     }
+     
+     @Async
+    public void sendSMSSingle(String recepientPhone, String message) {
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println("About to send sms up");
+        
+        /*
+        try {
+            Thread.sleep(30000);
+            System.out.println("I just want to delay this ni");
+            // return new AsyncResult<String>("hello world !!!!");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("username", smsConfigBean.getUsername());
+        params.add("password", smsConfigBean.getPassword());
+        params.add("sender", smsConfigBean.getSender());
+        params.add("to", recepientPhone);
+        params.add("message", message);
+        params.add("reqid", smsConfigBean.getReqid());
+        params.add("format", smsConfigBean.getFormat());
+        // params.add("route_id", smsConfigBean.getRoute_id());
+        params.add("callback", smsConfigBean.getCallback());
+        params.add("unique", smsConfigBean.getUnique());
+        params.add("sendondate", smsConfigBean.getUnique());
+        params.add("msgtype", smsConfigBean.getUnique());
+
+     
+        System.out.println("params :: " + params);
+        // Add the Jackson message converter
+       // restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        ResponseEntity<String> response = restTemplate.postForEntity(smsConfigBean.getUri(), params, String.class);
+        
+        System.out.println("response :: " + response);
+        System.out.println("response.getBody() :: " + response.getBody());
+        // System.out.println("result :: " + result);
+        
+        System.out.println("SMS sent down down");
 
     }
 

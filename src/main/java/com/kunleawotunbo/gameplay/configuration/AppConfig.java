@@ -1,5 +1,6 @@
 package com.kunleawotunbo.gameplay.configuration;
 
+import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.controller.HomeController;
 import com.kunleawotunbo.gameplay.converter.RoleToUserProfileConverter;
 import java.util.Locale;
@@ -204,15 +205,67 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return new StandardServletMultipartResolver();
     }
 
-    
-   /*
+    /*
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
     
-    */
-    
-    
+     */
+    @Bean
+    public SMSConfigBean getSMSConfigBean() {
+
+        SMSConfigBean smsConfigBean = new SMSConfigBean();
+
+        String uri = "";
+        String username = "";
+        String password = "";
+        String sender = "";
+        String to = "";
+        String message = "";
+        String reqid = "";
+        String format = "";
+        String route_id = "";
+        String callback = "";
+        String unique = "";
+        String sendondate = "";
+        String msgtype = "";
+
+        try {
+            uri = environment.getRequiredProperty("sms.url");
+            username = environment.getRequiredProperty("sms.username");
+             password = environment.getRequiredProperty("sms.password");
+            sender = environment.getRequiredProperty("sms.sender");
+            to = environment.getRequiredProperty("sms.to");
+            message = environment.getRequiredProperty("sms.message");
+            reqid = environment.getRequiredProperty("sms.reqid");
+            format = environment.getRequiredProperty("sms.format");
+            route_id = environment.getRequiredProperty("sms.route_id");
+            callback = environment.getRequiredProperty("sms.callback");
+            unique = environment.getRequiredProperty("sms.unique");
+            sendondate = environment.getRequiredProperty("sms.sendondate");
+            msgtype = environment.getRequiredProperty("sms.msgtype");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        smsConfigBean.setUri(uri);
+        smsConfigBean.setUsername(username);
+        smsConfigBean.setPassword(password);
+        smsConfigBean.setSender(sender);
+        smsConfigBean.setTo(to);
+        smsConfigBean.setMessage(message);
+        smsConfigBean.setReqid(reqid);
+        
+        smsConfigBean.setFormat(format);
+        smsConfigBean.setRoute_id(route_id);
+        smsConfigBean.setCallback(callback);
+        smsConfigBean.setUnique(unique);
+        smsConfigBean.setSendondate(sendondate);
+        smsConfigBean.setMsgtype(msgtype);
+
+        return smsConfigBean;
+    }
 
 }
