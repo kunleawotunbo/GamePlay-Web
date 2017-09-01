@@ -17,8 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -122,13 +124,49 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
          Date todaydate = tunborUtility.getDate("Africa/Nigeria");
          Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans).ignoreCase());
          criteria.add(Restrictions.eq("gameId", id));
-         criteria.setMaxResults(NoOfWinners);
+        // criteria.setMaxResults(NoOfWinners);
         // criteria.add(Restrictions.
         // criteria.
          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
          List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+         
+         List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = new ArrayList<WeeklyGamesAnswers>();
+         
+         //List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = null;
+         
+        //  int WeeklyGameAnswerLength = weeklyGamesAnswersList.size();
+        
+        logger.info("Game List  Start Size :" + String.valueOf(weeklyGamesAnswersList.size()));
+          
+          WeeklyGamesAnswersDaoImpl obj = new WeeklyGamesAnswersDaoImpl();
+		//for(int i = 0; i < 10; i++){
+                // System.out.println(obj.getRandomList(weeklyGamesAnswersList));
+		//}
+          
+          try {
+         for(int i=0; i < NoOfWinners; i++){
+             
+             int j = obj.getRandomList(weeklyGamesAnswersList);
+             
+              logger.info("Generated Random Numbers : {}", j);
+              
+             
+             weeklyGamesAnswersListRandomWinner.add(weeklyGamesAnswersList.get(j));
+             
+             logger.info("Game List Random Winner Phone Number :" + String.valueOf(weeklyGamesAnswersList.get(j).getUserPhoneNo()));
+             
+                 WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersList.remove(j);
+                 
+                 logger.info("Game List latest Size :" + String.valueOf(weeklyGamesAnswersList.size()));
+               
+              }
+                 }catch(Exception e){
+               
+              System.err.println( e.getMessage());
+          }
 
-        return weeklyGamesAnswersList;
+          // return weeklyGamesAnswersList;
+        return weeklyGamesAnswersListRandomWinner;
     }
      
      
@@ -143,5 +181,14 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         
         return count;
     }
+    
+    public int getRandomList(List<WeeklyGamesAnswers> list) {
+
+	    //0-4
+	    int index = ThreadLocalRandom.current().nextInt(list.size());
+	    System.out.println("\nIndex :" + index );
+	    return index;
+
+	}
 
 }
