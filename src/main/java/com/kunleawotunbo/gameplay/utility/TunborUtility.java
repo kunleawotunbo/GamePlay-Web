@@ -63,6 +63,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  *
@@ -445,6 +446,12 @@ public class TunborUtility {
         
         System.out.println("SMS sent down down");
 
+    }
+    
+    public Object getTimeZone(HttpServletRequest request){
+        
+        TimeZone timeZone = RequestContextUtils.getTimeZone(request);
+     return (timeZone != null ? timeZone : TimeZone.getDefault());
     }
 
 

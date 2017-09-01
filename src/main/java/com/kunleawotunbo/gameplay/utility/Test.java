@@ -30,7 +30,7 @@ public class Test {
     }
     
     public String  forSMS (){
-         tunborUtility.sendSMS();
+         
          
          return "";
     }

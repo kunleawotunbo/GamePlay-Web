@@ -85,42 +85,5 @@ public class WebServiceUtility {
 
     }
 
-    public SMSConfigBean getSMSConfig() {
-        String uri = "";
-        String port = "";
-        String user = "";
-        String pass = "";
-        String sender = "";
-        String owneremail = "";
-
-        SMSConfigBean MB = new SMSConfigBean();
-
-        smsConfigBean.getUri();
-
-        try {
-            javax.naming.Context ctx = new javax.naming.InitialContext();
-
-            uri = (String) ctx.lookup("java:comp/env/sms.uri");
-            port = (String) ctx.lookup("java:comp/env/sms.port");
-            user = (String) ctx.lookup("java:comp/env/sms.user");
-            pass = (String) ctx.lookup("java:comp/env/sms.pass");
-            sender = (String) ctx.lookup("java:comp/env/sms.sender");
-            owneremail = (String) ctx.lookup("java:comp/env/sms.owneremail");
-
-            MB.setUri(uri);
-
-            MB.setUsername(user);
-
-            MB.setPassword(pass);
-
-            MB.setSender(sender);
-
-        } catch (Exception nx) {
-            MB = null;
-            nx.printStackTrace();
-        }
-
-        return MB;
-    }
 
 }

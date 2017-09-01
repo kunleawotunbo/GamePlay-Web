@@ -8,9 +8,12 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.WeeklyGamesBean;
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
+import com.kunleawotunbo.gameplay.model.ActivityLog;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.service.ActivityLogService;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
@@ -74,6 +77,11 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ActivityLogService activityLogService;
+
+    ActivityLog activityLog = new ActivityLog();
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -307,11 +315,11 @@ public class AdminController {
         if (weeklyGame.getIsPicture() == 1) {
 
             encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
-            
-            if (weeklyGame.getGameImage2() != null){
+
+            if (weeklyGame.getGameImage2() != null) {
                 encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
             }
-            
+
         }
 
         fbWeeklyGame.setId(weeklyGame.getId());
@@ -499,6 +507,22 @@ public class AdminController {
         // If not created
         if (!saved) {
 
+            /*
+            
+            activityLog.setAction("Game Category Creation");
+            activityLog.setEvent(Definitions.CREATE);
+            activityLog.setUsername(req.getRemoteUser());
+            activityLog.setDescription("Game category creation failed");
+            activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+            // activityLog.setActionItem("1");
+            activityLog.setActionResult(Definitions.FAILED);
+            activityLog.setIpaddress(req.getRemoteHost());
+            activityLog.setTimezone(tunborUtility.getTimeZone(req).toString());
+
+            activityLogService.save(activityLog);
+
+            */
+            
             model.addAttribute("error", true);
             model.addAttribute("message", " Unable to  Create game category");
             return "admin/addGameCategory";
@@ -509,7 +533,23 @@ public class AdminController {
         model.addAttribute("gameList", gameService.listAllGames());
         model.addAttribute("game", new GameBean());
 
-        return "admin/addGameCategory";
+        /*
+        activityLog.setAction("Game Category Creation");
+        activityLog.setEvent(Definitions.CREATE);
+        activityLog.setUsername(req.getRemoteUser());
+        activityLog.setDescription("Game category creation successful");
+        activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+        // activityLog.setActionItem("1");
+        activityLog.setActionResult(Definitions.SUCCESS);
+        activityLog.setIpaddress(req.getRemoteHost());
+        activityLog.setTimezone(tunborUtility.getTimeZone(req).toString());
+
+        activityLogService.save(activityLog);
+        
+        */
+                
+        return "redirect:/admin/addGameCategory";
+       // return "admin/addGameCategory";
 
     }
 
