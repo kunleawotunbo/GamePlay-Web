@@ -37,7 +37,7 @@
              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Random Winners List for <c:out value="${WeeklyGameText}"/> of <c:out value="${gameCategoryName}"/> category</h2>
+                        <h2>Latest Random Winners List for Just Expired Games 
 
                         <div class="clearfix"></div>
                     </div>
@@ -49,6 +49,7 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>GAME CATEGORY</th>
+                                    <th>WEEKLY GAME ID</th>
                                     <th>USER PHONE NO</th>                                    
                                     <th>USER ANSWER</th>
                                     <th>WEEK NO</th>
@@ -62,7 +63,9 @@
                                  <c:forEach items="${weeklyGameAnswer}" var="item" varStatus = "status">
                                      <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
-                                        <td><c:out value="${item.gameId}"/></td>  
+                                        
+                                        <td><c:out value="${weeklyGameCategoryName[status.getIndex()]}"/></td>
+                                         <td><c:out value="${item.gameId}"/></td>
                                         <td><c:out value="${item.userPhoneNo}"/></td>                                          
                                         <td><c:out value="${item.userAnswer}"/></td> 
                                         <td><c:out value="${item.weekNo}"/></td> 
