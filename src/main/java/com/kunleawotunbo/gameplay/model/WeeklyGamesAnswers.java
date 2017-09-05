@@ -67,8 +67,11 @@ public class WeeklyGamesAnswers implements Serializable {
     @Column(name = "weekNo")
     private int weekNo;
     
-    @Column(name = "isRandomWinner", nullable = false, columnDefinition = "TINYINT(1) default '0'" )
-    private boolean isRandomWinner;
+    //@Column(name = "isRandomWinner", nullable = false, columnDefinition = "TINYINT(1) default '0'" )
+   // private boolean isRandomWinner;
+    
+   @Column(name = "isRandomWinner", nullable = false)
+   private boolean isRandomWinner;
     
     public WeeklyGamesAnswers() {
         super();
