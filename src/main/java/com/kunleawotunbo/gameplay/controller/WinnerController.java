@@ -214,27 +214,16 @@ public class WinnerController {
          // gameList.get(1).getId();
          int NoOfWinners = gameList.get(0).getNoOfWinners();
            GameAnswer gameAnswers = gamesAnswerService.findByGameId(gameList.get(0).getId());
+           if(gameAnswers != null){
            String gametextanswer = gameAnswers.getGameAnswer();
                 logger.info("Game Answer:"+ gametextanswer);
                // weeklyGameAnswer.addAll(weeklyGameAnswer)
          weeklyGameAnswer = weeklyGamesAnswersService.listAllWeeklyGamesCorrectAnswersbyId(gametextanswer, gameList.get(0).getId(), NoOfWinners);
-         
+           }
          }catch(Exception e){
                System.err.println( e.getMessage());
          }
-          /*int NoOfWinners1 = gameList.get(1).getNoOfWinners();
-           GameAnswer gameAnswers1 = gamesAnswerService.findByGameId(gameList.get(1).getId());
-           String gametextanswer1 = gameAnswers1.getGameAnswer();
-                logger.info("Game Answer:"+ gametextanswer);
-               // weeklyGameAnswer.addAll(weeklyGameAnswer)
-         weeklyGameAnswer.addAll(weeklyGamesAnswersService.listAllWeeklyGamesCorrectAnswersbyId(gametextanswer1, gameList.get(1).getId(), NoOfWinners1));
-      
-          int NoOfWinners2 = gameList.get(2).getNoOfWinners();
-           GameAnswer gameAnswers2 = gamesAnswerService.findByGameId(gameList.get(2).getId());
-           String gametextanswer2 = gameAnswers2.getGameAnswer();
-                logger.info("Game Answer:"+ gametextanswer2);
-         weeklyGameAnswer.addAll( weeklyGamesAnswersService.listAllWeeklyGamesCorrectAnswersbyId(gametextanswer2, gameList.get(2).getId(), NoOfWinners2));         
-                 */
+          
           int WeeklyGameLength = gameList.size();
          
          try {
@@ -242,11 +231,12 @@ public class WinnerController {
             
              int NoOfWinners1 = gameList.get(i).getNoOfWinners();
            GameAnswer gameAnswers1 = gamesAnswerService.findByGameId(gameList.get(i).getId());
+            if(gameAnswers1 != null){
            String gametextanswer1 = gameAnswers1.getGameAnswer();
                 logger.info("Game Answer:"+ gametextanswer1);
                // weeklyGameAnswer.addAll(weeklyGameAnswer)
          weeklyGameAnswer.addAll(weeklyGamesAnswersService.listAllWeeklyGamesCorrectAnswersbyId(gametextanswer1, gameList.get(i).getId(), NoOfWinners1));
-          
+            }
          //logger.info("Weekly Answer Game ID:" + String.valueOf(listWeeklyGamesAnswers.get(i).getGameId()));
          //logger.info("Weekly Game ID:" + String.valueOf(weeklyGamesAnswer.getId()));
          
@@ -263,8 +253,29 @@ public class WinnerController {
           for (WeeklyGamesAnswers item : weeklyGameAnswer) {
               
                 // gameListValid.add(weeklyGamesService.findById(item.getGameId()));
-             weeklyGameCategoryName.add(gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());
-              logger.info("Game Category Name:" + gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());                                 
+            WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersService.findById(item.getId());
+            
+            boolean winnerstatus = true;
+            
+            weeklyGamesAnswers.setIsRandomWinner(winnerstatus);
+                 
+           // boolean isRandomWinnerSaveStatus =    weeklyGamesAnswersService.saveWeeklyGamesAnswer(weeklyGamesAnswers);
+            
+            boolean isRandomWinnerSaveStatus =    weeklyGamesAnswersService.updateWeeklyGamesAnswer(weeklyGamesAnswers);
+            
+           
+            logger.info("is Random Winner Weekly Game Save Status:" + isRandomWinnerSaveStatus); 
+            
+            weeklyGameCategoryName.add(gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());
+              
+           WeeklyGames weeklyGame = weeklyGamesService.findById(item.getGameId());
+               weeklyGame.setModifiedDate(todaydate);
+                          // weeklyGame.
+                  boolean weeklyGameSaveStatus =    weeklyGamesService.save(weeklyGame);
+                  
+              logger.info("Weekly Game Save Status:" + weeklyGameSaveStatus);    
+                  
+             logger.info("Game Category Name:" + gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());                                 
                 }
           }catch(Exception e){
                
@@ -280,6 +291,44 @@ public class WinnerController {
 
         return "/admin/allweeklygamelatestwinner";
     } 
+    
+     @RequestMapping(value = "/allrandomwinners", method = RequestMethod.GET)
+    
+    public String allWeeklyGamesRandomWinners(ModelMap model, HttpServletRequest request) {
+        List<String> weeklyGameCategoryName = new ArrayList<String>();
+        
+        boolean winnerstatus = true;
+        //List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
+        
+        List<WeeklyGamesAnswers> weeklyGamesRandomWinner = null;
+        
+       weeklyGamesRandomWinner = weeklyGamesAnswersService.listWeeklyGamesAnswers(winnerstatus);
+       
+        try {
+          for (WeeklyGamesAnswers item : weeklyGamesRandomWinner) {
+              
+                // gameListValid.add(weeklyGamesService.findById(item.getGameId()));
+           // WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersService.findById(item.getId());
+            
+           weeklyGameCategoryName.add(gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());
+              
+           logger.info("Game Category Name:" + gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());                                 
+                }
+          }catch(Exception e){
+               
+              System.err.println( e.getMessage());
+          }
+       
+       
+       
+        model.addAttribute("allWeeklyGameRandomWinner", weeklyGamesRandomWinner);
+        //model.addAttribute("weeklyGameAnswer", weeklyGameAnswer);
+        model.addAttribute("weeklyGameCategoryName", weeklyGameCategoryName);
+        model.addAttribute("loggedinuser", getPrincipal());
+        
+        return "/admin/allrandomwinners";
+    }
+   
     private String getPrincipal() {
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

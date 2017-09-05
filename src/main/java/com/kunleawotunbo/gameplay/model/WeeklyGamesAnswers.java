@@ -30,6 +30,7 @@ public class WeeklyGamesAnswers implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+
     private Long id;
 
     @Basic(optional = false)
@@ -66,6 +67,14 @@ public class WeeklyGamesAnswers implements Serializable {
     @Column(name = "weekNo")
     private int weekNo;
     
+    @Column(name = "isRandomWinner", nullable = false, columnDefinition = "TINYINT(1) default '0'" )
+    private boolean isRandomWinner;
+    
+    public WeeklyGamesAnswers() {
+        super();
+        this.isRandomWinner = false;
+        // this.creationDate(new Date());
+    }
     
     public Long getId() {
         return id;
@@ -171,6 +180,20 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setWeekNo(int weekNo) {
         this.weekNo = weekNo;
+    }
+    
+    /**
+     * @return the isRandomWinner
+     */
+    public boolean getIsRandomWinner() {
+        return isRandomWinner;
+    }
+
+    /**
+     * @param isRandomWinner the isRandomWinner to set
+     */
+    public void setIsRandomWinner(boolean isRandomWinner) {
+        this.isRandomWinner = isRandomWinner;
     }
 
 }

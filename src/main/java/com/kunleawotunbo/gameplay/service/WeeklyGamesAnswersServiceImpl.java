@@ -26,6 +26,10 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     public WeeklyGamesAnswers findById(Long id) {
         return weeklyGamesAnswersDao.findById(id);
     }
+    
+    public WeeklyGamesAnswers findById(int id) {
+        return weeklyGamesAnswersDao.findById(id);
+    }
 
     public boolean saveWeeklyGamesAnswer(WeeklyGamesAnswers game) {
         return weeklyGamesAnswersDao.saveWeeklyGamesAnswer(game);
