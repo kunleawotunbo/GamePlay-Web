@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.transform.Transformers;
 
 /**
  *
@@ -35,6 +37,15 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     private TunborUtility tunborUtility;
 
     public WeeklyGamesAnswers findById(Long id) {
+    logger.info("id : {}", id);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+
+        return (WeeklyGamesAnswers) crit.uniqueResult();
+    }
+    
+    public WeeklyGamesAnswers findById(int id) {
         logger.info("id : {}", id);
 
         Criteria crit = createEntityCriteria();
@@ -72,7 +83,74 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     }
 
     public List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          Criteria criteria = createEntityCriteria().addOrder(Order.desc("dateAnswered"));
+         // Criteria criteria = createEntityCriteria();
+          // criteria.addOrder(Order.desc("dateAnswered"));
+           criteria.add(Restrictions.eq("isRandomWinner", enabled));
+           //ProjectionList projectionList = Projections.projectionList();
+           //criteria.setProjection(Projections.distinct(projectionList.add(Projections.property("userPhoneNo"))));
+           //criteria.setProjection(Projections.distinct(Projections.property("userPhoneNo")));
+          // criteria.setProjection(Projections.distinct("userPhoneNo"));
+          // criteria.setProjection(Projections.projectionList().add(Projections.distinct(Projections.property("userPhoneNo"))));
+           // criteria.       
+           criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+          //projectionList.add(Projections.distinct(projectionList.add(Projections.property("userPhoneNo"))));
+          // projectionList.add(Projections.countDistinct("userPhoneNo"));
+           // projectionList.add(Projections.distinct("userPhoneNo"));
+          //criteria.setProjection(projectionList);
+          //criteria.setResultTransformer(Transformers.aliasToBean(WeeklyGamesAnswers.class));
+         // List<WeeklyGamesAnswers> weeklyGamesAnswersList = criteria.list();
+          // List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+          List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+             
+            //int WeeklyGameWinnerLength = weeklyGamesAnswersList.size();
+             
+             int i =0;
+             
+             while(i < weeklyGamesAnswersList.size() ){
+                 
+              String winnerPhoneNumber =  weeklyGamesAnswersList.get(i).getUserPhoneNo();
+              String winnerPhoneNumber2 = null;
+                    
+                logger.info("i Size :" + String.valueOf(i));
+              
+                     int j = i + 1;
+                    while ( j  < weeklyGamesAnswersList.size()){
+                        
+                        logger.info("j Size :" + String.valueOf(j));
+                        
+                                winnerPhoneNumber2 = weeklyGamesAnswersList.get(j).getUserPhoneNo();
+                                
+                                 logger.info(" i phone value :" + winnerPhoneNumber + " j phone value :" + winnerPhoneNumber2 );
+                      
+                                 if(winnerPhoneNumber.equals(winnerPhoneNumber2)){
+                       
+                                 weeklyGamesAnswersList.remove(j);
+                                            j--;
+                                           // i--;
+                                               }
+                                           j++;
+                           }
+                  
+              
+               /* if( i + 1  < weeklyGamesAnswersList.size()){
+                  
+                    winnerPhoneNumber2 = weeklyGamesAnswersList.get(i + 1).getUserPhoneNo();
+                      
+                   if(winnerPhoneNumber.equals(winnerPhoneNumber2)){
+                     
+                        weeklyGamesAnswersList.remove(i + 1);
+                        
+                       // i--;
+                      }
+                 }*/
+              
+                
+              i++;
+             }
+        return weeklyGamesAnswersList;
+    
     }
 
     public List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers() {
@@ -132,6 +210,39 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
          
          List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = new ArrayList<WeeklyGamesAnswers>();
          
+         int i =0;
+             
+             while(i < weeklyGamesAnswersList.size() ){
+                 
+              String winnerPhoneNumber =  weeklyGamesAnswersList.get(i).getUserPhoneNo();
+              int winnergameid =  weeklyGamesAnswersList.get(i).getGameId();
+              String winnerPhoneNumber2 = null;
+              int winnergameid2;
+                    
+                logger.info("i Size :" + String.valueOf(i));
+              
+                     int j = i + 1;
+                    while ( j  < weeklyGamesAnswersList.size()){
+                        
+                        logger.info("j Size :" + String.valueOf(j));
+                        
+                                winnerPhoneNumber2 = weeklyGamesAnswersList.get(j).getUserPhoneNo();
+                                winnergameid2 =  weeklyGamesAnswersList.get(j).getGameId();
+                                
+                                 logger.info(" i phone value :" + winnerPhoneNumber + " j phone value :" + winnerPhoneNumber2 );
+                                 logger.info(" i game id :" + String.valueOf(winnergameid) + " j game id :" + String.valueOf(winnergameid2) );
+                                 if(winnerPhoneNumber.equals(winnerPhoneNumber2) && winnergameid == winnergameid2 ){
+                       
+                                 weeklyGamesAnswersList.remove(j);
+                                            j--;
+                                        
+                                               }
+                                           j++;
+                           }
+                  i++;
+             }
+         
+         
          //List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = null;
          
         //  int WeeklyGameAnswerLength = weeklyGamesAnswersList.size();
@@ -144,7 +255,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 		//}
           
           try {
-         for(int i=0; i < NoOfWinners; i++){
+              for(int k = 0; k < NoOfWinners; k++){
              
              int j = obj.getRandomList(weeklyGamesAnswersList);
              
@@ -158,6 +269,8 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
                  WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersList.remove(j);
                  
                  logger.info("Game List latest Size :" + String.valueOf(weeklyGamesAnswersList.size()));
+                 
+                 logger.info("Weekly Random Winner Array Size :" + String.valueOf(weeklyGamesAnswersListRandomWinner.size()));
                
               }
                  }catch(Exception e){
@@ -166,6 +279,8 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
           }
 
           // return weeklyGamesAnswersList;
+          
+              
         return weeklyGamesAnswersListRandomWinner;
     }
      

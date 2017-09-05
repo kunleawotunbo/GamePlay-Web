@@ -1,6 +1,6 @@
 <%-- 
-    Document   : allweeklygamelatestwinner
-    Created on : 29-Aug-2017, 18:42:23
+    Document   : allrandomwinners
+    Created on : 03-Sep-2017, 12:26:38
     Author     : BELLO
 --%>
 
@@ -37,7 +37,7 @@
              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Latest Random Winners List for Just Expired Games </h2>
+                        <h2>All Time Weekly Games Random Winners List </h2> 
 
                         <div class="clearfix"></div>
                     </div>
@@ -52,7 +52,7 @@
                                     <th>WEEKLY GAME ID</th>
                                     <th>USER PHONE NO</th>                                    
                                     <th>USER ANSWER</th>
-                                    <th>WEEK NO</th>
+                                    <th>DATE ANSWERED</th>
                                     <!--<th></th>
                                     <th></th>
                                     <th></th>-->
@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 <c:forEach items="${weeklyGameAnswer}" var="item" varStatus = "status">
+                                 <c:forEach items="${allWeeklyGameRandomWinner}" var="item" varStatus = "status">
                                      <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
                                         
@@ -68,7 +68,8 @@
                                          <td><c:out value="${item.gameId}"/></td>
                                         <td><c:out value="${item.userPhoneNo}"/></td>                                          
                                         <td><c:out value="${item.userAnswer}"/></td> 
-                                        <td><c:out value="${item.weekNo}"/></td> 
+                                        <td><c:out value="${item.dateAnswered}"/></td>
+                                       <!-- <td><c:out value="${item.weekNo}"/></td> --> 
                                          <!-- <td><a href="<c:url value='/admin/generate-RandomWinners-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Generate Random Winners
                                             </a>
