@@ -542,11 +542,22 @@ public class AdminController {
         // activityLog.setActionItem("1");
         activityLog.setActionResult(Definitions.SUCCESS);
         activityLog.setIpaddress(req.getRemoteHost());
-        activityLog.setTimezone(tunborUtility.getTimeZone(req).toString());
+        //activityLog.setTimezone(tunborUtility.getTimeZone(req).toString());
+        activityLog.setTimezone("Africa/Nigeria");
 
+        System.out.println("Definitions.CREATE :: " + Definitions.CREATE);
+        System.out.println("req.getRemoteUser() :: " + req.getRemoteUser());
+        System.out.println("tunborUtility.getDate :: " + tunborUtility.getDate("Africa/Nigeria"));
+        System.out.println("Definitions.SUCCESS :: " + Definitions.SUCCESS);
+        System.out.println("req.getRemoteHost() :: " + req.getRemoteHost());
+        
+        System.out.println("tunborUtility.getTimeZone(req).toString() :: " + tunborUtility.getTimeZone(req).toString());
+        
         activityLogService.save(activityLog);
         
         */
+        
+        
                 
         return "redirect:/admin/addGameCategory";
        // return "admin/addGameCategory";
