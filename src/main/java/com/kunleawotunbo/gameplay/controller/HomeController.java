@@ -5,9 +5,11 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +38,14 @@ public class HomeController implements Controller {
     
      @Autowired
     private TunborUtility tunborUtility;
-
+     
+   
     public ModelAndView handleRequest(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
         logger.info("inside HomeController");
-      
+        
+              
         ModelMap model = new ModelMap();
         
         String test = "This is a test";

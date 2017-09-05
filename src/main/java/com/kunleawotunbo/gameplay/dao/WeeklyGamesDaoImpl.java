@@ -33,9 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implements WeeklyGamesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private TunborUtility tunborUtility;
-
+   
     public WeeklyGames findById(int id) {
         logger.info("id : {}", id);
 
@@ -143,37 +141,12 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date) {
         logger.info("gameCategory : {}", gameCategory);
-        //logger.info("date : {}", date);
-        
-       // SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
-
-      /*  String strdate2 = "2017-08-08 11:35:42";
-
-        try {
-            Date newdate = dateformat2.parse(strdate2);
-             newDate = dateformat2.format(date);
-            //date2 = dateformat2.parse(strdate2);
-            System.out.println("D date :: " +  newdate);
-            System.out.println("newDate :: " +  newDate);
-           
-            
-        } catch (ParseException e) {
-            
-                e.printStackTrace();
-
-                }*/
-       
-
-
+      
         boolean enabled = true;
 
         Criteria crit = createEntityCriteria();    
 
-        crit.add(Restrictions.eq("gameCategory", gameCategory));
-        //crit.add(Restrictions.eq("enabled", enabled));
-      // crit.add(Restrictions.le("gameExpiryDate", date));
-       // Date newDate = subtractDays(date, 7);
-        // crit.add(Restrictions.eq("gameCategory", gameCategory));
+        crit.add(Restrictions.eq("gameCategory", gameCategory));       
         crit.add(Restrictions.eq("enabled", enabled));
 
       // crit.add(Restrictions.ge("gameStartDate", date));

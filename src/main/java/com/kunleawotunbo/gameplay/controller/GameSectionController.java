@@ -5,12 +5,14 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -38,12 +40,30 @@ public class GameSectionController {
 
     @Autowired
     private WeeklyGamesService weeklyGamesService;
+    
+       @Autowired
+    private SMSConfigBean smsConfigBean;
+     
+     WebServiceUtility webServiceUtility = new WebServiceUtility();
+
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("gameCatSection- id ::  " + id);
+        
+        /*
+        String recepientPhone = "08059979029";
+        String message = "This is a sample sms";
+      
+        tunborUtility.sendSMSSingle(recepientPhone, message);
+        
+        */
+        //webServiceUtility.getRestClient(smsConfigBean, recepientPhone, message);
+        
+        
+        
 
         List<WeeklyGames> weeklyGameList = null;
         //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());

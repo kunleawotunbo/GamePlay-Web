@@ -91,8 +91,8 @@ public class SwaggerConfig {
     */
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-            .title("Tunbor APP")
-            .description("This is a self built app for personal training")
+            .title("GamePlay")
+            .description("This is a GamePlay App")
             .version("0.0.1")
             .termsOfServiceUrl("http://terms-of-services.url")
             .license("Apache 2.0")
