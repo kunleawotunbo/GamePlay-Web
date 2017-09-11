@@ -37,4 +37,6 @@ public interface WeeklyGamesAnswersService {
     Long submittedAnswersByWeek(int weekNo);
 
     public List<WeeklyGamesAnswers> ActiveWeekGamesAnswersByCategory(int GameWeek, int id);
+    
+    public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners);
 }

@@ -38,4 +38,5 @@ public interface WeeklyGamesService {
       
       public List<WeeklyGames> listWeekActiveGamesByDate(Date date) ;
       
+      public List<WeeklyGames> listUnproccessedGames(int status, Date date);
 }

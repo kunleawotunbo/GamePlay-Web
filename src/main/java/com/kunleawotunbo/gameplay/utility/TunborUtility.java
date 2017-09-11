@@ -8,8 +8,10 @@ package com.kunleawotunbo.gameplay.utility;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
+import com.kunleawotunbo.gameplay.model.GameWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
+import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import freemarker.template.Configuration;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,10 +26,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -453,6 +457,31 @@ public class TunborUtility {
         TimeZone timeZone = RequestContextUtils.getTimeZone(request);
      return (timeZone != null ? timeZone : TimeZone.getDefault());
     }
+    
+     public List<GameWinner> weeklyGamesAnswersListToGameWinnerList(List<WeeklyGamesAnswers> weeklyGamesAnswers){
+        List<GameWinner> gameWinners = null;
+
+        if(weeklyGamesAnswers != null && !weeklyGamesAnswers.isEmpty()){
+        	gameWinners = new ArrayList<GameWinner>();
+        	GameWinner gameWinner = null;
+
+        	for(WeeklyGamesAnswers item : weeklyGamesAnswers){
+        		gameWinner = new GameWinner();
+
+			    gameWinner.setGameId(item.getGameId());
+			    gameWinner.setDateAnswered(item.getDateAnswered());
+                            gameWinner.setProccessedDate(getDate("Africa/Nigeria"));
+                            gameWinner.setUserAnswer(item.getUserAnswer());
+                            gameWinner.setUserPhoneNo(item.getUserPhoneNo());
+
+        		
+
+			    gameWinners.add(gameWinner);
+		   }
+	    }
+
+        return gameWinners;
+ }
 
 
 }

@@ -7,10 +7,6 @@ package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.GamePlayType;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
-import com.kunleawotunbo.gameplay.utility.TunborUtility;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -22,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -33,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implements WeeklyGamesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-   
+
     public WeeklyGames findById(int id) {
         logger.info("id : {}", id);
 
@@ -129,8 +124,8 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         // return (WeeklyGames) crit.uniqueResult();
         //return (WeeklyGames) crit.list().get(0);
         return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
-    }   
-   
+    }
+
     public List<GamePlayType> getGamePlayType() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
@@ -141,32 +136,28 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date) {
         logger.info("gameCategory : {}", gameCategory);
-      
+
         boolean enabled = true;
 
-        Criteria crit = createEntityCriteria();    
+        Criteria crit = createEntityCriteria();
 
-        crit.add(Restrictions.eq("gameCategory", gameCategory));       
+        crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
 
-      // crit.add(Restrictions.ge("gameStartDate", date));
-      // crit.add(Restrictions.le("gameExpiryDate", date));
-      
-      // To get game based on the game expiry date
-       crit.add(Restrictions.ge("gameExpiryDate", date));
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        // To get game based on the game expiry date
+        crit.add(Restrictions.ge("gameExpiryDate", date));
 
-
-      // System.out.println("crit.toString() :: " + crit.toString());
-       
+        // System.out.println("crit.toString() :: " + crit.toString());
         return crit.list();
     }
-    
-     public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
+
+    public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
         //logger.info("gameCategory : {}", gameCategory);
         logger.info("date : {}", date);
-        
+
         //Date date  = tunborUtility.getDate("Africa/Nigeria");
-        
         Date newDate = subtractDays(date, 7);
 
         boolean enabled = true;
@@ -181,19 +172,16 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
          */
 
-       // crit.add(Restrictions.eq("gameCategory", gameCategory));
+        // crit.add(Restrictions.eq("gameCategory", gameCategory));
         crit.add(Restrictions.eq("enabled", enabled));
         //crit.add(Restrictions.ge("gameStartDate", date));
-       crit.add(Restrictions.le("gameExpiryDate", date));
+        crit.add(Restrictions.le("gameExpiryDate", date));
         crit.add(Restrictions.ge("gameExpiryDate", newDate));
-        
 
         return crit.list();
     }
-     
-    
-     
-     public WeeklyGames getWeekGameNoOfWinners(int id) {
+
+    public WeeklyGames getWeekGameNoOfWinners(int id) {
 
         //
         Criteria crit = createEntityCriteria();
@@ -205,33 +193,52 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
         return crit.list().size() == 0 ? null : (WeeklyGames) crit.list().get(0);
     }
 
-      /**
-	 * add days to date in java
-	 * @param date
-	 * @param days
-	 * @return
-	 */
-	public static Date addDays(Date date, int days) {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, days);
-				
-		return cal.getTime();
-	}
-	
-	/**
-	 * subtract days to date in java
-	 * @param date
-	 * @param days
-	 * @return
-	 */
-	public static Date subtractDays(Date date, int days) {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, -days);
-				
-		return cal.getTime();
-	}
+    /**
+     * add days to date in java
+     *
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date addDays(Date date, int days) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+
+        return cal.getTime();
+    }
+
+    /**
+     * subtract days to date in java
+     *
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date subtractDays(Date date, int days) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days);
+
+        return cal.getTime();
+    }
+
+    public List<WeeklyGames> listUnproccessedGames(int status, Date date) {
+        logger.info("status ::", status);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("status", status));       
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        
+        // To get game based on the game expiry date
+        crit.add(Restrictions.le("gameExpiryDate", date));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
 
 }
-

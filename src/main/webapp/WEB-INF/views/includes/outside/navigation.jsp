@@ -22,6 +22,7 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<%=request.getContextPath()%>">Home</a></li>
+                     <li ><a href="<%=request.getContextPath()%>/prediction">Prediction</a></li>
                     <li><a href="<%=request.getContextPath()%>/about">About</a></li>
                     <li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>
                 </ul>

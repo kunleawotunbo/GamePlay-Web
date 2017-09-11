@@ -71,4 +71,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     
           return weeklyGamesDao.listWeekActiveGamesByDate(date);
     }
+
+    public List<WeeklyGames> listUnproccessedGames(int status, Date date) {
+        return weeklyGamesDao.listUnproccessedGames(status, date);
+    }
 }

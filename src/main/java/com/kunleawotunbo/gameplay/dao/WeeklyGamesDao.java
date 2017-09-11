@@ -37,5 +37,7 @@ public interface WeeklyGamesDao {
     List<WeeklyGames> listWeekGamesByCateAndDate(int gameCategory, Date date);
 
     public List<WeeklyGames> listWeekActiveGamesByDate(Date date);
+    
+    public List<WeeklyGames> listUnproccessedGames(int status, Date date);
 
 }
