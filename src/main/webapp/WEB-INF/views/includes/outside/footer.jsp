@@ -4,37 +4,18 @@
     Author     : Olakunle Awotunbo
 --%>
 
-  </div><!--/row-->
-
-    <hr>
-
-    <footer>
+    <footer class="container-fluid text-center">
         <p>&copy; 2017 GamePlay, Inc.</p>
     </footer>
 
-</div><!--/.container-->
 
 
 <script src="<c:url value='/resources/js/jquery.min.js' />"></script> 
+<script src="<c:url value='/resources/js/bootstrap.min.js' />"></script> 
 <!-- PNotify -->
 <script src="<c:url value='/resources/js/pnotify.js' />"></script> 
 <script src="<c:url value='/resources/js/pnotify.buttons.js' />"></script> 
 <script src="<c:url value='/resources/js/pnotify.nonblock.js' />"></script> 
-
-
-<script>
-    $(document).ready(function () {
-        console.log("Clicked..");
-        $('[data-toggle="offcanvas"]').click(function () {
-            $('.row-offcanvas').toggleClass('active')
-        });
-    });
-
-</script>
-
-
-
-
 
 
 </body>

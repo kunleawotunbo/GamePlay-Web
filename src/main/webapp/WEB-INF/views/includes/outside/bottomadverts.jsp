@@ -4,7 +4,7 @@
     Author     : Olakunle Awotunbo
 --%>
 
-<div class=" col-xs-12 ">
+
                     <h2>Adverts area</h2>
                     <p>Adverts area Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
 
@@ -21,6 +21,3 @@ google_ad_height = 90;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
-
-<!-- End Here --> 
-</div>
