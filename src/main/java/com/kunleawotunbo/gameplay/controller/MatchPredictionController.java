@@ -5,7 +5,9 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
+import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
@@ -56,7 +58,7 @@ public class MatchPredictionController {
        List<MatchPrediction> activeMatchesList = null;
         
         
-        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate("Africa/Nigeria"));
+        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
         
 
         model.addAttribute("activeMatchesList", activeMatchesList);
@@ -74,8 +76,10 @@ public class MatchPredictionController {
         logger.info("Set answer for matchPrediction id :: " + id);
         
         MatchPrediction matchPredictionObject = matchPredictionService.findById(id);
-       
+        MatchPredictionAnswer matchPredictionAnswer = new MatchPredictionAnswer();
+        
         model.addAttribute("matchPredictionObject", matchPredictionObject);
+       // model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
         model.addAttribute("selectedAnswer", selectedAnswer);
         
 
@@ -169,7 +173,7 @@ public class MatchPredictionController {
         List<MatchPrediction> matchPredictionList = null;
         
         
-        matchPredictionList = matchPredictionService.listActiveMatches(tunborUtility.getDate("Africa/Nigeria"));
+        matchPredictionList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
         
 
         model.addAttribute("matchPredictionList", matchPredictionList);

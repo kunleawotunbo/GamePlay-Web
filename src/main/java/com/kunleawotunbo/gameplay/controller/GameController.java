@@ -153,7 +153,7 @@ public class GameController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
          */
-        game.setCreationDate(tunborUtility.getDate("Africa/Nigeria"));
+        game.setCreationDate(tunborUtility.getDate(Definitions.TIMEZONE));
         //game.setCreationDate(new Date());
         created = gameService.save(game);
 
@@ -163,7 +163,7 @@ public class GameController {
             activityLog.setEvent(Definitions.CREATE);
             activityLog.setUsername(request.getRemoteUser());
             activityLog.setDescription("Game category creation successful");
-            activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+            activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
            // activityLog.setActionItem("1");
             activityLog.setActionResult(Definitions.SUCCESS);
             activityLog.setIpaddress(request.getRemoteHost());
@@ -190,7 +190,7 @@ public class GameController {
             activityLog.setEvent(Definitions.CREATE);
             activityLog.setUsername(request.getRemoteUser());
             activityLog.setDescription("Game category creation failed");
-            activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+            activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
            // activityLog.setActionItem("1");
             activityLog.setActionResult(Definitions.FAILED);
             activityLog.setIpaddress(request.getRemoteHost());
@@ -251,7 +251,7 @@ public class GameController {
             activityLog.setEvent(4);
             activityLog.setUsername(request.getRemoteUser());
             activityLog.setDescription("Game category deletion successful");
-            activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+            activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
             activityLog.setActionItem("4");
             activityLog.setActionResult("FAILED");
             activityLog.setIpaddress(request.getRemoteHost());
@@ -268,7 +268,7 @@ public class GameController {
         activityLog.setEvent(4);
         activityLog.setUsername(request.getRemoteUser());
         activityLog.setDescription("Game category deletion successful");
-        activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+        activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
         activityLog.setActionItem("4");
         activityLog.setActionResult("SUCCESS");
         activityLog.setIpaddress(request.getRemoteHost());

@@ -6,6 +6,7 @@
 package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
@@ -67,7 +68,7 @@ public class GameSectionController {
 
         List<WeeklyGames> weeklyGameList = null;
         //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());
-        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria"));
+        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
         // check if weeklyGameList is greater than 1
         if (null != weeklyGameList && weeklyGameList.size() > 1) {
@@ -116,8 +117,9 @@ public class GameSectionController {
         logger.info("getGameCategory");
 
         //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
-        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
-        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate("Africa/Nigeria"));
+       // WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
+        WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
+        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
         boolean isPicture = false;
         String encodedPictureString = "";
 

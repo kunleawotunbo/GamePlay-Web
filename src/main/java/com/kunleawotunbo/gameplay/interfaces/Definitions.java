@@ -20,4 +20,6 @@ public interface Definitions {
     // 
     public String  SUCCESS = "SUCCESS";
     public String  FAILED  = "FAILED";
+    
+    public String  TIMEZONE  = "Africa/Nigeria";
 }

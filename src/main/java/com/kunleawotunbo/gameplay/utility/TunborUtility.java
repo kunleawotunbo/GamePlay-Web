@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.utility;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.GameWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
@@ -470,7 +471,7 @@ public class TunborUtility {
 
 			    gameWinner.setGameId(item.getGameId());
 			    gameWinner.setDateAnswered(item.getDateAnswered());
-                            gameWinner.setProccessedDate(getDate("Africa/Nigeria"));
+                            gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
                             gameWinner.setUserAnswer(item.getUserAnswer());
                             gameWinner.setUserPhoneNo(item.getUserPhoneNo());
 

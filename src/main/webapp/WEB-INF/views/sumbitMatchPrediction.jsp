@@ -32,11 +32,11 @@
                         Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>
 
                         <br><br>
-                        <form:form modelAttribute="matchPredictionObject" class="form-horizontal">
+                        <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal">
                             <div class="form-group row text-right">
                                 <label for="email-h-f" class="col-sm-3 form-control-label m-t-5">Email</label>
                                 <div class="col-sm-9">
-                                    <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                          
+                                    <input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                          
                                 </div>
                             </div>
                             <div class="form-group row text-right">

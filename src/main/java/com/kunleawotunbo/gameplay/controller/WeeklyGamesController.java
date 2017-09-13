@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
@@ -95,7 +96,7 @@ public class WeeklyGamesController {
         System.out.println("date :: " +  date);
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
-        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
+        weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate(Definitions.TIMEZONE));
 
         String encodedPictureString = "";
         String encodedGameImage2 = "";
@@ -171,7 +172,7 @@ public class WeeklyGamesController {
 
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
-        // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate("Africa/Nigeria"));
+        // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate(Definitions.TIMEZONE));
         //weeklyGame = weeklyGamesService.getWeekGameByWeekNo(weeklyGameId, tunborUtility.gameWeekNoByDate(new Date()));
         weeklyGame = weeklyGamesService.findById(weeklyGameId);
 
@@ -390,9 +391,9 @@ public class WeeklyGamesController {
             gameAnswer.setWeekNo(weeklyGames.getWeekNo());
             gameAnswer.setGameAnswer(wGames.getGameAnswer());
             gameAnswer.setCreatedBy(findGame.getCreatedBy());
-            //gameAnswer.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
+            //gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             gameAnswer.setModifiedBy(wGames.getCreatedBy());
-            gameAnswer.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));
+            gameAnswer.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             saved = gameAnswerService.updateGame(gameAnswer);
 
         } else {
@@ -403,7 +404,7 @@ public class WeeklyGamesController {
             gameAnswer.setWeekNo(weeklyGames.getWeekNo());
             gameAnswer.setGameAnswer(wGames.getGameAnswer());
             gameAnswer.setCreatedBy(wGames.getCreatedBy());
-            gameAnswer.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
+            gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             //gameAnswer.setModifiedBy(modifiedBy);
             //gameAnswer.setModifiedDate(modifiedDate);
             saved = gameAnswerService.save(gameAnswer);
