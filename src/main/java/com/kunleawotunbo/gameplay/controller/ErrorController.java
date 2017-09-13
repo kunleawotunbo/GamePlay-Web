@@ -50,6 +50,12 @@ public class ErrorController {
                 errorCode = "500";
                 break;
             }
+            
+            default:
+                errorMsg = "Something went wrong";
+                errorCode = "" + httpErrorCode;
+                break;
+                
         }
         errorPage.addObject("errorMsg", errorMsg);
         errorPage.addObject("errorCode", errorCode);

@@ -1,0 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kunleawotunbo.gameplay.dao;
+
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
+import java.util.Date;
+import java.util.List;
+
+/**
+ *
+ * @author Olakunle Awotunbo
+ */
+public interface MatchPredictionDao {
+    
+    public MatchPrediction findById(int id);
+
+    public boolean save(MatchPrediction matchPrediction);
+
+    public boolean updatePrediction(MatchPrediction matchPrediction);
+
+    public void deleteMatchPrediction(MatchPrediction matchPrediction);
+
+    public List<MatchPrediction> listAllMatchPredictions();
+    
+    List<MatchPrediction> listActiveMatches( Date date);
+}

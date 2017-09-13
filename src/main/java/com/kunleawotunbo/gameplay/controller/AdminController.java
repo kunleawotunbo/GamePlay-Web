@@ -132,8 +132,14 @@ public class AdminController {
         for (WeeklyGames item : gameList) {
 
             if (item.getGameCategory() != 0) {
-                gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
-                gameCatName = gameService.findById(item.getGameCategory()).getGameName();
+
+                try {
+                    gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
+                    gameCatName = gameService.findById(item.getGameCategory()).getGameName();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
             if (item.getGamePlayType() == 1) {
@@ -521,8 +527,7 @@ public class AdminController {
 
             activityLogService.save(activityLog);
 
-            */
-            
+             */
             model.addAttribute("error", true);
             model.addAttribute("message", " Unable to  Create game category");
             return "admin/addGameCategory";
@@ -555,12 +560,9 @@ public class AdminController {
         
         activityLogService.save(activityLog);
         
-        */
-        
-        
-                
+         */
         return "redirect:/admin/addGameCategory";
-       // return "admin/addGameCategory";
+        // return "admin/addGameCategory";
 
     }
 

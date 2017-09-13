@@ -23,8 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "predictions")
-public class Prediction implements Serializable {
+@Table(name = "match_predictions")
+public class MatchPrediction implements Serializable {
 
     private static long serialVersionUID = 1L;
 
@@ -45,6 +45,22 @@ public class Prediction implements Serializable {
     @Column(name = "homeTeamName")
     private String homeTeamName;
     
+     @Basic(optional = false)
+    @NotNull
+    @Column(name = "weekNo")
+    private int weekNo;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "prizeOfWinners")
+    private String prizeOfWinners;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "noOfWinners")
+    private int noOfWinners;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "awayTeamId")
@@ -64,17 +80,35 @@ public class Prediction implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date endTime;
     
-    @Basic(optional = false)
-    @NotNull
+    //@Basic(optional = false)
+    //@NotNull
     @Size(max = 100)
     @Column(name = "winner")
     private String winner;
     
-    @Basic(optional = false)
-    @NotNull
+   // @Basic(optional = false)
+   // @NotNull
     @Size(max = 100)
     @Column(name = "matchResult")
     private String matchResult;
+    
+    @Column(name = "modifiedDate")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date modifiedDate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "createdBy")
+    private String createdBy;
+    
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "status")
+    private int status;
 
     /**
      * @return the serialVersionUID
@@ -130,6 +164,48 @@ public class Prediction implements Serializable {
      */
     public void setHomeTeamName(String homeTeamName) {
         this.homeTeamName = homeTeamName;
+    }
+
+    /**
+     * @return the weekNo
+     */
+    public int getWeekNo() {
+        return weekNo;
+    }
+
+    /**
+     * @param weekNo the weekNo to set
+     */
+    public void setWeekNo(int weekNo) {
+        this.weekNo = weekNo;
+    }
+
+    /**
+     * @return the prizeOfWinners
+     */
+    public String getPrizeOfWinners() {
+        return prizeOfWinners;
+    }
+
+    /**
+     * @param prizeOfWinners the prizeOfWinners to set
+     */
+    public void setPrizeOfWinners(String prizeOfWinners) {
+        this.prizeOfWinners = prizeOfWinners;
+    }
+
+    /**
+     * @return the noOfWinners
+     */
+    public int getNoOfWinners() {
+        return noOfWinners;
+    }
+
+    /**
+     * @param noOfWinners the noOfWinners to set
+     */
+    public void setNoOfWinners(int noOfWinners) {
+        this.noOfWinners = noOfWinners;
     }
 
     /**
@@ -214,6 +290,62 @@ public class Prediction implements Serializable {
      */
     public void setMatchResult(String matchResult) {
         this.matchResult = matchResult;
+    }
+
+    /**
+     * @return the modifiedDate
+     */
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    /**
+     * @param modifiedDate the modifiedDate to set
+     */
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    /**
+     * @return the createdBy
+     */
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    /**
+     * @param createdBy the createdBy to set
+     */
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    /**
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled the enabled to set
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     
