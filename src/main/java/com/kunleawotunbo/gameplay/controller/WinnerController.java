@@ -194,10 +194,10 @@ public class WinnerController {
     
     public String latestWeeklyGamesWinners(ModelMap model, HttpServletRequest request) {
 
-        List<WeeklyGames> gameList = null;
-        List<WeeklyGames> gameListValid = null;
-        List<Game> validGames = null;
-        List<WeeklyGamesAnswers> weeklyGameAnswer = null;
+        List<WeeklyGames> gameList = new ArrayList<WeeklyGames>();
+       // List<WeeklyGames> gameListValid = null;
+       // List<Game> validGames = null;
+        List<WeeklyGamesAnswers> weeklyGameAnswer = new ArrayList<WeeklyGamesAnswers>();
        // List weeklyGameCategoryName = null;
         List<String> weeklyGameCategoryName = new ArrayList<String>();
         //String gameCategoryCode = "";
@@ -270,6 +270,9 @@ public class WinnerController {
               
            WeeklyGames weeklyGame = weeklyGamesService.findById(item.getGameId());
                weeklyGame.setModifiedDate(todaydate);
+               
+               boolean enabledstatus = false;
+               weeklyGame.setEnabled(enabledstatus);
                           // weeklyGame.
                   boolean weeklyGameSaveStatus =    weeklyGamesService.save(weeklyGame);
                   
@@ -283,7 +286,7 @@ public class WinnerController {
           }
          //logger.info("Weekly Game Category :" + weeklyGameCategoryName.get(0));
         //ogger.info("Weekly Game Category :" + weeklyGameCategoryName.get(0));
-        model.addAttribute("weeklyGame", validGames);
+        //model.addAttribute("weeklyGame", validGames);
         model.addAttribute("weeklyGameAnswer", weeklyGameAnswer);
         model.addAttribute("weeklyGameCategoryName", weeklyGameCategoryName);
         model.addAttribute("loggedinuser", getPrincipal());

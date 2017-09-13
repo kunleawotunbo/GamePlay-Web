@@ -192,84 +192,91 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return weeklyGamesAnswersList;
     }
 
-    public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId(String Ans, int id, int NoOfWinners) {
+    public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId(String Ans, int id, int NoOfWinners ) {
         //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
-        Date todaydate = tunborUtility.getDate("Africa/Nigeria");
-        Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans).ignoreCase());
-        criteria.add(Restrictions.eq("gameId", id));
+         Date todaydate = tunborUtility.getDate("Africa/Nigeria");
+         Criteria criteria = createEntityCriteria().add(Restrictions.eq("userAnswer", Ans).ignoreCase());
+         criteria.add(Restrictions.eq("gameId", id));
         // criteria.setMaxResults(NoOfWinners);
         // criteria.add(Restrictions.
         // criteria.
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
-
-        List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = new ArrayList<WeeklyGamesAnswers>();
-
-        int i = 0;
-
-        while (i < weeklyGamesAnswersList.size()) {
-
-            String winnerPhoneNumber = weeklyGamesAnswersList.get(i).getUserPhoneNo();
-            int winnergameid = weeklyGamesAnswersList.get(i).getGameId();
-            String winnerPhoneNumber2 = null;
-            int winnergameid2;
-
-            logger.info("i Size :" + String.valueOf(i));
-
-            int j = i + 1;
-            while (j < weeklyGamesAnswersList.size()) {
-
-                logger.info("j Size :" + String.valueOf(j));
-
-                winnerPhoneNumber2 = weeklyGamesAnswersList.get(j).getUserPhoneNo();
-                winnergameid2 = weeklyGamesAnswersList.get(j).getGameId();
-
-                logger.info(" i phone value :" + winnerPhoneNumber + " j phone value :" + winnerPhoneNumber2);
-                logger.info(" i game id :" + String.valueOf(winnergameid) + " j game id :" + String.valueOf(winnergameid2));
-                if (winnerPhoneNumber.equals(winnerPhoneNumber2) && winnergameid == winnergameid2) {
-
-                    weeklyGamesAnswersList.remove(j);
-                    j--;
-
-                }
-                j++;
-            }
-            i++;
-        }
-
-        //List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = null;
+         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+         List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+         
+         List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = new ArrayList<WeeklyGamesAnswers>();
+         
+         int i =0;
+             
+             while(i < weeklyGamesAnswersList.size() ){
+                 
+              String winnerPhoneNumber =  weeklyGamesAnswersList.get(i).getUserPhoneNo();
+              int winnergameid =  weeklyGamesAnswersList.get(i).getGameId();
+              String winnerPhoneNumber2 = null;
+              int winnergameid2;
+                    
+                logger.info("i Size :" + String.valueOf(i));
+              
+                     int j = i + 1;
+                    while ( j  < weeklyGamesAnswersList.size()){
+                        
+                        logger.info("j Size :" + String.valueOf(j));
+                        
+                                winnerPhoneNumber2 = weeklyGamesAnswersList.get(j).getUserPhoneNo();
+                                winnergameid2 =  weeklyGamesAnswersList.get(j).getGameId();
+                                
+                                 logger.info(" i phone value :" + winnerPhoneNumber + " j phone value :" + winnerPhoneNumber2 );
+                                 logger.info(" i game id :" + String.valueOf(winnergameid) + " j game id :" + String.valueOf(winnergameid2) );
+                                 if(winnerPhoneNumber.equals(winnerPhoneNumber2) && winnergameid == winnergameid2 ){
+                       
+                                 weeklyGamesAnswersList.remove(j);
+                                            j--;
+                                        
+                                               }
+                                           j++;
+                           }
+                  i++;
+             }
+         
+         
+         //List<WeeklyGamesAnswers> weeklyGamesAnswersListRandomWinner = null;
+         
         //  int WeeklyGameAnswerLength = weeklyGamesAnswersList.size();
+        
         logger.info("Game List  Start Size :" + String.valueOf(weeklyGamesAnswersList.size()));
+          
+          WeeklyGamesAnswersDaoImpl obj = new WeeklyGamesAnswersDaoImpl();
+		//for(int i = 0; i < 10; i++){
+                // System.out.println(obj.getRandomList(weeklyGamesAnswersList));
+		//}
+          
+          try {
+              for(int k = 0; k < NoOfWinners; k++){
+             
+             int j = obj.getRandomList(weeklyGamesAnswersList);
+             
+              logger.info("Generated Random Numbers : {}", j);
+              
+             
+             weeklyGamesAnswersListRandomWinner.add(weeklyGamesAnswersList.get(j));
+             
+              logger.info("No of Winners :" + String.valueOf(NoOfWinners));
+             logger.info("Game List Random Winner Phone Number :" + String.valueOf(weeklyGamesAnswersList.get(j).getUserPhoneNo()));
+             
+                 WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersList.remove(j);
+                 
+                 logger.info("Game List latest Size :" + String.valueOf(weeklyGamesAnswersList.size()));
+                 
+                 logger.info("Weekly Random Winner Array Size :" + String.valueOf(weeklyGamesAnswersListRandomWinner.size()));
+               
+              }
+                 }catch(Exception e){
+               
+              System.err.println( e.getMessage());
+          }
 
-        WeeklyGamesAnswersDaoImpl obj = new WeeklyGamesAnswersDaoImpl();
-        //for(int i = 0; i < 10; i++){
-        // System.out.println(obj.getRandomList(weeklyGamesAnswersList));
-        //}
-
-        try {
-            for (int k = 0; k < NoOfWinners; k++) {
-
-                int j = obj.getRandomList(weeklyGamesAnswersList);
-
-                logger.info("Generated Random Numbers : {}", j);
-
-                weeklyGamesAnswersListRandomWinner.add(weeklyGamesAnswersList.get(j));
-
-                logger.info("Game List Random Winner Phone Number :" + String.valueOf(weeklyGamesAnswersList.get(j).getUserPhoneNo()));
-
-                WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersList.remove(j);
-
-                logger.info("Game List latest Size :" + String.valueOf(weeklyGamesAnswersList.size()));
-
-                logger.info("Weekly Random Winner Array Size :" + String.valueOf(weeklyGamesAnswersListRandomWinner.size()));
-
-            }
-        } catch (Exception e) {
-
-            System.err.println(e.getMessage());
-        }
-
-        // return weeklyGamesAnswersList;
+          // return weeklyGamesAnswersList;
+          
+              
         return weeklyGamesAnswersListRandomWinner;
     }
 
