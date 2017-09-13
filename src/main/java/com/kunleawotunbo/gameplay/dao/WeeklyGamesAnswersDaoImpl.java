@@ -264,6 +264,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
              
              weeklyGamesAnswersListRandomWinner.add(weeklyGamesAnswersList.get(j));
              
+              logger.info("No of Winners :" + String.valueOf(NoOfWinners));
              logger.info("Game List Random Winner Phone Number :" + String.valueOf(weeklyGamesAnswersList.get(j).getUserPhoneNo()));
              
                  WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersList.remove(j);

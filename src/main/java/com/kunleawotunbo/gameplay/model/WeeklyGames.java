@@ -115,7 +115,7 @@ public class WeeklyGames implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date gameStartDate;
      
-     @Column(name = "enabled")
+     @Column(name = "enabled", columnDefinition = "TINYINT(2)")
     private boolean enabled;
 
     /**
