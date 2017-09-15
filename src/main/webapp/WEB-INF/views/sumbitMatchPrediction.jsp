@@ -32,34 +32,27 @@
                         Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>
 
                         <br><br>
-                        <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal">
-                            <div class="form-group row text-right">
-                                <label for="email-h-f" class="col-sm-3 form-control-label m-t-5">Email</label>
+                        <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal" id="matchPredictionAnswer-form">
+                            <form:hidden path="gameId" value="${matchPredictionObject.id}" id="gameId" name="gameId" />
+                             <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
+                             <form:hidden path="weekNo" value="${matchPredictionObject.weekNo}" id="weekNo" name="weekNo" />
+                             <div class="form-group row text-left">
+                                <label for="phone-h-f" class="col-sm-3 form-control-label m-t-5">Phone Number</label>
                                 <div class="col-sm-9">
                                     <input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                          
+                                     <p>Your phone number will be used to contact you if you win.</p> 
                                 </div>
                             </div>
-                            <div class="form-group row text-right">
-                                <label for="password-h-f" class="col-sm-3 form-control-label m-t-5">Password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password-h-f">
+                           
+                             <div class="form-group">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
+                                        <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row text-right">
-                                <label for="re-password-h-f" class="col-sm-3 form-control-label m-t-5">Re Password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="re-password-h-f">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-9 offset-sm-3">
-                                    <label class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-main" type="checkbox" checked="" >
-                                        <span class="custom-control-indicator"></span>
-                                        <span class="custom-control-description align-middle">Keep me signed in</span>
-                                    </label>
-                                    <button class="btn btn-main pull-right" type="submit">Sign in</button>
-                                </div>
+                            
+                            <div class="form-group row text-left">
+                              
                             </div>
                         </form:form> 
 
@@ -117,3 +110,111 @@
         
     });
 </script>
+
+
+<script>
+
+    jQuery(document).ready(function ($) {
+
+        $("#matchPredictionAnswer-form").submit(function (event) {
+            //var formData = $('addGame-form').serialize();
+            // Disble the search button
+            enableSearchButton(false);
+
+            // Prevent the form from submitting via the browser.
+            event.preventDefault();
+
+            submitViaAjax();
+
+        });
+
+    });
+
+    function submitViaAjax() {
+
+
+        var id = $('#id').val();
+        //var userPhoneNo = $('#userPhoneNo').val();
+        var userAnswer = $('#userAnswer').val();
+        var gameId = $('#gameId').val();
+        var userPhoneNo = $("#userPhoneNo").intlTelInput("getNumber");
+        var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
+        var weekNo = $('#weekNo').val();
+
+        // console.log("countryData  " + countryData);
+        // console.log("countryData.name  " + countryData.name);
+        // console.log("countryData.iso2s  " + countryData.iso2);
+        // console.log("userAnswer:  " + userAnswer)
+
+        // set a variable
+        var gameExpiryDate = new Date();
+        // console.log("userPhoneNo ::" + userPhoneNo);
+
+        var json = {
+
+            "userPhoneNo": userPhoneNo,
+            "userAnswer": userAnswer,
+            "gameId": gameId,
+            "weekNo": weekNo
+
+
+        };
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "${pageContext.request.contextPath}/api/matchpredictionanswer/submitanswer",
+            data: JSON.stringify(json),
+            dataType: 'json',
+            timeout: 100000,
+            success: function (data) {
+                console.log("SUCCESS: ", data);
+                //  display(data);
+                //   notify(data);
+                notification("Notification", "Congratulations your answer has been submitted.", "success");
+
+                window.location = 'congratulations.html';
+                /*
+                 if (noerrors) {
+                 window.location = 'congratulations.html';
+                 }
+                 */
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                //  display(e);
+                notification("Notification", "Unable to save your answer. Please try again later", "error");
+
+            },
+            done: function (e) {
+                console.log("DONE");
+                enableSearchButton(true);
+            }
+        });
+
+        $("#matchPredictionAnswer-form")[0].reset();
+
+    }
+
+    function enableSearchButton(flag) {
+        $("#btn-submit").prop("disabled", flag);
+    }
+
+    function display(data) {
+        var json = "<h4>Ajax Response</h4><pre>"
+                + JSON.stringify(data, null, 4) + "</pre>";
+        $('#feedback').html(json);
+    }
+
+    function notification(title, text, type) {
+
+        new PNotify({
+            title: title,
+            text: text,
+            type: type,
+            styling: 'bootstrap3'
+        });
+    }
+</script>
+
+

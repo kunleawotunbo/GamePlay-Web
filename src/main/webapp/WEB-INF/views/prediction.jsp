@@ -76,9 +76,10 @@
                                             <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width"> 
                                                 <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
                                             </a>
-
+                                           <!--
                                             &nbsp;
                                             <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal </button>
+                                           -->
 
                                         </td>
 

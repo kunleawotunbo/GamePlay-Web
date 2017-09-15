@@ -12,6 +12,7 @@
 
 <script src="<c:url value='/resources/js/jquery.min.js' />"></script> 
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script> 
+<script src="<c:url value='/resources/js/custom_outside.js' />"></script> 
 <!-- PNotify -->
 <script src="<c:url value='/resources/js/pnotify.js' />"></script> 
 <script src="<c:url value='/resources/js/pnotify.buttons.js' />"></script> 

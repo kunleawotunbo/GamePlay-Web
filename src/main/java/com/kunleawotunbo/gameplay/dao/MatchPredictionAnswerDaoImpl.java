@@ -13,12 +13,14 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
 @Repository("matchPredictionAnswerDao")
+@Transactional
 public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredictionAnswer> implements MatchPredictionAnswerDao{
 
     private final Logger logger = LoggerFactory.getLogger(getClass());

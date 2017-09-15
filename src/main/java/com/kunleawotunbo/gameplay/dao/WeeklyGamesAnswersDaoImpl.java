@@ -24,12 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.transform.Transformers;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
 @Repository("weeklyGamesAnswersDao")
+@Transactional
 public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnswers> implements WeeklyGamesAnswersDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());

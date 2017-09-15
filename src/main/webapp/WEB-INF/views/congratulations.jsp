@@ -4,36 +4,43 @@
     Author     : Olakunle Awotunbo
 --%>
 
-
 <!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
 <!--Include outside navigation-->
 <%@ include file="includes/outside/navigation.jsp" %>
 
+<!--intl-tel-input-->
+<link href="<c:url value='/resources/css/intlTelInput.css' />"  rel="stylesheet"></link> 
 
 <div class="container">
+    <div class="row content">
 
-    <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
-
-            <div class="row">
+        <div class="col-sm-9 ">
 
 
-                <div class="panel-body">
+            <div class="container-fluid">    
 
-                    <div class="col-md-6 ">
+                <div class="row">   
 
-                             <img src="<c:url value='/resources/images/congrats.jpg' />" alt="congrats">
-                        <div class="alert alert-success lead">
+
+                    <!--Content starts-->
+
+                    <br>
+                    <div class="x_content">
+
+                        <div class="imgCenter">
+                            
+                            <img src="<c:url value='/resources/images/congrats.jpg' />" alt="congrats">
+                             <div class="alert alert-success lead">
                            
                             <!--<h2> Congratulations. </h2>--> 
                             
                             <p>Your answer has been submitted successfully.</p>
                         </div>
+                        </div>
+                                   
+                                   
+                       
 
                         <span class="well floatRight">
                             Go to <a href="<c:url value='/' />">Homepage</a>
@@ -41,54 +48,40 @@
                         <span class="well floatLeft">
                             <a href="##" onclick="window.history.back()">Try another answer</a>
                         </span>
+                        <br><br>
+                       
 
-                        <!--                        
-                                            Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                             Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                              Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                                               Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                        -->
                     </div>
+
+                    <!--Content ends --> 
+
+                    <!--Modal--> 
+
+
+                </div>    
+
+            </div><br>
+
+            <!--Bottom Ads Starts -->               
+            <div class="row">   
+                <div class="container-fluid bg-3 text-center">    
+                    <!--Include bottomadverts-->
+                    <%@ include file="includes/outside/bottomadverts.jsp" %>
+
                 </div>
-                <!--                
-                                <div class="alert alert-success lead">
-                                                        
-                                    Congratulations.
-                                </div>
-                                
-                              
-                -->
+            </div>
 
+            <!--Bottom Ads Ends -->        
 
+        </div>
+        <!-- Side bar ads starts--> 
+        <div class="col-sm-3 sidenav">
+            <%@ include file="includes/outside/sidebar.jsp" %>                      
+        </div>
+        <!--Side bar ads ends --> 
 
+    </div>
+</div>
 
-                <!--Include bottomadverts-->
-                <%@ include file="includes/outside/bottomadverts.jsp" %>
-            </div><!--/row-->
-        </div><!--/.col-xs-12.col-sm-9-->
-
-
-        <!--Center content ends-->       
-
-        <!--Inculde outer sidebar-->
-        <%@ include file="includes/outside/sidebar.jsp" %>
-
-        <!--Iniclude outside footer-->
-        <%@ include file="includes/outside/footer.jsp" %>
-
-
-
-
-        <script>
-//            function goBack() {
-//                window.history.back();
-//            }
-        </script>
+<!--Include outside footer-->
+<%@ include file="includes/outside/footer.jsp" %>

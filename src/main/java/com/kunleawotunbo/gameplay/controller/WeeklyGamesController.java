@@ -9,7 +9,6 @@ import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
-import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
@@ -27,12 +26,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -44,10 +41,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -447,5 +441,75 @@ public class WeeklyGamesController {
 
         return new ResponseEntity(id, HttpStatus.OK);
     }    
+    
+      /**
+     * Set weekly game answer
+     *
+     * @param weeklyGames
+     * @param errors
+     * @return
+     */
+    @PostMapping(value = "/setUserAnswerForMatcPrediction")
+    public ResponseEntity setUserAnswerForMatcPrediction(@RequestBody WeeklyGames wGames, Errors errors) {
+        boolean saved;
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("" + errors.getAllErrors().toString());
+
+            return ResponseEntity.badRequest().body(result);
+
+        }
+
+        WeeklyGames weeklyGames = weeklyGamesService.findById(wGames.getId());
+
+        if (weeklyGames == null) {
+            return new ResponseEntity("No WeeklyGames found for ID " + wGames.getId(), HttpStatus.NOT_FOUND);
+        }
+
+        GameAnswer gameAnswer = new GameAnswer();
+        GameAnswer findGame = gameAnswerService.findByGameId(wGames.getId());
+        if (findGame != null) {
+            logger.info("Updating answer for game :: " + wGames.getId());
+            gameAnswer.setId(findGame.getId());
+            gameAnswer.setGameId(weeklyGames.getId());
+            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
+            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
+            gameAnswer.setGameAnswer(wGames.getGameAnswer());
+            gameAnswer.setCreatedBy(findGame.getCreatedBy());
+            //gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            gameAnswer.setModifiedBy(wGames.getCreatedBy());
+            gameAnswer.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            saved = gameAnswerService.updateGame(gameAnswer);
+
+        } else {
+            // set weekly answer for games/question
+
+            gameAnswer.setGameId(weeklyGames.getId());
+            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
+            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
+            gameAnswer.setGameAnswer(wGames.getGameAnswer());
+            gameAnswer.setCreatedBy(wGames.getCreatedBy());
+            gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            //gameAnswer.setModifiedBy(modifiedBy);
+            //gameAnswer.setModifiedDate(modifiedDate);
+            saved = gameAnswerService.save(gameAnswer);
+
+        }
+
+        if (saved) {
+            logger.info("Answer set for question id :: " + weeklyGames.getId());
+            result.setCode("" + HttpStatus.OK);
+            result.setMessage("Answer set for question");
+
+            return ResponseEntity.ok(result);
+        } else {
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Answer set for question");
+            return ResponseEntity.ok(result);
+        }
+
+    }
 
 }

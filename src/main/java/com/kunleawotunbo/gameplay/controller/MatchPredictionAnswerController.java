@@ -8,7 +8,8 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
-import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
@@ -19,8 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,19 +33,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
  *
  * @author Olakunle Awotunbo
  */
-
 @RestController
-//@Controller
-@RequestMapping("/api/weeklygamesanswers/")
-@Api(value = "Game", description = "Handles the game management")
-@SessionAttributes("roles")
-public class WeeklyGamesAnswersController {
+@RequestMapping("/api/matchpredictionanswer/")
+@Api(value = "Match Prediction", description = "Handles the match prediction answer")
+//@SessionAttributes("roles")
+public class MatchPredictionAnswerController {  
     
     @Autowired
-    private WeeklyGamesService weeklyGamesService;
-    
-    @Autowired
-    private WeeklyGamesAnswersService weeklyGamesAnswersService;
+    private MatchPredictionAnswerService matchPredictionAnswerService;
     
     @Autowired
     private TunborUtility tunborUtility;
@@ -54,19 +48,18 @@ public class WeeklyGamesAnswersController {
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();
     
-    final Logger logger = LoggerFactory.getLogger(getClass());    
-  
+    final Logger logger = LoggerFactory.getLogger(getClass()); 
     
-     @GetMapping("/weeklyGameById/{id}")
-    public ResponseEntity getWeeklyGamesAnswers(@PathVariable("id") Long id) {
+     @GetMapping("/matchPredictionById/{id}")
+    public ResponseEntity getmatchPredictionById(@PathVariable("id") int id) {
 
-        WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersService.findById(id);
+        MatchPredictionAnswer matchPredictionAnswer = matchPredictionAnswerService.findById(id);
 
-        if (weeklyGamesAnswers == null) {
-            return new ResponseEntity("No WeeklyGamesAnswers found for ID " + id, HttpStatus.NOT_FOUND);
+        if (matchPredictionAnswer == null) {
+            return new ResponseEntity("No matchPredictionAnswer found for ID " + id, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity(weeklyGamesAnswers, HttpStatus.OK);
+        return new ResponseEntity(matchPredictionAnswer, HttpStatus.OK);
     }
     
     /**
@@ -76,11 +69,11 @@ public class WeeklyGamesAnswersController {
      * @return 
      */
     
-    @PostMapping(value = "/setanswer")
-    public ResponseEntity createWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
+    @PostMapping(value = "/submitanswer")
+    public ResponseEntity submitMactPredictionAnswer(@RequestBody MatchPredictionAnswer matchPredictionAnswer, Errors errors) {
         
         // set answer submitted date
-        weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
+        matchPredictionAnswer.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
@@ -91,29 +84,13 @@ public class WeeklyGamesAnswersController {
             return ResponseEntity.badRequest().body(result);
 
         }
-        if (weeklyGamesAnswersService.saveWeeklyGamesAnswer(weeklyGamesAnswers)) {           
+        if (matchPredictionAnswerService.saveMatchPredictionAnswer(matchPredictionAnswer)) {           
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer submitted");
-            //result.setResult((List<?>) weeklyGames);
+            
         }
        
         return ResponseEntity.ok(result);
     }   
     
-    
-    
-  private String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        System.out.println("Logged in user :: " + userName);
-        return userName;
-    }
-      
-      
 }

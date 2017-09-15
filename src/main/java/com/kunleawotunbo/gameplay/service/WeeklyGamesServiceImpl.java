@@ -24,7 +24,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     @Autowired
     private WeeklyGamesDao weeklyGamesDao;
     
-    @Autowired GamePlayTypeDao gamePlayTypeDao;
+    @Autowired 
+    GamePlayTypeDao gamePlayTypeDao;
     
     public WeeklyGames findById(int id) {
        return weeklyGamesDao.findById(id);

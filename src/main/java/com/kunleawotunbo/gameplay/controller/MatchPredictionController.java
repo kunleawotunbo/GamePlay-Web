@@ -9,6 +9,8 @@ import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.User;
+import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.SimpleDateFormat;
@@ -42,6 +44,9 @@ public class MatchPredictionController {
     @Autowired
     private MatchPredictionService matchPredictionService;
     
+    @Autowired 
+    private MatchPredictionResultService matchPredictionResultService;
+    
     final Logger logger = LoggerFactory.getLogger(getClass()); 
     
     @InitBinder
@@ -71,15 +76,16 @@ public class MatchPredictionController {
      * Set answer for selected match.
      */
     @RequestMapping(value = {"/set-matchPrediction-{selectedAnswer}-{id}"}, method = RequestMethod.GET)
-    public String setMatchPredictionAnswer(@PathVariable String selectedAnswer, @PathVariable int id, ModelMap model) {
+    public String submitMatchPredictionAnswer(@PathVariable String selectedAnswer, @PathVariable int id, ModelMap model) {
 
         logger.info("Set answer for matchPrediction id :: " + id);
         
         MatchPrediction matchPredictionObject = matchPredictionService.findById(id);
+        //matchPredictionObject.set
         MatchPredictionAnswer matchPredictionAnswer = new MatchPredictionAnswer();
         
         model.addAttribute("matchPredictionObject", matchPredictionObject);
-       // model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
+        model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
         model.addAttribute("selectedAnswer", selectedAnswer);
         
 
@@ -173,13 +179,30 @@ public class MatchPredictionController {
         List<MatchPrediction> matchPredictionList = null;
         
         
-        matchPredictionList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
-        
+        //matchPredictionList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
+        matchPredictionList = matchPredictionService.listAllMatchPredictions();
 
         model.addAttribute("matchPredictionList", matchPredictionList);
         //model.addAttribute("loggedinuser", getPrincipal());
 
         return "/admin/listMatchPredictions";
+    }
+    
+    /**
+     * This method will allows to set answer for match prediction.
+     */
+    @RequestMapping(value = "/admin/set-matchPrediction-Answer-{id}", method = RequestMethod.GET)
+    public String setMatchPredictionAnswer(@PathVariable int id, ModelMap model) {
+
+        logger.info("Get setMatchPredictionAnswer answer page id :: " + id);
+        
+        MatchPrediction matchPrediction = matchPredictionService.findById(id);
+        
+        model.addAttribute("matchPrediction", matchPrediction);    
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());    
+        model.addAttribute("matchPredictionResult", matchPredictionResultService.findById(id));
+
+        return "/admin/setMatchPredictionAnswer";
     }
     
       

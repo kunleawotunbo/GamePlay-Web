@@ -366,7 +366,7 @@ public class TunborUtility {
         
         Date currentDate = calendar.getTime();
         
-        logger.info("date : {}" + currentDate);
+        logger.info("date :: " + currentDate);
         
        String startDateString = "2017/08/09";
        DateFormat df = new SimpleDateFormat("yyyy/MM/dd"); 
@@ -375,7 +375,7 @@ public class TunborUtility {
                startDate = df.parse(startDateString);
                 String newDateString = df.format(currentDate);
               System.out.println(newDateString);
-               logger.info("date : {}" + newDateString);
+               logger.info("newDateString :: " + newDateString);
           } catch (ParseException e) {
                  e.printStackTrace();
                }

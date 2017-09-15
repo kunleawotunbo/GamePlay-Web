@@ -55,3 +55,28 @@ and open the template in the editor.
         padding: 5px;
         background-color: #dfe1e3
     }
+    
+    .imgCenter{
+        vertical-align:middle;
+        text-align:center;
+    }
+    
+    .navbar-nav  li a:active { 
+        background-color: yellow !important;
+    }
+    
+    .navbar-nav  li a:visited { 
+        background-color: blue;
+    }
+    
+    .navbar-nav  li a:hover {
+      background-color: #1abc9c !important;
+    }
+    
+    .active a {
+
+        background-color: green !important;
+
+    }
+    
+    

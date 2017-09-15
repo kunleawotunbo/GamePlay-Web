@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "macth_prediction_answers")
+@Table(name = "match_prediction_answers")
 public class MatchPredictionAnswer implements Serializable{
     
      @Id
@@ -31,7 +31,7 @@ public class MatchPredictionAnswer implements Serializable{
     @Basic(optional = false)
     @Column(name = "id")
 
-    private Long id;
+    private int id;
 
     @Basic(optional = false)
     @NotNull
@@ -70,14 +70,14 @@ public class MatchPredictionAnswer implements Serializable{
     /**
      * @return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

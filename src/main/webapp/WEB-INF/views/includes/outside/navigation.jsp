@@ -17,13 +17,13 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="<%=request.getContextPath()%>">Home</a></li>
-                        <li ><a href="<%=request.getContextPath()%>/prediction">Match Prediction</a></li>
+                        <li><a href="<%=request.getContextPath()%>">Home</a></li>
+                        <li><a href="<%=request.getContextPath()%>/prediction">Match Prediction</a></li>
                         <li><a href="<%=request.getContextPath()%>/about">About</a></li>
                         <li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="<%=request.getContextPath()%>/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </ul>
                 </div>
             </div>
