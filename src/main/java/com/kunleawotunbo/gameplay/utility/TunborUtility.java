@@ -480,8 +480,9 @@ public class TunborUtility {
     
     public List<MatchPredictionWinner> matchPredictionsListToGameWinnerList(List<MatchPredictionAnswer> matchPredictionAnswerList) {
         List<MatchPredictionWinner> gameWinners = null;
-
+        System.out.println("I am here 1");
         if (matchPredictionAnswerList != null && !matchPredictionAnswerList.isEmpty()) {
+            System.out.println("I am here 2");
             gameWinners = new ArrayList<MatchPredictionWinner>();
             MatchPredictionWinner gameWinner = null;
 
@@ -489,12 +490,13 @@ public class TunborUtility {
                 System.out.println("I am here");
                 
                 gameWinner = new MatchPredictionWinner();
-
+                System.out.println("item.getGameId() :: " + item.getGameId());
                 gameWinner.setGameId(item.getGameId());
                 gameWinner.setDateAnswered(item.getDateAnswered());
                 gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
                 gameWinner.setUserAnswer(item.getUserAnswer());
                 gameWinner.setUserPhoneNo(item.getUserPhoneNo());
+                gameWinner.setAnswerId(item.getId());
 
                 gameWinners.add(gameWinner);
             }
@@ -505,6 +507,10 @@ public class TunborUtility {
         }
 
         return gameWinners;
+    }
+    
+    public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage){
+        
     }
 
 }

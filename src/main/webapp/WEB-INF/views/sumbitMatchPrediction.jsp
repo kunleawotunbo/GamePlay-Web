@@ -28,7 +28,7 @@
                     <br>
                     <div class="x_content">
 
-                        Selected Answer - ${selectedAnswer}
+                       
                         Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>
 
                         <br><br>

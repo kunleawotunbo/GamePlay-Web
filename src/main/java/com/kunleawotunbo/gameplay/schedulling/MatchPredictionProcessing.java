@@ -109,7 +109,7 @@ public class MatchPredictionProcessing {
         }
     }
 
-    //@Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 10000)
     //@Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
     public void processMatchPredictionWinners() {
         logger.info("Inside processMatchPredictionWinners to process Match Prediction winners");
@@ -130,29 +130,37 @@ public class MatchPredictionProcessing {
 
                 logger.info("Processing List of random winner for matchPrediction id :: " + matchPrediction.getId());
 
-                try {
-                    //weeklyGame.getGameAnswer();
+                try {                    
                     MatchPredictionResult matchPResultObj = matchPredictionResultService.findByMatchPredictionId(matchPrediction.getId());
-                    System.out.println("matchPResultObj :: " + matchPResultObj);
+                    logger.info("matchPResultObj :: " + matchPResultObj);
                     if (matchPResultObj != null) {
 
                         gameAnswer = matchPResultObj.getWinner();
                         if (gameAnswer != null && "" != gameAnswer) {
                             int noOfWinners = matchPrediction.getNoOfWinners();
-
+                             logger.info("noOfWinners :: " + noOfWinners);
                             // Generate list of random winners
                             randomMatchPredictionWinnersList = matchPredictionAnswerService.listCorrectAnswersByGameId(gameAnswer, matchPrediction.getId(), noOfWinners);
-                            
-                            logger.info("randomMatchPredictionWinnersList.size() :: " + randomMatchPredictionWinnersList.size());
-                            // Persist list of random winners for weekly game
-                            matchPredictionWinnerService.saveBulkMatchPredictionWinners(tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList));
+                            logger.info("randomMatchPredictionWinnersList.size() up :: " + randomMatchPredictionWinnersList.size());
+                            if(!randomMatchPredictionWinnersList.isEmpty()){
+                                logger.info("randomMatchPredictionWinnersList.size() :: " + randomMatchPredictionWinnersList.size());
+                                // Persist list of random winners for weekly game
+                                matchPredictionWinnerService.saveBulkMatchPredictionWinners(tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList));
 
-                            // set proccessed to 1.
-                            int processedStatus = 1;
-                            matchPrediction.setStatus(processedStatus);
-                            matchPredictionService.updatePrediction(matchPrediction);
+                                // send sms to list of winners.
+                                // randomMatchPredictionWinnersList
+                                
+                                
+                                // set proccessed to 1.
+                                int processedStatus = 1;
+                                matchPrediction.setStatus(processedStatus);
+                                matchPredictionService.updatePrediction(matchPrediction);
+
+                                logger.info("Finished weeklyGameId :: " + matchPrediction.getId());
+                            }else {
+                                logger.info("randomMatchPredictionWinnersList is null or empty for matchPredictionId :: " + matchPrediction.getId());
+                            }
                             
-                            logger.info("Finished weeklyGameId :: " + matchPrediction.getId());
                         }else {
                             logger.info("Answer not yet set for match with ID :: " + matchPrediction.getId());
                         }

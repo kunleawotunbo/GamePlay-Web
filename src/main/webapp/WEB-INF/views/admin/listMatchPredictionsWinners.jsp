@@ -51,10 +51,9 @@
                                     <th>S/N</th>
                                     <th>PHONE NO </th>
                                     <th>DATE ANSWERED</th>  
-                                    <th>USER ANSWER</th>
-                                    <th>SET ANSWER</th>
+                                    <th>USER ANSWER</th>                                    
                                     <th>PROCESSED DATE</th>
-                                    <th></th>
+                                   
 
                                 </tr>
                             </thead>
