@@ -30,6 +30,8 @@ public interface WeeklyGamesAnswersService {
     
     public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String Ans );
     
+    public List<WeeklyGamesAnswers> listAllWeeklyGamesWinnersByPhoneNo(String PhoneNumber);
+    
     public List<WeeklyGamesAnswers> listAllActiveWeekGamesAnswers(int weekNo);
     
     List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId (String ans, int id, int NoOfWinners);

@@ -7,7 +7,7 @@
       <!--
         http://blog.codeply.com/2016/05/18/bootstrap-sidebar-responsive-examples/ 
         -->
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -23,6 +23,8 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<%=request.getContextPath()%>">Home</a></li>
                     <li><a href="<%=request.getContextPath()%>/about">About</a></li>
+                    <li><a href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a></li>
+                    <!--<li><a href="addWinnerNumber">Winners List</a></li>-->
                     <li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>
                 </ul>
             </div><!-- /.nav-collapse -->

@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.model.Game;
+import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
@@ -95,8 +96,9 @@ public class HomeController implements Controller {
         model.addAttribute("gameList", gameListFinal);
         
         return new ModelAndView("home", model);
+        //return new ModelAndView("winnerlist", model);
     }
 
-            
+    
   
 }

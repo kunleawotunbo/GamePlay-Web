@@ -30,6 +30,8 @@ public interface WeeklyGamesAnswersDao {
     
     List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswers(String ans);
     
+    List<WeeklyGamesAnswers> listAllWeeklyGamesWinnersByPhoneNo(String phoneNumber);
+    
     List<WeeklyGamesAnswers> listAllActiveWeekGamesAnswers(int weekNo);
    
     List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId (String ans, int id, int NoOfWinners);

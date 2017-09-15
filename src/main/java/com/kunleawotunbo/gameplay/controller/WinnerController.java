@@ -51,6 +51,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.scheduling.annotation.Scheduled;
 
 
 @Controller
@@ -303,7 +304,7 @@ public class WinnerController {
         boolean winnerstatus = true;
         //List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
         
-        List<WeeklyGamesAnswers> weeklyGamesRandomWinner = null;
+        List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
         
        weeklyGamesRandomWinner = weeklyGamesAnswersService.listWeeklyGamesAnswers(winnerstatus);
        

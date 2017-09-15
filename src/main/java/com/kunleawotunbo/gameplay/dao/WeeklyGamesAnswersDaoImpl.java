@@ -197,6 +197,19 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return weeklyGamesAnswersList;
     }
      
+     public List<WeeklyGamesAnswers> listAllWeeklyGamesWinnersByPhoneNo(String PhoneNumber ) {
+        //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+           boolean winnerstatus = true;
+         Criteria criteria = createEntityCriteria().add(Restrictions.eq("userPhoneNo", PhoneNumber));
+        criteria.add(Restrictions.eq("isRandomWinner", winnerstatus));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+
+        return weeklyGamesAnswersList;
+    }
+     
+     
+     
       public List<WeeklyGamesAnswers> listAllWeeklyGamesCorrectAnswersbyId(String Ans, int id, int NoOfWinners ) {
         //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
          Date todaydate = tunborUtility.getDate("Africa/Nigeria");
