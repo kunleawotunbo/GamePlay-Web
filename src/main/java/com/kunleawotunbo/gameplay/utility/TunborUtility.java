@@ -10,6 +10,8 @@ import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.GameWinner;
+import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
@@ -26,7 +28,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,11 +47,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -87,10 +86,10 @@ public class TunborUtility {
 
     @Autowired
     private MessageSource messages;
-      
+
     @Autowired
     private SMSConfigBean smsConfigBean;
-    
+
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Async
@@ -139,7 +138,7 @@ public class TunborUtility {
         // String template = "fm_mailTemplate.txt";
         String templateName = "registration_verification.txt";
         try {
-          
+
             content.append(FreeMarkerTemplateUtils.processTemplateIntoString(
                     freemarkerConfiguration.getTemplate(templateName), model));
             System.out.println("templateName ::" + templateName);
@@ -360,61 +359,60 @@ public class TunborUtility {
             System.err.println(ex.getMessage());
         }
     }
-     @DateTimeFormat(pattern = "yyyy/MM/dd")
-       public Date getDate(String timeZone) {
+
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    public Date getDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
-        
+
         Date currentDate = calendar.getTime();
-        
+
         logger.info("date :: " + currentDate);
-        
-       String startDateString = "2017/08/09";
-       DateFormat df = new SimpleDateFormat("yyyy/MM/dd"); 
-       Date startDate;
-          try {
-               startDate = df.parse(startDateString);
-                String newDateString = df.format(currentDate);
-              System.out.println(newDateString);
-               logger.info("newDateString :: " + newDateString);
-          } catch (ParseException e) {
-                 e.printStackTrace();
-               }
-        
+
+        String startDateString = "2017/08/09";
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        Date startDate;
+        try {
+            startDate = df.parse(startDateString);
+            String newDateString = df.format(currentDate);
+            System.out.println(newDateString);
+            logger.info("newDateString :: " + newDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return currentDate;
     }
-    
-     public String getFormattedDate(String timeZone) {
+
+    public String getFormattedDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
-        
+
         Date currentDate = calendar.getTime();
-       DateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY HH:mm:ss"); 
-       
-       
-       
+        DateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY HH:mm:ss");
+
         return dateFormat.format(currentDate);
     }
-     
-     public void logoutUser(HttpServletRequest request){
-        HttpSession session= request.getSession(false);
+
+    public void logoutUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
         SecurityContextHolder.clearContext();
-        if(session != null) {
+        if (session != null) {
             session.invalidate();
         }
 
     }
-     
-     public void sendSMS2(){
-         
-         System.out.println("Uri :: " + smsConfigBean.getUri());
-         System.out.println("getUsername :: " + smsConfigBean.getUsername());
-         
-     }
-     
-     @Async
+
+    public void sendSMS2() {
+
+        System.out.println("Uri :: " + smsConfigBean.getUri());
+        System.out.println("getUsername :: " + smsConfigBean.getUsername());
+
+    }
+
+    @Async
     public void sendSMSSingle(String recepientPhone, String message) {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("About to send sms up");
-        
+
         /*
         try {
             Thread.sleep(30000);
@@ -423,8 +421,7 @@ public class TunborUtility {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        */
-
+         */
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("username", smsConfigBean.getUsername());
         params.add("password", smsConfigBean.getPassword());
@@ -439,50 +436,75 @@ public class TunborUtility {
         params.add("sendondate", smsConfigBean.getUnique());
         params.add("msgtype", smsConfigBean.getUnique());
 
-     
         System.out.println("params :: " + params);
         // Add the Jackson message converter
-       // restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        // restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         ResponseEntity<String> response = restTemplate.postForEntity(smsConfigBean.getUri(), params, String.class);
-        
+
         System.out.println("response :: " + response);
         System.out.println("response.getBody() :: " + response.getBody());
         // System.out.println("result :: " + result);
-        
+
         System.out.println("SMS sent down down");
 
     }
-    
-    public Object getTimeZone(HttpServletRequest request){
-        
+
+    public Object getTimeZone(HttpServletRequest request) {
+
         TimeZone timeZone = RequestContextUtils.getTimeZone(request);
-     return (timeZone != null ? timeZone : TimeZone.getDefault());
+        return (timeZone != null ? timeZone : TimeZone.getDefault());
     }
-    
-     public List<GameWinner> weeklyGamesAnswersListToGameWinnerList(List<WeeklyGamesAnswers> weeklyGamesAnswers){
+
+    public List<GameWinner> weeklyGamesAnswersListToGameWinnerList(List<WeeklyGamesAnswers> weeklyGamesAnswers) {
         List<GameWinner> gameWinners = null;
 
-        if(weeklyGamesAnswers != null && !weeklyGamesAnswers.isEmpty()){
-        	gameWinners = new ArrayList<GameWinner>();
-        	GameWinner gameWinner = null;
+        if (weeklyGamesAnswers != null && !weeklyGamesAnswers.isEmpty()) {
+            gameWinners = new ArrayList<GameWinner>();
+            GameWinner gameWinner = null;
 
-        	for(WeeklyGamesAnswers item : weeklyGamesAnswers){
-        		gameWinner = new GameWinner();
+            for (WeeklyGamesAnswers item : weeklyGamesAnswers) {
+                gameWinner = new GameWinner();
 
-			    gameWinner.setGameId(item.getGameId());
-			    gameWinner.setDateAnswered(item.getDateAnswered());
-                            gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
-                            gameWinner.setUserAnswer(item.getUserAnswer());
-                            gameWinner.setUserPhoneNo(item.getUserPhoneNo());
+                gameWinner.setGameId(item.getGameId());
+                gameWinner.setDateAnswered(item.getDateAnswered());
+                gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
+                gameWinner.setUserAnswer(item.getUserAnswer());
+                gameWinner.setUserPhoneNo(item.getUserPhoneNo());
 
-        		
-
-			    gameWinners.add(gameWinner);
-		   }
-	    }
+                gameWinners.add(gameWinner);
+            }
+        }
 
         return gameWinners;
- }
+    }
+    
+    public List<MatchPredictionWinner> matchPredictionsListToGameWinnerList(List<MatchPredictionAnswer> matchPredictionAnswerList) {
+        List<MatchPredictionWinner> gameWinners = null;
 
+        if (matchPredictionAnswerList != null && !matchPredictionAnswerList.isEmpty()) {
+            gameWinners = new ArrayList<MatchPredictionWinner>();
+            MatchPredictionWinner gameWinner = null;
+
+            for (MatchPredictionAnswer item : matchPredictionAnswerList) {
+                System.out.println("I am here");
+                
+                gameWinner = new MatchPredictionWinner();
+
+                gameWinner.setGameId(item.getGameId());
+                gameWinner.setDateAnswered(item.getDateAnswered());
+                gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
+                gameWinner.setUserAnswer(item.getUserAnswer());
+                gameWinner.setUserPhoneNo(item.getUserPhoneNo());
+
+                gameWinners.add(gameWinner);
+            }
+           
+             logger.info("gameWinners.size() :: " +gameWinners.size());
+        }else {
+            logger.info("matchPredictionAnswerList is null or empty");
+        }
+
+        return gameWinners;
+    }
 
 }

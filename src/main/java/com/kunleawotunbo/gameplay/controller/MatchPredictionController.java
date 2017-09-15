@@ -8,10 +8,12 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +48,9 @@ public class MatchPredictionController {
     
     @Autowired 
     private MatchPredictionResultService matchPredictionResultService;
+    
+    @Autowired
+    private MatchPredictionWinnerService matchPredictionWinnerService;
     
     final Logger logger = LoggerFactory.getLogger(getClass()); 
     
@@ -200,9 +205,30 @@ public class MatchPredictionController {
         
         model.addAttribute("matchPrediction", matchPrediction);    
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());    
-        model.addAttribute("matchPredictionResult", matchPredictionResultService.findById(id));
+        model.addAttribute("matchPredictionResult", matchPredictionResultService.findByMatchPredictionId(id));
 
         return "/admin/setMatchPredictionAnswer";
+    }
+    
+    /**
+     * List weekly games
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/listMatchPredictionsWinners-{gameId}", method = RequestMethod.GET)
+    public String listMatchPredictionsWinners(@PathVariable int gameId, ModelMap model, HttpServletRequest request) {
+
+        List<MatchPredictionWinner> matchPredictionWinnersList = null;
+        
+        
+        matchPredictionWinnersList = matchPredictionWinnerService.listAllMatchPredictionWinnersByGameId(gameId);
+        logger.info("matchPredictionWinnersList.size() :: " + matchPredictionWinnersList.size());
+        model.addAttribute("matchPredictionWinnersList", matchPredictionWinnersList);
+        
+
+        return "/admin/listMatchPredictionsWinners";
     }
     
       

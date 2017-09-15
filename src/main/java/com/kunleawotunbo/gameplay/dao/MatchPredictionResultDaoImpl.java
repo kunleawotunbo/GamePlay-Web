@@ -27,7 +27,7 @@ public class MatchPredictionResultDaoImpl extends AbstractDao<Integer, MatchPred
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public MatchPredictionResult findById(int id) {
-        logger.info("id :: ", id);
+        logger.info("id :: " + id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -77,7 +77,7 @@ public class MatchPredictionResultDaoImpl extends AbstractDao<Integer, MatchPred
     }
 
     public MatchPredictionResult findByMatchPredictionId(int matchPredictionId) {
-        logger.info("matchPredictionId ::", matchPredictionId);
+        logger.info("matchPredictionId :: " +  matchPredictionId);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("matchPredictionId", matchPredictionId));

@@ -94,21 +94,22 @@
                                 <div class="col-md-9 col-sm-9 col-xs-9">
                                     <!--<input type="text" class="form-control"  id="winner" required="required">-->
 
-                                    <select class="form-control" name="winner" >
+                                    <!--                               
+                                        <select class="form-control" name="winner" >
                                         <option value="0"> Select Match Outcome</option>
                                         <option value="1">Home Win - 1</option>
                                         <option value="X">Draw - X </option>
                                         <option value="2">Away Win - 2</option>
 
-                                    </select>
+                                    </select>-->
 
                                     <div class="radio">
                                         <div class="radio">
-                                            <input type="radio" class="flat" name="iCheck"> <strong> Home Win </strong>
+                                            <input type="radio" class="flat" name="winner" value="1"> <strong> Home Win </strong>
                                             &nbsp;
-                                            <input type="radio" class="flat" name="iCheck"> <strong> Draw </strong>
+                                            <input type="radio" class="flat" name="winner" value="X"> <strong> Draw </strong>
                                             &nbsp;
-                                            <input type="radio" class="flat" name="iCheck"> <strong>  Away Win </strong>
+                                            <input type="radio" class="flat" name="winner" value="2"> <strong>  Away Win </strong>
 
                                         </div>
                                     </div>
@@ -211,25 +212,30 @@
 
 
                 var id = $('#id').val();
-                var gameAnswer = $('#gameAnswer').val();
+                var homeScore = $('#homeScore').val();
+                var awayScore = $('#awayScore').val();
+                var weekNo = $('#weekNo').val();
+                var createdBy = $('#createdBy').val();               
+                var winner = $("input[name='winner']:checked").val();
+                //var matchResult = '' + homeScore ' - ' + '' + awayScore;
+                //alert("Winner :: " + winner);
 
-                var createdBy = $('#createdBy').val();
-
-                // set a variable
-                var gameExpiryDate = new Date();
-                console.log("gameExpiryDate ::" + gameExpiryDate);
-
+              
+                
 
                 var json = {
                     "id": id,
-                    "gameAnswer": gameAnswer,
-                    "createdBy": createdBy
+                    "homeScore": homeScore,
+                    "awayScore": awayScore,
+                    "createdBy": createdBy,
+                     "winner" : winner,
+                     "weekNo": weekNo
                 };
 
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "${pageContext.request.contextPath}/api/weeklygames/setanswer",
+                    url: "${pageContext.request.contextPath}/api/weeklygames/setUserAnswerForMatcPrediction",
                     data: JSON.stringify(json),
                     dataType: 'json',
                     timeout: 100000,
@@ -239,7 +245,7 @@
                         //   notify(data);
                         notification("Notification", "Answer added successfully.", "success");
                         //window.location = "/admin/listWeeklyGames";
-                        location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                        location.href = "<%=request.getContextPath()%>/admin/listMatchPredictions";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);

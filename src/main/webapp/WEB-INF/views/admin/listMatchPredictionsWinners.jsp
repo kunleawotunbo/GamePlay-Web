@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listMatchPredictions
-    Created on : Sep 12, 2017, 1:51:15 PM
+    Document   : listMatchPredictionsWinners
+    Created on : Sep 15, 2017, 7:12:10 PM
     Author     : Olakunle Awotunbo
 --%>
 
@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Match Prediction</h3>
+                <h3>Match Prediction Winners for game </h3>
             </div>
             <!--
                         <div class="title_right">
@@ -37,7 +37,7 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Match Prediction List</h2>
+                        <h2>Match Prediction Winners List</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -49,43 +49,26 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>GAME </th>
-                                    <th>PRIZE OF WINNER</th>                                    
-                                    <th>START TIME</th>
-                                    <th>END TIME</th>
+                                    <th>PHONE NO </th>
+                                    <th>DATE ANSWERED</th>  
+                                    <th>USER ANSWER</th>
                                     <th>SET ANSWER</th>
-                                    <th>VIEW WINNERS</th>
-                                    <th></th>
+                                    <th>PROCESSED DATE</th>
                                     <th></th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${matchPredictionList}" var="item" varStatus = "status">  
+                                <c:forEach items="${matchPredictionWinnersList}" var="item" varStatus = "status">  
                                     <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
-                                        <td><c:out value="${item.homeTeamName}"/> vs <c:out value="${item.awayTeamName}"/></td>  
-                                        <td><c:out value="${item.prizeOfWinners}"/></td>                                          
+                                        <td>${item.userPhoneNo}</td>                                                                           
                                         <td>
-                                            <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.startTime}" />
+                                            <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.dateAnswered}" />
                                         </td> 
-                                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.endTime}" /></td> 
-                                        <td><a href="<c:url value='/admin/set-matchPrediction-Answer-${item.id}' />" class="btn btn-success ">
-                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Set Answer
-                                            </a>
-                                        </td>
-                                        <td><a href="<c:url value='/admin/listMatchPredictionsWinners-${item.id}' />" class="btn btn-success ">
-                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> VIEW WINNERS
-                                            </a>
-                                        </td>
-                                        <td><a href="<c:url value='/admin/edit-matchPrediction-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                                            </a>
-                                        </td>
-                                        <td><a href="<c:url value='/admin/delete-matchPrediction-${item.id}' />" class="btn btn-danger custom-width"> 
-                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
-                                            </a>
-                                        </td>
+                                        <td>${item.userAnswer}</td>    
+                                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.proccessedDate}" /></td> 
+                                       
                                     </tr>  
                                 </c:forEach>  
                             </tbody>

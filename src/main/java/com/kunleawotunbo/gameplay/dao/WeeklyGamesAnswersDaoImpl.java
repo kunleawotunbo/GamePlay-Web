@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.transform.Transformers;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
