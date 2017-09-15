@@ -32,6 +32,12 @@
                                <li><a href="listWeeklyGames">Weekly Games List</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-futbol-o"></i> Match Prediction <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                             <li><a href="addMatchPrediction">Add Match</a></li>   
+                               <li><a href="listMatchPredictions">Match Prediction List</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-desktop"></i> Games Answers <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                              <li><a href="activeweekanswer">Active Week Correct Answers List</a></li>

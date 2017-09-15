@@ -14,12 +14,14 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
 @Repository("gameAnswerDao")
+@Transactional
 public class GameAnswerDaoImpl extends AbstractDao<Integer, GameAnswer> implements GameAnswerDao{
     
     private final Logger logger = LoggerFactory.getLogger(getClass());

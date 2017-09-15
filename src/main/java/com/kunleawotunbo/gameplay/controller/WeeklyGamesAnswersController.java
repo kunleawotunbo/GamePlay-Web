@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
@@ -39,9 +40,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequestMapping("/api/weeklygamesanswers/")
 @Api(value = "Game", description = "Handles the game management")
 @SessionAttributes("roles")
-
-
-
 public class WeeklyGamesAnswersController {
     
     @Autowired
@@ -82,7 +80,7 @@ public class WeeklyGamesAnswersController {
     public ResponseEntity createWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
         
         // set answer submitted date
-        weeklyGamesAnswers.setDateAnswered(new Date());
+        weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {

@@ -132,8 +132,14 @@ public class AdminController {
         for (WeeklyGames item : gameList) {
 
             if (item.getGameCategory() != 0) {
-                gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
-                gameCatName = gameService.findById(item.getGameCategory()).getGameName();
+
+                try {
+                    gameCategoryCode = gameService.findById(item.getGameCategory()).getGameCode();
+                    gameCatName = gameService.findById(item.getGameCategory()).getGameName();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
             if (item.getGamePlayType() == 1) {
@@ -240,7 +246,7 @@ public class AdminController {
         weeklyGames.setGameImage(fb.getGameImage());
         weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
-        weeklyGames.setCreatedDate(tunborUtility.getDate("Africa/Nigeria"));
+        weeklyGames.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
         weeklyGames.setModifiedDate(fb.getModifiedDate());
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
@@ -407,7 +413,7 @@ public class AdminController {
         weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
         weeklyGames.setCreatedDate(fb.getCreatedDate());
-        weeklyGames.setModifiedDate(tunborUtility.getDate("Africa/Nigeria"));
+        weeklyGames.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
         weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
@@ -499,7 +505,7 @@ public class AdminController {
         game.setGameImage(fb.getGameImage());
         game.setGameImgLocation(fb.getGameImgLocation());
         //game.setCreationDate(fb.getCreationDate());
-        game.setCreationDate(tunborUtility.getDate("Africa/Nigeria"));
+        game.setCreationDate(tunborUtility.getDate(Definitions.TIMEZONE));
         game.setLastModificationDate(fb.getLastModificationDate());
         game.setCreatedBy(fb.getCreatedBy());
 
@@ -513,7 +519,7 @@ public class AdminController {
             activityLog.setEvent(Definitions.CREATE);
             activityLog.setUsername(req.getRemoteUser());
             activityLog.setDescription("Game category creation failed");
-            activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+            activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
             // activityLog.setActionItem("1");
             activityLog.setActionResult(Definitions.FAILED);
             activityLog.setIpaddress(req.getRemoteHost());
@@ -521,8 +527,7 @@ public class AdminController {
 
             activityLogService.save(activityLog);
 
-            */
-            
+             */
             model.addAttribute("error", true);
             model.addAttribute("message", " Unable to  Create game category");
             return "admin/addGameCategory";
@@ -538,16 +543,16 @@ public class AdminController {
         activityLog.setEvent(Definitions.CREATE);
         activityLog.setUsername(req.getRemoteUser());
         activityLog.setDescription("Game category creation successful");
-        activityLog.setActionDate(tunborUtility.getDate("Africa/Nigeria"));
+        activityLog.setActionDate(tunborUtility.getDate(Definitions.TIMEZONE));
         // activityLog.setActionItem("1");
         activityLog.setActionResult(Definitions.SUCCESS);
         activityLog.setIpaddress(req.getRemoteHost());
         //activityLog.setTimezone(tunborUtility.getTimeZone(req).toString());
-        activityLog.setTimezone("Africa/Nigeria");
+        activityLog.setTimezone(Definitions.TIMEZONE);
 
         System.out.println("Definitions.CREATE :: " + Definitions.CREATE);
         System.out.println("req.getRemoteUser() :: " + req.getRemoteUser());
-        System.out.println("tunborUtility.getDate :: " + tunborUtility.getDate("Africa/Nigeria"));
+        System.out.println("tunborUtility.getDate :: " + tunborUtility.getDate(Definitions.TIMEZONE));
         System.out.println("Definitions.SUCCESS :: " + Definitions.SUCCESS);
         System.out.println("req.getRemoteHost() :: " + req.getRemoteHost());
         
@@ -555,12 +560,9 @@ public class AdminController {
         
         activityLogService.save(activityLog);
         
-        */
-        
-        
-                
+         */
         return "redirect:/admin/addGameCategory";
-       // return "admin/addGameCategory";
+        // return "admin/addGameCategory";
 
     }
 
@@ -640,7 +642,7 @@ public class AdminController {
         game.setGameImage(fb.getGameImage());
         game.setGameImgLocation(fb.getGameImgLocation());
         game.setCreationDate(fb.getCreationDate());
-        game.setLastModificationDate(tunborUtility.getDate("Africa/Nigeria"));
+        game.setLastModificationDate(tunborUtility.getDate(Definitions.TIMEZONE));
         game.setCreatedBy(fb.getCreatedBy());
 
         boolean saved = gameService.updateGame(game);

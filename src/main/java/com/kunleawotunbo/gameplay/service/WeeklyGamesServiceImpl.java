@@ -24,7 +24,8 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     @Autowired
     private WeeklyGamesDao weeklyGamesDao;
     
-    @Autowired GamePlayTypeDao gamePlayTypeDao;
+    @Autowired 
+    GamePlayTypeDao gamePlayTypeDao;
     
     public WeeklyGames findById(int id) {
        return weeklyGamesDao.findById(id);
@@ -70,5 +71,9 @@ public class WeeklyGamesServiceImpl implements WeeklyGamesService {
     public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
     
           return weeklyGamesDao.listWeekActiveGamesByDate(date);
+    }
+
+    public List<WeeklyGames> listUnproccessedGames(int status, Date date) {
+        return weeklyGamesDao.listUnproccessedGames(status, date);
     }
 }

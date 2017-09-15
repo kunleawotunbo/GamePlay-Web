@@ -4,6 +4,7 @@
     Author     : Olakunle Awotunbo
 --%>
 
+
 <!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
 <!--Include outside navigation-->
@@ -11,36 +12,45 @@
 
 
 <div class="container">
+    <div class="row content">
 
-    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-sm-9 text-left">
 
-        <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
 
-            <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
-                    <div class="col-md-9 col-sm-9 col-xs-9">                                            
-                        <p class="form-control-static">This is contact page.</p>
-                    </div>     
+            <div class="container-fluid bg-3 text-center">    
+                 <br>
+                <div class="row">   
+                    <div class="form-group">
+                        
+                        <div class="col-md-9 col-sm-9 col-xs-9">                                            
+                            <p class="form-control-static">This is prediction page.</p>
+                        </div>     
+                    </div>
+
+                </div>    
+
+            </div><br>
+
+            <!--Bottom Ads Starts -->               
+            <div class="row">   
+                <div class="container-fluid bg-3 text-center">    
+                    <!--Include bottomadverts-->
+                    <%@ include file="includes/outside/bottomadverts.jsp" %>
+
                 </div>
+            </div>
 
+            <!--Bottom Ads Ends -->        
 
+        </div>
+        <!-- Side bar ads starts--> 
+        <div class="col-sm-3 sidenav">
+            <%@ include file="includes/outside/sidebar.jsp" %>                      
+        </div>
+        <!--Side bar ads ends --> 
 
-                <!--Include bottomadverts-->
-                <%@ include file="includes/outside/bottomadverts.jsp" %>
-            </div><!--/row-->
-        </div><!--/.col-xs-12.col-sm-9-->
+    </div>
+</div>
 
-
-        <!--Center content ends-->       
-
-        <!--Inculde outer sidebar-->
-        <%@ include file="includes/outside/sidebar.jsp" %>
-
-        <!--Iniclude outside footer-->
-        <%@ include file="includes/outside/footer.jsp" %>
-
-
+<!--Include outside footer-->
+<%@ include file="includes/outside/footer.jsp" %>

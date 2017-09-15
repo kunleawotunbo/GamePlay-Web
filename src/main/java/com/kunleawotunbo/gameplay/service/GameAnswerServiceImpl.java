@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Olakunle Awotunbo
  */
 @Service("gameAnswerService")
-@Transactional
 public class GameAnswerServiceImpl implements GameAnswerService{
 
      @Autowired

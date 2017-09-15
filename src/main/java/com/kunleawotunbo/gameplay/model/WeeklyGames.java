@@ -27,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class WeeklyGames implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -35,7 +35,7 @@ public class WeeklyGames implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
-    @NotNull    
+    @NotNull
     @Column(name = "weekNo")
     private int weekNo;
 
@@ -55,68 +55,71 @@ public class WeeklyGames implements Serializable {
     @Column(name = "gameExpiryDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date gameExpiryDate;
-    
+
     @Basic(optional = false)
     @NotNull
-    @Size( max = 1000)
+    @Size(max = 1000)
     @Column(name = "gameRules")
     private String gameRules;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "gamePlayType")
     private int gamePlayType;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "gameCategory")
     private int gameCategory;
-    
-    
-    @Size( max = 1000)
+
+    @Size(max = 1000)
     @Column(name = "gameText")
     private String gameText;
-    
+
     //@Size( max = 500)
     @Column(name = "gameImage")
     private String gameImage;
-   
+
     //@Size( max = 500)
     @Column(name = "gameImage2")
     private String gameImage2;
-    
+
     //@Size(min = 1, max = 500)
     @Column(name = "gameImgLocation")
     private String gameImgLocation;
-    
 
     @Column(name = "createdDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdDate;
-    
+
     @Column(name = "modifiedDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
-    
-     @Basic(optional = false)
+
+    @Basic(optional = false)
     @NotNull
-    @Size( max = 100)
+    @Size(max = 100)
     @Column(name = "createdBy")
     private String createdBy;
-     
-     @Column(name = "isPicture")
-    private byte isPicture;  
-     
-     @Size( max = 1000)
+
+    @Column(name = "isPicture")
+    private byte isPicture;
+
+    @Size(max = 1000)
     @Column(name = "gameAnswer")
     private String gameAnswer;
-     
-     @Column(name = "gameStartDate")
+
+    @Column(name = "gameStartDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date gameStartDate;
-     
-     @Column(name = "enabled", columnDefinition = "TINYINT(2)")
+
+    @Column(name = "enabled")
     private boolean enabled;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "status")
+    private int status;
 
     /**
      * @return the id
@@ -383,6 +386,19 @@ public class WeeklyGames implements Serializable {
     public void setGameImage2(String gameImage2) {
         this.gameImage2 = gameImage2;
     }
-   
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
 }

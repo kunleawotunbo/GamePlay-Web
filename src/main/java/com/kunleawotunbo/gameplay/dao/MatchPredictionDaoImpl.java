@@ -1,0 +1,96 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kunleawotunbo.gameplay.dao;
+
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
+import java.util.Date;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author Olakunle Awotunbo
+ */
+@Repository("matchPredictionDao")
+@Transactional
+public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction> implements MatchPredictionDao{
+    
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    public MatchPrediction findById(int id) {
+        logger.info("id : {}", id);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+
+        return (MatchPrediction) crit.uniqueResult();
+    }
+
+
+    public boolean save(MatchPrediction matchPrediction) {
+        boolean success = false;
+        try {           
+            saveOrUpdate(matchPrediction);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public boolean updatePrediction(MatchPrediction matchPrediction) {
+        boolean success = false;
+        try {
+            update(matchPrediction);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public void deleteMatchPrediction(MatchPrediction matchPrediction) {
+        delete(matchPrediction);
+    }
+
+    public List<MatchPrediction> listAllMatchPredictions() {
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("startTime"));
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<MatchPrediction> matchPredictionList = (List<MatchPrediction>) criteria.list();
+        
+        
+
+        return matchPredictionList;
+    }
+
+    public List<MatchPrediction> listActiveMatches( Date date) {
+       
+
+        boolean enabled = true;
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("enabled", enabled));
+
+        crit.add(Restrictions.ge("endTime", date));
+
+        // System.out.println("crit.toString() :: " + crit.toString());
+        return crit.list();
+    }
+  
+    
+}
