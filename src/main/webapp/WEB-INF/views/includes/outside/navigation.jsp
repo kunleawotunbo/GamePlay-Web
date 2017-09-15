@@ -5,7 +5,7 @@
 --%>
 
 
-        <nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -19,6 +19,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="<%=request.getContextPath()%>">Home</a></li>
                         <li><a href="<%=request.getContextPath()%>/prediction">Match Prediction</a></li>
+                         <li><a href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a></li>
                         <li><a href="<%=request.getContextPath()%>/about">About</a></li>
                         <li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>
                     </ul>
@@ -28,3 +29,4 @@
                 </div>
             </div>
         </nav>
+    

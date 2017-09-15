@@ -106,6 +106,12 @@ public class IndexController {
         return "about";
     }
     
+   /* @RequestMapping(value = "/addWinnerNumber", method = RequestMethod.GET)
+     public String winnerList() {
+
+            return "winnerlist";
+    }*/
+    
      @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactPage() {
           
