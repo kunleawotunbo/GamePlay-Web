@@ -110,7 +110,8 @@ public class MatchPredictionProcessing {
     }
 
     //@Scheduled(fixedDelay = 10000)
-    @Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
+    //@Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
+    @Scheduled(cron = "0 0 0/4 ? *  *") 
     public void processMatchPredictionWinners() {
         logger.info("Inside processMatchPredictionWinners to process Match Prediction winners");
         List<MatchPrediction> matchPredictionList = null;
