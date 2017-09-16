@@ -103,13 +103,20 @@
 
                                     </select>-->
 
-                                    <div class="radio">
-                                        <div class="radio">
-                                            <input type="radio" class="flat" name="winner" value="1"> <strong> Home Win </strong>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <!--
+                                        <input type="radio" class="flat" name="winner" value="1"> <strong> Home Win </strong>
                                             &nbsp;
                                             <input type="radio" class="flat" name="winner" value="X"> <strong> Draw </strong>
                                             &nbsp;
                                             <input type="radio" class="flat" name="winner" value="2"> <strong>  Away Win </strong>
+                                        -->
+                                        <input type="radio" name="winner" value="1"> <strong> Home Win </strong>
+                                            &nbsp;
+                                            <input type="radio"  name="winner" value="X"> <strong> Draw </strong>
+                                            &nbsp;
+                                            <input type="radio"  name="winner" value="2"> <strong>  Away Win </strong>
 
                                         </div>
                                     </div>

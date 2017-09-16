@@ -445,7 +445,7 @@ public class TunborUtility {
         System.out.println("response.getBody() :: " + response.getBody());
         // System.out.println("result :: " + result);
 
-        System.out.println("SMS sent down down");
+        System.out.println("SMS sent");
 
     }
 
@@ -509,6 +509,7 @@ public class TunborUtility {
         return gameWinners;
     }
     
+    @Async
     public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage){
         
     }

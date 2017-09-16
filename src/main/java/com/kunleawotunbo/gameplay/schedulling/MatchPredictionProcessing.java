@@ -10,6 +10,7 @@ import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
+import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
@@ -109,9 +110,11 @@ public class MatchPredictionProcessing {
         }
     }
 
-    //@Scheduled(fixedDelay = 10000)
+   // @Scheduled(fixedDelay = 10000)
+    // @Scheduled(cron = "0 0 0/1 1/1 * ? *") // Run every hour
+      @Scheduled(cron = "0 0/15 * 1/1 * ? *") // Every 15mins
     //@Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
-    @Scheduled(cron = "0 0 0/4 ? *  *") 
+   // @Scheduled(cron = "0 0 0/4 ? *  *") 
     public void processMatchPredictionWinners() {
         logger.info("Inside processMatchPredictionWinners to process Match Prediction winners");
         List<MatchPrediction> matchPredictionList = null;
@@ -146,10 +149,16 @@ public class MatchPredictionProcessing {
                             if(!randomMatchPredictionWinnersList.isEmpty()){
                                 logger.info("randomMatchPredictionWinnersList.size() :: " + randomMatchPredictionWinnersList.size());
                                 // Persist list of random winners for weekly game
-                                matchPredictionWinnerService.saveBulkMatchPredictionWinners(tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList));
+                                List<MatchPredictionWinner>  winnersList =  tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
+                                matchPredictionWinnerService.saveBulkMatchPredictionWinners(winnersList);
 
-                                // send sms to list of winners.
-                                // randomMatchPredictionWinnersList
+                                // send sms to list of winners.                             
+                                String message = "This is to notify you that you have won for the match prediction";
+                                
+                                for (MatchPredictionWinner item : winnersList) {
+                                    tunborUtility.sendSMSSingle(item.getUserPhoneNo(), message);
+                                    logger.info("SMS sent to :: " + item.getUserPhoneNo());
+                                }
                                 
                                 
                                 // set proccessed to 1.
