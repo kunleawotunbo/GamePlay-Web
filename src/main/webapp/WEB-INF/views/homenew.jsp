@@ -101,19 +101,27 @@
                     <div class="container-fluid bg-3 text-center">    
 
                         <div class="row">   
-                            <c:forEach var="item" items="${gameList}" >
+                                                <c:forEach var="item" items="${gameList}" >
+
+                        <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">-->
+                        <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+                            <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
+                            <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
+                            <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"   class="img-responsive" style="width:100%" alt="${item.gameName}">
+                            </a> 
+                        </div>
+                        <%--
+                                                        <div class="col-sm-4">
+                                                            <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
+                                                            <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
+                                                                <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"   class="img-responsive" style="width:100%" alt="${item.gameName}">
+                                                            </a> 
+                                                        </div>
+                        --%>
 
 
-                                <div class="col-sm-4">
-                                    <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
-                                    <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
-                                        <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"   class="img-responsive" style="width:100%" alt="${item.gameName}">
-                                    </a> 
-                                </div>
 
-
-
-                            </c:forEach>
+                    </c:forEach>
 
                         </div>    
 

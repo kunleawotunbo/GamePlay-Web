@@ -78,6 +78,10 @@
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> VIEW WINNERS
                                             </a>
                                         </td>
+                                        <td><a href="<c:url value='/admin/viewAllAnswersMatchPredictions-${item.id}' />" class="btn btn-success ">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>ALL ANSWERS
+                                            </a>
+                                        </td>
                                         <td><a href="<c:url value='/admin/edit-matchPrediction-${item.id}' />" class="btn btn-success custom-width">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                             </a>

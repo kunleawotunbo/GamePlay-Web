@@ -128,5 +128,18 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
         
         return matchPredictionAnswerRandomWinnerList;
     }
+
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId) {
+        logger.info("gameId :: " +  gameId);
+
+       
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+
+        criteria.add(Restrictions.eq("gameId", gameId));
+        
+        List<MatchPredictionAnswer> gameWinnerList = (List<MatchPredictionAnswer>) criteria.list();
+       
+        return gameWinnerList;
+    }
     
 }

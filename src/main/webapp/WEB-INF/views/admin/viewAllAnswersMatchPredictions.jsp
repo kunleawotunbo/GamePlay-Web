@@ -1,8 +1,9 @@
 <%-- 
-    Document   : listMatchPredictionsWinners
-    Created on : Sep 15, 2017, 7:12:10 PM
+    Document   : viewAllAnswersMatchPredictions
+    Created on : Sep 16, 2017, 4:40:54 PM
     Author     : Olakunle Awotunbo
 --%>
+
 
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/sidebar-menu.jsp" %>
@@ -37,7 +38,7 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Match Prediction Winners List</h2>
+                        <h2>Match Prediction user answer for ${matchPrediction.homeTeamName} - ${matchPrediction.awayTeamName}</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -52,21 +53,22 @@
                                     <th>PHONE NO </th>
                                     <th>DATE ANSWERED</th>  
                                     <th>USER ANSWER</th>                                    
-                                    <th>PROCESSED DATE</th>
+                                    <th>STATUS</th>
                                    
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${matchPredictionWinnersList}" var="item" varStatus = "status">  
+                                <c:forEach items="${matchPredictionAnswerList}" var="item" varStatus = "status">  
                                     <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
                                         <td>${item.userPhoneNo}</td>                                                                           
                                         <td>
                                             <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.dateAnswered}" />
                                         </td> 
-                                        <td>${item.userAnswer}</td>    
-                                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.proccessedDate}" /></td> 
+                                        <td>${item.userAnswer}</td>   
+                                        <td></td>   
+                                       
                                        
                                     </tr>  
                                 </c:forEach>  

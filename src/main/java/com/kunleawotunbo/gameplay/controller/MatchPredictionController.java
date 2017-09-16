@@ -52,6 +52,9 @@ public class MatchPredictionController {
     @Autowired
     private MatchPredictionWinnerService matchPredictionWinnerService;
     
+    @Autowired
+    private MatchPredictionAnswerService matchPredictionAnswerService;
+    
     final Logger logger = LoggerFactory.getLogger(getClass()); 
     
     @InitBinder
@@ -229,6 +232,32 @@ public class MatchPredictionController {
         
 
         return "/admin/listMatchPredictionsWinners";
+    }
+    
+    /**
+     * List weekly games
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/viewAllAnswersMatchPredictions-{gameId}", method = RequestMethod.GET)
+    public String viewAllAnswersMatchPredictions(@PathVariable int gameId, ModelMap model, HttpServletRequest request) {
+
+        List<MatchPredictionAnswer> matchPredictionAnswerList = null;
+        MatchPrediction matchPrediction = null;
+        String dMatchOutCome = "";
+        
+        matchPrediction = matchPredictionService.findById(gameId);
+        matchPredictionAnswerList = matchPredictionAnswerService.listAllMatchPredictionAnswersByGameId(gameId);
+        
+        logger.info("matchPredictionAnswerList.size() :: " + matchPredictionAnswerList.size());
+        
+        model.addAttribute("matchPrediction", matchPrediction);
+        model.addAttribute("matchPredictionAnswerList", matchPredictionAnswerList);
+        
+
+        return "/admin/viewAllAnswersMatchPredictions";
     }
     
       
