@@ -30,7 +30,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public WeeklyGames findById(int id) {
-        logger.info("id : {}", id);
+        logger.info("id :: " +  id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));

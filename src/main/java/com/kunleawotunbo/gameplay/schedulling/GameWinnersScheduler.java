@@ -86,7 +86,7 @@ public class GameWinnersScheduler {
             int noOfWinners = weeklyGame.getNoOfWinners();
             
             // Generate list of random winners
-            randomWeeklyGamesWinnersList = weeklyGamesAnswersService.listCorrectAnswersByGameId(gameAnswer, noOfWinners, noOfWinners);
+            randomWeeklyGamesWinnersList = weeklyGamesAnswersService.listCorrectAnswersByGameId(gameAnswer, weeklyGame.getId(), noOfWinners);
             
             // Persist list of random winners for weekly game
             gameWinnerService.saveBulkGameWinners(tunborUtility.weeklyGamesAnswersListToGameWinnerList(randomWeeklyGamesWinnersList));

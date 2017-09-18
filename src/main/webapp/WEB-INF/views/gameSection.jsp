@@ -49,75 +49,73 @@
                                     <c:choose>
                                         <c:when test="${isPicture}">
 
-                                            <div class="form-group" id="gameImage" >
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
-                                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <div class="form-group row text-left">
+                                                <label for="GameImage1" class="col-sm-3 form-control-label m-t-5">GameImage</label>
+                                                <div class="col-sm-9">
                                                     <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="400" height="400">
                                                 </div>
-                                            </div>
+                                            </div>                                           
 
-                                            <c:if test="${hasGameImage2}">          
+                                            <c:if test="${hasGameImage2}">     
 
-                                                <div class="form-group" id="gameImage" >
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage 2<span class="required">*</span></label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <div class="form-group row text-left" id="gameImage">
+                                                    <label for="gameImage" class="col-sm-3 form-control-label m-t-5">GameImage 2</label>
+                                                    <div class="col-sm-9">
                                                         <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="400" height="400">
                                                     </div>
-                                                </div>  
+                                                </div> 
 
                                             </c:if> 
 
                                         </c:when>
                                         <c:otherwise>
 
-                                            <div class="form-group" id="gameText">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
-                                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <div class="form-group row text-left" id="gameText">
+                                                <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Text</label>
+                                                <div class="col-sm-9">
                                                     <p class="form-control-static">${weeklyGame.gameText}</p>
                                                 </div>
-                                            </div>
+                                            </div> 
 
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">                                            
-                                        <p class="form-control-static">${weeklyGame.weekNo}</p>
-                                    </div>     
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize to Win<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <p class="form-control-static"> &#x20a6; ${weeklyGame.prizeOfWinners}</p>
+                                <div class="form-group row text-left" id="weekNo">
+                                    <label for="weekNo" class="col-sm-3 form-control-label m-t-5">Week No</label>
+                                    <div class="col-sm-9">
+                                       <p class="form-control-static">${weeklyGame.weekNo}</p>
                                     </div>
-                                </div>  
+                                </div> 
+                                    
+                                 <div class="form-group row text-left" id="prizeOfWinner">
+                                    <label for="prizeOfWinner" class="col-sm-3 form-control-label m-t-5">Prize to Winner</label>
+                                    <div class="col-sm-9">
+                                       <p class="form-control-static"> &#x20a6; ${weeklyGame.prizeOfWinners}</p>
+                                    </div>
+                                </div>    
 
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">No Of Winners<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                  <div class="form-group row text-left" id="noOfWinners">
+                                    <label for="noOfWinners" class="col-sm-3 form-control-label m-t-5">No Of Winners</label>
+                                    <div class="col-sm-9">
                                         <p class="form-control-static">${weeklyGame.noOfWinners}</p>
                                     </div>
                                 </div>  
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <p class="form-control-static"> ${weeklyGame.gameExpiryDate}</p>
+                                    
+                                 <div class="form-group row text-left" id="gameExpiryDate">
+                                    <label for="gameExpiryDate" class="col-sm-3 form-control-label m-t-5">Game Expiry Date</label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static">${weeklyGame.gameExpiryDate}</p>
                                     </div>
-                                </div>                  
+                                </div>  
 
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Rules <span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <p class="form-control-static"> ${weeklyGame.gameRules}</p>
+                                 <div class="form-group row text-left" id="gameRules">
+                                    <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static">${weeklyGame.gameRules}</p>
                                     </div>
-                                </div>
+                                </div>  
+
 
                             </form>
 
@@ -133,27 +131,25 @@
                                                 </div>
                                             </div>
                                 --%>
-
-                                <div class="form-group" >
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
+                                
+                                <div class="form-group row text-left" id="userPhoneNo2">
+                                    <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
+                                    <div class="col-sm-9">
+                                         <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                         <p>Your phone number will be used to contact you if you win.</p> 
                                     </div>
+                                </div>  
 
-                                </div>
-
-
-                                <!--<input type="tel" id="phone">-->
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Answer To Question<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:textarea path="userAnswer" id="userAnswer" name="userAnswer" type="textarea" class="form-control" rows="4"  placeholder="Input your answer to this question" required ="required" />                                 
+                                
+                                 <div class="form-group row text-left" id="userAnswer">
+                                    <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
+                                    <div class="col-sm-9">
+                                          <form:textarea path="userAnswer" id="userAnswer" name="userAnswer" type="textarea" class="form-control" rows="4"  placeholder="Input your answer to this question" required ="required" />                                 
 
                                     </div>
-                                </div>
+                                </div>  
 
+                                
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>

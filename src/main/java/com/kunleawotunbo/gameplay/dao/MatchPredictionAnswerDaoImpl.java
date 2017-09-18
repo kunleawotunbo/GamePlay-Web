@@ -6,7 +6,9 @@
 package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -91,7 +93,53 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
     }
 
     public List<MatchPredictionAnswer> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.info("gameAnswer :: " + gameAnswer);
+        logger.info("gameId :: " + gameId);
+        // Criteria criteria = createEntityCriteria();
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+        criteria.add(Restrictions.eq("userAnswer", gameAnswer).ignoreCase());
+        criteria.add(Restrictions.eq("gameId", gameId));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        
+         logger.info("crit.toString() :: " + criteria.toString());
+
+        List<MatchPredictionAnswer> matchPredictionAnswerList = (List<MatchPredictionAnswer>) criteria.list();
+        List<MatchPredictionAnswer> matchPredictionAnswerRandomWinnerList = new ArrayList<MatchPredictionAnswer>();
+
+        Random rand = new Random();
+
+        for (int i = 0; i < noOfWinners; i++) {
+            
+            if (matchPredictionAnswerList != null && !matchPredictionAnswerList.isEmpty()){
+                logger.info("matchPredictionAnswerList is not empty :: " + matchPredictionAnswerList.size());
+            int randomIndex = rand.nextInt(matchPredictionAnswerList.size());
+            MatchPredictionAnswer randomWeeklyGamesAnswer = matchPredictionAnswerList.get(randomIndex);
+            matchPredictionAnswerList.remove(randomIndex);
+            
+             logger.info("randomWeeklyGamesAnswer.getId() ::  " + randomWeeklyGamesAnswer.getId());
+            // Add each random winner to the arrayList.
+            matchPredictionAnswerRandomWinnerList.add(randomWeeklyGamesAnswer);
+            
+            }else {
+                logger.info("weeklyGamesAnswersList is null or empty");
+            }
+        }
+
+        
+        return matchPredictionAnswerRandomWinnerList;
+    }
+
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId) {
+        logger.info("gameId :: " +  gameId);
+
+       
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+
+        criteria.add(Restrictions.eq("gameId", gameId));
+        
+        List<MatchPredictionAnswer> gameWinnerList = (List<MatchPredictionAnswer>) criteria.list();
+       
+        return gameWinnerList;
     }
     
 }

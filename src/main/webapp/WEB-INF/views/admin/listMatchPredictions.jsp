@@ -54,6 +54,7 @@
                                     <th>START TIME</th>
                                     <th>END TIME</th>
                                     <th>SET ANSWER</th>
+                                    <th>VIEW WINNERS</th>
                                     <th></th>
                                     <th></th>
 
@@ -71,6 +72,14 @@
                                         <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.endTime}" /></td> 
                                         <td><a href="<c:url value='/admin/set-matchPrediction-Answer-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Set Answer
+                                            </a>
+                                        </td>
+                                        <td><a href="<c:url value='/admin/listMatchPredictionsWinners-${item.id}' />" class="btn btn-success ">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> VIEW WINNERS
+                                            </a>
+                                        </td>
+                                        <td><a href="<c:url value='/admin/viewAllAnswersMatchPredictions-${item.id}' />" class="btn btn-success ">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>ALL ANSWERS
                                             </a>
                                         </td>
                                         <td><a href="<c:url value='/admin/edit-matchPrediction-${item.id}' />" class="btn btn-success custom-width">

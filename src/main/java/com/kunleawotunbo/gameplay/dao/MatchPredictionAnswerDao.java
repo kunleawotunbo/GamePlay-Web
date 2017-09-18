@@ -37,4 +37,6 @@ public interface MatchPredictionAnswerDao {
     Long submittedAnswersByWeek(int weekNo);
     
     public List<MatchPredictionAnswer> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners);
+    
+    List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId);
 }

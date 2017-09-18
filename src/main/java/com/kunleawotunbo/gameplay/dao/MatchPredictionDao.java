@@ -26,4 +26,10 @@ public interface MatchPredictionDao {
     public List<MatchPrediction> listAllMatchPredictions();
     
     List<MatchPrediction> listActiveMatches( Date date);
+    
+     List<MatchPrediction> listWeekGamesByCateAndDate(int gameCategory, Date date);
+
+    public List<MatchPrediction> listWeekActiveGamesByDate(Date date);
+    
+    public List<MatchPrediction> listUnproccessedGames(int status, Date date);
 }

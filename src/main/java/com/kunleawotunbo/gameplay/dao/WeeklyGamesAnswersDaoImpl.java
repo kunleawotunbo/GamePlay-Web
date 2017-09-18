@@ -22,14 +22,14 @@ import java.util.Date;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.transform.Transformers;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
 @Repository("weeklyGamesAnswersDao")
+@Transactional
 public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnswers> implements WeeklyGamesAnswersDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -322,9 +322,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 	}
 
     public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    
-          logger.info("gameAnswer :: " + gameAnswer);
+        logger.info("gameAnswer :: " + gameAnswer);
         logger.info("gameId :: " + gameId);
         // Criteria criteria = createEntityCriteria();
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));

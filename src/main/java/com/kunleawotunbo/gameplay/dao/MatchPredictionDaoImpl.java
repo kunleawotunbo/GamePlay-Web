@@ -30,7 +30,7 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public MatchPrediction findById(int id) {
-        logger.info("id : {}", id);
+        logger.info("id :: ", id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -89,6 +89,32 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         crit.add(Restrictions.ge("endTime", date));
 
         // System.out.println("crit.toString() :: " + crit.toString());
+        return crit.list();
+    }
+
+    public List<MatchPrediction> listWeekGamesByCateAndDate(int gameCategory, Date date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<MatchPrediction> listWeekActiveGamesByDate(Date date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<MatchPrediction> listUnproccessedGames(int status, Date date) {
+        logger.info("status ::" + status);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("status", status));       
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        
+        // To get game based on the game expiry date
+        crit.add(Restrictions.le("endTime", date));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
         return crit.list();
     }
   

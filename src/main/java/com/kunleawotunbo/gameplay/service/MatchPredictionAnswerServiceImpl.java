@@ -64,5 +64,9 @@ public class MatchPredictionAnswerServiceImpl implements MatchPredictionAnswerSe
     public List<MatchPredictionAnswer> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners) {
         return matchPredictionAnswerDao.listCorrectAnswersByGameId(gameAnswer, gameId, noOfWinners);
     }
+
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId) {
+        return matchPredictionAnswerDao.listAllMatchPredictionAnswersByGameId(gameId);
+    }
     
 }

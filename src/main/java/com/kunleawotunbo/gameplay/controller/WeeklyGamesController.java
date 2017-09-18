@@ -10,8 +10,14 @@ import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
+import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
@@ -61,6 +67,15 @@ public class WeeklyGamesController {
 
     @Autowired
     private GameAnswerService gameAnswerService;
+    
+    @Autowired
+    private MatchPredictionService matchPredictionService;
+    
+    @Autowired
+    private MatchPredictionAnswerService matchPredictionAnswerService;
+    
+    @Autowired
+    private MatchPredictionResultService matchPredictionResultService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -450,11 +465,11 @@ public class WeeklyGamesController {
      * @return
      */
     @PostMapping(value = "/setUserAnswerForMatcPrediction")
-    public ResponseEntity setUserAnswerForMatcPrediction(@RequestBody WeeklyGames wGames, Errors errors) {
+    public ResponseEntity setUserAnswerForMatcPrediction(@RequestBody MatchPredictionResult mPResult, Errors errors) {
         boolean saved;
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
-
+            logger.error("Error occured");
             result.setCode("" + HttpStatus.BAD_REQUEST);
             result.setMessage("" + errors.getAllErrors().toString());
 
@@ -462,30 +477,49 @@ public class WeeklyGamesController {
 
         }
 
-        WeeklyGames weeklyGames = weeklyGamesService.findById(wGames.getId());
+        MatchPrediction matchPrediction = matchPredictionService.findById(mPResult.getId());
 
-        if (weeklyGames == null) {
-            return new ResponseEntity("No WeeklyGames found for ID " + wGames.getId(), HttpStatus.NOT_FOUND);
+        if (matchPrediction == null) {
+            return new ResponseEntity("No MatchPrediction answer found for ID " + mPResult.getId(), HttpStatus.NOT_FOUND);
         }
 
-        GameAnswer gameAnswer = new GameAnswer();
-        GameAnswer findGame = gameAnswerService.findByGameId(wGames.getId());
+        MatchPredictionResult matchPredictionResult = new MatchPredictionResult();
+        MatchPredictionResult findGame = matchPredictionResultService.findByMatchPredictionId(mPResult.getId());
         if (findGame != null) {
-            logger.info("Updating answer for game :: " + wGames.getId());
-            gameAnswer.setId(findGame.getId());
-            gameAnswer.setGameId(weeklyGames.getId());
-            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
-            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
-            gameAnswer.setGameAnswer(wGames.getGameAnswer());
-            gameAnswer.setCreatedBy(findGame.getCreatedBy());
-            //gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
-            gameAnswer.setModifiedBy(wGames.getCreatedBy());
-            gameAnswer.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
-            saved = gameAnswerService.updateGame(gameAnswer);
+            logger.info("Updating answer for game :: " + mPResult.getId());
+            matchPredictionResult.setId(findGame.getId());            
+            matchPredictionResult.setAwayScore(mPResult.getAwayScore());
+            matchPredictionResult.setHomeScore(mPResult.getHomeScore());
+            matchPredictionResult.setCreatedBy(findGame.getCreatedBy());  
+            matchPredictionResult.setMatchPredictionId(findGame.getMatchPredictionId());
+            matchPredictionResult.setMatchResult("" + mPResult.getHomeScore() + " - " + mPResult.getAwayScore());
+            matchPredictionResult.setModifiedBy(mPResult.getCreatedBy());
+            matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            matchPredictionResult.setWeekNo(mPResult.getWeekNo());
+            matchPredictionResult.setWinner(mPResult.getWinner());                    
+           
+            
+            saved = matchPredictionResultService.updateMatchPredictionResult(matchPredictionResult);
 
         } else {
             // set weekly answer for games/question
+            
+            logger.info("Settin answer for game :: " + mPResult.getId());
+            //matchPredictionResult.setId(findGame.getId());            
+            matchPredictionResult.setAwayScore(mPResult.getAwayScore());
+            matchPredictionResult.setHomeScore(mPResult.getHomeScore());
+            matchPredictionResult.setCreatedBy(mPResult.getCreatedBy());  
+             matchPredictionResult.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            matchPredictionResult.setMatchPredictionId(mPResult.getId());
+            matchPredictionResult.setMatchResult( "" + mPResult.getHomeScore() + " - " + mPResult.getAwayScore());
+            matchPredictionResult.setModifiedBy(mPResult.getCreatedBy());
+            matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            matchPredictionResult.setWeekNo(mPResult.getWeekNo());
+            matchPredictionResult.setWinner(mPResult.getWinner());     
 
+            saved = matchPredictionResultService.saveMatchPredictionResult(matchPredictionResult);
+            
+            /*
             gameAnswer.setGameId(weeklyGames.getId());
             gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
             gameAnswer.setWeekNo(weeklyGames.getWeekNo());
@@ -495,11 +529,13 @@ public class WeeklyGamesController {
             //gameAnswer.setModifiedBy(modifiedBy);
             //gameAnswer.setModifiedDate(modifiedDate);
             saved = gameAnswerService.save(gameAnswer);
+            
+            */
 
         }
 
         if (saved) {
-            logger.info("Answer set for question id :: " + weeklyGames.getId());
+            logger.info("Answer set for matchPredictionResult id :: " + mPResult.getId());
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer set for question");
 
