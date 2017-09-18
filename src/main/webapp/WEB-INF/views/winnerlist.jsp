@@ -41,13 +41,31 @@
           
             <div class="row">
 
-
+                   <p> &nbsp;</p>
+                       <p> &nbsp;</p>
                 
 
                     <!--                            <div class="item  col-xs-12 col-md-6">-->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                       You're a Winner In These Games. Congratulations!
+                 <c:set var = "iswinner" scope = "session" value = "true"/>
+                    <c:choose>
+                         
+                         <c:when test = "${winnerstatus == iswinner}">
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <p> &nbsp;</p>
+                       <p> &nbsp;</p>
+                                  You're a Winner In These Game(s). Congratulations!
                        
+                            </c:when>
+                       
+                      <c:otherwise>
+                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <p> &nbsp;</p>
+                       <p> &nbsp;</p>
+                                   Oops. You're not yet one of our winners. Please Play One Of Our Games Now 
+                                     To Be Winner or Play Again.                       
+                       
+                          </c:otherwise>
+                   </c:choose>
                        <p> &nbsp;</p>
                        <p> &nbsp;</p>
                        
@@ -97,18 +115,22 @@
                         
               
                 
-  
+                               <p> &nbsp;</p>
+                       <p> &nbsp;</p>
+                       <p> &nbsp;</p>
+                       <p> &nbsp;</p>
                 
             </div><!--/row-->   
             <%@ include file="includes/outside/bottomadverts.jsp" %>
         </div><!--/.col-xs-12.col-sm-9-->
+</div>
 </div>
 
 
         <!--Center content ends-->       
 
         <!--Inculde outer sidebar-->
-        <%@ include file="includes/outside/sidebar.jsp" %>
+        
 
         <!--Iniclude outside footer-->
         <%@ include file="includes/outside/footer.jsp" %>

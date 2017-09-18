@@ -51,7 +51,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 
 @Controller
@@ -191,9 +193,19 @@ public class WinnerController {
         return "/admin/weeklygamesrandomwinners";
     }
 
-   @RequestMapping(value = "/latestrandomwinners", method = RequestMethod.GET)
     
-    public String latestWeeklyGamesWinners(ModelMap model, HttpServletRequest request) {
+   // @Scheduled(fixedRate = 30000)
+    public void reportCurrentTime() {
+        logger.info("The time is now {}", tunborUtility.getDate("Africa/Nigeria"));
+        logger.info("Scheduler is running {}", tunborUtility.getDate("Africa/Nigeria"));
+    }
+    
+   //@RequestMapping(value = "/latestrandomwinners", method = RequestMethod.GET)
+    
+   // public String latestWeeklyGamesWinners(ModelMap model, HttpServletRequest request) {
+    
+      //@Scheduled(fixedRate = 30000)
+        public void latestWeeklyGamesWinners() {
 
         List<WeeklyGames> gameList = new ArrayList<WeeklyGames>();
        // List<WeeklyGames> gameListValid = null;
@@ -288,12 +300,14 @@ public class WinnerController {
          //logger.info("Weekly Game Category :" + weeklyGameCategoryName.get(0));
         //ogger.info("Weekly Game Category :" + weeklyGameCategoryName.get(0));
         //model.addAttribute("weeklyGame", validGames);
-        model.addAttribute("weeklyGameAnswer", weeklyGameAnswer);
+       /* model.addAttribute("weeklyGameAnswer", weeklyGameAnswer);
         model.addAttribute("weeklyGameCategoryName", weeklyGameCategoryName);
-        model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("loggedinuser", getPrincipal());*/
         
+        logger.info("The time is now {}", tunborUtility.getDate("Africa/Nigeria"));
+        logger.info("Scheduler is running {}", tunborUtility.getDate("Africa/Nigeria"));
 
-        return "/admin/allweeklygamelatestwinner";
+       // return "/admin/allweeklygamelatestwinner";
     } 
     
      @RequestMapping(value = "/allrandomwinners", method = RequestMethod.GET)

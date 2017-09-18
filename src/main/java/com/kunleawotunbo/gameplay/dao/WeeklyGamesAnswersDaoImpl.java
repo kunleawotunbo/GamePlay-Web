@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
 import org.hibernate.criterion.ProjectionList;
@@ -321,7 +322,42 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 	}
 
     public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+          logger.info("gameAnswer :: " + gameAnswer);
+        logger.info("gameId :: " + gameId);
+        // Criteria criteria = createEntityCriteria();
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+        criteria.add(Restrictions.eq("userAnswer", gameAnswer).ignoreCase());
+        criteria.add(Restrictions.eq("gameId", gameId));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        
+         logger.info("crit.toString() :: " + criteria.toString());
+
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+        List<WeeklyGamesAnswers> weeklyGamesAnswersRandomWinnerList = new ArrayList<WeeklyGamesAnswers>();
+
+        Random rand = new Random();
+
+        for (int i = 0; i < noOfWinners; i++) {
+            
+            if (weeklyGamesAnswersList != null && !weeklyGamesAnswersList.isEmpty()){
+                logger.info("weeklyGamesAnswersList is not empty :: " + weeklyGamesAnswersList.size());
+            int randomIndex = rand.nextInt(weeklyGamesAnswersList.size());
+            WeeklyGamesAnswers randomWeeklyGamesAnswer = weeklyGamesAnswersList.get(randomIndex);
+            weeklyGamesAnswersList.remove(randomIndex);
+            
+             logger.info("randomWeeklyGamesAnswer.getId() ::  " + randomWeeklyGamesAnswer.getId());
+            // Add each random winner to the arrayList.
+            weeklyGamesAnswersRandomWinnerList.add(randomWeeklyGamesAnswer);
+            
+            }else {
+                logger.info("weeklyGamesAnswersList is null or empty");
+            }
+        }
+
+        
+        return weeklyGamesAnswersRandomWinnerList;
     }
 
 }
