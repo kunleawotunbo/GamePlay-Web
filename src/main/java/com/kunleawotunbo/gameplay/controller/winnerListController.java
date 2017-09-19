@@ -131,11 +131,17 @@ public class winnerListController {
          List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
          
           List<String> weeklyGameCategoryName = new ArrayList<String>();
+          
+          String winnerStatus = "false";
          
          try {
         
        weeklyGamesRandomWinner = weeklyGamesAnswersService.listAllWeeklyGamesWinnersByPhoneNo(winnerNumber.getWinnerNumber());
-         
+       
+        if(  weeklyGamesRandomWinner.size() > 0){
+            
+            winnerStatus = "true";
+        }
        logger.info("Winner Answer :: " + weeklyGamesRandomWinner.get(0).getUserAnswer());
        
        }catch(Exception e){
@@ -159,7 +165,7 @@ public class winnerListController {
 
             model.addAttribute("weeklyGameAnswer", weeklyGamesRandomWinner);
             model.addAttribute("weeklyGameCategoryName", weeklyGameCategoryName);
-            // model.addAttribute("noOfAnswersSubmitted", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek()));
+            model.addAttribute("winnerstatus", winnerStatus);
             // model.addAttribute("lastWeekTotalAnswers", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek() - 1));
 
             //return "/addWinnerNumber";

@@ -34,10 +34,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableWebMvc
 @EnableAsync
+@EnableScheduling
 @ComponentScan(basePackages = "com.kunleawotunbo")
 @PropertySource(value = {"classpath:application.properties"})
 public class AppConfig extends WebMvcConfigurerAdapter {

@@ -33,14 +33,15 @@
 
 <div class="container">
 
-    <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
+   <!-- <div class="row row-offcanvas row-offcanvas-right">-->
+ 
+        <div class="row" >
+        <!--<div class="col-xs-12 col-sm-9">-->
+           <!-- <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
+            </p>-->
           
-            <div class="row">
+            
 
 
                 
@@ -48,18 +49,27 @@
                     <!--                            <div class="item  col-xs-12 col-md-6">-->
                     <!--<div class="item  col-xs-6 col-md-4" >-->
                     
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        
+                   <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                 <div> 
                         <p> &nbsp;</p>
                         
-                       Want To Know Whether You're a Winner Today?
-                       
                         <p> &nbsp;</p>
                         <p> &nbsp;</p>
                         
-                <form:form modelAttribute="winnerNumber"  method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" > 
+               
+                
+  
+                
+            </div> 
+            <p> &nbsp;</p>
+            
+         
+                        <p> Want To Know Whether You're a Winner Today?</p>
+                        
+                         <p> &nbsp;</p>
+                       <form:form modelAttribute="winnerNumber"  method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" > 
 
-                 <div class="form-group">
+       <div class="form-group">
                            
        <form:label path="winnerNumber" class="control-label col-md-3 col-sm-3 col-xs-3">Enter Your Phone Number<span class="required">*</span></form:label>
                       <div class="col-md-6 col-sm-6 col-xs-6">
@@ -77,21 +87,27 @@
                                                     <input type="submit" id="bth-submit" class="btn btn-success" value="Search" onclick="return submitForm();"/> 
                                                 </div>
                           
-                           </form:form> 
-                
-  
-                
-            </div><!--/row-->   
-            <p> &nbsp;</p>
-                        <p> &nbsp;</p>
-                        <p> &nbsp;</p>
+                           </form:form>  
                       
-            <%@ include file="includes/outside/bottomadverts.jsp" %>
-        </div><!--/.col-xs-12.col-sm-9-->
+            
+          <!--/.col-xs-12.col-sm-9-->
+                     </div>  
+                                    
+                                    <p> &nbsp;</p>
+                        
+                        <p> &nbsp;</p>
+                        <p> &nbsp;</p>
+                        <p> &nbsp;</p>
+                        
+                        <p> &nbsp;</p>
+                        <p> &nbsp;</p>
 
-
+                 </div>
+          
+            
+          <%@ include file="includes/outside/bottomadverts.jsp" %>
         <!--Center content ends-->       
-
+</div>
         <!--Inculde outer sidebar-->
         
 
