@@ -37,7 +37,13 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Match Prediction Winners List</h2>
+                        <h2>Match Prediction Winners List for 
+
+                            <strong>${matchPrediction.homeTeamName} 
+                                ${matchPredictionResult.homeScore} - ${matchPredictionResult.awayScore} 
+                                ${matchPrediction.awayTeamName}
+                            </strong>
+                        </h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -53,7 +59,7 @@
                                     <th>DATE ANSWERED</th>  
                                     <th>USER ANSWER</th>                                    
                                     <th>PROCESSED DATE</th>
-                                   
+
 
                                 </tr>
                             </thead>
@@ -67,7 +73,7 @@
                                         </td> 
                                         <td>${item.userAnswer}</td>    
                                         <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.proccessedDate}" /></td> 
-                                       
+
                                     </tr>  
                                 </c:forEach>  
                             </tbody>

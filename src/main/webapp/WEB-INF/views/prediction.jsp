@@ -70,7 +70,7 @@
                                             </a>                                            
                                             &nbsp;
                                             <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> X
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
                                             </a>
                                             &nbsp;
                                             <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width"> 

@@ -10,11 +10,17 @@ import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.GameWinner;
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
 import freemarker.template.Configuration;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -89,6 +95,18 @@ public class TunborUtility {
 
     @Autowired
     private SMSConfigBean smsConfigBean;
+    
+    @Autowired
+    private MatchPredictionService matchPredictionService;    
+    
+    @Autowired
+    private MatchPredictionAnswerService matchPredictionAnswerService;
+
+    @Autowired
+    private MatchPredictionResultService matchPredictionResultService;
+
+    @Autowired
+    private MatchPredictionWinnerService matchPredictionWinnerService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -391,6 +409,20 @@ public class TunborUtility {
 
         return dateFormat.format(currentDate);
     }
+    
+    public boolean isDateAfter(Date currentDate, Date otherDate){
+        boolean isDateAfter = false;
+        if(getDate(Definitions.TIMEZONE).after(otherDate)){
+            isDateAfter = true;
+           // System.out.println("start time is after current time");
+        }else {
+            // System.out.println("Current time is not after start time");
+            return isDateAfter;
+           
+        }
+        
+        return isDateAfter;
+    }
 
     public void logoutUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -511,6 +543,69 @@ public class TunborUtility {
     
     @Async
     public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage){
+        
+    }
+    
+    @Async
+    public void processWinnerByMatchPredictionId(MatchPrediction matchPrediction) {
+
+        List<MatchPredictionAnswer> randomMatchPredictionWinnersList = null;
+        String gameAnswer = "";
+
+        try {
+            MatchPredictionResult matchPResultObj = matchPredictionResultService.findByMatchPredictionId(matchPrediction.getId());
+            logger.info("matchPResultObj :: " + matchPResultObj);
+            if (matchPResultObj != null) {
+
+                gameAnswer = matchPResultObj.getWinner();
+                if (gameAnswer != null && "" != gameAnswer) {
+                    int noOfWinners = matchPrediction.getNoOfWinners();
+                    logger.info("noOfWinners :: " + noOfWinners);
+                    // Generate list of random winners
+                    randomMatchPredictionWinnersList = matchPredictionAnswerService.listCorrectAnswersByGameId(gameAnswer, matchPrediction.getId(), noOfWinners);
+                    logger.info("randomMatchPredictionWinnersList.size() up :: " + randomMatchPredictionWinnersList.size());
+                    if (!randomMatchPredictionWinnersList.isEmpty()) {
+                        logger.info("randomMatchPredictionWinnersList.size() :: " + randomMatchPredictionWinnersList.size());
+                        // Persist list of random winners for weekly game
+                        //List<MatchPredictionWinner> winnersList = tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
+                        List<MatchPredictionWinner> winnersList = matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
+                        matchPredictionWinnerService.saveBulkMatchPredictionWinners(winnersList);
+
+                        // send sms to list of winners.                             
+                        String message = "This is to notify you that you have won for the match prediction";
+
+                        for (MatchPredictionWinner item : winnersList) {
+                            //tunborUtility.sendSMSSingle(item.getUserPhoneNo(), message);
+                            sendSMSSingle(item.getUserPhoneNo(), message);
+                            logger.info("SMS sent to :: " + item.getUserPhoneNo());
+                        }
+
+                        // set proccessed to 1.
+                        int processedStatus = 1;
+                        matchPrediction.setStatus(processedStatus);
+                        matchPredictionService.updatePrediction(matchPrediction);
+
+                        logger.info("Finished weeklyGameId :: " + matchPrediction.getId());
+                    } else {
+                        logger.info("randomMatchPredictionWinnersList is null or empty for matchPredictionId :: " + matchPrediction.getId());
+                    }
+
+                } else {
+                    logger.info("Answer not yet set for match with ID :: " + matchPrediction.getId());
+                }
+
+            } else {
+                logger.info("MatchPredictionResult object is null for game Id :: " + matchPrediction.getId());
+            }
+
+        } catch (Exception e) {
+            logger.info("Error Occurred while processing match with id :: " + matchPrediction.getId());
+            e.printStackTrace();
+        }
+    }
+    
+    @Async
+    public void aa(){
         
     }
 

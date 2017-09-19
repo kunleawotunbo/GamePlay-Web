@@ -58,7 +58,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/weeklygames/")
 @Api(value = "WeeklyGames", description = "Handles the game management")
 public class WeeklyGamesController {
-    
+
     @Autowired
     private WeeklyGamesService weeklyGamesService;
 
@@ -67,13 +67,13 @@ public class WeeklyGamesController {
 
     @Autowired
     private GameAnswerService gameAnswerService;
-    
+
     @Autowired
     private MatchPredictionService matchPredictionService;
-    
+
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
-    
+
     @Autowired
     private MatchPredictionResultService matchPredictionResultService;
 
@@ -102,7 +102,7 @@ public class WeeklyGamesController {
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("date :: " +  date);
+        System.out.println("date :: " + date);
         int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
         weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate(Definitions.TIMEZONE));
@@ -124,9 +124,9 @@ public class WeeklyGamesController {
                 if (item.getGameImgLocation() != null && item.getGameImage() != null) {
                     encodedPictureString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
                     weeklyGame.setGameImgLocation(encodedPictureString);
-                    if (item.getGameImage2() != null) {                      
-                    encodedGameImage2 = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage2());
-                    
+                    if (item.getGameImage2() != null) {
+                        encodedGameImage2 = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage2());
+
                     }
                     weeklyGame.setGameImage2(encodedGameImage2);
 
@@ -206,8 +206,8 @@ public class WeeklyGamesController {
                 weeklyGame.setGameImgLocation(encodedPictureString);
                 if (weeklyGame.getGameImage2() != null) {
                     encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
-                    }
-                    weeklyGame.setGameImage2(encodedGameImage2);
+                }
+                weeklyGame.setGameImage2(encodedGameImage2);
             } else {
                 logger.info("No image");
             }
@@ -250,14 +250,11 @@ public class WeeklyGamesController {
         return new ResponseEntity(weeklyGames, HttpStatus.OK);
     }
 
- 
-
-
     //@RequestMapping(value = "/create", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
     @PostMapping(value = "/create")
     public ResponseEntity createWeeklyGame(@RequestBody FileBucket fileBucket, Errors errors) {
         System.out.println("I am here oooo");
-    
+
         WeeklyGames weeklyGames = new WeeklyGames();
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
@@ -292,7 +289,7 @@ public class WeeklyGamesController {
         if (weeklyGamesService.save(weeklyGames)) {
             result.setCode("" + HttpStatus.OK);
             result.setMessage("WeeklyGames Created");
-            
+
         }
 
         return ResponseEntity.ok(result);
@@ -336,7 +333,7 @@ public class WeeklyGamesController {
                 bytes = file.getBytes();
                 serverFileName = imgLocation + gameImage;
                 System.out.println("gameImage:: " + gameImage);
-            
+
                 System.out.println("serverFileName :: " + serverFileName);
 
                 // resize image
@@ -455,9 +452,9 @@ public class WeeklyGamesController {
         weeklyGamesService.updateWeeklyGame(weeklyGames);
 
         return new ResponseEntity(id, HttpStatus.OK);
-    }    
-    
-      /**
+    }
+
+    /**
      * Set weekly game answer
      *
      * @param weeklyGames
@@ -487,55 +484,51 @@ public class WeeklyGamesController {
         MatchPredictionResult findGame = matchPredictionResultService.findByMatchPredictionId(mPResult.getId());
         if (findGame != null) {
             logger.info("Updating answer for game :: " + mPResult.getId());
-            matchPredictionResult.setId(findGame.getId());            
+            matchPredictionResult.setId(findGame.getId());
             matchPredictionResult.setAwayScore(mPResult.getAwayScore());
             matchPredictionResult.setHomeScore(mPResult.getHomeScore());
-            matchPredictionResult.setCreatedBy(findGame.getCreatedBy());  
+            matchPredictionResult.setCreatedBy(findGame.getCreatedBy());
             matchPredictionResult.setMatchPredictionId(findGame.getMatchPredictionId());
             matchPredictionResult.setMatchResult("" + mPResult.getHomeScore() + " - " + mPResult.getAwayScore());
             matchPredictionResult.setModifiedBy(mPResult.getCreatedBy());
             matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             matchPredictionResult.setWeekNo(mPResult.getWeekNo());
-            matchPredictionResult.setWinner(mPResult.getWinner());                    
-           
-            
+            matchPredictionResult.setWinner(mPResult.getWinner());
+
             saved = matchPredictionResultService.updateMatchPredictionResult(matchPredictionResult);
 
         } else {
             // set weekly answer for games/question
-            
+
             logger.info("Settin answer for game :: " + mPResult.getId());
             //matchPredictionResult.setId(findGame.getId());            
             matchPredictionResult.setAwayScore(mPResult.getAwayScore());
             matchPredictionResult.setHomeScore(mPResult.getHomeScore());
-            matchPredictionResult.setCreatedBy(mPResult.getCreatedBy());  
-             matchPredictionResult.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            matchPredictionResult.setCreatedBy(mPResult.getCreatedBy());
+            matchPredictionResult.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             matchPredictionResult.setMatchPredictionId(mPResult.getId());
-            matchPredictionResult.setMatchResult( "" + mPResult.getHomeScore() + " - " + mPResult.getAwayScore());
+            matchPredictionResult.setMatchResult("" + mPResult.getHomeScore() + " - " + mPResult.getAwayScore());
             matchPredictionResult.setModifiedBy(mPResult.getCreatedBy());
             matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             matchPredictionResult.setWeekNo(mPResult.getWeekNo());
-            matchPredictionResult.setWinner(mPResult.getWinner());     
+            matchPredictionResult.setWinner(mPResult.getWinner());
 
             saved = matchPredictionResultService.saveMatchPredictionResult(matchPredictionResult);
-            
-            /*
-            gameAnswer.setGameId(weeklyGames.getId());
-            gameAnswer.setGameCategoryId(weeklyGames.getGameCategory());
-            gameAnswer.setWeekNo(weeklyGames.getWeekNo());
-            gameAnswer.setGameAnswer(wGames.getGameAnswer());
-            gameAnswer.setCreatedBy(wGames.getCreatedBy());
-            gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
-            //gameAnswer.setModifiedBy(modifiedBy);
-            //gameAnswer.setModifiedDate(modifiedDate);
-            saved = gameAnswerService.save(gameAnswer);
-            
-            */
 
         }
 
         if (saved) {
             logger.info("Answer set for matchPredictionResult id :: " + mPResult.getId());
+
+            // Check if match has been proccessed before
+            MatchPrediction matchPredictionObject = matchPredictionService.findById(mPResult.getId());
+
+            if (matchPredictionObject.getStatus() != 1) {
+                // Call the asyc match prediction winner processing method        
+                tunborUtility.processWinnerByMatchPredictionId(matchPredictionObject);
+            } else {
+                logger.info("Match winners has been processed before :: " + matchPredictionObject.getId());
+            }
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer set for question");
 
