@@ -25,6 +25,8 @@ public interface WeeklyGamesAnswersDao {
     void deleteWeeklyGamesAnswer(WeeklyGamesAnswers game);
 
     List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled);
+    
+    List<WeeklyGamesAnswers> listWeeklyGamesAnswersByModifiedDate(boolean enabled);
         
     List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers();
     

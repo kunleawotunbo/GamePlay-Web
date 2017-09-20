@@ -271,6 +271,8 @@ public class WinnerController {
             boolean winnerstatus = true;
             
             weeklyGamesAnswers.setIsRandomWinner(winnerstatus);
+            
+             weeklyGamesAnswers.setModifiedDate(todaydate);
                  
            // boolean isRandomWinnerSaveStatus =    weeklyGamesAnswersService.saveWeeklyGamesAnswer(weeklyGamesAnswers);
             
@@ -308,7 +310,48 @@ public class WinnerController {
         logger.info("Scheduler is running {}", tunborUtility.getDate("Africa/Nigeria"));
 
        // return "/admin/allweeklygamelatestwinner";
-    } 
+    }
+        
+        
+    @RequestMapping(value = "/latestrandomwinners", method = RequestMethod.GET)
+     public String allWeeklyLatestGamesRandomWinners(ModelMap model, HttpServletRequest request) {
+        
+         List<String> weeklyGameCategoryName = new ArrayList<String>();
+         
+          Date todaydate = tunborUtility.getDate("Africa/Nigeria");
+        
+        boolean winnerstatus = true;
+        //List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
+        
+        List<WeeklyGamesAnswers> weeklyGamesRandomWinner = new ArrayList<WeeklyGamesAnswers>();
+        
+         weeklyGamesRandomWinner = weeklyGamesAnswersService.listWeeklyGamesAnswersByModifiedDate(winnerstatus);
+       
+       try {
+          for (WeeklyGamesAnswers item : weeklyGamesRandomWinner) {
+              
+                // gameListValid.add(weeklyGamesService.findById(item.getGameId()));
+           // WeeklyGamesAnswers weeklyGamesAnswers = weeklyGamesAnswersService.findById(item.getId());
+            
+           weeklyGameCategoryName.add(gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());
+              
+           logger.info("Game Category Name:" + gameService.findById(weeklyGamesService.findById(item.getGameId()).getGameCategory()).getGameName());                                 
+                }
+          }catch(Exception e){
+               
+              System.err.println( e.getMessage());
+          }
+       
+       
+       
+             //model.addAttribute("allWeeklyGameRandomWinner", weeklyGamesRandomWinner);
+             model.addAttribute("weeklyGameAnswer", weeklyGamesRandomWinner);
+             model.addAttribute("weeklyGameCategoryName", weeklyGameCategoryName);
+             model.addAttribute("loggedinuser", getPrincipal());
+       
+          return "/admin/allweeklygamelatestwinner";
+       
+     }
     
      @RequestMapping(value = "/allrandomwinners", method = RequestMethod.GET)
     

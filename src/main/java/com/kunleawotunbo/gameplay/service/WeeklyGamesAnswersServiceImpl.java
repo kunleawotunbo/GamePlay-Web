@@ -46,6 +46,11 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     public List<WeeklyGamesAnswers> listWeeklyGamesAnswers(boolean enabled) {
         return weeklyGamesAnswersDao.listWeeklyGamesAnswers(enabled);
     }
+    
+    public List<WeeklyGamesAnswers> listWeeklyGamesAnswersByModifiedDate(boolean enabled) {
+        
+        return weeklyGamesAnswersDao.listWeeklyGamesAnswersByModifiedDate(enabled);
+    }
 
     public List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers() {
       return weeklyGamesAnswersDao.listAllWeeklyGamesAnswers();

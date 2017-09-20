@@ -36,6 +36,7 @@
                         <ul class="nav child_menu">
                              <li><a href="addMatchPrediction">Add Match</a></li>   
                                <li><a href="listMatchPredictions">Match Prediction List</a></li>
+                               
                         </ul>
                     </li>
                     <li><a><i class="fa fa-desktop"></i> Games Answers <span class="fa fa-chevron-down"></span></a>

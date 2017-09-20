@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
+import static com.kunleawotunbo.gameplay.dao.WeeklyGamesDaoImpl.subtractDays;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import java.io.Serializable;
@@ -18,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ThreadLocalRandom;
@@ -153,7 +156,94 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return weeklyGamesAnswersList;
     
     }
+    
+    public List<WeeklyGamesAnswers> listWeeklyGamesAnswersByModifiedDate(boolean enabled) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Date todaydate = tunborUtility.getDate("Africa/Nigeria");
+        
+        Date newDate = subtractDays(todaydate, 7);
+        
+          Criteria criteria = createEntityCriteria().addOrder(Order.desc("dateAnswered"));
+          
+         // boolean winnerstatus = true;
+        
+           criteria.add(Restrictions.eq("isRandomWinner", enabled));
+           
+           criteria.add(Restrictions.le("modifiedDate", todaydate));
+          criteria.add(Restrictions.ge("modifiedDate", newDate));
+                 
+           criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+          
+           List<WeeklyGamesAnswers> weeklyGamesAnswersList = (List<WeeklyGamesAnswers>) criteria.list();
+             
+            //int WeeklyGameWinnerLength = weeklyGamesAnswersList.size();
+             
+             int i =0;
+             
+             while(i < weeklyGamesAnswersList.size() ){
+                 
+              String winnerPhoneNumber =  weeklyGamesAnswersList.get(i).getUserPhoneNo();
+              String winnerPhoneNumber2 = null;
+                    
+                logger.info("i Size :" + String.valueOf(i));
+              
+                     int j = i + 1;
+                    while ( j  < weeklyGamesAnswersList.size()){
+                        
+                        logger.info("j Size :" + String.valueOf(j));
+                        
+                                winnerPhoneNumber2 = weeklyGamesAnswersList.get(j).getUserPhoneNo();
+                                
+                                 logger.info(" i phone value :" + winnerPhoneNumber + " j phone value :" + winnerPhoneNumber2 );
+                      
+                                 if(winnerPhoneNumber.equals(winnerPhoneNumber2)){
+                       
+                                 weeklyGamesAnswersList.remove(j);
+                                            j--;
+                                          
+                                               }
+                                           j++;
+                           }
+                  
+              
+               
+              
+                
+              i++;
+             }
+        return weeklyGamesAnswersList;
+    
+    }
 
+     /**
+     * add days to date in java
+     *
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date addDays(Date date, int days) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+
+        return cal.getTime();
+    }
+
+    /**
+     * subtract days to date in java
+     *
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date subtractDays(Date date, int days) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days);
+
+        return cal.getTime();
+    }
     public List<WeeklyGamesAnswers> listAllWeeklyGamesAnswers() {
         //Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
          Criteria criteria = createEntityCriteria().addOrder(Order.desc("weekNo"));
