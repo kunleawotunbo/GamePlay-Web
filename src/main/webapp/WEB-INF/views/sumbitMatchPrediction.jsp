@@ -28,31 +28,32 @@
                     <br>
                     <div class="x_content">
 
-                       
+
                         Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>
 
                         <br><br>
                         <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal" id="matchPredictionAnswer-form">
                             <form:hidden path="gameId" value="${matchPredictionObject.id}" id="gameId" name="gameId" />
-                             <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
-                             <form:hidden path="weekNo" value="${matchPredictionObject.weekNo}" id="weekNo" name="weekNo" />
-                             <div class="form-group row text-left">
+                            <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
+                            <form:hidden path="weekNo" value="${matchPredictionObject.weekNo}" id="weekNo" name="weekNo" />
+                            <div class="form-group row text-left">
                                 <label for="phone-h-f" class="col-sm-3 form-control-label m-t-5">Phone Number</label>
                                 <div class="col-sm-9">
                                     <input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                          
-                                     <p>Your phone number will be used to contact you if you win.</p> 
+                                    <p>Your phone number will be used to contact you if you win.</p> 
                                 </div>
                             </div>
-                           
-                             <div class="form-group">
-                                    <div class="col-md-9 col-md-offset-3">
-                                        <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
-                                        <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
-                                    </div>
+                            <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
+
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
+                                    <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
                                 </div>
-                            
+                            </div>
+
                             <div class="form-group row text-left">
-                              
+
                             </div>
                         </form:form> 
 
@@ -97,24 +98,41 @@
 <script src="<c:url value='/resources/js/utils.js' />"></script> 
 
 <script>
-    // https://github.com/jackocnr/intl-tel-input
+                                        // https://github.com/jackocnr/intl-tel-input
 
-    $("#userPhoneNo").intlTelInput({
-        initialCountry: "auto",
-        geoIpLookup: function (callback) {
-            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
-                var countryCode = (resp && resp.country) ? resp.country : "";
-                callback(countryCode);
-            });
-        },
-        
-    });
+                                        $("#userPhoneNo").intlTelInput({
+                                            initialCountry: "auto",
+                                            geoIpLookup: function (callback) {
+                                                $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
+                                                    var countryCode = (resp && resp.country) ? resp.country : "";
+                                                    callback(countryCode);
+                                                });
+                                            },
+
+                                        });
 </script>
 
 
 <script>
 
     jQuery(document).ready(function ($) {
+
+        var matchStarted = $('#matchStarted').val();
+
+        //console.log(" matchStarted :: " + matchStarted);
+        
+        if (matchStarted === 'true') {
+            
+            // disable button
+            console.log(" matchStarted has started::" + matchStarted);
+            // $("#bth-submit").button("enable");
+            $("#bth-submit").prop("disabled", true);
+
+        } else {
+            //console.log(" Mactch not  ::" + matchStarted);
+            $("#bth-submit").prop("disabled", false);
+
+        }
 
         $("#matchPredictionAnswer-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();

@@ -121,7 +121,7 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
             matchPredictionAnswerRandomWinnerList.add(randomWeeklyGamesAnswer);
             
             }else {
-                logger.info("weeklyGamesAnswersList is null or empty");
+                logger.info("matchPredictionAnswerList is null or empty");
             }
         }
 

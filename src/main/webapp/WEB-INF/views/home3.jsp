@@ -221,6 +221,17 @@
                         <span class="icon-bar"></span>                        
                     </button>
                     <a class="navbar-brand" href="#myPage">Logo</a>
+                    <!--   
+                    <a class="navbar-brand" href="/">Home</a></li>
+                       <a class="navbar-brand" href="<%=request.getContextPath()%>/prediction">Match Prediction</a>
+                        <a class="navbar-brand" href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a>
+                     -->
+                      <ul >
+                        <li><a href="#about">ABOUT</a></li>
+                        <li><a href="#services">SERVICES</a></li>
+                        <li><a href="#portfolio">PORTFOLIO</a></li>
+                       
+                    </ul>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">

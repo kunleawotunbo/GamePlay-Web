@@ -8,8 +8,10 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
@@ -37,20 +39,23 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequestMapping("/api/matchpredictionanswer/")
 @Api(value = "Match Prediction", description = "Handles the match prediction answer")
 //@SessionAttributes("roles")
-public class MatchPredictionAnswerController {  
-    
+public class MatchPredictionAnswerController {
+
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
     
+     @Autowired
+    private MatchPredictionService matchPredictionService;
+
     @Autowired
     private TunborUtility tunborUtility;
-    
+
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();
-    
-    final Logger logger = LoggerFactory.getLogger(getClass()); 
-    
-     @GetMapping("/matchPredictionById/{id}")
+
+    final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @GetMapping("/matchPredictionById/{id}")
     public ResponseEntity getmatchPredictionById(@PathVariable("id") int id) {
 
         MatchPredictionAnswer matchPredictionAnswer = matchPredictionAnswerService.findById(id);
@@ -61,17 +66,16 @@ public class MatchPredictionAnswerController {
 
         return new ResponseEntity(matchPredictionAnswer, HttpStatus.OK);
     }
-    
+
     /**
-     * 
+     *
      * @param weeklyGames
      * @param errors
-     * @return 
+     * @return
      */
-    
     @PostMapping(value = "/submitanswer")
     public ResponseEntity submitMactPredictionAnswer(@RequestBody MatchPredictionAnswer matchPredictionAnswer, Errors errors) {
-        
+        logger.info("User submitting answer for game");
         // set answer submitted date
         matchPredictionAnswer.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 
@@ -84,13 +88,27 @@ public class MatchPredictionAnswerController {
             return ResponseEntity.badRequest().body(result);
 
         }
-        if (matchPredictionAnswerService.saveMatchPredictionAnswer(matchPredictionAnswer)) {           
+        
+        MatchPrediction matchPredictionObject = matchPredictionService.findById(matchPredictionAnswer.getGameId());
+        boolean matchStarted = false;
+        if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())) {
+            matchStarted = true;
+            System.out.println("start time is after current time");
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Match already started, play another game" );
+
+            return ResponseEntity.badRequest().body(result);
+        } else {
+            matchStarted = false;
+            System.out.println("Current time is not after start time");
+        }
+        if (matchPredictionAnswerService.saveMatchPredictionAnswer(matchPredictionAnswer)) {
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer submitted");
-            
+
         }
-       
+
         return ResponseEntity.ok(result);
-    }   
-    
+    }
+
 }

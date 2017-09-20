@@ -110,6 +110,8 @@ public class MatchPredictionProcessing {
         }
     }
 
+    /*
+
    // @Scheduled(fixedDelay = 10000)
     // @Scheduled(cron = "0 0 0/1 1/1 * ? *") // Run every hour
       @Scheduled(cron = "0 0/16 0 ? * * ") // Every 16mins
@@ -122,11 +124,7 @@ public class MatchPredictionProcessing {
         int status = 0;
         String gameAnswer = "";
         matchPredictionList = matchPredictionService.listUnproccessedGames(status, tunborUtility.getDate(Definitions.TIMEZONE));
-        /*
-        for (User item : userList) {
-            System.out.println("First Name :: " + item.getFirstName());
-        }
-         */
+       
         System.out.println("matchPredictionList.size() :: " + matchPredictionList.size());
         if (matchPredictionList != null && !matchPredictionList.isEmpty()) {
 
@@ -190,5 +188,41 @@ public class MatchPredictionProcessing {
             System.out.println("No expired game to process");
         }
     }
+    
+     */
+    // @Scheduled(fixedDelay = 10000)
+    // @Scheduled(cron = "0 0 0/1 1/1 * ? *") // Run every hour
+    @Scheduled(cron = "0 0/16 0 ? * * ") // Every 16mins
+    //@Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
+    // @Scheduled(cron = "0 0 0/4 ? *  *") 
+    public void processMatchPredictionWinners() {
+        logger.info("Inside processMatchPredictionWinners to process Match Prediction winners");
+        List<MatchPrediction> matchPredictionList = null;
+        List<MatchPredictionAnswer> randomMatchPredictionWinnersList = null;
+        int status = 0;
+        String gameAnswer = "";
+        matchPredictionList = matchPredictionService.listUnproccessedGames(status, tunborUtility.getDate(Definitions.TIMEZONE));
+        /*
+        for (User item : userList) {
+            System.out.println("First Name :: " + item.getFirstName());
+        }
+         */
+        System.out.println("matchPredictionList.size() :: " + matchPredictionList.size());
+        if (matchPredictionList != null && !matchPredictionList.isEmpty()) {
+
+            for (MatchPrediction matchPrediction : matchPredictionList) {
+
+                logger.info("Processing List of random winner for matchPrediction id :: " + matchPrediction.getId());
+                tunborUtility.processWinnerByMatchPredictionId(matchPrediction);
+
+            }
+            System.out.println("I am called by processMatchPredictionWinners");
+
+        } else {
+            System.out.println("No expired game to process");
+        }
+    }
+
+    
 
 }

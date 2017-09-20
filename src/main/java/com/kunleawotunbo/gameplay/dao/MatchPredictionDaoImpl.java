@@ -30,7 +30,7 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public MatchPrediction findById(int id) {
-        logger.info("id :: ", id);
+        logger.info("id :: " + id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
