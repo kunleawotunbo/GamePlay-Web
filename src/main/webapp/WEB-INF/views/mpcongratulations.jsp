@@ -1,8 +1,9 @@
 <%-- 
-    Document   : congratulations
-    Created on : Jul 6, 2017, 11:15:37 PM
+    Document   : mpcongratulations
+    Created on : Sep 20, 2017, 12:30:43 PM
     Author     : Olakunle Awotunbo
 --%>
+
 
 <!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
@@ -48,7 +49,7 @@
                         <span class="well floatLeft">
                             <!--<a href="##" onclick="window.history.back()">Try another answer</a>-->
                            
-                            <a href="<c:url value='/' />">Try another answer</a>
+                            <a href="<c:url value='/prediction' />">Try another answer</a>
                         </span>
                         <br><br>
                        

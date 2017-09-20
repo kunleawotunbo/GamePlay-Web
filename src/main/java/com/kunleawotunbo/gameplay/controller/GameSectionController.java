@@ -144,4 +144,16 @@ public class GameSectionController {
 
         return new ModelAndView("congratulations", map);
     }
+    
+    @RequestMapping(value = {"/mpcongratulations"}, method = RequestMethod.GET)
+    public ModelAndView goMpcongratulationsPage(ModelMap map) {
+        logger.info("tryanotheranswer");
+        boolean status = false;
+        
+        if (status){
+            return new ModelAndView("congratulations", map);
+        }
+
+        return new ModelAndView("mpcongratulations", map);
+    }
 }

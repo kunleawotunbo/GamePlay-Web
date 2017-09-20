@@ -29,13 +29,25 @@
                     <div class="x_content">
 
 
-                        Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>
+                        <%--Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>--%>
 
-                        <br><br>
+                       
                         <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal" id="matchPredictionAnswer-form">
                             <form:hidden path="gameId" value="${matchPredictionObject.id}" id="gameId" name="gameId" />
                             <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
                             <form:hidden path="weekNo" value="${matchPredictionObject.weekNo}" id="weekNo" name="weekNo" />
+                            <div class="form-group row text-left">
+                                <label for="match" class="col-sm-3 form-control-label m-t-5">Match</label>
+                                <div class="col-sm-9">
+                                    <p> <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong></p> 
+                                </div>
+                            </div>
+                            <div class="form-group row text-left">
+                                <label for="match" class="col-sm-3 form-control-label m-t-5">Your Answer</label>
+                                <div class="col-sm-9">
+                                    <p> <strong> ${userAnswer}  </strong></p> 
+                                </div>
+                            </div>
                             <div class="form-group row text-left">
                                 <label for="phone-h-f" class="col-sm-3 form-control-label m-t-5">Phone Number</label>
                                 <div class="col-sm-9">
@@ -191,7 +203,9 @@
                 //   notify(data);
                 notification("Notification", "Congratulations your answer has been submitted.", "success");
 
-                window.location = 'congratulations.html';
+                // Redirect to Match Prediction Congratulation page
+                //window.location = 'congratulations.html';
+                window.location = 'mpcongratulations';
                 /*
                  if (noerrors) {
                  window.location = 'congratulations.html';

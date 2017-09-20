@@ -34,9 +34,9 @@
                                     <th></th>
                                     <th>Match</th>
                                     <th>&nbsp; &nbsp; &nbsp;
-                                        1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-                                        X &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                        2
+                                        Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                        Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                        Away
                                     </th>
 
                                 </tr>

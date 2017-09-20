@@ -89,6 +89,7 @@ public class MatchPredictionController {
 
         MatchPrediction matchPredictionObject = matchPredictionService.findById(id);
         boolean matchStarted = false;
+        String userAnswer = "";
 
         MatchPredictionAnswer matchPredictionAnswer = new MatchPredictionAnswer();
         // Check if match has started. Disable submit button if match has started.        
@@ -102,11 +103,21 @@ public class MatchPredictionController {
             System.out.println("Current time is not after start time");
         }
         
+        if("1".equalsIgnoreCase(selectedAnswer)){
+            userAnswer = "Home Win";
+        }else if ("X".equalsIgnoreCase(selectedAnswer)){
+            userAnswer = "Draw";
+        }else if ("2".equalsIgnoreCase(selectedAnswer)){
+            userAnswer = "Away Win";
+        }else {
+            userAnswer = "Unable to determine your selected answer";
+        }
         
 
         model.addAttribute("matchPredictionObject", matchPredictionObject);
         model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
         model.addAttribute("selectedAnswer", selectedAnswer);
+        model.addAttribute("userAnswer", userAnswer);
         model.addAttribute("matchStarted", matchStarted);
 
         return "sumbitMatchPrediction";
