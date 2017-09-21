@@ -24,6 +24,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <%--<link href="<c:url value='/resources/css/custom2.css' />"  rel="stylesheet"></link>--%>  
         <style>
             body {
                 font: 400 15px Lato, sans-serif;
@@ -208,42 +209,104 @@
                     font-size: 150px;
                 }
             }
+
+
+            .nav {
+                color: #ccc;
+                background: #333;
+                display: table;
+                width: 100%;
+                border-bottom: solid 1px #666
+            }
+            .nav ul {
+                display: table-row
+            }
+            .nav li {
+                display: table-cell;
+                text-align: center
+            }
+            .nav a {
+                line-height: 20px;
+                height: 20px;
+                color: #666;
+                display: block;
+                border-right: solid 1px #000;
+                border-left: solid 1px #666
+            }
+            .nav li.first a {
+                border-left: none
+            }
+            .nav li:last-child a {
+                border-right: none
+            }
+            .nav a.selected,
+            .nav a:hover,
+            .right-bar .buttons a {
+                color: #f60
+            }
+            .nav a .icon-info {
+                display: inline-block;
+                width: 10px;
+                top: 2px;
+                height: 14px
+            }
+            .nav a .icon-info:before {
+                font-size: 15px
+            }
+
+            .nav .timezone {
+                padding: 10px;
+                border-bottom: solid 1px #444;
+                background: #333
+            }
         </style>
     </head>
     <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+        <!--
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>                        
+                            </button>
+                            <a class="navbar-brand" href="#myPage">Logo</a>                   
+                           
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#about">ABOUT</a></li>
+                                <li><a href="#services">SERVICES</a></li>
+                                <li><a href="#portfolio">PORTFOLIO</a></li>
+                                <li><a href="#pricing">PRICING</a></li>
+                                <li><a href="#contact">CONTACT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+        -->
 
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
-                    </button>
-                    <a class="navbar-brand" href="#myPage">Logo</a>
-                    <!--   
-                    <a class="navbar-brand" href="/">Home</a></li>
-                       <a class="navbar-brand" href="<%=request.getContextPath()%>/prediction">Match Prediction</a>
-                        <a class="navbar-brand" href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a>
-                     -->
-                      <ul >
-                        <li><a href="#about">ABOUT</a></li>
-                        <li><a href="#services">SERVICES</a></li>
-                        <li><a href="#portfolio">PORTFOLIO</a></li>
-                       
-                    </ul>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#about">ABOUT</a></li>
-                        <li><a href="#services">SERVICES</a></li>
-                        <li><a href="#portfolio">PORTFOLIO</a></li>
-                        <li><a href="#pricing">PRICING</a></li>
-                        <li><a href="#contact">CONTACT</a></li>
-                    </ul>
-                </div>
+
+
+        <div class="wrapper">  
+            <div class="nav col-sm-12 col-xs-12" data-type="top-menu"> 
+                <ul>
+                    <li class="timezone"> 
+                        <!--<div data-type="clock">14:39 (+01:00)<span>21 Sep 2017 (Thu)</span></div>--> 
+                    </li> 
+                   
+                    <li class="first"><a class="selected" href="/">Home</a></li>
+                    <li><a href="<%=request.getContextPath()%>/prediction">Match Prediction</a></li>
+                    <li><a href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a></li>
+                    <li><a href="<%=request.getContextPath()%>/about">About</a></li>
+                    <li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>
+                </ul>
+                <div class="clear"></div> 
             </div>
-        </nav>
+
+        </div>
+
 
         <!--<div class="jumbotron text-center">
           <h1>Company</h1> 
@@ -273,16 +336,16 @@
                             </a> 
                         </div>
 
-                <%--
-                        <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
-                        <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
-                            <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+                        <%--
+                                <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >       <h3>${item.gameName}</h3>   </a>
+                                <a href="<c:url value='/gameSection-${item.id}-${item.gameCode}' />"  >
+                                    <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
 
                                 <img src="data:image/jpg;base64,${item.gameImgLocation}" alt="${item.gameName}"   class="img-responsive" style="width:100%" alt="${item.gameName}">
 
                             </div>
                         </a> 
-                --%>
+                        --%>
 
 
                         <%--

@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
@@ -15,8 +16,10 @@ import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
 import io.swagger.annotations.Api;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +46,8 @@ public class MatchPredictionAnswerController {
 
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
-    
-     @Autowired
+
+    @Autowired
     private MatchPredictionService matchPredictionService;
 
     @Autowired
@@ -52,6 +55,7 @@ public class MatchPredictionAnswerController {
 
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();
+    WebServiceUtility webServiceUtility = new WebServiceUtility();
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -74,10 +78,40 @@ public class MatchPredictionAnswerController {
      * @return
      */
     @PostMapping(value = "/submitanswer")
-    public ResponseEntity submitMactPredictionAnswer(@RequestBody MatchPredictionAnswer matchPredictionAnswer, Errors errors) {
+    public ResponseEntity submitMactPredictionAnswer(@RequestBody MatchPredictionAnswer matchPredictionAnswer, Errors errors,
+            HttpServletRequest request) {
         logger.info("User submitting answer for game");
+
+        // Get ip address
+        String ipAddress = request.getRemoteAddr();
+        JsonNode ipObj = null;
+        String status = "";
+        String country = "Unknown";
+        String countryCode = "Unknown";
+        String city = "Unknown";
+        System.out.println("IpAddress :: " + ipAddress);
+        try {
+
+            ipObj = webServiceUtility.getIPObjectRestClient(Definitions.IP_API, ipAddress);
+            status = ipObj.get("status").asText();
+            if ("fail".equalsIgnoreCase(status)) {
+                logger.info("Unable to determine country from Ip :: " + ipAddress);
+            } else {
+                country = ipObj.get("country").asText();
+                countryCode = ipObj.get("countryCode").asText();
+                city = ipObj.get("city").asText();
+            }
+           
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // set answer submitted date
         matchPredictionAnswer.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
+        matchPredictionAnswer.setIpAddress(ipAddress);
+        matchPredictionAnswer.setCountry(country);
+        matchPredictionAnswer.setCountryCode(countryCode);
+        matchPredictionAnswer.setCity(city);
 
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
@@ -88,14 +122,14 @@ public class MatchPredictionAnswerController {
             return ResponseEntity.badRequest().body(result);
 
         }
-        
+
         MatchPrediction matchPredictionObject = matchPredictionService.findById(matchPredictionAnswer.getGameId());
         boolean matchStarted = false;
         if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())) {
             matchStarted = true;
             System.out.println("start time is after current time");
             result.setCode("" + HttpStatus.BAD_REQUEST);
-            result.setMessage("Match already started, play another game" );
+            result.setMessage("Match already started, play another game");
 
             return ResponseEntity.badRequest().body(result);
         } else {

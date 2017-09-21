@@ -25,6 +25,8 @@
         
         <!--Custom css--> 
          <link href="<c:url value='/resources/css/custom_outside.css' />"  rel="stylesheet"></link>  
+         
+         <%--<link href="<c:url value='/resources/css/custom2.css' />"  rel="stylesheet"></link>--%>  
         
        
   

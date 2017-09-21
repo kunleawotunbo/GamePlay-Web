@@ -529,6 +529,11 @@ public class TunborUtility {
                 gameWinner.setUserAnswer(item.getUserAnswer());
                 gameWinner.setUserPhoneNo(item.getUserPhoneNo());
                 gameWinner.setAnswerId(item.getId());
+                gameWinner.setCity(item.getCity());
+                gameWinner.setCountry(item.getCountry());
+                gameWinner.setCountryCode(item.getCountryCode());
+                gameWinner.setIpAddress(item.getIpAddress());
+                gameWinner.setLeague(item.getLeague());
 
                 gameWinners.add(gameWinner);
             }

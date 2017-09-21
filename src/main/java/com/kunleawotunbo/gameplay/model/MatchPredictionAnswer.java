@@ -66,6 +66,29 @@ public class MatchPredictionAnswer implements Serializable{
     @NotNull
     @Column(name = "weekNo")
     private int weekNo;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "ip_address")
+    private String ipAddress;
+    
+    @Size(max = 100)
+    @Column(name = "country")
+    private String country;
+    
+    @Size(max = 10)
+    @Column(name = "country_code")
+    private String countryCode;
+    
+     @Size(max = 10)
+    @Column(name = "city")
+    private String city;
+     
+      @Size(max = 100)
+    @Column(name = "league")
+    private String league;
+
 
     /**
      * @return the id
@@ -177,5 +200,75 @@ public class MatchPredictionAnswer implements Serializable{
      */
     public void setWeekNo(int weekNo) {
         this.weekNo = weekNo;
+    }
+
+    /**
+     * @return the ipAddress
+     */
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    /**
+     * @param ipAddress the ipAddress to set
+     */
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * @param country the country to set
+     */
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    /**
+     * @return the countryCode
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    /**
+     * @param countryCode the countryCode to set
+     */
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * @return the league
+     */
+    public String getLeague() {
+        return league;
+    }
+
+    /**
+     * @param league the league to set
+     */
+    public void setLeague(String league) {
+        this.league = league;
     }
 }

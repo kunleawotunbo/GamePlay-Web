@@ -19,6 +19,7 @@
     - total Games played sorted by players country of origin. - Pending
 
     - the winners reports on particular games, leagues, total winners on match days, (specified period e.g week, month, year etc) - Pending
+    
 5. On the front end that "X" should be changed to "Draw" - Resolved
 6.  "try another answer" link should take the user back to the "home page" of That particular game module - Resolved
 7. If it's match prediction....It should take me to the list of games for that Matchday. - Resolved
@@ -48,8 +49,3 @@
     Number of winners to be selected, prize to be won per winner, amount to play(e.g N100, N50 etc) - Pending
     
 11. Match Prediction should show on the home page and not in the menu when viewed on mobile - Pending
-
-5J3876V
-5J3NNY9
-5J3PKKC
-5J3PXSY

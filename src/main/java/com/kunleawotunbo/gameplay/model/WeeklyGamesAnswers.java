@@ -37,48 +37,51 @@ public class WeeklyGamesAnswers implements Serializable {
     @NotNull
     @Column(name = "game_id")
     private int gameId;
-    
+
     @Basic(optional = false)
     @NotNull
-    @Size( max = 15)
+    @Size(max = 15)
     @Column(name = "user_phone_no")
     private String userPhoneNo;
-    
+
     @Basic(optional = false)
     @NotNull
-    @Size( max = 1000)
+    @Size(max = 1000)
     @Column(name = "user_answer")
     private String userAnswer;
 
     @Column(name = "date_answered")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateAnswered;
-    
+
     @Column(name = "createdDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdDate;
-    
+
     @Column(name = "modifiedDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "weekNo")
     private int weekNo;
-    
-    //@Column(name = "isRandomWinner", nullable = false, columnDefinition = "TINYINT(1) default '0'" )
-   // private boolean isRandomWinner;
-    
-   @Column(name = "isRandomWinner", nullable = false)
-   private boolean isRandomWinner;
-    
+
+    @Column(name = "isRandomWinner", nullable = false)
+    private boolean isRandomWinner;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "ip_address")
+    private String ipAddress;
+
     public WeeklyGamesAnswers() {
         super();
         this.isRandomWinner = false;
         // this.creationDate(new Date());
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -184,7 +187,7 @@ public class WeeklyGamesAnswers implements Serializable {
     public void setWeekNo(int weekNo) {
         this.weekNo = weekNo;
     }
-    
+
     /**
      * @return the isRandomWinner
      */
@@ -197,6 +200,20 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setIsRandomWinner(boolean isRandomWinner) {
         this.isRandomWinner = isRandomWinner;
+    }
+
+    /**
+     * @return the ipAddress
+     */
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    /**
+     * @param ipAddress the ipAddress to set
+     */
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
 }

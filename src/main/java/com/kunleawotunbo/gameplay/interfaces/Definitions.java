@@ -21,5 +21,7 @@ public interface Definitions {
     public String  SUCCESS = "SUCCESS";
     public String  FAILED  = "FAILED";
     
-    public String  TIMEZONE  = "Africa/Nigeria";
+    public String  TIMEZONE  = "Africa/Lagos";
+    
+    public String  IP_API  = "http://ip-api.com/json/";
 }

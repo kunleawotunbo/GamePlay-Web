@@ -5,11 +5,18 @@
  */
 package com.kunleawotunbo.gameplay.utility;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONObject;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.Async;
@@ -29,6 +36,8 @@ public class WebServiceUtility {
 
     @Autowired
     private SMSConfigBean smsConfigBean;
+    
+    final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     public String getRestClient3(String resource, String jsonstring) {
 
@@ -45,6 +54,7 @@ public class WebServiceUtility {
     public void getRestClient(SMSConfigBean smsConfigBean, String recepientPhone, String message) {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("About to send sms");
+        /*
         try {
             Thread.sleep(60000);
             System.out.println("I just want to delay this ni");
@@ -52,6 +62,7 @@ public class WebServiceUtility {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+         */
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("username", smsConfigBean.getUsername());
@@ -80,10 +91,53 @@ public class WebServiceUtility {
         System.out.println("response :: " + response);
         System.out.println("response.getBody() :: " + response.getBody());
         // System.out.println("result :: " + result);
-        
+
         System.out.println("SMS sent");
 
     }
 
+    /**
+     * Get country details by ipaddress using http://ip-api.com/
+     * @param resourceUrl
+     * @param ipAddress
+     * @return 
+     */
+    public JsonNode getIPObjectRestClient(String resourceUrl, String ipAddress) {
+        RestTemplate restTemplate = new RestTemplate();
+        
+        //UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl("http://spsenthil.com/order").queryParams(params).build();
+        // ListenableFuture<ResponseEntity<String>> responseFuture = restTemplate.getForEntity(uriComponents.toUriString(), String.class);
+        //System.out.println("params :: " + params);
+        // Add the Jackson message converter
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        // ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, String.class);
+
+        String a = resourceUrl + ipAddress;
+
+        String fooResourceUrl
+                = "http://localhost:8080/spring-rest/foos";
+        ResponseEntity<String> response
+                = restTemplate.getForEntity(resourceUrl + ipAddress, String.class);
+        //assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = null;
+        try {
+            root = mapper.readTree(response.getBody());
+            logger.info("root :: " + root);
+        } catch (IOException ex) {
+            Logger.getLogger(WebServiceUtility.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JsonNode name = root.path("name");
+
+        // Object result = restTemplate.postForObject(smsConfigBean.getUri(), obj, String.class);
+        //System.out.println("response :: " + response);
+        //System.out.println("response.getBody() :: " + response.getBody());
+        // System.out.println("result :: " + result);
+        System.out.println("SMS sent");
+
+        return root;
+
+    }
 
 }
