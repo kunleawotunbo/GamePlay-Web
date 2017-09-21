@@ -31,7 +31,7 @@
 
                         <%--Match ::  <strong> ${matchPredictionObject.homeTeamName} - ${matchPredictionObject.awayTeamName} </strong>--%>
 
-                       
+
                         <form:form modelAttribute="matchPredictionAnswer" class="form-horizontal" id="matchPredictionAnswer-form">
                             <form:hidden path="gameId" value="${matchPredictionObject.id}" id="gameId" name="gameId" />
                             <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
@@ -56,11 +56,14 @@
                                 </div>
                             </div>
                             <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
+                            <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
+                            <!--<p id="ipAddress">This is another paragraph.</p>-->
 
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
                                     <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
                                     <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                    <p id="cantPlay">Match already started, you can't play the game. Please try another game</p>
                                 </div>
                             </div>
 
@@ -127,17 +130,26 @@
 
 <script>
 
+
     jQuery(document).ready(function ($) {
+        $('#cantPlay').hide();
+          $.get("http://ipinfo.io", function (response) {
+            //alert(response.ip);
+             //ipAddress = response.ip;
+             //$("#ipAddress").html("" + response.ip);
+             $("#ipAddress").val(response.ip);
+        }, "jsonp");
 
         var matchStarted = $('#matchStarted').val();
 
         //console.log(" matchStarted :: " + matchStarted);
-        
+
         if (matchStarted === 'true') {
-            
+
             // disable button
             console.log(" matchStarted has started::" + matchStarted);
             // $("#bth-submit").button("enable");
+            $('#cantPlay').show();
             $("#bth-submit").prop("disabled", true);
 
         } else {
@@ -163,6 +175,8 @@
     function submitViaAjax() {
 
 
+       
+        
         var id = $('#id').val();
         //var userPhoneNo = $('#userPhoneNo').val();
         var userAnswer = $('#userAnswer').val();
@@ -170,6 +184,8 @@
         var userPhoneNo = $("#userPhoneNo").intlTelInput("getNumber");
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
         var weekNo = $('#weekNo').val();
+        var ipAddress = $('#ipAddress').val();
+       
 
         // console.log("countryData  " + countryData);
         // console.log("countryData.name  " + countryData.name);
@@ -185,7 +201,8 @@
             "userPhoneNo": userPhoneNo,
             "userAnswer": userAnswer,
             "gameId": gameId,
-            "weekNo": weekNo
+            "weekNo": weekNo,
+            "ipAddress": ipAddress
 
 
         };

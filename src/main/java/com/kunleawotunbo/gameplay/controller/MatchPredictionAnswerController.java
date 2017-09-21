@@ -83,15 +83,17 @@ public class MatchPredictionAnswerController {
         logger.info("User submitting answer for game");
 
         // Get ip address
-        String ipAddress = request.getRemoteAddr();
+        //String ipAddress = request.getRemoteAddr();
+         String ipAddress = "";
         JsonNode ipObj = null;
         String status = "";
         String country = "Unknown";
         String countryCode = "Unknown";
         String city = "Unknown";
-        System.out.println("IpAddress :: " + ipAddress);
+        
         try {
-
+            ipAddress = matchPredictionAnswer.getIpAddress();
+             System.out.println("IpAddress :: " + ipAddress);
             ipObj = webServiceUtility.getIPObjectRestClient(Definitions.IP_API, ipAddress);
             status = ipObj.get("status").asText();
             if ("fail".equalsIgnoreCase(status)) {

@@ -23,5 +23,7 @@ public interface Definitions {
     
     public String  TIMEZONE  = "Africa/Lagos";
     
+    // API url
+    // https://freegeoip.net/json/197.255.170.0
     public String  IP_API  = "http://ip-api.com/json/";
 }
