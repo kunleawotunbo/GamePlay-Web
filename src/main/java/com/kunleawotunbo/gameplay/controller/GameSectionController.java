@@ -50,24 +50,20 @@ public class GameSectionController {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * Get game section page by id and game code, if game in the category is more than one, then got to
+     * gamesection list page to list the games
+     * @param id
+     * @param gameCode
+     * @param map
+     * @return 
+     */
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("gameCatSection- id ::  " + id);
-        
-        /*
-        String recepientPhone = "08059979029";
-        String message = "This is a sample sms";
-      
-        tunborUtility.sendSMSSingle(recepientPhone, message);
-        
-        */
-        //webServiceUtility.getRestClient(smsConfigBean, recepientPhone, message);
-        
-        
-        
-
+     
         List<WeeklyGames> weeklyGameList = null;
-        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, new Date());
+       
         weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
         // check if weeklyGameList is greater than 1
@@ -112,14 +108,19 @@ public class GameSectionController {
 
     }
 
+    /**
+     * Get game section by id and game code
+     * @param id
+     * @param gameCode
+     * @param map
+     * @return 
+     */
     @RequestMapping(value = {"/gameSectionx-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
-        logger.info("getGameCategory");
+        logger.info("gameSection");
 
-        //WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeek());
-       // WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(new Date()));
         WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
-        //weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
+        
         boolean isPicture = false;
         String encodedPictureString = "";
 
@@ -138,6 +139,11 @@ public class GameSectionController {
         return new ModelAndView("gameSection", map);
     }
 
+    /**
+     * Go to congratulations page
+     * @param map
+     * @return 
+     */
     @RequestMapping(value = {"/congratulations.html"}, method = RequestMethod.GET)
     public ModelAndView getCongratlations(ModelMap map) {
         logger.info("congratulations");
@@ -145,6 +151,11 @@ public class GameSectionController {
         return new ModelAndView("congratulations", map);
     }
     
+    /**
+     * Go to Match prediction congratulations page
+     * @param map
+     * @return 
+     */
     @RequestMapping(value = {"/mpcongratulations"}, method = RequestMethod.GET)
     public ModelAndView goMpcongratulationsPage(ModelMap map) {
         logger.info("tryanotheranswer");

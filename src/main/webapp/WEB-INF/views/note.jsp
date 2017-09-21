@@ -46,6 +46,8 @@
 10. Everything must be Setup from the backend by admin....the match day/date, country/league, league title , 
     matches to be played and start time and end time of matches. 
     Number of winners to be selected, prize to be won per winner, amount to play(e.g N100, N50 etc) - Pending
+    
+11. Match Prediction should show on the home page and not in the menu when viewed on mobile - Pending
 
 5J3876V
 5J3NNY9

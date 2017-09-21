@@ -62,6 +62,13 @@
                                <li><a href="listUsers">Users List</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-cog"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                             <li><a href="addCountry">Manage Country</a></li>   
+                               <li><a href="listMatchPredictions">Match Prediction List</a></li>
+                               
+                        </ul>
+                    </li>
                     
 <!--                   
                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>

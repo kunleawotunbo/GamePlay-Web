@@ -455,7 +455,7 @@ public class WeeklyGamesController {
     }
 
     /**
-     * Set weekly game answer
+     * Set match prediction answer by the admin
      *
      * @param weeklyGames
      * @param errors
