@@ -146,7 +146,8 @@
             }
             .navbar li a, .navbar .navbar-brand {
                 color: #fff !important;
-            }
+                font-size: 12px; 
+            }          
             .navbar-nav li a:hover, .navbar-nav li.active a {
                 color: #f4511e !important;
                 background-color: #fff !important;
@@ -210,7 +211,7 @@
                 }
             }
 
-
+            /*
             .nav {
                 color: #ccc;
                 background: #333;
@@ -259,41 +260,67 @@
                 border-bottom: solid 1px #444;
                 background: #333
             }
+            
+            */
+/*            
+            .navbar-collapse.collapse {
+  display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: -15px !important;
+}
+
+.navbar-right {
+  float: right!important;
+}*/
         </style>
     </head>
     <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-        <!--
+        
                 <nav class="navbar navbar-default navbar-fixed-top">
+                <!--<nav class="navbar navbar-inverse">-->
                     <div class="container">
-                        <div class="navbar-header">
+                        
+                       <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>                        
                             </button>
-                            <a class="navbar-brand" href="#myPage">Logo</a>                   
+                            <a class="navbar-brand" href="#myPage">WINGAMEPLAY</a> 
+                            <a class="navbar-brand" href="/">Home</a>
+                             <a class="navbar-brand" href="<%=request.getContextPath()%>/prediction">Match Prediction</a>
+                           
                            
                         </div>
+                        <!--<a class="navbar-brand" href="#myPage">Logo</a>--> 
+                        
                         <div class="collapse navbar-collapse" id="myNavbar">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#about">ABOUT</a></li>
-                                <li><a href="#services">SERVICES</a></li>
-                                <li><a href="#portfolio">PORTFOLIO</a></li>
-                                <li><a href="#pricing">PRICING</a></li>
-                                <li><a href="#contact">CONTACT</a></li>
+                                <!--<li><a href="#about">ABOUT</a></li>-->
+                                <li><a href="/">Home</a></li>
+                        <li><a href="<%=request.getContextPath()%>/prediction">Match Prediction</a></li>
+                         <li><a href="<%=request.getContextPath()%>/addWinnerNumber">Winners List</a></li>
+                        <li><a href="<%=request.getContextPath()%>/about">About</a></li>
+                        <!--<li><a href="<%=request.getContextPath()%>/contact">Contact</a></li>-->
                             </ul>
                         </div>
                     </div>
                 </nav>
-        -->
+        
 
 
-
+<!--
         <div class="wrapper">  
             <div class="nav col-sm-12 col-xs-12" data-type="top-menu"> 
                 <ul>
                     <li class="timezone"> 
-                        <!--<div data-type="clock">14:39 (+01:00)<span>21 Sep 2017 (Thu)</span></div>--> 
+                        <div data-type="clock">14:39 (+01:00)<span>21 Sep 2017 (Thu)</span></div> 
                     </li> 
                    
                     <li class="first"><a class="selected" href="/">Home</a></li>
@@ -306,7 +333,7 @@
             </div>
 
         </div>
-
+-->
 
         <!--<div class="jumbotron text-center">
           <h1>Company</h1> 
@@ -375,7 +402,7 @@
             </div>
         </div>
 
-        <div class="container-fluid bg-grey">
+<!--        <div class="container-fluid bg-grey">
             <div class="row">
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-globe logo slideanim"></span>
@@ -387,10 +414,10 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Container (Services Section) -->
-        <div id="services" class="container-fluid text-center">
+<!--        <div id="services" class="container-fluid text-center">
             <h2>SERVICES</h2>
             <h4>What we offer</h4>
             <br>
@@ -429,10 +456,10 @@
                     <p>Lorem ipsum dolor sit amet..</p>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Container (Portfolio Section) -->
-        <div id="portfolio" class="container-fluid text-center bg-grey">
+<!--        <div id="portfolio" class="container-fluid text-center bg-grey">
             <h2>Portfolio</h2><br>
             <h4>What we have created</h4>
             <div class="row text-center slideanim">
@@ -461,14 +488,14 @@
 
             <h2>What our customers say</h2>
             <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
-                <!-- Indicators -->
+                 Indicators 
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>
                     <li data-target="#myCarousel" data-slide-to="2"></li>
                 </ol>
 
-                <!-- Wrapper for slides -->
+                 Wrapper for slides 
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <h4>"This company is the best. I am so happy with the result!"<br><span>Michael Roe, Vice President, Comment Box</span></h4>
@@ -481,7 +508,7 @@
                     </div>
                 </div>
 
-                <!-- Left and right controls -->
+                 Left and right controls 
                 <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -491,10 +518,10 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </div>
+        </div>-->
 
         <!-- Container (Pricing Section) -->
-        <div id="pricing" class="container-fluid">
+<!--        <div id="pricing" class="container-fluid">
             <div class="text-center">
                 <h2>Pricing</h2>
                 <h4>Choose a payment plan that works for you</h4>
@@ -558,10 +585,10 @@
                     </div>      
                 </div>    
             </div>
-        </div>
+        </div>-->
 
         <!-- Container (Contact Section) -->
-        <div id="contact" class="container-fluid bg-grey">
+<!--        <div id="contact" class="container-fluid bg-grey">
             <h2 class="text-center">CONTACT</h2>
             <div class="row">
                 <div class="col-sm-5">
@@ -587,10 +614,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Add Google Maps -->
-        <div id="googleMap" style="height:400px;width:100%;"></div>
+<!--        <div id="googleMap" style="height:400px;width:100%;"></div>
         <script>
             function myMap() {
                 var myCenter = new google.maps.LatLng(41.878114, -87.629798);
@@ -600,7 +627,7 @@
                 marker.setMap(map);
             }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>-->
         <!--
         To use this code on your website, get a free API key from Google.
         Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp

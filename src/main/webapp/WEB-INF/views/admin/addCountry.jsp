@@ -43,7 +43,7 @@
                     </div>
                     <div class="x_content">
                         <br />
-                    
+
 
                         <c:if test="${error}">                                  
                             <div class="alert alert-danger" id="success-error">
@@ -87,7 +87,7 @@
                                         <div class="form-group">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="reset" class="btn btn-primary">Cancel</button>
-                                                <input type="submit" bth-search value="Update" class="btn btn-success /> 
+                                                <input type="submit" bth-search value="Update" class="btn btn-success" /> 
 
                                             </div>
                                         </div>
@@ -99,74 +99,78 @@
                                                 <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
                                                 <input type="submit" id="bth-submit" class="btn btn-success" /> 
                                             </div>
-                                        </div>
+                                        </div>                                    
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-
                         </form:form>
-
                     </div>
-                </div>
-            </div>
-            <!-- /form input mask -->
 
+
+
+                <div>
+
+               
+            </div>
         </div>
+        <!-- /form input mask -->
+
+    </div>
 
 
-        <div class="row">
-            <!-- form input mask -->
-            <!--              <div class="col-md-6 col-sm-12 col-xs-12">--> 
-            <div class="col-md-10 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>List of Countries</h2>
+    <div class="row">
+        <!-- form input mask -->
+        <!--              <div class="col-md-6 col-sm-12 col-xs-12">--> 
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>List of Countries</h2>
 
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <br />
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
 
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>COUNTRY NAME</th>
-                                    <th>COUNTRY CODE</th>                                    
-                                    <th></th>
-                                    <th></th>
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>COUNTRY NAME</th>
+                                <th>COUNTRY CODE</th>                                    
+                                <th></th>
+                                <th></th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${countriesList}" var="item">  
-                                    <tr>  
-                                        <td><c:out value="${item.id}"/></td>  
-                                        <td><c:out value="${item.countryName}"/></td>  
-                                        <td><c:out value="${item.countryCode}"/></td>                                    
-                                        <td>
-                                            <a href="<c:url value='/admin/edit-country-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="<c:url value='/admin/delete-country-${item.id}' />" class="btn btn-danger custom-width">
-                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
-                                            </a>
-                                        </td>
-                                    </tr>  
-                                </c:forEach>  
-                            </tbody>
-                        </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${countriesList}" var="item">  
+                                <tr>  
+                                    <td><c:out value="${item.id}"/></td>  
+                                    <td><c:out value="${item.countryName}"/></td>  
+                                    <td><c:out value="${item.countryCode}"/></td>                                    
+                                    <td>
+                                        <a href="<c:url value='/admin/edit-country-${item.id}' />" class="btn btn-success custom-width">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="<c:url value='/admin/delete-country-${item.id}' />" class="btn btn-danger custom-width">
+                                            <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>  
+                            </c:forEach>  
+                        </tbody>
+                    </table>
 
 
-                    </div>
                 </div>
             </div>
-            <!-- /form input mask -->
+        </div>
+        <!-- /form input mask -->
 
-        </div>         
+    </div>         
 
 
 
-        <%@ include file="../includes/footer.jsp" %>
+    <%@ include file="../includes/footer.jsp" %>

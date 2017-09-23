@@ -38,14 +38,14 @@ public class MatchPrediction implements Serializable {
     @NotNull
     @Column(name = "homeTeamId")
     private int homeTeamId;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(max = 100)
     @Column(name = "homeTeamName")
     private String homeTeamName;
-    
-     @Basic(optional = false)
+
+    @Basic(optional = false)
     @NotNull
     @Column(name = "weekNo")
     private int weekNo;
@@ -60,38 +60,62 @@ public class MatchPrediction implements Serializable {
     @NotNull
     @Column(name = "noOfWinners")
     private int noOfWinners;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "awayTeamId")
     private int awayTeamId;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(max = 100)
     @Column(name = "awayTeamName")
     private String awayTeamName;
-    
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "country_Code")
+    private String countryCode;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "country_name")
+    private String countryName;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "league_Code")
+    private String leagueCode;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "league_name")
+    private String leagueName;
+
     @Column(name = "startTime")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date startTime;
-    
+
     @Column(name = "endTime")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date endTime;
-    
+
     //@Basic(optional = false)
     //@NotNull
     @Size(max = 100)
     @Column(name = "winner")
     private String winner;
-    
-   // @Basic(optional = false)
-   // @NotNull
+
+    // @Basic(optional = false)
+    // @NotNull
     @Size(max = 100)
     @Column(name = "matchResult")
     private String matchResult;
-    
+
     @Column(name = "modifiedDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
@@ -101,7 +125,7 @@ public class MatchPrediction implements Serializable {
     @Size(max = 100)
     @Column(name = "createdBy")
     private String createdBy;
-    
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -348,6 +372,60 @@ public class MatchPrediction implements Serializable {
         this.status = status;
     }
 
-    
-    
+    /**
+     * @return the countryCode
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    /**
+     * @param countryCode the countryCode to set
+     */
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    /**
+     * @return the countryName
+     */
+    public String getCountryName() {
+        return countryName;
+    }
+
+    /**
+     * @param countryName the countryName to set
+     */
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    /**
+     * @return the leagueCode
+     */
+    public String getLeagueCode() {
+        return leagueCode;
+    }
+
+    /**
+     * @param leagueCode the leagueCode to set
+     */
+    public void setLeagueCode(String leagueCode) {
+        this.leagueCode = leagueCode;
+    }
+
+    /**
+     * @return the leagueName
+     */
+    public String getLeagueName() {
+        return leagueName;
+    }
+
+    /**
+     * @param leagueName the leagueName to set
+     */
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
 }

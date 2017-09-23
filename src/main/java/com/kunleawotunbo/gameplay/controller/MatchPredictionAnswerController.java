@@ -99,9 +99,11 @@ public class MatchPredictionAnswerController {
             if ("fail".equalsIgnoreCase(status)) {
                 logger.info("Unable to determine country from Ip :: " + ipAddress);
             } else {
-                country = ipObj.get("country").asText();
-                countryCode = ipObj.get("countryCode").asText();
-                city = ipObj.get("city").asText();
+               // country = ipObj.get("country").asText();
+               // countryCode = ipObj.get("countryCode").asText();
+               // city = ipObj.get("city").asText();
+                
+                countryCode = matchPredictionAnswer.getCountryCode();
             }
            
             
