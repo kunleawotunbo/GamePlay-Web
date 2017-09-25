@@ -73,35 +73,61 @@
                             <div class="form-group">
 
                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Country Code<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="countryCode" id="countryCode" type="text" class="form-control" name="countryCode" placeholder="ENG" required ="required" />                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Country Name<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="countryName" id="countryName" type="text" class="form-control" name="countryName" placeholder="England" required ="required" />                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">League Code<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="leagueCode" id="countryCode" type="text" class="form-control" name="leagueCode" placeholder="EPL" required ="required" />                        
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">League Name<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="leagueName" id="leagueName" type="text" class="form-control" name="leagueName" placeholder="Premier League" required ="required" />                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeamId<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:input path="homeTeamId" id="homeTeamId" type="number" class="form-control" name="homeTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
-                                
-                                 <div class="form-group">
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Home Team Name<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="homeTeamName" id="homeTeamName" type="text" class="form-control" name="homeTeamName" placeholder="" required ="required" />                                 
                                     </div>
                                 </div> 
-                                    
-                                    
+
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Id<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:input path="awayTeamId" id="awayTeamId" type="number" class="form-control" name="awayTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
-                                
-                                 <div class="form-group">
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Name<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="awayTeamName" id="awayTeamName" type="text" class="form-control" name="awayTeamName" placeholder="" required ="required" />                                 
                                     </div>
                                 </div> 
 
-                               
+
 
 
 
@@ -140,7 +166,7 @@
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Enabled</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -193,45 +219,44 @@
 
                 // Date time picker
                 $(function () {
-                //  var temp = $(this).datepicker('getDate');
-                // var d = new Date(temp);
-                // d.setDate(d.getDate() + 1);
-                $('#startTime').datetimepicker({
-                //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
+                    //  var temp = $(this).datepicker('getDate');
+                    // var d = new Date(temp);
+                    // d.setDate(d.getDate() + 1);
+                    $('#startTime').datetimepicker({
+                        //autoclose: true,
+                        format: 'DD-MM-YYYY HH:mm:ss'
+                                //format: 'dd MMM yyyy HH:mm:ss zzz'
+                                // startDate: d
 
-                });
-                $('#endTime').datetimepicker({
-                //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
+                    });
+                    $('#endTime').datetimepicker({
+                        //autoclose: true,
+                        format: 'DD-MM-YYYY HH:mm:ss'
+                                //format: 'dd MMM yyyy HH:mm:ss zzz'
+                                // startDate: d
 
-                });
+                    });
                 });
                 jQuery(document).ready(function ($) {
 
-                // success alert
-                $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-                $("#success-alert").slideUp(500);
+                    // success alert
+                    $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#success-alert").slideUp(500);
+                    });
+                    // error alert
+                    $("#success-error").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#success-error").slideUp(500);
+                    });
+
+
+
+
+
+
                 });
-                // error alert
-                $("#success-error").fadeTo(2000, 500).slideUp(500, function(){
-                $("#success-error").slideUp(500);
-                });
-                
-
-                
 
 
-
-                });
-                
-            
 
             </script>
 
 
-            
