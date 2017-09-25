@@ -169,7 +169,13 @@ public class MatchPredictionController {
             return "/admin/addMatchPrediction";
 
         }
-
+        // Quick fix, should be replaced with what was choosed on the form
+        /*
+        matchPrediction.setCountryCode("ENG");
+        matchPrediction.setLeagueCode("EPL");
+        matchPrediction.setLeagueName("English Premier League");
+        matchPrediction.setCountryName("England");
+        */
         boolean saved = matchPredictionService.save(matchPrediction);
         // If not saved
         if (!saved) {

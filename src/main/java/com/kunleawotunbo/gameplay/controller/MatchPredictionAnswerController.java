@@ -93,9 +93,9 @@ public class MatchPredictionAnswerController {
         
         try {
             ipAddress = matchPredictionAnswer.getIpAddress();
-             System.out.println("IpAddress :: " + ipAddress);
-            ipObj = webServiceUtility.getIPObjectRestClient(Definitions.IP_API, ipAddress);
-            status = ipObj.get("status").asText();
+            // System.out.println("IpAddress :: " + ipAddress);
+            //ipObj = webServiceUtility.getIPObjectRestClient(Definitions.IP_API, ipAddress);
+            //status = ipObj.get("status").asText();
             if ("fail".equalsIgnoreCase(status)) {
                 logger.info("Unable to determine country from Ip :: " + ipAddress);
             } else {
