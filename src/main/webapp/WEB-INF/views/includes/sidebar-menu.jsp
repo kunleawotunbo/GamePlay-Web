@@ -36,6 +36,8 @@
                         <ul class="nav child_menu">
                              <li><a href="addMatchPrediction">Add Match</a></li>   
                                <li><a href="listMatchPredictions">Match Prediction List</a></li>
+                               <li><a href="gamePredictionDurationReport">Games Played Across Time Duration</a></li>
+                               
                                
                         </ul>
                     </li>
