@@ -37,6 +37,8 @@
                              <li><a href="addMatchPrediction">Add Match</a></li>   
                               <li><a href="addMatchPredictionNew">Match Prediction v2</a></li>  
                                <li><a href="listMatchPredictions">Match Prediction List</a></li>
+                               <li><a href="gamePredictionDurationReport">Games Played Across Time Duration</a></li>
+                               
                                
                         </ul>
                     </li>
