@@ -62,7 +62,6 @@ public class CountryController {
     public String saveCountry(Country country, BindingResult result,
             ModelMap model, HttpServletRequest req) {
 
-        System.out.println("Inside addCountry ");
         boolean saved = false;
 
         
@@ -72,7 +71,7 @@ public class CountryController {
 
             System.out.println("Error in form:: " + result.getFieldError());
 
-            return "/admin/addWeeklyGame";
+            return "/admin/addCountry";
 
         }
         
@@ -115,7 +114,7 @@ public class CountryController {
     
      @RequestMapping(value = {"/delete-country-{id}"}, method = RequestMethod.GET)
     public String deleteCountry(@PathVariable int id) {
-        logger.info("Delete  deleteWeklyGames id :: " + id);
+        logger.info("Delete  deleteLeague id :: " + id);
         Country country = countryService.getCountryById(id);
         countryService.deleteCountry(country);
 

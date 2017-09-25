@@ -63,7 +63,7 @@
                                 <div class="col-md-9 col-md-offset-3">
                                     <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
                                     <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
-                                    <p id="cantPlay">Match already started, you can't play the game. Please try another game</p>
+                                    <p id="cantPlay">Match already started, you can't play this game. Please try another game</p>
                                 </div>
                             </div>
 
@@ -185,11 +185,13 @@
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
         var weekNo = $('#weekNo').val();
         var ipAddress = $('#ipAddress').val();
+        var countryCode = countryData.iso2;
        
 
-        // console.log("countryData  " + countryData);
-        // console.log("countryData.name  " + countryData.name);
-        // console.log("countryData.iso2s  " + countryData.iso2);
+        console.log("countryData  " + countryData);
+         console.log("countryData.name  " + countryData.name);
+         console.log("countryData.iso2s  " + countryData.iso2);
+         //alert(countryData.iso2);
         // console.log("userAnswer:  " + userAnswer)
 
         // set a variable
@@ -202,7 +204,8 @@
             "userAnswer": userAnswer,
             "gameId": gameId,
             "weekNo": weekNo,
-            "ipAddress": ipAddress
+            "ipAddress": ipAddress,
+            "countryCode": countryCode
 
 
         };

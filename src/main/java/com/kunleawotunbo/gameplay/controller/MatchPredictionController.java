@@ -10,7 +10,7 @@ import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
-import com.kunleawotunbo.gameplay.model.User;
+import com.kunleawotunbo.gameplay.service.CountryService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -56,6 +54,9 @@ public class MatchPredictionController {
 
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
+    
+    @Autowired
+    private CountryService countryService;
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -284,5 +285,63 @@ public class MatchPredictionController {
 
         return "/admin/viewAllAnswersMatchPredictions";
     }
+    
+    
+//    Version 2 for the match prediction for
+     @RequestMapping(value = "/admin/addMatchPredictionNew", method = RequestMethod.GET)
+    public String getAddMatchPredictionNew(ModelMap model, HttpServletRequest request) {
+
+        boolean status = true;
+        model.addAttribute("matchPrediction", new MatchPrediction());
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+         model.addAttribute("countriesList", countryService.listCountries());
+        // model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "/admin/addMatchPredictionNew";
+    }
+    
+    @RequestMapping(value = "/admin/addMatchPredictionNew", method = RequestMethod.POST)
+    public String createMatchPredictionNew(MatchPrediction matchPrediction, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+
+        logger.info("To create new match prediction game");
+
+        //If error, just return a 400 bad request, along with the error message
+        if (result.hasErrors()) {
+            System.out.println("There is an error");
+
+            System.out.println("Error in form:: " + result.getFieldError());
+
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Match prediction Creation failed");
+
+            return "/admin/addMatchPrediction";
+
+        }
+
+        boolean saved = matchPredictionService.save(matchPrediction);
+        // If not saved
+        if (!saved) {
+
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Match prediction Creation failed");
+
+            return "admin/addMatchPredictionNew";
+        }
+
+        boolean status = true;
+
+        model.addAttribute("saved", saved);
+        model.addAttribute("message", "Match prediction  Created successfully");
+        model.addAttribute("matchPrediction", new MatchPrediction());
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "admin/addMatchPredictionNew";
+
+    }
+
 
 }
