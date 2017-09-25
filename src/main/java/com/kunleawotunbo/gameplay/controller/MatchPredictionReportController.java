@@ -11,6 +11,7 @@ import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.WinnerNumber;
+import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
@@ -97,14 +98,29 @@ public class MatchPredictionReportController {
     @RequestMapping(value = "/gamePredictionDurationReport", method = RequestMethod.GET)
     public String gamePredictionDurationReport(ModelMap model, HttpServletRequest request) {
         
-         model.addAttribute("winnerNumber", new WinnerNumber());
+         model.addAttribute("matchprediction", new MatchPrediction());
         //model.addAttribute("urlPath", request.getLocalAddr());
         //model.addAttribute("loggedinuser", getPrincipal());
        // model.addAttribute("game", new Game());
        // model.addAttribute("gameList", gameService.listAllGames());
         model.addAttribute("loggedinuser", getPrincipal());
 
-        return "/admin/setupGameCategory";
+        return "/admin/gamePredictionDurationReport";
+    }
+    
+    @RequestMapping(value = "/gamePredictionDurationReport", method = RequestMethod.POST)
+  // @RequestMapping(value = "/winnerlist", method = RequestMethod.GET)
+    // public String submit(@Valid @ModelAttribute("winnernumber")WinnerNumber winnernumber, BindingResult result,
+     //       ModelMap model) {
+    public String gamePredictionDurationReportReturn(MatchPrediction matchPrediction, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+
+            System.out.println("Inside game prediction report contoller :: ");
+            
+            logger.info("Date Range :: " + matchPrediction.getEndTime());
+            
+        
+            return "/matchlistbyplaytime";
     }
     
     private String getPrincipal() {

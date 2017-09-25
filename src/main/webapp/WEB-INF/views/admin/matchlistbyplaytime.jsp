@@ -1,6 +1,6 @@
 <%-- 
-    Document   : gamepredictiondurationreportstart
-    Created on : 25-Sep-2017, 09:24:52
+    Document   : matchlistbyplaytime
+    Created on : 25-Sep-2017, 14:30:26
     Author     : BELLO
 --%>
 
@@ -44,31 +44,49 @@
                     <div class="x_content">
                         <br />
 
-                       <form:form modelAttribute="MatchPrediction" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">  
-                            <form:hidden path="id" id="id" name="id" />
-                            
-                             <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Start Date<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="startTime" id="matchGameStartTime" name="matchGameStartTime" type="text" class="form-control"  placeholder="Game Start Time" required ="required" />                                 
-                                    </div>
-                                </div>    
+                       <table id="datatable-responsive" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>GAME CATEGORY</th>
+                                    <th>WEEKLY GAME ID</th>
+                                    <th>USER PHONE NO</th>                                    
+                                    <th>USER ANSWER</th>
+                                    <th>DATE ANSWERED</th>
+                                    <!--<th></th>
+                                    <th></th>
+                                    <th></th>-->
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="endTime" id="matchGameEndTime" name="matchGameEndTime" type="text" class="form-control"  placeholder="Game End Time" required ="required" />                                 
-                                    </div>
-                                </div>
-                                 <div class="form-group">
-                                                <div class="col-md-9 col-md-offset-3">
-                                                    <button type="reset" class="btn btn-primary">Cancel</button>
-                                                    <!--<button type="submit" id="bth-submit" class="btn btn-success">Submit</button>-->
-                                                    <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
-                                                </div>
-                                            </div>
-                            
-                                </form:form> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <c:forEach items="${allWeeklyGameRandomWinner}" var="item" varStatus = "status">
+                                     <tr>  
+                                        <td><c:out value="${status.index + 1}"/></td> 
+                                        
+                                        <td><c:out value="${weeklyGameCategoryName[status.getIndex()]}"/></td>
+                                         <td><c:out value="${item.gameId}"/></td>
+                                        <td><c:out value="${item.userPhoneNo}"/></td>                                          
+                                        <td><c:out value="${item.userAnswer}"/></td> 
+                                        <td><c:out value="${item.dateAnswered}"/></td>
+                                       <!-- <td><c:out value="${item.weekNo}"/></td> --> 
+                                         <!-- <td><a href="<c:url value='/admin/generate-RandomWinners-${item.id}' />" class="btn btn-success ">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Generate Random Winners
+                                            </a>
+                                        </td>
+                                        <td><a href="<c:url value='/admin/edit-weeklyGames-${item.id}' />" class="btn btn-success custom-width">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                            </a>
+                                        </td>
+                                        <td><a href="<c:url value='/admin/delete-weeklyGames-${item.id}' />" class="btn btn-danger custom-width"> 
+                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>-->  
+                                
+                               </c:forEach>             
+                            </tbody>
+                        </table>
 
 
                     </div>
@@ -85,25 +103,7 @@
         <script>
 
 
-                  $(function () {
-                //  var temp = $(this).datepicker('getDate');
-                // var d = new Date(temp);
-                // d.setDate(d.getDate() + 1);
-                $('#matchGameStartTime').datetimepicker({
-                //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
 
-                });
-                $('#matchGameEndTime').datetimepicker({
-                //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
-
-                });
-                });
 
             jQuery(document).ready(function ($) {
 
@@ -189,5 +189,6 @@
                 $('#feedback').html(json);
             }
         </script>
+
 
 
