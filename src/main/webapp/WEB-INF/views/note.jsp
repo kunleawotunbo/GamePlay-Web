@@ -49,3 +49,27 @@
     Number of winners to be selected, prize to be won per winner, amount to play(e.g N100, N50 etc) - Pending
     
 11. Match Prediction should show on the home page and not in the menu when viewed on mobile - Resolved
+
+
+
+
+
+New task JACKPOT MODULE 26-09-2017
+
+1. Setup Jackpot Game - Kolade
+2. Admin to set answer for each games - Kolade
+3. Display games on frontend to allow customers to play and submit answer taking note of when the game expires i.e User can't play anymore once it expires - Kolade
+4. Process answers submitted by user at the backend and generate winners based on number of winners set by the admin at game setup(Same as other modules we have done).
+5. Total entries for every game. - Olakunle
+
+6. total games by players  over specified selectable period - Olakunle
+
+7.  entries played on a particular game sorted by players country of origin. - Olakunle
+
+8.  total Games played by a particular phone number /player. - Olakunle
+
+9.  total number of players with right answer for a particular game whether selected or not AND for all time on that module. - Olakunle
+
+10. total number of SELECTED winners for a particular game and for all games on a module. - Olakunle
+
+

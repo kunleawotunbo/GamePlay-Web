@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addMatchPrediction
-    Created on : Sep 12, 2017, 10:51:41 AM
+    Document   : newjspMatchPredictionBackUp
+    Created on : Sep 26, 2017, 9:41:48 PM
     Author     : Olakunle Awotunbo
 --%>
 
@@ -14,7 +14,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Match Prediction </h3>
+                <h3>Match Prediction</h3>
             </div>
 
             <!--            <div class="title_right">
@@ -39,7 +39,7 @@
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Setup Match Prediction Game</h2>
+                        <h2>Add Match Prediction</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -73,81 +73,59 @@
                             <div class="form-group">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Country<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Country Code<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
-                                        <form:select id="countryCode" path="countryCode" title="Choose Country" class="form-control">
-                                            <option value="">Choose Country</option>
-                                            <form:options items="${countriesList}" itemValue="countryCode" itemLabel="countryName"/>
-                                        </form:select>   
+                                        <form:input path="countryCode" id="countryCode" type="text" class="form-control" name="countryCode" placeholder="ENG" required ="required" />                        
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">League<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Country Name<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
-                                        <form:select id="leagueCode" path="leagueCode" title="Choose League" class="form-control">
-
-                                            <form:option value="0" label="Choose League" />
-                                        </form:select>   
+                                        <form:input path="countryName" id="countryName" type="text" class="form-control" name="countryName" placeholder="England" required ="required" />                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">League Code<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="leagueCode" id="countryCode" type="text" class="form-control" name="leagueCode" placeholder="EPL" required ="required" />                        
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">League Name<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:input path="leagueName" id="leagueName" type="text" class="form-control" name="leagueName" placeholder="Premier League" required ="required" />                        
                                     </div>
                                 </div>
 
-                                <%--                             
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeamId<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:input path="homeTeamId" id="homeTeamId" type="number" class="form-control" name="homeTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
-                                --%>                                
+
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeam<span class="required">*</span></label>
-                                    <div class="col-sm-4">                                         
-                                        <form:select id="homeTeamId" path="homeTeamId" title="Choose Team" class="form-control">
-                                            <!--<option value="">Choose League</option>-->
-                                            <%--<form:options items="${teamList}" itemValue="id" itemLabel="teamName"/>--%>
-                                            <%--<form:options  itemValue="leagueCode" itemLabel="countryName"/>--%>
-                                            <form:option value="0" label="Choose Home Team" />
-                                        </form:select>   
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Home Team Name<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="homeTeamName" id="homeTeamName" type="text" class="form-control" name="homeTeamName" placeholder="" required ="required" />                                 
                                     </div>
-                                </div>                              
-
-                                <%--
-                               <div class="form-group">
-                                   <label class="control-label col-md-3 col-sm-3 col-xs-3">Home Team Name<span class="required">*</span></label>
-                                   <div class="col-md-9 col-sm-9 col-xs-9">
-                                       <form:input path="homeTeamName" id="homeTeamName" type="text" class="form-control" name="homeTeamName" placeholder="" required ="required" />                                 
-                                   </div>
-                               </div> 
-                                --%>
+                                </div> 
 
 
-                                <%--                                
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Id<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:input path="awayTeamId" id="awayTeamId" type="number" class="form-control" name="awayTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
-                                --%>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeam<span class="required">*</span></label>
-                                    <div class="col-sm-4">                                         
-                                        <form:select id="awayTeamId" path="awayTeamId" title="Choose Away Team" class="form-control">                                           
-                                            <form:option value="0" label="Choose Away Team" />
-                                        </form:select>   
-                                    </div>
-                                </div>    
-
-                                <%--       
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Name<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="awayTeamName" id="awayTeamName" type="text" class="form-control" name="awayTeamName" placeholder="" required ="required" />                                 
                                     </div>
-                                </div>
-                                --%>
+                                </div> 
 
 
 
@@ -259,8 +237,6 @@
 
                     });
                 });
-
-
                 jQuery(document).ready(function ($) {
 
                     // success alert
@@ -273,164 +249,11 @@
                     });
 
 
-                    // On country drop down change
-                    $("#countryCode").change(function (event) {
-
-                        $('#leagueCode').html("");
-                        $('#homeTeamId').html("Choose Home Team");
-                        $('#awayTeamId').html("Choose Away Team");
-
-                        /*
-                         $('#homeTeamId')
-                         .append($("<option></option>")
-                         .attr("value", "0")
-                         .text("Choose Home Team"));
-                         
-                         */
-
-                        var countryCode = $('#countryCode').val();
-                        console.log(" countryCode ::" + countryCode);
-
-                        $.ajax({
-                            type: "GET",
-                            contentType: "application/json",
-                            url: "${pageContext.request.contextPath}/admin/getLeagueByCountry/" + countryCode,
-                            timeout: 600000,
-                            success: function (data) {
-                                console.log("SUCCESS: ", data);
-                                //display(data);              
-                                var records = data.result;
-                                console.log(records.length);
-                                $.each(records, function (i, item) {
-
-                                    $('#leagueCode')
-                                            .append($("<option></option>")
-                                                    .attr("value", item.leagueCode)
-                                                    .text(item.leagueName));
-                                });
-                                //notification("Notification", "Weekly game added successfully.", "success");
-                            },
-                            error: function (e) {
-                                console.log("ERROR: ", e);
-                                //display(e);
-                                // notification("Notification", "Failed to add Weekly game.", "error");
-                            },
-                            done: function (e) {
-                                console.log("DONE");
-                                enableSearchButton(true);
-                            }
-                        });
-
-                    });
-                    // On change end for country dropdown
-
-                    // On change for league drop down change
-                    // This will list teams in the league
-                    $("#leagueCode").change(function (event) {
-
-                        $('#homeTeamId').html("");
-                        $('#awayTeamId').html("");
-                        var leagueCode = $('#leagueCode').val();
-                        console.log(" leagueCode ::" + leagueCode);
-
-                        $.ajax({
-                            type: "GET",
-                            contentType: "application/json",
-                            url: "${pageContext.request.contextPath}/admin/getTeamByLeagueCode/" + leagueCode,
-                            timeout: 600000,
-                            success: function (data) {
-                                console.log("SUCCESS: ", data);
-                                //display(data);              
-                                var records = data.result;
-                                console.log(records.length);
-
-                                
-                                 $.each(records, function (i, item) {
-                                 
-                                 // Home team
-                                 $('#homeTeamId')
-                                 .append($("<option></option>")
-                                 .attr("value", item.id)
-                                 .text(item.teamName));
-                                 // Away team
-                                 $('#awayTeamId')
-                                 .append($("<option></option>")
-                                 .attr("value", item.id)
-                                 .text(item.teamName));
-                                 });
-                                 
-                                
-                                
-                                /*
-                                var listItems = "";
-                                for (var i = 0; i < records; i++) {
-                                    listItems += "<option value='" + records[i].stateid + "'>" + jsonList.Table[i].statename + "</option>";
-                                }
-                                $("#DLState").html(listItems);
-
-                                */
-                                //notification("Notification", "Weekly game added successfully.", "success");
-                            },
-                            error: function (e) {
-                                console.log("ERROR: ", e);
-                                //display(e);
-                                // notification("Notification", "Failed to add Weekly game.", "error");
-                            },
-                            done: function (e) {
-                                console.log("DONE");
-                                enableSearchButton(true);
-                            }
-                        });
-
-                    });
-                    // On change end for league drop down
-
-
-
 
 
 
 
                 });
-
-
-
-            </script>
-
-            <script type="text/javascript">
-                function submitForm() {
-                   
-                   
-                    // getting the user form values
-                    var homeTeamId = $('#homeTeamId').val();
-                    var awayTeamId = $('#awayTeamId').val();
-
-                    console.log("homeTeamId :: " + homeTeamId);
-                    console.log("awayTeamId :: " + awayTeamId);
-                    //alert("homeTeamId :: " + homeTeamId);
-                    //alert("awayTeamId :: " + awayTeamId);
-                    // Do some validation
-                    if (homeTeamId === awayTeamId) {
-                        alert('Please choose different teams');
-                        $('#homeTeamId').focus();
-                        return false;
-                    }
-
-
-                    var r = confirm("Do you want to Submit?");
-                    if (r == true) {
-                        frm.submit();
-                    } else {
-                        return false;
-                    }
-
-                    //return true;
-
-                   
-
-                }
-
-
 
 
 

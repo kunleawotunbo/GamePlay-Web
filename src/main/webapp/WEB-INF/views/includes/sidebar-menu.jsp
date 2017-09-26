@@ -34,8 +34,8 @@
                     </li>
                     <li><a><i class="fa fa-futbol-o"></i> Match Prediction <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                             <li><a href="addMatchPrediction">Add Match</a></li>   
-                              <li><a href="addMatchPredictionNew">Match Prediction v2</a></li>  
+                             <li><a href="addMatchPrediction">Setup Match</a></li>   
+                              <!--<li><a href="addMatchPredictionNew">Match Prediction v2</a></li>-->  
                                <li><a href="listMatchPredictions">Match Prediction List</a></li>
                                <li><a href="gamePredictionDurationReport">Match Across Time Duration</a></li>
                                
