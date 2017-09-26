@@ -11,10 +11,12 @@ import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.service.CountryService;
+import com.kunleawotunbo.gameplay.service.LeagueService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
+import com.kunleawotunbo.gameplay.service.TeamService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,6 +60,12 @@ public class MatchPredictionController {
     @Autowired
     private CountryService countryService;
 
+    @Autowired
+    private TeamService teamService;
+    
+    @Autowired
+    private LeagueService leagueService;
+    
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @InitBinder
@@ -300,8 +308,7 @@ public class MatchPredictionController {
         boolean status = true;
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-         model.addAttribute("countriesList", countryService.listCountries());
-        // model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("countriesList", countryService.listCountries());       
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPredictionNew";
@@ -313,6 +320,8 @@ public class MatchPredictionController {
 
         logger.info("To create new match prediction game");
 
+        System.out.println("matchPrediction.getAwayTeamId() :: " + matchPrediction.getAwayTeamId());
+        System.out.println("matchPrediction.getHomeTeamId() :: " + matchPrediction.getHomeTeamId());
         //If error, just return a 400 bad request, along with the error message
         if (result.hasErrors()) {
             System.out.println("There is an error");
@@ -322,14 +331,18 @@ public class MatchPredictionController {
             model.addAttribute("error", true);
             model.addAttribute("message", "Match prediction Creation failed");
 
-            return "/admin/addMatchPrediction";
+            return "/admin/addMatchPredictionNew";
 
         }
 
+        matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
+        matchPrediction.setLeagueName(leagueService.getLeagueByCode(matchPrediction.getLeagueCode()).getLeagueName());
+        matchPrediction.setHomeTeamName(teamService.getTeamById(matchPrediction.getHomeTeamId()).getTeamName());
+        matchPrediction.setAwayTeamName(teamService.getTeamById(matchPrediction.getAwayTeamId()).getTeamName());
         boolean saved = matchPredictionService.save(matchPrediction);
         // If not saved
         if (!saved) {
-
+            logger.error("Error occured, unable to save match predcition");
             model.addAttribute("error", true);
             model.addAttribute("message", "Match prediction Creation failed");
 
@@ -342,7 +355,7 @@ public class MatchPredictionController {
         model.addAttribute("message", "Match prediction  Created successfully");
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-
+        model.addAttribute("countriesList", countryService.listCountries());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "admin/addMatchPredictionNew";

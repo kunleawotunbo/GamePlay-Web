@@ -86,10 +86,8 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">League<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:select id="leagueCode" path="leagueCode" title="Choose League" class="form-control">
-                                            <!--<option value="">Choose League</option>-->
-                                            <%--<form:options items="${countriesList}" itemValue="leagueCode" itemLabel="countryName"/>--%>
-                                            <%--<form:options  itemValue="leagueCode" itemLabel="countryName"/>--%>
-                                            <form:option value="" label="Choose League" />
+
+                                            <form:option value="0" label="Choose League" />
                                         </form:select>   
                                     </div>
                                 </div>
@@ -101,40 +99,55 @@
                                         <form:input path="homeTeamId" id="homeTeamId" type="number" class="form-control" name="homeTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
-                                --%>
-                                 <div class="form-group">
+                                --%>                                
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeam<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:select id="homeTeamId" path="homeTeamId" title="Choose Team" class="form-control">
                                             <!--<option value="">Choose League</option>-->
-                                            <%--<form:options items="${countriesList}" itemValue="leagueCode" itemLabel="countryName"/>--%>
+                                            <%--<form:options items="${teamList}" itemValue="id" itemLabel="teamName"/>--%>
                                             <%--<form:options  itemValue="leagueCode" itemLabel="countryName"/>--%>
-                                            <form:option value="" label="Choose Home Team" />
+                                            <form:option value="0" label="Choose Home Team" />
                                         </form:select>   
                                     </div>
-                                </div>
+                                </div>                              
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Home Team Name<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <form:input path="homeTeamName" id="homeTeamName" type="text" class="form-control" name="homeTeamName" placeholder="" required ="required" />                                 
-                                    </div>
-                                </div> 
+                                <%--
+                               <div class="form-group">
+                                   <label class="control-label col-md-3 col-sm-3 col-xs-3">Home Team Name<span class="required">*</span></label>
+                                   <div class="col-md-9 col-sm-9 col-xs-9">
+                                       <form:input path="homeTeamName" id="homeTeamName" type="text" class="form-control" name="homeTeamName" placeholder="" required ="required" />                                 
+                                   </div>
+                               </div> 
+                                --%>
 
 
+                                <%--                                
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Id<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:input path="awayTeamId" id="awayTeamId" type="number" class="form-control" name="awayTeamId" placeholder="" required ="required" />                        
                                     </div>
                                 </div>
+                                --%>
 
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeam<span class="required">*</span></label>
+                                    <div class="col-sm-4">                                         
+                                        <form:select id="awayTeamId" path="awayTeamId" title="Choose Away Team" class="form-control">                                           
+                                            <form:option value="0" label="Choose Away Team" />
+                                        </form:select>   
+                                    </div>
+                                </div>    
+
+                                <%--       
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team Name<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
                                         <form:input path="awayTeamName" id="awayTeamName" type="text" class="form-control" name="awayTeamName" placeholder="" required ="required" />                                 
                                     </div>
-                                </div> 
+                                </div>
+                                --%>
 
 
 
@@ -264,6 +277,17 @@
                     $("#countryCode").change(function (event) {
 
                         $('#leagueCode').html("");
+                        $('#homeTeamId').html("Choose Home Team");
+                        $('#awayTeamId').html("Choose Away Team");
+
+                        /*
+                         $('#homeTeamId')
+                         .append($("<option></option>")
+                         .attr("value", "0")
+                         .text("Choose Home Team"));
+                         
+                         */
+
                         var countryCode = $('#countryCode').val();
                         console.log(" countryCode ::" + countryCode);
 
@@ -305,6 +329,7 @@
                     $("#leagueCode").change(function (event) {
 
                         $('#homeTeamId').html("");
+                        $('#awayTeamId').html("");
                         var leagueCode = $('#leagueCode').val();
                         console.log(" leagueCode ::" + leagueCode);
 
@@ -318,13 +343,32 @@
                                 //display(data);              
                                 var records = data.result;
                                 console.log(records.length);
-                                $.each(records, function (i, item) {
 
-                                    $('#homeTeamId')
-                                            .append($("<option></option>")
-                                                    .attr("value", item.teamId)
-                                                    .text(item.teamName));
-                                });
+                                
+                                 $.each(records, function (i, item) {
+                                 
+                                 // Home team
+                                 $('#homeTeamId')
+                                 .append($("<option></option>")
+                                 .attr("value", item.id)
+                                 .text(item.teamName));
+                                 // Away team
+                                 $('#awayTeamId')
+                                 .append($("<option></option>")
+                                 .attr("value", item.id)
+                                 .text(item.teamName));
+                                 });
+                                 
+                                
+                                
+                                /*
+                                var listItems = "";
+                                for (var i = 0; i < records; i++) {
+                                    listItems += "<option value='" + records[i].stateid + "'>" + jsonList.Table[i].statename + "</option>";
+                                }
+                                $("#DLState").html(listItems);
+
+                                */
                                 //notification("Notification", "Weekly game added successfully.", "success");
                             },
                             error: function (e) {
@@ -348,6 +392,45 @@
 
 
                 });
+
+
+
+            </script>
+
+            <script type="text/javascript">
+                function submitForm() {
+                    /*
+                    alert("yess ");
+                    // getting the user form values
+                    var homeTeamId = $('#homeTeamId').val();
+                    var awayTeamId = $('#awayTeamId').val();
+
+                    console.log("homeTeamId :: " + homeTeamId);
+                    console.log("awayTeamId :: " + awayTeamId);
+                    alert("homeTeamId :: " + homeTeamId);
+                    alert("awayTeamId :: " + awayTeamId);
+                    // Do some validation
+                    if (homeTeamId === "") {
+                        alert('Please choose a game category');
+                        $('#homeTeamId').focus();
+                        return false;
+                    }
+
+
+                    var r = confirm("Do you want to Submit?");
+                    if (r == true) {
+                        frm.submit();
+                    } else {
+                        return false;
+                    }
+
+                    //return true;
+
+                    */
+
+                }
+
+
 
 
 
