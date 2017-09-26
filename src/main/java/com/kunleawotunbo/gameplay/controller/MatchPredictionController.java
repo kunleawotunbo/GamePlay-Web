@@ -17,6 +17,7 @@ import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -348,6 +349,45 @@ public class MatchPredictionController {
         return "admin/addMatchPredictionNew";
 
     }
+    
+    
+    @RequestMapping(value = "/admin/answersByPlayerCountry", method = RequestMethod.GET)
+    public String gamePredictionByLeagueReportGet(ModelMap model, HttpServletRequest request) {
+        
+         model.addAttribute("matchPrediction", new MatchPrediction());
+        //model.addAttribute("urlPath", request.getLocalAddr());
+        //model.addAttribute("loggedinuser", getPrincipal());
+       // model.addAttribute("game", new Game());
+       // model.addAttribute("gameList", gameService.listAllGames());
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "/admin/answersByPlayerCountry";
+    }
+    
+    
+    @RequestMapping(value = "/admin/answersByPlayerCountry", method = RequestMethod.POST)
+    public String answerByPlayerCountry(MatchPrediction matchPrediction, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+        
+           System.out.println("Inside game prediction by player country controller :: ");
+            
+            logger.info("Country Code :: " + matchPrediction.getCountryCode());
+            
+           List<MatchPrediction> matchPredictionList = new ArrayList<MatchPrediction>();
+            
+           matchPredictionList = matchPredictionService.listByCountry(matchPrediction.getCountryCode());
+            
+             
+           logger.info("List Length :: " + matchPredictionList.size());
+           logger.info("League Name :: " + matchPredictionList.get(0).getCountryName());
+            model.addAttribute("matchPredictionList", matchPredictionList);
+            model.addAttribute("CountryName", matchPredictionList.get(0).getCountryName());
+
+            model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+         return "/admin/answersByPlayerCountryList";
+
+      }
 
 
 }

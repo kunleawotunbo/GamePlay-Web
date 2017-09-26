@@ -37,7 +37,9 @@
                              <li><a href="addMatchPrediction">Add Match</a></li>   
                               <li><a href="addMatchPredictionNew">Match Prediction v2</a></li>  
                                <li><a href="listMatchPredictions">Match Prediction List</a></li>
-                               <li><a href="gamePredictionDurationReport">Match Across Time Duration</a></li>
+                               <li><a href="gamePredictionDurationReport">Matches Played During Period</a></li>
+                               <li><a href="gamePredictionByLeagueReport">Matches Played By League</a></li>
+                               <li><a href="answersByPlayerCountry">Answers Submitted By Player Country of Origin</a></li>
                                
                                
                         </ul>

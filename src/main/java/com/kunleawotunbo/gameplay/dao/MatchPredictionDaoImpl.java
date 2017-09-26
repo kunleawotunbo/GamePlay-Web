@@ -117,6 +117,56 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
 
         return crit.list();
     }
+    
+    public List<MatchPrediction> listByTimePlayedPeriod(Date startDateAndTime, Date endDateAndTime) {
+        logger.info("status ::" + startDateAndTime);
+        logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+      //  crit.add(Restrictions.eq("status", status));       
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        
+        // To get game based on the game expiry date
+        crit.add(Restrictions.ge("startTime", startDateAndTime));
+        crit.add(Restrictions.le("endTime", endDateAndTime));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+    
+    public List<MatchPrediction> listByLeague(String leagueCode) {
+        logger.info("status League Code ::" + leagueCode);
+        //logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("leagueCode", leagueCode));       
+
+     
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+    
+    public List<MatchPrediction> listByCountry(String countryCode) {
+        logger.info("status League Code ::" + countryCode);
+        //logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("countryCode", countryCode));       
+
+     
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
   
     
 }

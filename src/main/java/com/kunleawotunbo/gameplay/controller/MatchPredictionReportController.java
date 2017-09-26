@@ -17,6 +17,7 @@ import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
+import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -58,8 +59,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author BELLO
  */
 @Controller
-@RequestMapping("/admin/")
-@SessionAttributes("roles")
+
 
 /**
  *
@@ -83,7 +83,7 @@ public class MatchPredictionReportController {
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
     
     @Autowired
-    private GameAnswerService gamesAnswerService;
+    private MatchPredictionService matchPredictionService;
 
 
     final Logger logger = LoggerFactory.getLogger(getClass());
@@ -94,11 +94,21 @@ public class MatchPredictionReportController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+     /**
+     * *****
+     * ADMIN SECTION
+     */
+    /**
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     
-    @RequestMapping(value = "/gamePredictionDurationReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/gamePredictionDurationReport", method = RequestMethod.GET)
     public String gamePredictionDurationReport(ModelMap model, HttpServletRequest request) {
         
-         model.addAttribute("matchprediction", new MatchPrediction());
+         model.addAttribute("matchPrediction", new MatchPrediction());
         //model.addAttribute("urlPath", request.getLocalAddr());
         //model.addAttribute("loggedinuser", getPrincipal());
        // model.addAttribute("game", new Game());
@@ -108,7 +118,7 @@ public class MatchPredictionReportController {
         return "/admin/gamePredictionDurationReport";
     }
     
-    @RequestMapping(value = "/gamePredictionDurationReport", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/gamePredictionDurationReport", method = RequestMethod.POST)
   // @RequestMapping(value = "/winnerlist", method = RequestMethod.GET)
     // public String submit(@Valid @ModelAttribute("winnernumber")WinnerNumber winnernumber, BindingResult result,
      //       ModelMap model) {
@@ -119,8 +129,57 @@ public class MatchPredictionReportController {
             
             logger.info("Date Range :: " + matchPrediction.getEndTime());
             
+           List<MatchPrediction> matchPredictionList = new ArrayList<MatchPrediction>();
+            
+           matchPredictionList = matchPredictionService.listByTimePlayedPeriod(matchPrediction.getStartTime(), matchPrediction.getEndTime());
+            
+             
+           logger.info("List Length :: " + matchPredictionList.size());
+           model.addAttribute("matchPredictionList", matchPredictionList);
+           model.addAttribute("startTime", matchPrediction.getStartTime());
+           model.addAttribute("endTime", matchPrediction.getEndTime());
+            model.addAttribute("loggedinuser", getPrincipal());
+             
+            return "/admin/matchlistbyplayperiod";
+    }
+    
+    
+     @RequestMapping(value = "/admin/gamePredictionByLeagueReport", method = RequestMethod.GET)
+    public String gamePredictionByLeagueReportGet(ModelMap model, HttpServletRequest request) {
         
-            return "/matchlistbyplaytime";
+         model.addAttribute("matchPrediction", new MatchPrediction());
+        //model.addAttribute("urlPath", request.getLocalAddr());
+        //model.addAttribute("loggedinuser", getPrincipal());
+       // model.addAttribute("game", new Game());
+       // model.addAttribute("gameList", gameService.listAllGames());
+        model.addAttribute("loggedinuser", getPrincipal());
+
+        return "/admin/gamePredictionByLeagueReport";
+    }
+    
+    @RequestMapping(value = "/admin/gamePredictionByLeagueReport", method = RequestMethod.POST)
+  // @RequestMapping(value = "/winnerlist", method = RequestMethod.GET)
+    // public String submit(@Valid @ModelAttribute("winnernumber")WinnerNumber winnernumber, BindingResult result,
+     //       ModelMap model) {
+    public String gamePredictionByLeagueReportPost(MatchPrediction matchPrediction, BindingResult result,
+            ModelMap model, HttpServletRequest req) {
+
+            System.out.println("Inside game prediction by league report contoller :: ");
+            
+            logger.info("League Code :: " + matchPrediction.getLeagueCode());
+            
+           List<MatchPrediction> matchPredictionList = new ArrayList<MatchPrediction>();
+            
+           matchPredictionList = matchPredictionService.listByLeague(matchPrediction.getLeagueCode());
+            
+             
+           logger.info("List Length :: " + matchPredictionList.size());
+           logger.info("League Name :: " + matchPredictionList.get(0).getLeagueName());
+            model.addAttribute("matchPredictionList", matchPredictionList);
+            model.addAttribute("LeagueName", matchPredictionList.get(0).getLeagueName());
+             model.addAttribute("loggedinuser", getPrincipal());
+             
+            return "/admin/matchlistbyleague";
     }
     
     private String getPrincipal() {

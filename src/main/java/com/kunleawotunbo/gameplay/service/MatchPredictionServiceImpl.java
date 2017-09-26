@@ -58,4 +58,16 @@ public class MatchPredictionServiceImpl implements MatchPredictionService{
         return matchPredictionDao.listUnproccessedGames(status, date);
     }
     
+    public List<MatchPrediction> listByTimePlayedPeriod(Date startDateAndTime, Date endDateAndTime) {
+        return matchPredictionDao.listByTimePlayedPeriod(startDateAndTime, endDateAndTime);
+    }
+    
+    public List<MatchPrediction> listByLeague(String leagueCode) {
+     return matchPredictionDao.listByLeague(leagueCode);
+    }
+     
+    public List<MatchPrediction> listByCountry(String countryCode){
+       return matchPredictionDao.listByCountry(countryCode);
+       }
+    
 }
