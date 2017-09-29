@@ -27,6 +27,8 @@ public interface MatchPredictionDao {
     
     List<MatchPrediction> listActiveMatches( Date date);
     
+    List<MatchPrediction> listActiveMatchesByLeagueCode( Date date, String leagueCode);
+    
      List<MatchPrediction> listWeekGamesByCateAndDate(int gameCategory, Date date);
 
     public List<MatchPrediction> listWeekActiveGamesByDate(Date date);

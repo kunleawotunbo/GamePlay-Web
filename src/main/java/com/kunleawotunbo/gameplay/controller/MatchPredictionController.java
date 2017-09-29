@@ -11,10 +11,12 @@ import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.service.CountryService;
+import com.kunleawotunbo.gameplay.service.LeagueService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
+import com.kunleawotunbo.gameplay.service.TeamService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +61,12 @@ public class MatchPredictionController {
     @Autowired
     private CountryService countryService;
 
+    @Autowired
+    private TeamService teamService;
+    
+    @Autowired
+    private LeagueService leagueService;
+    
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @InitBinder
@@ -67,7 +75,8 @@ public class MatchPredictionController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-
+    
+    /*
     @RequestMapping(value = "/prediction", method = RequestMethod.GET)
     public String getPredictionPage(ModelMap model, HttpServletRequest request) {
 
@@ -78,6 +87,39 @@ public class MatchPredictionController {
         model.addAttribute("activeMatchesList", activeMatchesList);
         //  model.addAttribute("lastWeekTotalAnswers", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek() - 1));
 
+        return "prediction";
+    }
+    */
+    
+      @RequestMapping(value = "/prediction", method = RequestMethod.GET)
+    public String getPredictionPage(ModelMap model, HttpServletRequest request) {
+
+        List<MatchPrediction> activeMatchesList = null;
+        List<MatchPrediction> eplMatchesList = null;
+        List<MatchPrediction> laligaMatchesList = null;
+        List<MatchPrediction> otherLeagueMatchesList = null;
+        String england = "England";
+        String epl = "Premier League";
+        String spain = "Spanin";
+        String laliga = "La Liga";
+        
+        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
+        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
+        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
+        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
+        
+        model.addAttribute("activeMatchesList", activeMatchesList);
+        
+        model.addAttribute("england", england);
+        model.addAttribute("spain", spain);
+        model.addAttribute("epl", epl);
+        model.addAttribute("laliga", laliga);
+        
+        
+        model.addAttribute("eplMatchesList", eplMatchesList);
+        model.addAttribute("laligaMatchesList", laligaMatchesList);
+        model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
+        
         return "prediction";
     }
 
@@ -138,11 +180,20 @@ public class MatchPredictionController {
     @RequestMapping(value = "/admin/addMatchPrediction", method = RequestMethod.GET)
     public String getAddMatchPrediction(ModelMap model, HttpServletRequest request) {
 
+        /*
         boolean status = true;
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         // model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
         // model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "/admin/addMatchPrediction";
+        */
+        boolean status = true;
+        model.addAttribute("matchPrediction", new MatchPrediction());
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+        model.addAttribute("countriesList", countryService.listCountries());       
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPrediction";
@@ -154,10 +205,12 @@ public class MatchPredictionController {
      */
     @RequestMapping(value = "/admin/addMatchPrediction", method = RequestMethod.POST)
     public String createMatchPrediction(MatchPrediction matchPrediction, BindingResult result,
-            ModelMap model, HttpServletRequest req) {
-
+            ModelMap model, HttpServletRequest req) {        
+        
         logger.info("To create new match prediction game");
 
+        System.out.println("matchPrediction.getAwayTeamId() :: " + matchPrediction.getAwayTeamId());
+        System.out.println("matchPrediction.getHomeTeamId() :: " + matchPrediction.getHomeTeamId());
         //If error, just return a 400 bad request, along with the error message
         if (result.hasErrors()) {
             System.out.println("There is an error");
@@ -170,17 +223,26 @@ public class MatchPredictionController {
             return "/admin/addMatchPrediction";
 
         }
-        // Quick fix, should be replaced with what was choosed on the form
-        /*
-        matchPrediction.setCountryCode("ENG");
-        matchPrediction.setLeagueCode("EPL");
-        matchPrediction.setLeagueName("English Premier League");
-        matchPrediction.setCountryName("England");
-        */
+        if(matchPrediction.getHomeTeamId() == matchPrediction.getAwayTeamId()){
+            System.out.println("There is an error");
+
+            System.out.println("Error in form:: " + result.getFieldError());
+
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Home and away team can't be the same");
+
+            return "/admin/addMatchPrediction";
+        }
+
+        matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
+        matchPrediction.setLeagueName(leagueService.getLeagueByCode(matchPrediction.getLeagueCode()).getLeagueName());
+        matchPrediction.setHomeTeamName(teamService.getTeamById(matchPrediction.getHomeTeamId()).getTeamName());
+        matchPrediction.setAwayTeamName(teamService.getTeamById(matchPrediction.getAwayTeamId()).getTeamName());
+        matchPrediction.setCode(tunborUtility.getRandomNumber());
         boolean saved = matchPredictionService.save(matchPrediction);
         // If not saved
         if (!saved) {
-
+            logger.error("Error occured, unable to save match predcition");
             model.addAttribute("error", true);
             model.addAttribute("message", "Match prediction Creation failed");
 
@@ -193,7 +255,7 @@ public class MatchPredictionController {
         model.addAttribute("message", "Match prediction  Created successfully");
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-
+        model.addAttribute("countriesList", countryService.listCountries());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "admin/addMatchPrediction";
@@ -301,8 +363,7 @@ public class MatchPredictionController {
         boolean status = true;
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-         model.addAttribute("countriesList", countryService.listCountries());
-        // model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("countriesList", countryService.listCountries());       
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPredictionNew";
@@ -314,6 +375,8 @@ public class MatchPredictionController {
 
         logger.info("To create new match prediction game");
 
+        System.out.println("matchPrediction.getAwayTeamId() :: " + matchPrediction.getAwayTeamId());
+        System.out.println("matchPrediction.getHomeTeamId() :: " + matchPrediction.getHomeTeamId());
         //If error, just return a 400 bad request, along with the error message
         if (result.hasErrors()) {
             System.out.println("There is an error");
@@ -323,14 +386,18 @@ public class MatchPredictionController {
             model.addAttribute("error", true);
             model.addAttribute("message", "Match prediction Creation failed");
 
-            return "/admin/addMatchPrediction";
+            return "/admin/addMatchPredictionNew";
 
         }
 
+        matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
+        matchPrediction.setLeagueName(leagueService.getLeagueByCode(matchPrediction.getLeagueCode()).getLeagueName());
+        matchPrediction.setHomeTeamName(teamService.getTeamById(matchPrediction.getHomeTeamId()).getTeamName());
+        matchPrediction.setAwayTeamName(teamService.getTeamById(matchPrediction.getAwayTeamId()).getTeamName());
         boolean saved = matchPredictionService.save(matchPrediction);
         // If not saved
         if (!saved) {
-
+            logger.error("Error occured, unable to save match predcition");
             model.addAttribute("error", true);
             model.addAttribute("message", "Match prediction Creation failed");
 
@@ -343,7 +410,7 @@ public class MatchPredictionController {
         model.addAttribute("message", "Match prediction  Created successfully");
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-
+        model.addAttribute("countriesList", countryService.listCountries());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "admin/addMatchPredictionNew";

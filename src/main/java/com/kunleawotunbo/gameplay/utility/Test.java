@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.utility;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class Test {
     
-    @Autowired
-    private TunborUtility tunborUtility;
+   // @Autowired
+    //private TunborUtility tunborUtility;
     
     public static void main(String[] args){
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Nigeria"));
@@ -27,6 +28,17 @@ public class Test {
        // test();
        Test test = new Test();
        test.forSMS();
+       
+       int total = 100;
+       int x = 0;
+       int randomNo;
+       
+       while(x < total){
+          randomNo = test.getRandomNumber();
+          System.out.println("random Number :: " + randomNo);
+           x++;
+           
+       }
     }
     
     public String  forSMS (){
@@ -35,6 +47,18 @@ public class Test {
          return "";
     }
     
+     /**
+     * Generate random number
+     * @return random number
+     */
+    public int getRandomNumber() {
+        int randomNumber;
+        Random r = new Random();
+        //Random r = new Random(System.currentTimeMillis());
+        randomNumber = ((1 + r.nextInt(9)) * 1000 + r.nextInt(1000));
+        // randomNumber = ((1 + r.nextInt(2)) * 1000 + r.nextInt(1000));
+        return randomNumber;
+    }
    
     
 }

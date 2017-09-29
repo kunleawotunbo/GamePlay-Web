@@ -34,6 +34,15 @@ public class CountryDaoImpl extends AbstractDao<Integer, Country> implements Cou
 
         return (Country) crit.uniqueResult();
     }
+    
+    public Country getCountryByCountryCode(String countryCode) {
+        logger.info("countryCode :: " +  countryCode);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("countryCode", countryCode));
+
+        return (Country) crit.uniqueResult();
+    }
 
     public boolean saveCountry(Country country) {
         boolean success = false;
@@ -70,6 +79,6 @@ public class CountryDaoImpl extends AbstractDao<Integer, Country> implements Cou
 
     public void deleteCountry(Country country) {
         delete(country);
-    }
+    }    
     
 }

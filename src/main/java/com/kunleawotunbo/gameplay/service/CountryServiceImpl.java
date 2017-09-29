@@ -24,6 +24,10 @@ public class CountryServiceImpl implements CountryService{
     public Country getCountryById(int id) {
         return countryDao.getCountryById(id);
     }
+    
+    public Country getCountryByCountryCode(String countryCode) {
+        return countryDao.getCountryByCountryCode(countryCode);
+    }
 
     public boolean saveCountry(Country country) {
         return countryDao.saveCountry(country);
@@ -39,6 +43,6 @@ public class CountryServiceImpl implements CountryService{
 
     public void deleteCountry(Country country) {
          countryDao.deleteCountry(country);
-    }
+    }    
     
 }

@@ -15,6 +15,8 @@ import java.util.List;
 public interface CountryService {
 
     public Country getCountryById(int id);
+    
+    public Country getCountryByCountryCode(String countryCode);
 
     boolean saveCountry(Country country);
 
