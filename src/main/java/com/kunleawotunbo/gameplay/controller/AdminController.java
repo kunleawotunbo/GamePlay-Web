@@ -348,6 +348,7 @@ public class AdminController {
         fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
         fbWeeklyGame.setGameStartDate(weeklyGame.getGameStartDate());
         fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
+        fbWeeklyGame.setCode(weeklyGame.getCode());
         
         String gamePlayType = "Text Game";
 
@@ -395,6 +396,7 @@ public class AdminController {
         fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
         fbWeeklyGame.setGameStartDate(weeklyGame.getGameStartDate());
         fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
+        fbWeeklyGame.setCode(weeklyGame.getCode());
 
         //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
         model.addAttribute("weeklyGame", fbWeeklyGame);
@@ -473,6 +475,7 @@ public class AdminController {
         weeklyGames.setGameAnswer(fb.getGameAnswer());
         weeklyGames.setGameStartDate(fb.getGameStartDate());
         weeklyGames.setEnabled(fb.isEnabled());
+        weeklyGames.setCode(fb.getCode());
 
         boolean saved = weeklyGamesService.updateWeeklyGame(weeklyGames);
         if (!saved) {

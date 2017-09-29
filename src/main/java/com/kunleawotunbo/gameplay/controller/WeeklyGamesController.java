@@ -400,6 +400,7 @@ public class WeeklyGamesController {
             //gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             gameAnswer.setModifiedBy(wGames.getCreatedBy());
             gameAnswer.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
+            gameAnswer.setCode(findGame.getCode());
             saved = gameAnswerService.updateGame(gameAnswer);
 
         } else {
@@ -411,7 +412,7 @@ public class WeeklyGamesController {
             gameAnswer.setGameAnswer(wGames.getGameAnswer());
             gameAnswer.setCreatedBy(wGames.getCreatedBy());
             gameAnswer.setCreatedDate(tunborUtility.getDate(Definitions.TIMEZONE));
-            //gameAnswer.setModifiedBy(modifiedBy);
+            gameAnswer.setCode(weeklyGames.getCode());
             //gameAnswer.setModifiedDate(modifiedDate);
             saved = gameAnswerService.save(gameAnswer);
 
@@ -493,14 +494,15 @@ public class WeeklyGamesController {
             matchPredictionResult.setModifiedBy(mPResult.getCreatedBy());
             matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             matchPredictionResult.setWeekNo(mPResult.getWeekNo());
-            matchPredictionResult.setWinner(mPResult.getWinner());
+            matchPredictionResult.setWinner(mPResult.getWinner());      
+            matchPredictionResult.setCode(findGame.getCode());
 
             saved = matchPredictionResultService.updateMatchPredictionResult(matchPredictionResult);
 
         } else {
             // set weekly answer for games/question
 
-            logger.info("Settin answer for game :: " + mPResult.getId());
+            logger.info("Setting answer for game :: " + mPResult.getId());
             //matchPredictionResult.setId(findGame.getId());            
             matchPredictionResult.setAwayScore(mPResult.getAwayScore());
             matchPredictionResult.setHomeScore(mPResult.getHomeScore());
@@ -512,6 +514,7 @@ public class WeeklyGamesController {
             matchPredictionResult.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
             matchPredictionResult.setWeekNo(mPResult.getWeekNo());
             matchPredictionResult.setWinner(mPResult.getWinner());
+            matchPredictionResult.setCode(matchPrediction.getCode());
 
             saved = matchPredictionResultService.saveMatchPredictionResult(matchPredictionResult);
 

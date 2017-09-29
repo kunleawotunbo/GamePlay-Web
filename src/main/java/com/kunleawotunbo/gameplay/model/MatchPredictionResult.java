@@ -74,6 +74,11 @@ public class MatchPredictionResult implements Serializable{
     
     @Column(name = "modifiedBy")
     private String modifiedBy;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "code")
+    private int code;
 
     /**
      * @return the id
@@ -228,5 +233,19 @@ public class MatchPredictionResult implements Serializable{
      */
     public void setMatchPredictionId(int matchPredictionId) {
         this.matchPredictionId = matchPredictionId;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 }
