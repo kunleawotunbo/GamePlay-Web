@@ -1,9 +1,9 @@
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
-    Document   : gameSection
-    Created on : Jun 21, 2017, 4:15:14 PM
-    Author     : Olakunle Awotunbo
+    Document   : gameSectionJackpotNumber
+    Created on : 27-Sep-2017, 15:28:04
+    Author     : BELLO
 --%>
-
 
 <!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
@@ -23,6 +23,9 @@
             <div class="container-fluid bg-3 text-center">    
 
                 <div class="row"> 
+                    <p> &nbsp; </p>
+                    
+                    <h2> You're Playing Jackpot Number Game </h2>
 
                     <!--The choose tag checks if object weeklyGame is null-->
                     <c:choose>
@@ -49,21 +52,34 @@
                                     <c:choose>
                                         <c:when test="${isPicture}">
 
-                                            <div class="form-group row text-left">
+                                          <!--  <div class="form-group row text-left">
                                                 <label for="GameImage1" class="col-sm-3 form-control-label m-t-5">GameImage</label>
                                                 <div class="col-sm-9">
                                                     <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="400" height="400">
                                                 </div>
-                                            </div>                                           
+                                            </div>  -->   
+                                          
+                                            <div class="form-group row text-left">
+                                                <label for="GameImage1" class="col-sm-3 form-control-label m-t-5">&nbsp;</label>
+                                                <div class="col-sm-9">
+                                                    &nbsp;
+                                                </div>
+                                            </div>   
 
                                             <c:if test="${hasGameImage2}">     
 
-                                                <div class="form-group row text-left" id="gameImage">
+                                                <!--<div class="form-group row text-left" id="gameImage">
                                                     <label for="gameImage" class="col-sm-3 form-control-label m-t-5">GameImage 2</label>
                                                     <div class="col-sm-9">
                                                         <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="400" height="400">
                                                     </div>
-                                                </div> 
+                                                </div> -->
+                                                 <div class="form-group row text-left" id="gameImage">
+                                                    <label for="gameImage" class="col-sm-3 form-control-label m-t-5">&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
 
                                             </c:if> 
 
@@ -71,11 +87,12 @@
                                         <c:otherwise>
 
                                             <div class="form-group row text-left" id="gameText">
-                                                <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Text</label>
+                                                <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Number</label>
                                                 <div class="col-sm-9">
-                                                    <p class="form-control-static">${weeklyGame.gameText}</p>
+                                                    <p class="form-control-static"><b>${weeklyGame.gameText}</b></p>
                                                 </div>
                                             </div> 
+                                          
 
                                         </c:otherwise>
                                     </c:choose>
@@ -109,10 +126,17 @@
                                     </div>
                                 </div>  
 
-                                 <div class="form-group row text-left" id="gameRules">
+                                <!-- <div class="form-group row text-left" id="gameRules">
                                     <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
                                     <div class="col-sm-9">
                                         <p class="form-control-static">${weeklyGame.gameRules}</p>
+                                    </div>-->
+                                </div>  
+                                     <div class="form-group row text-left" id="gameRules">
+                                    <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static">Fill in the missing jackpot number(s) &nbsp;i.e. 12,_,3,14,_,3 should be submitted as
+                                          12,5,3,14,12,3 with your answers (5 and 12) replacing the '_' (underscore symbol) in the game text question indicated above</p>
                                     </div>
                                 </div>  
 
@@ -233,7 +257,7 @@
     function searchViaAjax() {
 
 
-       // var id = $('#id').val();
+        // var id = $('#id').val();
         //var userPhoneNo = $('#userPhoneNo').val();
         if ($('#userAnswer2') != undefined) {
         var userAnswer = $('#userAnswer2').val();
@@ -321,5 +345,6 @@
         });
     }
 </script>
+
 
 

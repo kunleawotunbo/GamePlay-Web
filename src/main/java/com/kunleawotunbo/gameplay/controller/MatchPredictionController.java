@@ -373,15 +373,15 @@ public class MatchPredictionController {
             
             logger.info("Country Code :: " + matchPrediction.getCountryCode());
             
-           List<MatchPrediction> matchPredictionList = new ArrayList<MatchPrediction>();
+           List<MatchPredictionAnswer> matchPredictionList = new ArrayList<MatchPredictionAnswer>();
             
-           matchPredictionList = matchPredictionService.listByCountry(matchPrediction.getCountryCode());
+           matchPredictionList = matchPredictionAnswerService.listByCountry(matchPrediction.getCountryCode());
             
              
            logger.info("List Length :: " + matchPredictionList.size());
-           logger.info("League Name :: " + matchPredictionList.get(0).getCountryName());
+           logger.info("Country Code :: " + matchPredictionList.get(0).getCountryCode());
             model.addAttribute("matchPredictionList", matchPredictionList);
-            model.addAttribute("CountryName", matchPredictionList.get(0).getCountryName());
+            model.addAttribute("CountryName", matchPredictionList.get(0).getCountry());
 
             model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 

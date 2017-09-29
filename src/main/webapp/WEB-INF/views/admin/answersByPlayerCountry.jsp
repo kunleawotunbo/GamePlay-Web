@@ -55,7 +55,7 @@
                                             <%--<form:options items="${countriesList}" itemValue="leagueCode" itemLabel="countryName"/>--%>
                                             <%--<form:options  itemValue="leagueCode" itemLabel="countryName"/>--%>
                                             <form:option value="" label="Choose Player's Country To Search" />
-                                            <form:option value="NIG" label="Nigeria" />
+                                            <form:option value="NG" label="Nigeria" />
                                             <form:option value="BRZ" label="Brazil" />
                                             <form:option value="LIT" label="Lithuania" />
                                             <form:option value="FRN" label="France" />

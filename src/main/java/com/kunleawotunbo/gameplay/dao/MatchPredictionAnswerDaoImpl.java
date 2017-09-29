@@ -142,4 +142,19 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
         return gameWinnerList;
     }
     
+    public List<MatchPredictionAnswer> listByCountry(String countryCode) {
+        logger.info("status League Code ::" + countryCode);
+        //logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("countryCode", countryCode));       
+
+     
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+    
 }

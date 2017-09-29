@@ -37,4 +37,6 @@ public interface MatchPredictionAnswerService {
     public List<MatchPredictionAnswer> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners);
     
     List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId);
+    
+    public List<MatchPredictionAnswer> listByCountry(String countryCode);
 }

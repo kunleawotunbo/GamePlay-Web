@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Game Matches</h3>
+                <h3>Match Prediction Players Country</h3>
             </div>
 <!--
             <div class="title_right">
@@ -48,11 +48,11 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>HOME TEAM </th>
-                                    <th>AWAY TEAM</th>
-                                    <th>MATCH RESULT</th>                                    
-                                    <th>LEAGUE</th>
+                                    <th>MATCH DETAILS </th>
+                                    <th>USER ANSWER</th>
+                                    <th>COUNTRY</th>                                    
                                     <th>COUNTRY</th>
+                                    <th>USER PHONE NUMBER</th>
                                     <!--<th></th>
                                     <th></th>
                                     <th></th>-->
@@ -64,11 +64,11 @@
                                      <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
                                         
-                                        <td><c:out value="${item.homeTeamName}"/></td>
-                                         <td><c:out value="${item.awayTeamName}"/></td>
-                                        <td><c:out value="${item.matchResult}"/></td>                                          
-                                        <td><c:out value="${item.leagueName}"/></td> 
-                                        <td><c:out value="${item.countryName}"/></td>
+                                        <td><c:out value="${item.gameId}"/></td>
+                                         <td><c:out value="${item.userAnswer}"/></td>
+                                        <td><c:out value="${item.userAnswer}"/></td>                                          
+                                        <td><c:out value="${item.country}"/></td> 
+                                        <td><c:out value="${item.userPhoneNo}"/></td>
                                        <!-- <td><c:out value="${item.weekNo}"/></td> --> 
                                          <!-- <td><a href="<c:url value='/admin/generate-RandomWinners-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Generate Random Winners
