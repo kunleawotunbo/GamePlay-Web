@@ -25,6 +25,9 @@ public class WeeklyGamesAnswersBean {
     private String ipAddress;
     private Date startDate;
     private Date endDate;
+    private int code;
+    private String countryCode;
+    private String countryId;
 
     /**
      * @return the id
@@ -192,5 +195,47 @@ public class WeeklyGamesAnswersBean {
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    /**
+     * @return the countryCode
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    /**
+     * @param countryCode the countryCode to set
+     */
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    /**
+     * @return the countryId
+     */
+    public String getCountryId() {
+        return countryId;
+    }
+
+    /**
+     * @param countryId the countryId to set
+     */
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
     }
 }

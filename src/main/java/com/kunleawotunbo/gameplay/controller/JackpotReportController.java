@@ -250,4 +250,45 @@ public class JackpotReportController {
 
     }
     
+    /**
+     * Get JpReportByPeriodCountry page
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/jpReportByCountry", method = RequestMethod.GET)
+    public String getJpReportByCountry(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswersBean());
+        model.addAttribute("countriesList", countryService.listCountries());
+        //model.addAttribute("gameList", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
+       
+        return "/admin/jpReportByPeriod";
+    }
+    
+    @RequestMapping(value = "/admin/jpReportByCountry", method = RequestMethod.POST)
+    public String jpReportByCountry(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("Report on jpReportByCountry");
+     
+        System.out.println("getCode :: " + weeklyGamesAnswersBean.getCode());
+        System.out.println("getCountryCode :: " + weeklyGamesAnswersBean.getCountryCode());       
+        
+        List<WeeklyGamesAnswers> list = null;
+        
+        list = weeklyGamesAnswersService.listAnswerByPhoneAndDate(
+                weeklyGamesAnswersBean.getUserPhoneNo(),                
+                weeklyGamesAnswersBean.getStartDate(), weeklyGamesAnswersBean.getEndDate());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("weeklyGamesAnswers", weeklyGamesAnswersBean);
+        model.addAttribute("userPhoneNo", weeklyGamesAnswersBean.getUserPhoneNo());
+
+        return "admin/jpReportByCountry";
+
+    }
+    
 }
