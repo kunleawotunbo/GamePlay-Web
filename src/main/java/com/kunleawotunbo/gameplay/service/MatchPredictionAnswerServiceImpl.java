@@ -69,4 +69,10 @@ public class MatchPredictionAnswerServiceImpl implements MatchPredictionAnswerSe
         return matchPredictionAnswerDao.listAllMatchPredictionAnswersByGameId(gameId);
     }
     
+    public List<MatchPredictionAnswer> listByCountry(String countryCode){
+        
+        return matchPredictionAnswerDao.listByCountry(countryCode);
+        
+    }
+    
 }

@@ -69,12 +69,20 @@ public class WeeklyGamesAnswers implements Serializable {
 
     @Column(name = "isRandomWinner", nullable = false)
     private boolean isRandomWinner;
+    
+    @Column(name = "isWinner", nullable = false)
+    private boolean isWinner;
 
+    @Basic(optional = false)
+    @Size(max = 50)
+    @Column(name = "ip_address", nullable = false)
+    private String ipAddress;
+    
     @Basic(optional = false)
     @NotNull
     @Size(max = 50)
-    @Column(name = "ip_address")
-    private String ipAddress;
+    @Column(name = "players_country")
+    private String playersCountry;
 
     public WeeklyGamesAnswers() {
         super();
@@ -201,6 +209,20 @@ public class WeeklyGamesAnswers implements Serializable {
     public void setIsRandomWinner(boolean isRandomWinner) {
         this.isRandomWinner = isRandomWinner;
     }
+    
+    /**
+     * @return the isWinner
+     */
+    public boolean getIsWinner() {
+        return isWinner;
+    }
+
+    /**
+     * @param isWinner the isRandomWinner to set
+     */
+    public void setIsWinner(boolean isWinner) {
+        this.isWinner = isWinner;
+    }
 
     /**
      * @return the ipAddress
@@ -215,5 +237,15 @@ public class WeeklyGamesAnswers implements Serializable {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+    
+    public String getPlayersCountry() {
+        return playersCountry;
+    }
 
+    /**
+     * @param playersCountry the ipAddress to set
+     */
+    public void setPlayersCountry(String playersCountry) {
+        this.playersCountry = playersCountry;
+    }
 }

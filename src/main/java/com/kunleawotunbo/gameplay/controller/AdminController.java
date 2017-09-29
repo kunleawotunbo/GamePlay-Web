@@ -312,7 +312,59 @@ public class AdminController {
         //byte status = 1;
         boolean status = true;
         WeeklyGames weeklyGame = weeklyGamesService.findById(id);
+        
+        int gamecategory = weeklyGame.getGameCategory();
+        
+        if(gamecategory == 6 ){
+            
         String encodedPictureString = "";
+        String encodedGameImage2 = "";
+        //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+        FileBucket fbWeeklyGame = new FileBucket();
+
+        // If type is picture
+        if (weeklyGame.getIsPicture() == 1) {
+
+            encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+
+            if (weeklyGame.getGameImage2() != null) {
+                encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
+            }
+
+        }
+
+        fbWeeklyGame.setId(weeklyGame.getId());
+        fbWeeklyGame.setGameCategory(weeklyGame.getGameCategory());
+        fbWeeklyGame.setGamePlayType(weeklyGame.getGamePlayType());
+        fbWeeklyGame.setGameText(weeklyGame.getGameText());
+        fbWeeklyGame.setGameImage(weeklyGame.getGameImage());
+        fbWeeklyGame.setWeekNo(weeklyGame.getWeekNo());
+        fbWeeklyGame.setPrizeOfWinners(weeklyGame.getPrizeOfWinners());
+        fbWeeklyGame.setNoOfWinners(weeklyGame.getNoOfWinners());
+        fbWeeklyGame.setGameExpiryDate(weeklyGame.getGameExpiryDate());
+        fbWeeklyGame.setGameRules(weeklyGame.getGameRules());
+        fbWeeklyGame.setCreatedBy(weeklyGame.getCreatedBy());
+        fbWeeklyGame.setIsPicture(weeklyGame.getIsPicture());
+        fbWeeklyGame.setGameStartDate(weeklyGame.getGameStartDate());
+        fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
+        
+        String gamePlayType = "Text Game";
+
+        //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
+        model.addAttribute("weeklyGame", fbWeeklyGame);
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+        model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
+        //model.addAttribute("gamePlayTypeList", gamePlayType);
+        model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("edit", true);
+        model.addAttribute("encodedPictureString", encodedPictureString);
+        model.addAttribute("encodedGameImage2", encodedGameImage2);
+
+         return "/admin/addWeeklyGameJackpotNumber";  
+        }else{
+            
+            String encodedPictureString = "";
         String encodedGameImage2 = "";
         //encodedPictureString = tunborUtility.imageToBase64tring(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
         FileBucket fbWeeklyGame = new FileBucket();
@@ -353,7 +405,8 @@ public class AdminController {
         model.addAttribute("encodedPictureString", encodedPictureString);
         model.addAttribute("encodedGameImage2", encodedGameImage2);
 
-        return "/admin/addWeeklyGame";
+         return "/admin/addWeeklyGame";  
+        }
     }
 
     /**
