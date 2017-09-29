@@ -34,4 +34,10 @@ public interface MatchPredictionService {
     public List<MatchPrediction> listWeekActiveGamesByDate(Date date);
     
     public List<MatchPrediction> listUnproccessedGames(int status, Date date);
+    
+    public List<MatchPrediction> listByTimePlayedPeriod(Date startDateAndTime, Date endDateAndTime);
+    
+    public List<MatchPrediction> listByLeague(String leagueCode);
+    
+    public List<MatchPrediction> listByCountry(String countryCode);
 }

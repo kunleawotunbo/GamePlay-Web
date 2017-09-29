@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Weekly Games</h3>
+                <h3>Game Matches</h3>
             </div>
 <!--
             <div class="title_right">
@@ -37,7 +37,7 @@
              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>All Time Weekly Games Random Winners List </h2> 
+                        <h2>Games Matches Played Within </h2> 
 
                         <div class="clearfix"></div>
                     </div>
@@ -48,11 +48,11 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>GAME CATEGORY</th>
-                                    <th>WEEKLY GAME ID</th>
-                                    <th>USER PHONE NO</th>                                    
-                                    <th>USER ANSWER</th>
-                                    <th>DATE ANSWERED</th>
+                                    <th>HOME TEAM </th>
+                                    <th>AWAY TEAM</th>
+                                    <th>MATCH RESULT</th>                                    
+                                    <th>LEAGUE</th>
+                                    <th>COUNTRY</th>
                                     <!--<th></th>
                                     <th></th>
                                     <th></th>-->
@@ -60,15 +60,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 <c:forEach items="${allWeeklyGameRandomWinner}" var="item" varStatus = "status">
+                                 <c:forEach items="${matchPredictionList}" var="item" varStatus = "status">
                                      <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
                                         
-                                        <td><c:out value="${weeklyGameCategoryName[status.getIndex()]}"/></td>
-                                         <td><c:out value="${item.gameId}"/></td>
-                                        <td><c:out value="${item.userPhoneNo}"/></td>                                          
-                                        <td><c:out value="${item.userAnswer}"/></td> 
-                                        <td><c:out value="${item.dateAnswered}"/></td>
+                                        <td><c:out value="${item.homeTeamName}"/></td>
+                                         <td><c:out value="${item.awayTeamName}"/></td>
+                                        <td><c:out value="${item.matchResult}"/></td>                                          
+                                        <td><c:out value="${item.leagueName}"/></td> 
+                                        <td><c:out value="${item.countryName}"/></td>
                                        <!-- <td><c:out value="${item.weekNo}"/></td> --> 
                                          <!-- <td><a href="<c:url value='/admin/generate-RandomWinners-${item.id}' />" class="btn btn-success ">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Generate Random Winners

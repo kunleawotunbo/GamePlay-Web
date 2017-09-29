@@ -25,8 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("matchPredictionDao")
 @Transactional
-public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction> implements MatchPredictionDao{
-    
+public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction> implements MatchPredictionDao {
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public MatchPrediction findById(int id) {
@@ -38,10 +38,9 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         return (MatchPrediction) crit.uniqueResult();
     }
 
-
     public boolean save(MatchPrediction matchPrediction) {
         boolean success = false;
-        try {           
+        try {
             saveOrUpdate(matchPrediction);
             success = true;
         } catch (Exception e) {
@@ -72,14 +71,11 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<MatchPrediction> matchPredictionList = (List<MatchPrediction>) criteria.list();
-        
-        
 
         return matchPredictionList;
     }
 
-    public List<MatchPrediction> listActiveMatches( Date date) {
-       
+    public List<MatchPrediction> listActiveMatches(Date date) {
 
         boolean enabled = true;
 
@@ -88,7 +84,7 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         crit.add(Restrictions.eq("enabled", enabled));
 
         crit.add(Restrictions.ge("endTime", date));
-        
+
         // group by
         //crit.add(Projections.groupProperty("countryCode"));
         /*
@@ -99,13 +95,12 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
                 .add(Projections.property("homeTeamName"))
                 .add(Projections.property("awayTeamName"))
         );
-        */
-
+         */
         // System.out.println("crit.toString() :: " + crit.toString());
         return crit.list();
     }
-    
-     public List<MatchPrediction> listActiveMatchesByLeagueCode(Date date, String leagueCode) {
+
+    public List<MatchPrediction> listActiveMatchesByLeagueCode(Date date, String leagueCode) {
         boolean enabled = true;
 
         Criteria crit = createEntityCriteria().addOrder(Order.asc("leagueCode"));
@@ -113,7 +108,7 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         crit.add(Restrictions.eq("enabled", enabled));
 
         crit.add(Restrictions.ge("endTime", date));
-        
+
         return crit.list();
     }
 
@@ -130,18 +125,61 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
 
         Criteria crit = createEntityCriteria();
 
-        crit.add(Restrictions.eq("status", status));       
+        crit.add(Restrictions.eq("status", status));
 
         // crit.add(Restrictions.ge("gameStartDate", date));
         // crit.add(Restrictions.le("gameExpiryDate", date));
-        
         // To get game based on the game expiry date
         crit.add(Restrictions.le("endTime", date));
 
         System.out.println("crit.toString() :: " + crit.toString());
 
         return crit.list();
-    }  
-  
-    
+
+    }
+
+    public List<MatchPrediction> listByTimePlayedPeriod(Date startDateAndTime, Date endDateAndTime) {
+        logger.info("status ::" + startDateAndTime);
+        logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        //  crit.add(Restrictions.eq("status", status));       
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        // To get game based on the game expiry date
+        crit.add(Restrictions.ge("startTime", startDateAndTime));
+        crit.add(Restrictions.le("endTime", endDateAndTime));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
+    public List<MatchPrediction> listByLeague(String leagueCode) {
+        logger.info("status League Code ::" + leagueCode);
+        //logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("leagueCode", leagueCode));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
+    public List<MatchPrediction> listByCountry(String countryCode) {
+        logger.info("status League Code ::" + countryCode);
+        //logger.info("status ::" + endDateAndTime);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("countryCode", countryCode));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
 }
