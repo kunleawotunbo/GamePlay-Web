@@ -60,6 +60,7 @@ New task JACKPOT MODULE 26-09-2017
 2. Admin to set answer for each games - Kolade
 3. Display games on frontend to allow customers to play and submit answer taking note of when the game expires i.e User can't play anymore once it expires - Kolade
 4. Process answers submitted by user at the backend and generate winners based on number of winners set by the admin at game setup(Same as other modules we have done).
+
 5. Total entries for every game. - Olakunle
 
 6. total games by players  over specified selectable period - Olakunle

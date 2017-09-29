@@ -45,6 +45,12 @@ public class MatchPredictionServiceImpl implements MatchPredictionService{
     public List<MatchPrediction> listActiveMatches( Date date) {
         return matchPredictionDao.listActiveMatches(date);
     }
+    
+    
+    public List<MatchPrediction> listActiveMatchesByLeagueCode(Date date, String leagueCode) {
+        return matchPredictionDao.listActiveMatchesByLeagueCode(date, leagueCode);
+    }
+    
 
     public List<MatchPrediction> listWeekGamesByCateAndDate(int gameCategory, Date date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -57,5 +63,5 @@ public class MatchPredictionServiceImpl implements MatchPredictionService{
     public List<MatchPrediction> listUnproccessedGames(int status, Date date) {
         return matchPredictionDao.listUnproccessedGames(status, date);
     }
-    
+
 }

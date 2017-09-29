@@ -57,6 +57,7 @@
                                     <th>VIEW WINNERS</th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
 
                                 </tr>
                             </thead>

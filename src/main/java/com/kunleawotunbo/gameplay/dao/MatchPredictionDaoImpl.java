@@ -83,12 +83,37 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
 
         boolean enabled = true;
 
-        Criteria crit = createEntityCriteria();
+        //Criteria crit = createEntityCriteria();
+        Criteria crit = createEntityCriteria().addOrder(Order.asc("countryCode"));
         crit.add(Restrictions.eq("enabled", enabled));
 
         crit.add(Restrictions.ge("endTime", date));
+        
+        // group by
+        //crit.add(Projections.groupProperty("countryCode"));
+        /*
+        crit.setProjection(Projections.projectionList()
+                .add(Projections.groupProperty("countryCode"))
+              //  .add(Projections.property("id"))
+                .add(Projections.property("endTime"))
+                .add(Projections.property("homeTeamName"))
+                .add(Projections.property("awayTeamName"))
+        );
+        */
 
         // System.out.println("crit.toString() :: " + crit.toString());
+        return crit.list();
+    }
+    
+     public List<MatchPrediction> listActiveMatchesByLeagueCode(Date date, String leagueCode) {
+        boolean enabled = true;
+
+        Criteria crit = createEntityCriteria().addOrder(Order.asc("leagueCode"));
+        crit.add(Restrictions.eq("leagueCode", leagueCode));
+        crit.add(Restrictions.eq("enabled", enabled));
+
+        crit.add(Restrictions.ge("endTime", date));
+        
         return crit.list();
     }
 
@@ -116,7 +141,7 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         System.out.println("crit.toString() :: " + crit.toString());
 
         return crit.list();
-    }
+    }  
   
     
 }

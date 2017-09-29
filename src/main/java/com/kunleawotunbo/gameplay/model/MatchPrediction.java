@@ -133,6 +133,11 @@ public class MatchPrediction implements Serializable {
     @NotNull
     @Column(name = "status")
     private int status;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "code")
+    private int code;
 
     /**
      * @return the serialVersionUID
@@ -426,6 +431,20 @@ public class MatchPrediction implements Serializable {
      */
     public void setLeagueName(String leagueName) {
         this.leagueName = leagueName;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 
 }

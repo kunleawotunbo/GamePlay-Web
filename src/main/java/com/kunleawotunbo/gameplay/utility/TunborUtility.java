@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
@@ -95,10 +96,10 @@ public class TunborUtility {
 
     @Autowired
     private SMSConfigBean smsConfigBean;
-    
+
     @Autowired
-    private MatchPredictionService matchPredictionService;    
-    
+    private MatchPredictionService matchPredictionService;
+
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
 
@@ -409,18 +410,18 @@ public class TunborUtility {
 
         return dateFormat.format(currentDate);
     }
-    
-    public boolean isDateAfter(Date currentDate, Date otherDate){
+
+    public boolean isDateAfter(Date currentDate, Date otherDate) {
         boolean isDateAfter = false;
-        if(getDate(Definitions.TIMEZONE).after(otherDate)){
+        if (getDate(Definitions.TIMEZONE).after(otherDate)) {
             isDateAfter = true;
-           // System.out.println("start time is after current time");
-        }else {
+            // System.out.println("start time is after current time");
+        } else {
             // System.out.println("Current time is not after start time");
             return isDateAfter;
-           
+
         }
-        
+
         return isDateAfter;
     }
 
@@ -509,7 +510,7 @@ public class TunborUtility {
 
         return gameWinners;
     }
-    
+
     public List<MatchPredictionWinner> matchPredictionsListToGameWinnerList(List<MatchPredictionAnswer> matchPredictionAnswerList) {
         List<MatchPredictionWinner> gameWinners = null;
         System.out.println("I am here 1");
@@ -520,7 +521,7 @@ public class TunborUtility {
 
             for (MatchPredictionAnswer item : matchPredictionAnswerList) {
                 System.out.println("I am here");
-                
+
                 gameWinner = new MatchPredictionWinner();
                 System.out.println("item.getGameId() :: " + item.getGameId());
                 gameWinner.setGameId(item.getGameId());
@@ -537,20 +538,20 @@ public class TunborUtility {
 
                 gameWinners.add(gameWinner);
             }
-           
-             logger.info("gameWinners.size() :: " +gameWinners.size());
-        }else {
+
+            logger.info("gameWinners.size() :: " + gameWinners.size());
+        } else {
             logger.info("matchPredictionAnswerList is null or empty");
         }
 
         return gameWinners;
     }
-    
+
     @Async
-    public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage){
-        
+    public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage) {
+
     }
-    
+
     @Async
     public void processWinnerByMatchPredictionId(MatchPrediction matchPrediction) {
 
@@ -608,10 +609,17 @@ public class TunborUtility {
             e.printStackTrace();
         }
     }
-    
-    @Async
-    public void aa(){
-        
+
+    /**
+     * Generate 4 digits random number
+     * @return random number
+     */
+     public int getRandomNumber() {
+        int randomNumber;
+        Random r = new Random();
+        //Random r = new Random(System.currentTimeMillis());
+        randomNumber = ((1 + r.nextInt(9)) * 1000 + r.nextInt(1000));        
+        return randomNumber;
     }
 
 }
