@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.dao.WeeklyGamesAnswersDao;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,10 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
 
     public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners) {
         return weeklyGamesAnswersDao.listCorrectAnswersByGameId(gameAnswer, gameId, noOfWinners);
+    }
+
+    public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
+        return weeklyGamesAnswersDao.listAnswerByPhoneAndDate(userPhoneNo, startDate, endDate);
     }
     
 }

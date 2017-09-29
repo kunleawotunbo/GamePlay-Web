@@ -6,6 +6,7 @@
 package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,4 +44,6 @@ public interface WeeklyGamesAnswersService {
     public List<WeeklyGamesAnswers> ActiveWeekGamesAnswersByCategory(int GameWeek, int id);
     
     public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners);
+    
+    public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate);
 }

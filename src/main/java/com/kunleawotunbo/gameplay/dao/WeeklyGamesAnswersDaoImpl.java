@@ -448,4 +448,23 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return weeklyGamesAnswersRandomWinnerList;
     }
 
+    public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
+         logger.info("userPhoneNo :: " + userPhoneNo);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("userPhoneNo", userPhoneNo));
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        // To get game based on the game expiry date
+        
+        crit.add(Restrictions.ge("dateAnswered", startDate));
+        crit.add(Restrictions.le("dateAnswered", endDate));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
 }

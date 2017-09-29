@@ -65,7 +65,7 @@ New task JACKPOT MODULE 26-09-2017
 
 6. total games by players  over specified selectable period - Olakunle
 
-7.  entries played on a particular game sorted by players country of origin. - Olakunle
+7. entries played on a particular game sorted by players country of origin. - Olakunle
 
 8.  total Games played by a particular phone number /player. - Olakunle
 

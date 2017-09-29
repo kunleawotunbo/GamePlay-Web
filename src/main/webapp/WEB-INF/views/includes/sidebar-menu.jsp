@@ -44,6 +44,14 @@
                                
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-refresh"></i> Jackpot <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                           
+                               <li><a href="getEntriesByGame">Total entries for every game</a></li>
+                               <li><a href="jpReportByPeriod">Report by Period</a></li>                              
+                               
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-desktop"></i> Games Answers <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                              <li><a href="activeweekanswer">Active Week Correct Answers List</a></li>
