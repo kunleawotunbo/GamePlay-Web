@@ -46,4 +46,6 @@ public interface WeeklyGamesAnswersService {
     public List<WeeklyGamesAnswers> listCorrectAnswersByGameId(String gameAnswer, int gameId, int noOfWinners);
     
     public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate);
+    
+    public List<WeeklyGamesAnswers> listAnswerByCodeAndCountry(int code, String playersCountry);
 }

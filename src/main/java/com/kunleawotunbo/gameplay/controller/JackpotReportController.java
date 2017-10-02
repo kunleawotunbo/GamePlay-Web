@@ -264,7 +264,7 @@ public class JackpotReportController {
         model.addAttribute("countriesList", countryService.listCountries());
         //model.addAttribute("gameList", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
        
-        return "/admin/jpReportByPeriod";
+        return "/admin/jpReportByCountry";
     }
     
     @RequestMapping(value = "/admin/jpReportByCountry", method = RequestMethod.POST)
@@ -278,9 +278,8 @@ public class JackpotReportController {
         
         List<WeeklyGamesAnswers> list = null;
         
-        list = weeklyGamesAnswersService.listAnswerByPhoneAndDate(
-                weeklyGamesAnswersBean.getUserPhoneNo(),                
-                weeklyGamesAnswersBean.getStartDate(), weeklyGamesAnswersBean.getEndDate());
+        list = weeklyGamesAnswersService.listAnswerByCodeAndCountry(weeklyGamesAnswersBean.getCode(),
+                weeklyGamesAnswersBean.getCountryCode());
         
         model.addAttribute("list", list);
         model.addAttribute("total", list.size());
@@ -289,6 +288,23 @@ public class JackpotReportController {
 
         return "admin/jpReportByCountry";
 
+    }
+    
+    /**
+     * Get JpReportByPeriodPhoneNo page
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/jpReportByPhoneNo", method = RequestMethod.GET)
+    public String getJpReportByPhoneNo(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswersBean());
+        model.addAttribute("countriesList", countryService.listCountries());
+        //model.addAttribute("gameList", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
+       
+        return "/admin/jpReportByPhoneNo";
     }
     
 }

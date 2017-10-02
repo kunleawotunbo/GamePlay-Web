@@ -618,7 +618,7 @@ public class TunborUtility {
         int randomNumber;
         //Random r = new Random();
         Random r = new Random(System.currentTimeMillis());
-        randomNumber = ((1 + r.nextInt(9)) * 1000 + r.nextInt(1000));        
+        randomNumber = ((1 + r.nextInt(9)) * 10000 + r.nextInt(10000));        
         return randomNumber;
     }
 

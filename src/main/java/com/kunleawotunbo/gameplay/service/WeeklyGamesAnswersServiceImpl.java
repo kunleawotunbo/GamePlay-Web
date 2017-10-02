@@ -89,5 +89,9 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
         return weeklyGamesAnswersDao.listAnswerByPhoneAndDate(userPhoneNo, startDate, endDate);
     }
+
+    public List<WeeklyGamesAnswers> listAnswerByCodeAndCountry(int code, String playersCountry) {
+        return weeklyGamesAnswersDao.listAnswerByCodeAndCountry(code, playersCountry);
+    }
     
 }
