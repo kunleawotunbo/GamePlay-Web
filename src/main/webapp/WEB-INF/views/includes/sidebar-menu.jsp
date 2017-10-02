@@ -48,7 +48,11 @@
                         <ul class="nav child_menu">
                            
                                <li><a href="getEntriesByGame">Total entries for every game</a></li>
-                               <li><a href="jpReportByPeriod">Report by Period</a></li>                              
+                               <li><a href="jpReportByPeriod">Report by Period</a></li>     
+                               <li><a href="jpReportByCountry">Report by Country</a></li>     
+                               <li><a href="jpReportByPhoneNo">Report by PhoneNo</a></li>   
+                               <li><a href="jpReportByCorrectAnswers">Report by Correct Answers</a></li>   
+                               <li><a href="jpReportByWinners">Report by Selected Winners</a></li>   
                                
                         </ul>
                     </li>

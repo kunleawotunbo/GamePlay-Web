@@ -478,4 +478,22 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         return crit.list();
     }
 
+    public List<WeeklyGamesAnswers> listAnswerByCode(int code) {
+        logger.info("code :: " +  code);       
+
+        Criteria crit = createEntityCriteria().addOrder(Order.desc("dateAnswered"));
+        crit.add(Restrictions.eq("code", code));       
+
+        return crit.list();
+    }
+
+    public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo) {
+        logger.info("userPhoneNo :: " +  userPhoneNo);        
+
+        Criteria crit = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+        crit.add(Restrictions.eq("userPhoneNo", userPhoneNo));       
+
+        return crit.list();
+    }
+
 }

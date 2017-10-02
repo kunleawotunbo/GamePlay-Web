@@ -76,8 +76,8 @@ public class JackpotReportController {
     public String getEntriesByGame(ModelMap model, HttpServletRequest request) {
 
        
-        model.addAttribute("game", new Game());
-        model.addAttribute("gameList", gameService.listAllGames());
+        model.addAttribute("weeklyGamesAnswersBean", new WeeklyGamesAnswersBean());
+        //model.addAttribute("gameList", gameService.listAllGames());
        // model.addAttribute("countriesList", countryService.listCountries());       
         //model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
@@ -89,7 +89,7 @@ public class JackpotReportController {
      * creating match prediction game in database.
      */
     @RequestMapping(value = "/admin/getEntriesByGame", method = RequestMethod.POST)
-    public String getEntriesByGameReport(Game game, BindingResult result,
+    public String getEntriesByGameReport(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
             ModelMap model, HttpServletRequest req) {        
         
         logger.info("To report on jackpot game");
@@ -144,15 +144,18 @@ public class JackpotReportController {
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
         
         */
-        System.out.println("gameName :: " + game.getGameName());
-        System.out.println("gameCode :: " + game.getGameCode());
+       
+        System.out.println("gameCode :: " + weeklyGamesAnswersBean.getCode());
         
-        List <Game> list = null;
-        list = gameService.listAllGames();
+       
+        
+         List<WeeklyGamesAnswers> list = null;
+        
+        list = weeklyGamesAnswersService.listAnswerByCode( weeklyGamesAnswersBean.getCode());
         
         model.addAttribute("list", list);
         model.addAttribute("total", list.size());
-        model.addAttribute("game", game);
+        model.addAttribute("weeklyGamesAnswersBean", weeklyGamesAnswersBean);
 
         return "admin/getEntriesByGame";
 
@@ -267,6 +270,14 @@ public class JackpotReportController {
         return "/admin/jpReportByCountry";
     }
     
+    /**
+     * Fetch reports by game code and country code
+     * @param weeklyGamesAnswersBean
+     * @param result
+     * @param model
+     * @param req
+     * @return 
+     */
     @RequestMapping(value = "/admin/jpReportByCountry", method = RequestMethod.POST)
     public String jpReportByCountry(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
             ModelMap model, HttpServletRequest req) {        
@@ -285,6 +296,7 @@ public class JackpotReportController {
         model.addAttribute("total", list.size());
         model.addAttribute("weeklyGamesAnswers", weeklyGamesAnswersBean);
         model.addAttribute("userPhoneNo", weeklyGamesAnswersBean.getUserPhoneNo());
+        model.addAttribute("countriesList", countryService.listCountries());
 
         return "admin/jpReportByCountry";
 
@@ -305,6 +317,129 @@ public class JackpotReportController {
         //model.addAttribute("gameList", weeklyGamesAnswersService.listAllWeeklyGamesAnswers());
        
         return "/admin/jpReportByPhoneNo";
+    }
+    
+    /**
+     * Fetch answers submitted by user phone numbers
+     * @param weeklyGamesAnswersBean
+     * @param result
+     * @param model
+     * @param req
+     * @return 
+     */
+    @RequestMapping(value = "/admin/jpReportByPhoneNo", method = RequestMethod.POST)
+    public String jpReportByPhoneNo(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("Report on jpReportByPhoneNo");
+     
+        System.out.println("getUserPhoneNo :: " + weeklyGamesAnswersBean.getUserPhoneNo());
+          
+        
+        List<WeeklyGamesAnswers> list = null;
+        
+        list = weeklyGamesAnswersService.listAnswersByUserPhoneNo(weeklyGamesAnswersBean.getUserPhoneNo());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("weeklyGamesAnswers", weeklyGamesAnswersBean);
+        model.addAttribute("userPhoneNo", weeklyGamesAnswersBean.getUserPhoneNo());
+        model.addAttribute("countriesList", countryService.listCountries());
+
+        return "admin/jpReportByPhoneNo";
+
+    }
+    
+    /**
+     * Get jpReportByCorrectAnswers page
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/jpReportByCorrectAnswers", method = RequestMethod.GET)
+    public String getJpCorrectAnswers(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswersBean());       
+       
+        return "/admin/jpReportByCorrectAnswers";
+    }
+    
+    /**
+     * Get all correct answers by game code
+     * @param weeklyGamesAnswersBean
+     * @param result
+     * @param model
+     * @param req
+     * @return 
+     */
+    @RequestMapping(value = "/admin/jpReportByCorrectAnswers", method = RequestMethod.POST)
+    public String jpCorrectAnswers(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("Report on jpReportByCorrectAnswers");
+     
+        System.out.println("getCode :: " + weeklyGamesAnswersBean.getCode());
+          
+        
+        List<WeeklyGamesAnswers> list = null;
+        
+        list = weeklyGamesAnswersService.listAnswerByCode(weeklyGamesAnswersBean.getCode());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("weeklyGamesAnswers", weeklyGamesAnswersBean);
+        model.addAttribute("userPhoneNo", weeklyGamesAnswersBean.getUserPhoneNo());
+        model.addAttribute("countriesList", countryService.listCountries());
+
+        return "admin/jpReportByCorrectAnswers";
+
+    }
+    
+    /**
+     * Get jpReportByWinners page to fetch random winners by game code
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/jpReportByWinners", method = RequestMethod.GET)
+    public String getJjpReportByWinners(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswersBean());       
+       
+        return "/admin/jpReportByWinners";
+    }
+    
+    /**
+     * List selected winners by game code
+     * @param weeklyGamesAnswersBean
+     * @param result
+     * @param model
+     * @param req
+     * @return 
+     */
+    @RequestMapping(value = "/admin/jpReportByWinners", method = RequestMethod.POST)
+    public String jjpReportByWinners(WeeklyGamesAnswersBean weeklyGamesAnswersBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("Report on jpReportByCorrectAnswers");
+     
+        System.out.println("getCode :: " + weeklyGamesAnswersBean.getCode());
+          
+        
+        List<WeeklyGamesAnswers> list = null;
+        
+        list = weeklyGamesAnswersService.listAnswerByCode(weeklyGamesAnswersBean.getCode());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("weeklyGamesAnswers", weeklyGamesAnswersBean);
+        model.addAttribute("userPhoneNo", weeklyGamesAnswersBean.getUserPhoneNo());
+        model.addAttribute("countriesList", countryService.listCountries());
+
+        return "admin/jpReportByWinners";
+
     }
     
 }

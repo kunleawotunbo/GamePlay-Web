@@ -75,9 +75,9 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Country<span class="required">*</span></label>
                                 <div class="col-sm-4">                                         
-                                    <form:select id="countryId" path="countryId" title="Choose Country" class="form-control">
+                                    <form:select id="countryCode" path="countryCode" title="Choose Country" class="form-control">
                                         <option value="">Choose Country</option>
-                                        <form:options items="${countriesList}" itemValue="id" itemLabel="countryName"/>
+                                        <form:options items="${countriesList}" itemValue="countryCode" itemLabel="countryName"/>
                                     </form:select>   
                                 </div>
                             </div>

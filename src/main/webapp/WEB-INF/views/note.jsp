@@ -61,15 +61,15 @@ New task JACKPOT MODULE 26-09-2017
 3. Display games on frontend to allow customers to play and submit answer taking note of when the game expires i.e User can't play anymore once it expires - Kolade
 4. Process answers submitted by user at the backend and generate winners based on number of winners set by the admin at game setup(Same as other modules we have done).
 
-5. Total entries for every game. - Olakunle
+5. Total entries for every game. - Olakunle - In Progress
 
-6. total games by players  over specified selectable period - Olakunle
+6. total games by players  over specified selectable period - Olakunle - In Progress
 
-7. entries played on a particular game sorted by players country of origin. - Olakunle
+7. entries played on a particular game sorted by players country of origin. - Olakunle - In Progress
 
-8.  total Games played by a particular phone number /player. - Olakunle
+8.  total Games played by a particular phone number /player. - Olakunle - In Progress
 
-9.  total number of players with right answer for a particular game whether selected or not AND for all time on that module. - Olakunle
+9.  total number of players with right answer for a particular game whether selected or not AND for all time on that module. - Olakunle - In Progress
 
 10. total number of SELECTED winners for a particular game and for all games on a module. - Olakunle
 

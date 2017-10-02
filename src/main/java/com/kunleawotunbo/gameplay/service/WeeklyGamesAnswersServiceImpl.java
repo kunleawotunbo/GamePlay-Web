@@ -93,5 +93,13 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     public List<WeeklyGamesAnswers> listAnswerByCodeAndCountry(int code, String playersCountry) {
         return weeklyGamesAnswersDao.listAnswerByCodeAndCountry(code, playersCountry);
     }
+
+    public List<WeeklyGamesAnswers> listAnswerByCode(int code) {
+        return weeklyGamesAnswersDao.listAnswerByCode(code);
+    }
+
+    public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo) {
+        return weeklyGamesAnswersDao.listAnswersByUserPhoneNo(userPhoneNo);
+    }
     
 }

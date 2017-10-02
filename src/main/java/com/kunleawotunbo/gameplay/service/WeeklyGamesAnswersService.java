@@ -48,4 +48,8 @@ public interface WeeklyGamesAnswersService {
     public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate);
     
     public List<WeeklyGamesAnswers> listAnswerByCodeAndCountry(int code, String playersCountry);
+    
+    public List<WeeklyGamesAnswers> listAnswerByCode(int code);
+    
+    public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo);
 }
