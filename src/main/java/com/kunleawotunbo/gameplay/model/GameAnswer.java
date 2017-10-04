@@ -69,6 +69,11 @@ public class GameAnswer implements Serializable{
     
     @Column(name = "modifiedBy")
     private String modifiedBy;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "code")
+    private int code;
 
     /**
      * @return the id
@@ -194,6 +199,20 @@ public class GameAnswer implements Serializable{
      */
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
    
      

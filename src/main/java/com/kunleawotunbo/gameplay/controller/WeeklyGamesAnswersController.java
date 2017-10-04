@@ -41,10 +41,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequestMapping("/api/weeklygamesanswers/")
 @Api(value = "Game", description = "Handles the game management")
 @SessionAttributes("roles")
-public class WeeklyGamesAnswersController {
-    
-    @Autowired
-    private WeeklyGamesService weeklyGamesService;
+public class WeeklyGamesAnswersController {   
     
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;

@@ -3,102 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kunleawotunbo.gameplay.model;
+package com.kunleawotunbo.gameplay.bean;
 
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Olakunle Awotunbo
  */
-@Entity
-@Table(name = "weekly_games_answers")
-public class WeeklyGamesAnswers implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-
+public class WeeklyGamesAnswersBean {
+    
     private Long id;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "game_id")
     private int gameId;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(max = 15)
-    @Column(name = "user_phone_no")
     private String userPhoneNo;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(max = 1000)
-    @Column(name = "user_answer")
     private String userAnswer;
-
-    @Column(name = "date_answered")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateAnswered;
-
-    @Column(name = "createdDate")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdDate;
-
-    @Column(name = "modifiedDate")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "weekNo")
     private int weekNo;
-
-    @Column(name = "isRandomWinner", nullable = false)
     private boolean isRandomWinner;
-    
-    @Column(name = "isWinner", nullable = false)
-    private boolean isWinner;
-
-    @Basic(optional = false)
-    @Size(max = 50)
-    @Column(name = "ip_address", nullable = false)
     private String ipAddress;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "players_country")
-    private String playersCountry;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "code")
+    private Date startDate;
+    private Date endDate;
     private int code;
+    private String countryCode;
+    private String countryId;
 
-    public WeeklyGamesAnswers() {
-        super();
-        this.isRandomWinner = false;
-        // this.creationDate(new Date());
-    }
-
+    /**
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -204,7 +144,7 @@ public class WeeklyGamesAnswers implements Serializable {
     /**
      * @return the isRandomWinner
      */
-    public boolean getIsRandomWinner() {
+    public boolean isIsRandomWinner() {
         return isRandomWinner;
     }
 
@@ -213,20 +153,6 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setIsRandomWinner(boolean isRandomWinner) {
         this.isRandomWinner = isRandomWinner;
-    }
-    
-    /**
-     * @return the isWinner
-     */
-    public boolean getIsWinner() {
-        return isWinner;
-    }
-
-    /**
-     * @param isWinner the isRandomWinner to set
-     */
-    public void setIsWinner(boolean isWinner) {
-        this.isWinner = isWinner;
     }
 
     /**
@@ -242,16 +168,33 @@ public class WeeklyGamesAnswers implements Serializable {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
-    
-    public String getPlayersCountry() {
-        return playersCountry;
+
+    /**
+     * @return the startDate
+     */
+    public Date getStartDate() {
+        return startDate;
     }
 
     /**
-     * @param playersCountry the ipAddress to set
+     * @param startDate the startDate to set
      */
-    public void setPlayersCountry(String playersCountry) {
-        this.playersCountry = playersCountry;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return the endDate
+     */
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     /**
@@ -266,5 +209,33 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setCode(int code) {
         this.code = code;
+    }
+
+    /**
+     * @return the countryCode
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    /**
+     * @param countryCode the countryCode to set
+     */
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    /**
+     * @return the countryId
+     */
+    public String getCountryId() {
+        return countryId;
+    }
+
+    /**
+     * @param countryId the countryId to set
+     */
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
     }
 }

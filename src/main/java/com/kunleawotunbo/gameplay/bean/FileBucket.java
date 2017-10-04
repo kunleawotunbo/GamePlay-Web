@@ -39,6 +39,7 @@ public class FileBucket {
     private boolean enabled;
     private MultipartFile[] files;
     private MultipartFile file;
+    private int code;
 
 
     /**
@@ -333,6 +334,20 @@ public class FileBucket {
      */
     public void setGameImage2(String gameImage2) {
         this.gameImage2 = gameImage2;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 
     

@@ -41,7 +41,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     private TunborUtility tunborUtility;
 
     public WeeklyGamesAnswers findById(Long id) {
-    logger.info("id : {}", id);
+    logger.info("id :: " + id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -50,7 +50,7 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     }
     
     public WeeklyGamesAnswers findById(int id) {
-        logger.info("id : {}", id);
+        logger.info("id ::" + id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
@@ -446,6 +446,54 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
 
         
         return weeklyGamesAnswersRandomWinnerList;
+    }
+
+    public List<WeeklyGamesAnswers> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
+         logger.info("userPhoneNo :: " + userPhoneNo);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("userPhoneNo", userPhoneNo));
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        // To get game based on the game expiry date
+        
+        crit.add(Restrictions.ge("dateAnswered", startDate));
+        crit.add(Restrictions.le("dateAnswered", endDate));
+
+        System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
+    public List<WeeklyGamesAnswers> listAnswerByCodeAndCountry(int code, String playersCountry) {
+        logger.info("code :: " +  code);
+        logger.info("playersCountry :: " +  playersCountry);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("code", code));
+        crit.add(Restrictions.eq("playersCountry", playersCountry));
+
+        return crit.list();
+    }
+
+    public List<WeeklyGamesAnswers> listAnswerByCode(int code) {
+        logger.info("code :: " +  code);       
+
+        Criteria crit = createEntityCriteria().addOrder(Order.desc("dateAnswered"));
+        crit.add(Restrictions.eq("code", code));       
+
+        return crit.list();
+    }
+
+    public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo) {
+        logger.info("userPhoneNo :: " +  userPhoneNo);        
+
+        Criteria crit = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
+        crit.add(Restrictions.eq("userPhoneNo", userPhoneNo));       
+
+        return crit.list();
     }
 
 }

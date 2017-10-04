@@ -1,6 +1,6 @@
 <%-- 
-    Document   : getEntriesByGame
-    Created on : Sep 29, 2017, 12:10:28 PM
+    Document   : jpReportByCountry
+    Created on : Sep 29, 2017, 6:25:18 PM
     Author     : Olakunle Awotunbo
 --%>
 
@@ -37,13 +37,13 @@
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2> Entries by Game Report</h2>
+                        <h2> Players  Report by Period</h2>
 
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <br />
-                    
+
 
                         <c:if test="${error}">                                  
                             <div class="alert alert-danger" id="success-error">
@@ -61,24 +61,27 @@
 
                         <div id="feedback"></div>
 
-                        <%--<form:form modelAttribute="game" class="form-horizontal form-label-left" id="gameCategory-form" data-parsley-validate="">--%>
-                        <form:form modelAttribute="weeklyGamesAnswersBean" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
+                        <form:form modelAttribute="weeklyGamesAnswers" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
                             <form:hidden path="id" id="id" name="id" />
-                            <%--     
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Name<span class="required">*</span></label>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <form:input path="gameName" id="gameName" type="text" class="form-control" name="gameName" placeholder="Input game Name" required ="required" />                                  
-                                </div>
-                            </div>
-                            --%>
-                            <div class="form-group">
+                            
+                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code<span class="required">*</span></label>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <form:input path="code" id="code" type="text" class="form-control" name="code" placeholder="Game Code" required ="required" />                                 
+                                    <form:input path="code" id="code" type="text" class="form-control" name="code" placeholder="Game Code" required ="required" />                                  
+                                </div>
+                            </div>  
+
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Country<span class="required">*</span></label>
+                                <div class="col-sm-4">                                         
+                                    <form:select id="countryCode" path="countryCode" title="Choose Country" class="form-control">
+                                        <option value="">Choose Country</option>
+                                        <form:options items="${countriesList}" itemValue="countryCode" itemLabel="countryName"/>
+                                    </form:select>   
                                 </div>
                             </div>
-
+                            
                            
 
                             <div class="ln_solid"></div>
@@ -86,12 +89,12 @@
 
                             <div class="form-group">
                                 <div class="form-group">
-                                            <div class="col-md-9 col-md-offset-3">
-                                                <button type="reset" class="btn btn-primary">Cancel</button>
-                                                <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
-                                                <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
-                                            </div>
-                                        </div>
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="reset" class="btn btn-primary">Cancel</button>
+                                        <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
+                                        <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
+                                    </div>
+                                </div>
                             </div>
 
                         </form:form>
@@ -110,7 +113,7 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>List of Game Categories</h2>
+                        <h2>List of Submitted answer by ${userPhoneNo}</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -122,11 +125,11 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>GAME NAME</th>
-                                    <th>GAME CODE</th>
-                                    <th>ENABLED</th>
-<!--                                    <th></th>
-                                    <th></th>-->
+                                    <th>PHONE No</th>
+                                    <th>ANSWER</th>
+                                    <th>DATE</th>
+                                    <!--                                    <th></th>
+                                                                        <th></th>-->
 
                                 </tr>
                             </thead>
@@ -134,29 +137,10 @@
                                 <c:forEach items="${list}" var="item">  
                                     <tr>  
                                         <td><c:out value="${item.id}"/></td>  
-                                        <td><c:out value="${item.gameName}"/></td>  
-                                        <td><c:out value="${item.gameCode}"/></td> 
-                                        <%--   <td><c:out value="${item.enabled}"/></td>  --%>
-                                        <c:choose>
-                                            <c:when test="${item.enabled==true}">
-                                                <td><c:out value="YES"/></td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td><c:out value="NO"/></td>
-                                            </c:otherwise>
-                                        </c:choose> 
-                                        <%--  
-                                        <td>
-                                            <a href="<c:url value='/admin/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="<c:url value='/admin/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
-                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
-                                            </a>
-                                        </td>
-                                        --%>
+                                        <td><c:out value="${item.userPhoneNo}"/></td>  
+                                        <td><c:out value="${item.userAnswer}"/></td> 
+                                        <td><c:out value="${item.dateAnswered}"/></td> 
+                                        
                                     </tr>  
                                 </c:forEach>  
                             </tbody>
