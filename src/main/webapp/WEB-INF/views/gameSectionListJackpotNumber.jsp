@@ -4,7 +4,7 @@
     Author     : BELLO
 --%>
 
---Include outside header-->
+<!--Include outside header-->
 <%@ include file="includes/outside/header.jsp" %>
 <!--Include outside navigation-->
 <%@ include file="includes/outside/navigation.jsp" %>

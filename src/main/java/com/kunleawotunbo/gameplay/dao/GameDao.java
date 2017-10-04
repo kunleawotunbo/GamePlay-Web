@@ -21,10 +21,14 @@ public interface GameDao {
     boolean updateGame(Game game);
 
     void deleteGame(Game game);
+    
+    public boolean findByName(String gameName);
 
     List<Game> listGames(boolean enabled);
 
     public boolean isGameCodeExist(String gameCode);
+    
+    public Game findByNameReturnGame(String gameName);
     
     List<Game> listAllGames();
     

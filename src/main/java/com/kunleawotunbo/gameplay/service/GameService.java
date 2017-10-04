@@ -21,6 +21,10 @@ public interface GameService {
     boolean updateGame(Game game);
 
     void deleteGame(Game game);
+    
+    public boolean findByName(String gameName);
+    
+    public Game findByNameReturnGame(String gameName);
 
     List<Game> listGames(boolean enabled);
 

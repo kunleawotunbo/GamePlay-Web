@@ -323,28 +323,7 @@
                 }
 
                 
-                $("#gameCategory").change(function (event) {
-                     
-                 var gameCategory = $('#gameCategory').val();
-                 if (gameCategory == "6") {
-                          $('#gameImage').hide();
-                $('#gameImage1edit').hide();
-                $("#gameImage1").prop("required", false);
-                // Hide the second image field
-                $('#gameImage2').hide();
-                $('#gameImage2edit').hide();
-                $("#gameImage2").prop("required", false);
-                // Show gameText since gameType is picture and sett attribute gameText1 required = true
-                $('#gameText').show();
-                //$('#gameText2').show();
-                $("#gameText1").prop("required", true);
-                $('#gameTypeForm').hide();
                 
-                           }else{
-                $('#gameTypeForm').show();           
-                      }
-                     
-                      });
 
 
                 $("#gameType").change(function (event) {

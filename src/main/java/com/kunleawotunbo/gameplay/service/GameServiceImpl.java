@@ -38,6 +38,14 @@ public class GameServiceImpl implements GameService{
     public void deleteGame(Game game) {
        gameDao.deleteGame(game);
     }
+    
+    public boolean findByName(String gameName) {
+         return gameDao.findByName(gameName);
+    }
+    
+    public Game findByNameReturnGame(String gameName) {
+        return gameDao.findByNameReturnGame(gameName);
+    }
 
     public List<Game> listGames(boolean enabled) {
        return gameDao.listGames(enabled);

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : addWeeklyGameJackpotNumber
-    Created on : 28-Sep-2017, 11:57:47
-    Author     : BELLO
+    Document   : addWeeklyGame
+    Created on : Jun 16, 2017, 9:27:44 PM
+    Author     : Olakunle Awotunbo
 --%>
 
 <%@ include file="../includes/header.jsp" %>
@@ -75,22 +75,20 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Category<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:select id="gameCategory" path="gameCategory" title="Choose Game Type" class="form-control">
-                                            
-                                            <option value="6">Jackpot Number</option>
-                                            
+                                            <option value="">Choose Game Type</option>
+                                            <form:options items="${gameList}" itemValue="id" itemLabel="gameName"/>
                                         </form:select>   
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" id="gameTypeForm">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Type<span class="required">*</span></label>
-                                 
                                     <div class="col-sm-4">
 
                                         <form:select id="gameType" path="gamePlayType" title=' Game Type' class="form-control">
-                                            <option value="2">Text Game</option>
-                                            
-                                        </form:select> 
+                                            <option value="">Choose Game Type</option>
+                                            <form:options items="${gamePlayTypeList}" itemValue="id" itemLabel="typeName"/>
+                                        </form:select>   
 
                                         <%--<form:radiobuttons id="gameType" path="gamePlayType" items="${gamePlayTypeList}"  itemValue="id" itemLabel="typeName"/>--%>
 
@@ -99,7 +97,7 @@
                                         <form:radiobutton id="gameType" path="gamePlayType" value="1" />Image Game 
                                            <form:radiobutton id="gameType2" path="gamePlayType" value="2" />Text 
                                         --%>
-                                                                                             
+                                        </select>                                                          
                                     </div>
                                 </div>        
 
@@ -112,7 +110,48 @@
                                     </div>
                                 </div>
 
-                              
+                                <div class="form-group" id="gameImage" >
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="files" id="gameImage1" name="gameImage" type="file" class="form-control"  placeholder="Game Image"  accept=".png, .jpg, .jpeg" />                                 
+                                    </div>
+                                </div>
+                                <c:if test="${edit}">          
+
+                                    <div class="form-group " id="gameImage1edit" >
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <img src="data:image/jpeg;base64,${encodedPictureString}" alt="..."floatRight width="200" height="200">
+
+                                        </div>
+                                    </div>  
+
+
+
+                                </c:if>  
+
+                                <!--secocnd image-->
+                                <div class="form-group" id="gameImage2" >
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">GameImage 2<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <form:input path="files" id="gameImage2" name="gameImage2" type="file" class="form-control"  placeholder="Game Image 2"  accept=".png, .jpg, .jpeg" />                                 
+                                    </div>
+                                </div>    
+
+                                <c:if test="${edit}">          
+
+                                    <div class="form-group " id="gameImage2edit" >
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-3"><span class="required"></span></label>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <img src="data:image/jpeg;base64,${encodedGameImage2}" alt="..."floatRight width="200" height="200">
+
+                                        </div>
+                                    </div>  
+
+                                </c:if>  
+
+
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -283,7 +322,8 @@
                 $("#gameText1").prop("required", true);
                 }
 
-
+                
+                
 
 
                 $("#gameType").change(function (event) {

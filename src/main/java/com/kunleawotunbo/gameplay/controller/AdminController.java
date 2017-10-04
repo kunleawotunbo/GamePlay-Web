@@ -314,8 +314,10 @@ public class AdminController {
         WeeklyGames weeklyGame = weeklyGamesService.findById(id);
         
         int gamecategory = weeklyGame.getGameCategory();
+           
+        Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
         
-        if(gamecategory == 6 ){
+        if(gamecategory == jackpotNumberGame.getId() ){
             
         String encodedPictureString = "";
         String encodedGameImage2 = "";

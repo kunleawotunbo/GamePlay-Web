@@ -61,6 +61,26 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
     public void deleteGame(Game game) {
         delete(game);
     }
+    
+     public boolean findByName(String gameName) {
+        logger.info("gameName : {}", gameName );
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("gameName", gameName));
+
+        int count = crit.list().size();
+        
+        return count > 0;
+    }
+     
+     public Game findByNameReturnGame(String gameName) {
+        logger.info("game name : {}", gameName);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("gameName", gameName));
+
+        return (Game) crit.uniqueResult();
+    }
 
     public List<Game> listGames(boolean enabled) {
        Criteria crit = createEntityCriteria();

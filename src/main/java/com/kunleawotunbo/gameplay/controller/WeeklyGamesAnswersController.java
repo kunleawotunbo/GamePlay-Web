@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
+import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
@@ -80,6 +81,15 @@ public class WeeklyGamesAnswersController {
     public ResponseEntity createWeeklyGame(@RequestBody WeeklyGamesAnswers weeklyGamesAnswers, Errors errors) {
         
         // set answer submitted date
+             
+          WeeklyGames weeklyGames = weeklyGamesService.findById(weeklyGamesAnswers.getGameId());
+          
+          int gameCategory = weeklyGames.getGameCategory();
+          
+          if (gameCategory == 6){
+              
+          }
+                     
         weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 
         //If error, just return a 400 bad request, along with the error message

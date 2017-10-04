@@ -11,7 +11,12 @@ import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
+import com.kunleawotunbo.gameplay.model.UserProfile;
+import com.kunleawotunbo.gameplay.service.MailService;
+import com.kunleawotunbo.gameplay.service.UserProfileService;
+import com.kunleawotunbo.gameplay.service.UserService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +60,22 @@ public class HomeController implements Controller {
          boolean status = true;
          gameList = gameService.listGames(status);
          String imageEncodedString = "";
+         
+         if(gameService.findByName("Jackpot Numbers") == false)  {
+             
+        Game jackpotNumbergame = new Game(); 
+        jackpotNumbergame.setGameCode("JNUMS");
+        jackpotNumbergame.setGameName("Jackpot Numbers");
+        jackpotNumbergame.setEnabled(true);
+        jackpotNumbergame.setCreationDate(new Date());
+        jackpotNumbergame.setCreatedBy(tunborUtility.getPrincipal());
+        
+        //boolean saveStatus = gameService.save(jackpotNumbergame);
+         gameService.save(jackpotNumbergame);
+        
+            
+                 
+         }
          
          Game game = null;
          gameListFinal = new ArrayList<Game>();

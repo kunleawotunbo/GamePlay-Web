@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
+import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
@@ -64,9 +65,12 @@ public class GameSectionController {
      
         List<WeeklyGames> weeklyGameList = null;
         
-        if(id == 6){
+        Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
+        
+               
+        if(id == jackpotNumberGame.getId()){
             
-             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(6, tunborUtility.getDate(Definitions.TIMEZONE));
+             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(jackpotNumberGame.getId(), tunborUtility.getDate(Definitions.TIMEZONE));
 
         // check if weeklyGameList is greater than 1
         if (null != weeklyGameList && weeklyGameList.size() > 1) {
@@ -168,7 +172,34 @@ public class GameSectionController {
     @RequestMapping(value = {"/gameSectionx-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("gameSection");
+        
+         Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
+        
+               
+        if(weeklyGamesService.findById(id).getGameCategory() == jackpotNumberGame.getId()){
+            
+         WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
+        
+        boolean isPicture = false;
+        String encodedPictureString = "";
 
+        if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
+            encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+            isPicture = true;
+        } else {
+            logger.info("No image");
+        }
+
+        map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
+        map.addAttribute("weeklyGame", weeklyGame);
+        map.addAttribute("isPicture", isPicture);
+        map.addAttribute("encodedPictureString", encodedPictureString);
+
+        return new ModelAndView("gameSectionJackpotNumber", map);    
+        
+            
+        }else{
+        
         WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
         
         boolean isPicture = false;
@@ -187,6 +218,8 @@ public class GameSectionController {
         map.addAttribute("encodedPictureString", encodedPictureString);
 
         return new ModelAndView("gameSection", map);
+          }
+        
     }
 
     /**

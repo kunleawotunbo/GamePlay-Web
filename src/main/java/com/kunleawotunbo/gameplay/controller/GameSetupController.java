@@ -231,28 +231,40 @@ public class GameSetupController {
             int answerid = listWeeklyGamesAnswers.get(i).getGameId();
            
         // WeeklyGames weeklyGamesAnswer = weeklyGamesService.getWeekGameAnswersbyId(answerid);    
-         GameAnswer  weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
-         
-        /* try{
-         
-           weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
-           }
-            catch(Exception e){
-                System.err.println( e.getMessage());
-            }*/
-        
-        // String gameanswer = weeklyGamesAnswer.getGameAnswer().toUpperCase();
-        String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
-         String gameanswer = "";
-          if(gameanswer2 == null){
+             GameAnswer  weeklyGamesAnswer =   gamesAnswerService.findByGameId(answerid);
+             
+             String gameanswer = ""; 
+             int gamecategory = 0;
+             
+            if (weeklyGamesAnswer == null){
+                
+                GameAnswer  weeklyGamesAnswer2 = new GameAnswer();
+                
+                weeklyGamesAnswer2.setGameAnswer("NOT SET");
+                String gameanswer2 = weeklyGamesAnswer2.getGameAnswer();
+               
+                if(gameanswer2 == null){
                gameanswer = "NOT SET";
-            }else{
-         gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
-          }
-         AdminGameAnswer.add(gameanswer);
+                }else{
+             gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+                        }
+                  AdminGameAnswer.add(gameanswer);
+                  //gamecategory = weeklyGamesAnswer.getGameCategoryId();
+                 }else{
+    
+               String gameanswer2 = weeklyGamesAnswer.getGameAnswer();
+        // String gameanswer = "";
+                    if(gameanswer2 == null){
+               gameanswer = "NOT SET";
+               }else{
+                     gameanswer = gameanswer2.toUpperCase(Locale.ENGLISH);
+                      }
+                   AdminGameAnswer.add(gameanswer);
+                  gamecategory = weeklyGamesAnswer.getGameCategoryId();
+            }
          
          //int gamecategory = weeklyGamesAnswer.getGameCategory();
-         int gamecategory = weeklyGamesAnswer.getGameCategoryId();
+         
          gameCategoryID.add(gamecategory);
          
          
@@ -270,7 +282,7 @@ public class GameSetupController {
                       }
          
          logger.info("Weekly Answer Game ID:" + String.valueOf(listWeeklyGamesAnswers.get(i).getGameId()));
-         logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategoryId()));
+         //logger.info("Weekly Game Category:" + String.valueOf(weeklyGamesAnswer.getGameCategoryId()));
          logger.info("Week Category Name:" + gameService.GamesCategory(id).get(0).getGameName());
          logger.info("Game Answer:"+ gameanswer);
          logger.info("User Answer:" + useranswer);
