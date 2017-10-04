@@ -61,11 +61,11 @@ public class HomeController implements Controller {
          gameList = gameService.listGames(status);
          String imageEncodedString = "";
          
-         if(gameService.findByName("Jackpot Numbers") == false)  {
+         if(gameService.findByName("Jackpot Number") == false)  {
              
         Game jackpotNumbergame = new Game(); 
-        jackpotNumbergame.setGameCode("JNUMS");
-        jackpotNumbergame.setGameName("Jackpot Numbers");
+        jackpotNumbergame.setGameCode("JNUM");
+        jackpotNumbergame.setGameName("Jackpot Number");
         jackpotNumbergame.setEnabled(true);
         jackpotNumbergame.setCreationDate(new Date());
         jackpotNumbergame.setCreatedBy(tunborUtility.getPrincipal());

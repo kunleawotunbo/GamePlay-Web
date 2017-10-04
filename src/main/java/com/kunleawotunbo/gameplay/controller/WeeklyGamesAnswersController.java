@@ -79,13 +79,13 @@ public class WeeklyGamesAnswersController {
         
         // set answer submitted date
              
-          WeeklyGames weeklyGames = weeklyGamesService.findById(weeklyGamesAnswers.getGameId());
+        //  WeeklyGames weeklyGames = weeklyGamesService.findById(weeklyGamesAnswers.getGameId());
           
-          int gameCategory = weeklyGames.getGameCategory();
+       //   int gameCategory = weeklyGames.getGameCategory();
           
-          if (gameCategory == 6){
+        //  if (gameCategory == 6){
               
-          }
+        //  }
                      
         weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 
