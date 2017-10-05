@@ -88,6 +88,15 @@ public class WeeklyGamesAnswers implements Serializable {
     @NotNull
     @Column(name = "code")
     private int code;
+        
+    @Size(max = 10)
+    @Column(name = "country_code")
+    private String countryCode;
+    
+     @Size(max = 10)
+    @Column(name = "city")
+    private String city;
+    
 
     public WeeklyGamesAnswers() {
         super();
@@ -266,5 +275,33 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setCode(int code) {
         this.code = code;
+    }
+
+    /**
+     * @return the countryCode
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    /**
+     * @param countryCode the countryCode to set
+     */
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 }

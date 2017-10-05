@@ -86,6 +86,41 @@ public class WeeklyGamesAnswersController {
         //  if (gameCategory == 6){
               
         //  }
+        
+        // Get ip address
+        //String ipAddress = request.getRemoteAddr();
+         String ipAddress = "";
+        
+        String status = "";
+        String country = "Unknown";
+        String countryCode = "Unknown";
+        String city = "Unknown";
+        
+        try {
+            ipAddress = weeklyGamesAnswers.getIpAddress();
+            System.out.println("IpAddress :: " + ipAddress);
+            //ipObj = webServiceUtility.getIPObjectRestClient(Definitions.IP_API, ipAddress);
+            //status = ipObj.get("status").asText();
+            if ("fail".equalsIgnoreCase(status)) {
+                logger.info("Unable to determine country from Ip :: " + ipAddress);
+            } else {
+               // country = ipObj.get("country").asText();
+               // countryCode = ipObj.get("countryCode").asText();
+               // city = ipObj.get("city").asText();
+                
+                countryCode = weeklyGamesAnswers.getCountryCode();
+            }
+           
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // set answer submitted date
+        
+        weeklyGamesAnswers.setIpAddress(ipAddress);
+        weeklyGamesAnswers.setPlayersCountry(country);
+        weeklyGamesAnswers.setCountryCode(countryCode);
+        weeklyGamesAnswers.setCity(city);
                      
         weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 

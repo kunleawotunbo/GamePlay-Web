@@ -148,6 +148,7 @@
 
                                     </div>
                                 </div>  
+                                          <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
 
                                 
                                 <div class="form-group">
@@ -203,9 +204,9 @@
     $("#userPhoneNo").intlTelInput({
         initialCountry: "auto",
         geoIpLookup: function (callback) {
-            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
+            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {                
                 var countryCode = (resp && resp.country) ? resp.country : "";
-                callback(countryCode);
+                callback(countryCode);                
             });
         },
         //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
@@ -215,6 +216,13 @@
 <script>
 
     jQuery(document).ready(function ($) {
+        
+         $.get("http://ipinfo.io", function (response) {
+            //alert(response.ip);
+             //ipAddress = response.ip;
+             //$("#ipAddress").html("" + response.ip);
+             $("#ipAddress").val(response.ip);
+        }, "jsonp");
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
@@ -243,13 +251,15 @@
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
         var weekNo = $('#weekNo2').val();
         var countryName = countryData.name;
+         var ipAddress = $('#ipAddress').val();
        // notification("countryData  " + userAnswer );
         // notification("countryData  " + countryData.name + id);
         // var countryName = countryData.name;
         // console.log("countryData  " + countryData);
         // console.log("countryData.name  " + countryData.name);
         // console.log("countryData.iso2s  " + countryData.iso2);
-        // console.log("userAnswer:  " + userAnswer)
+        // console.log("userAnswer:  " + userAnswer);
+        alert(ipAddress);
 
         // set a variable
         var gameExpiryDate = new Date();
@@ -261,7 +271,8 @@
             "userAnswer": userAnswer,
             "gameId": gameId,
             "weekNo": weekNo,
-            "playersCountry": countryName 
+            "playersCountry": countryName,
+            "ipAddress": ipAddress
 
         };
 
