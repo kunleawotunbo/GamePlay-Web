@@ -259,7 +259,7 @@
         // console.log("countryData.name  " + countryData.name);
         // console.log("countryData.iso2s  " + countryData.iso2);
         // console.log("userAnswer:  " + userAnswer);
-        alert(ipAddress);
+        //alert(ipAddress);
 
         // set a variable
         var gameExpiryDate = new Date();

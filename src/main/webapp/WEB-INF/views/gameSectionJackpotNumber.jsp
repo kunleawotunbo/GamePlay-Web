@@ -172,7 +172,7 @@
 
                                     </div>
                                 </div>  
-
+                                   <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >          
                                 
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
@@ -239,6 +239,13 @@
 <script>
 
     jQuery(document).ready(function ($) {
+        
+        $.get("http://ipinfo.io", function (response) {
+            //alert(response.ip);
+             //ipAddress = response.ip;
+             //$("#ipAddress").html("" + response.ip);
+             $("#ipAddress").val(response.ip);
+        }, "jsonp");
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
@@ -267,6 +274,7 @@
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
         var weekNo = $('#weekNo2').val();
         var countryName = countryData.name;
+        var ipAddress = $('#ipAddress').val();
        // notification("countryData  " + userAnswer );
         // notification("countryData  " + countryData.name + id);
         // var countryName = countryData.name;
@@ -285,7 +293,8 @@
             "userAnswer": userAnswer,
             "gameId": gameId,
             "weekNo": weekNo,
-            "playersCountry": countryName 
+            "playersCountry": countryName,
+            "ipAddress": ipAddress
 
         };
 
