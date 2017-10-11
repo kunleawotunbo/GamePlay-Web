@@ -207,6 +207,7 @@
                                     
                                     
                                     <!--Spain LAliga-->
+                         <c:if test="${!empty laligaMatchesList}">             
                         <table class="table">
                             <thead class="thead-inverse">
                                 <tr>
@@ -253,7 +254,7 @@
 
                             </tbody>
                         </table>
-                       
+                        </c:if> 
                           
 
 
