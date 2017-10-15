@@ -11,8 +11,11 @@ import com.kunleawotunbo.gameplay.bean.WeeklyGamesBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.ActivityLog;
 import com.kunleawotunbo.gameplay.model.Game;
+import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
+import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.model.WeeklyGamesWinner;
 import com.kunleawotunbo.gameplay.service.ActivityLogService;
 import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
@@ -20,6 +23,7 @@ import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.UserService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.service.WeeklyGamesWinnerService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -80,6 +84,9 @@ public class AdminController {
 
     @Autowired
     private ActivityLogService activityLogService;
+    
+    @Autowired
+    private WeeklyGamesWinnerService weeklyGamesWinnerService;
 
     ActivityLog activityLog = new ActivityLog();
 
@@ -171,6 +178,7 @@ public class AdminController {
             weeklyGamesBean.setGameCatCode(gameCategoryCode);
             weeklyGamesBean.setGameCatName(gameCatName);
             weeklyGamesBean.setGameTypeName(gameTypeName);
+            weeklyGamesBean.setCode(item.getCode());
 
             weeklyGamesBeanList.add(weeklyGamesBean);
         }
@@ -302,6 +310,68 @@ public class AdminController {
 
         return "/admin/setWeeklyAnswer";
     }
+    
+    /**
+     * List weekly games
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/listWeeklyGamesWinners-{gameId}", method = RequestMethod.GET)
+    public String listWeeklyGamesWinners(@PathVariable int gameId, ModelMap model, HttpServletRequest request) {
+
+        List<WeeklyGamesWinner> weeklyGamesWinnersList = null;
+        WeeklyGames weeklyGames = null;
+        GameAnswer gameAnswerObj = null;
+
+        try {
+            weeklyGames = weeklyGamesService.findById(gameId);
+            //gameAnswer = matchPredictionResultService.findByMatchPredictionId(gameId);
+            gameAnswerObj = gameAnswerService.findByGameId(gameId);
+            //weeklyGamesWinnersList = matchPredictionWinnerService.listAllMatchPredictionWinnersByGameId(gameId);
+             weeklyGamesWinnersList = weeklyGamesWinnerService.listAllWeeklyGamesWinnersByGameId(gameId);
+            logger.info("weeklyGamesWinnersList.size() :: " + weeklyGamesWinnersList.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("weeklyGames", weeklyGames);
+        model.addAttribute("gameAnswerObj", gameAnswerObj);
+        model.addAttribute("weeklyGamesWinnersList", weeklyGamesWinnersList);
+
+        return "/admin/listWeeklyGamesWinners";
+    }
+    
+    /**
+     * List weekly games
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/viewAllAnswersWeeklyGame-{gameId}", method = RequestMethod.GET)
+    public String viewAllAnswersWeeklyGame(@PathVariable int gameId, ModelMap model, HttpServletRequest request) {
+
+        List<WeeklyGamesAnswers> weeklyGamesAnswersList = null;
+        WeeklyGames weeklyGames = null;
+        GameAnswer gameAnswerObj = null;
+        Game gameCategory = null;
+        
+
+        weeklyGames = weeklyGamesService.findById(gameId);
+        weeklyGamesAnswersList = weeklyGamesAnswersService.listAllWeeklyGameAnswersByGameId(gameId);
+        gameAnswerObj = gameAnswerService.findByGameId(gameId);
+        gameCategory = gameService.findById(gameAnswerObj.getGameCategoryId());
+        
+        model.addAttribute("weeklyGames", weeklyGames);
+        model.addAttribute("gameAnswerObj", gameAnswerObj);
+        model.addAttribute("gameCategory", gameCategory);
+        model.addAttribute("weeklyGamesAnswersList", weeklyGamesAnswersList);
+
+        return "/admin/viewAllAnswersWeeklyGame";
+    }
+
 
     /**
      * This method will provide the medium to update an existing user.

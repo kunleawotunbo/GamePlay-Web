@@ -5,16 +5,9 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
-import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.model.Game;
-import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
-import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
-import com.kunleawotunbo.gameplay.model.UserProfile;
-import com.kunleawotunbo.gameplay.service.MailService;
-import com.kunleawotunbo.gameplay.service.UserProfileService;
-import com.kunleawotunbo.gameplay.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -61,6 +52,7 @@ public class HomeController implements Controller {
          gameList = gameService.listGames(status);
          String imageEncodedString = "";
          
+         /*
          if(gameService.findByName("Jackpot Number") == false)  {
              
         Game jackpotNumbergame = new Game(); 
@@ -71,11 +63,9 @@ public class HomeController implements Controller {
         jackpotNumbergame.setCreatedBy(tunborUtility.getPrincipal());
         
         //boolean saveStatus = gameService.save(jackpotNumbergame);
-         gameService.save(jackpotNumbergame);
-        
-            
-                 
+         gameService.save(jackpotNumbergame); 
          }
+         */
          
          Game game = null;
          gameListFinal = new ArrayList<Game>();

@@ -79,4 +79,10 @@ and open the template in the editor.
 
     }
     
+     .small-header{
+         margin-top:10px;
+         float:left;
+         display:block
+     }
+    
     

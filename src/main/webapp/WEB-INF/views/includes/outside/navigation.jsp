@@ -15,8 +15,10 @@
                     </button>
                     <!--<a class="navbar-brand" href="<%=request.getContextPath()%>">WINGAMEPLAY</a>-->
                      <a class="navbar-brand" href="/">WINGAMEPLAY</a>
+                    <%--                    
                      <a class="navbar-brand" href="/">Home</a>
                      <a class="navbar-brand" href="<%=request.getContextPath()%>/prediction">Match Prediction</a>
+                    --%>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">

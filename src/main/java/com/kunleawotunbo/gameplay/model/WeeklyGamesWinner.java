@@ -23,8 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Olakunle Awotunbo
  */
 @Entity
-@Table(name = "match_prediction_answers")
-public class MatchPredictionAnswer implements Serializable{
+@Table(name = "weekly_games_winners")
+public class WeeklyGamesWinner implements Serializable{
     
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +49,11 @@ public class MatchPredictionAnswer implements Serializable{
     @Size( max = 100)
     @Column(name = "user_answer")
     private String userAnswer;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "answer_id")
+    private Long answerId;
 
     @Column(name = "date_answered")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -61,14 +66,20 @@ public class MatchPredictionAnswer implements Serializable{
     @Column(name = "modifiedDate")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
+            
+    @Column(name = "proccessed_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date proccessedDate;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "weekNo")
     private int weekNo;
     
-    @Basic(optional = false)
-    @NotNull
+    
+    
+    //@Basic(optional = false)
+    //@NotNull
     @Size(max = 50)
     @Column(name = "ip_address")
     private String ipAddress;
@@ -93,7 +104,6 @@ public class MatchPredictionAnswer implements Serializable{
     @NotNull
     @Column(name = "code")
     private int code;
-
 
     /**
      * @return the id
@@ -289,5 +299,33 @@ public class MatchPredictionAnswer implements Serializable{
      */
     public void setCode(int code) {
         this.code = code;
+    }
+
+    /**
+     * @return the proccessedDate
+     */
+    public Date getProccessedDate() {
+        return proccessedDate;
+    }
+
+    /**
+     * @param proccessedDate the proccessedDate to set
+     */
+    public void setProccessedDate(Date proccessedDate) {
+        this.proccessedDate = proccessedDate;
+    }
+
+    /**
+     * @return the answerId
+     */
+    public Long getAnswerId() {
+        return answerId;
+    }
+
+    /**
+     * @param answerId the answerId to set
+     */
+    public void setAnswerId(Long answerId) {
+        this.answerId = answerId;
     }
 }

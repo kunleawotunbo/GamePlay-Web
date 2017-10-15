@@ -52,4 +52,10 @@ public interface WeeklyGamesAnswersDao {
     public List<WeeklyGamesAnswers> listAnswerByCode(int code);
     
     public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo);
+    
+    public List<WeeklyGamesAnswers> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners);
+    
+    public void updateBulkWeeklyGamesAnswers(List<WeeklyGamesAnswers> items);
+    
+    public List<WeeklyGamesAnswers> listAllWeeklyGameAnswersByGameId(int gameId);
 }

@@ -179,7 +179,7 @@ public class WeeklyGamesController {
         }
         System.out.println(date);
 
-        int weekNo = tunborUtility.gameWeekNoByDate(date);
+        //int weekNo = tunborUtility.gameWeekNoByDate(date);
         // weeklyGames = weeklyGamesService.getWeekGameByWeekNo(id, weekNo);
         // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(gameCategory, tunborUtility.getDate(Definitions.TIMEZONE));
         //weeklyGame = weeklyGamesService.getWeekGameByWeekNo(weeklyGameId, tunborUtility.gameWeekNoByDate(new Date()));
@@ -420,6 +420,18 @@ public class WeeklyGamesController {
 
         if (saved) {
             logger.info("Answer set for question id :: " + weeklyGames.getId());
+            // Check if match has been proccessed before
+            //MatchPrediction matchPredictionObject = matchPredictionService.findById(mPResult.getId());
+            WeeklyGames weeklyGamesObject = weeklyGamesService.findById(weeklyGames.getId());
+
+            if (weeklyGamesObject.getStatus() != 1) {
+                // Call the asyc match prediction winner processing method        
+                //tunborUtility.processWinnerByMatchPredictionId(matchPredictionObject);
+                tunborUtility.processWinnerWeeklyGameId(weeklyGamesObject);
+            } else {
+                logger.info("Match winners has been processed before :: " + weeklyGamesObject.getId());
+            }
+            
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer set for question");
 

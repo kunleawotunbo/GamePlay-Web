@@ -10,12 +10,10 @@ import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
-import com.kunleawotunbo.gameplay.service.GamePlayTypeService;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
-import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,12 +63,18 @@ public class GameSectionController {
      
         List<WeeklyGames> weeklyGameList = null;
         
-        Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
-        
-               
-        if(id == jackpotNumberGame.getId()){
+       // Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
+       // gameService.
+         logger.info("gameCode ::  " + gameCode);
+        if (gameCode.equalsIgnoreCase("MPP")){
+            return new ModelAndView("redirect:/prediction");
+        }else if (gameCode.equalsIgnoreCase("JNUM")){
             
-             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(jackpotNumberGame.getId(), tunborUtility.getDate(Definitions.TIMEZONE));
+        //}    
+        //if(id == jackpotNumberGame.getId()){
+            
+            // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(jackpotNumberGame.getId(), tunborUtility.getDate(Definitions.TIMEZONE));
+            weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
         // check if weeklyGameList is greater than 1
         if (null != weeklyGameList && weeklyGameList.size() > 1) {
@@ -91,7 +95,7 @@ public class GameSectionController {
             String encodedGameImage2 = "";
 
             if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
-                encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
+                encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());                
                 if (weeklyGame.getGameImage2() != null) {
                     encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
                     hasGameImage2 = true;
@@ -110,11 +114,9 @@ public class GameSectionController {
             map.addAttribute("gameCode", gameCode);
 
             return new ModelAndView("gameSectionJackpotNumber", map);
-        }
-        
-          
+        } 
             
-        }else{
+        } else {
        
         weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 

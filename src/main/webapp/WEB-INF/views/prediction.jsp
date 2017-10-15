@@ -162,12 +162,12 @@
                             <thead class="thead-inverse">
                                 <tr>
                                     <th></th>
-                                    <th>${england} - ${epl}</th>
+                                    <th style="width: 400px">${england} - ${epl}</th>
                                     
                                     <th>&nbsp; &nbsp; &nbsp;
                                         Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                                         Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                        Away
+                                        Away                                        
                                     </th>
                                 </tr>
                             </thead>
@@ -181,18 +181,18 @@
                                                 <fmt:formatDate pattern="HH:mm" value = "${item.startTime}" />
                                             </div>
                                         </td> 
-                                        <td><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
+                                        <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                         <td>
-                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success ">
+                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
                                             </a>                                            
                                             &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width">
+                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
                                             </a>
                                             &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width"> 
+                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
                                                 <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
                                             </a>                                        
 
@@ -212,12 +212,15 @@
                             <thead class="thead-inverse">
                                 <tr>
                                     <th></th>
-                                    <th>${spain} - ${laliga}</th>
+                                    <th style="width: 400px">${spain} - ${laliga}</th>
                                     
-                                    <th>&nbsp; &nbsp; &nbsp;
+                                    <th>
+                                        <!--                                    
+                                        &nbsp; &nbsp; &nbsp;
                                         Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                                         Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                         Away
+                                        -->
                                     </th>
                                 </tr>
                             </thead>
@@ -231,18 +234,18 @@
                                                 <fmt:formatDate pattern="HH:mm" value = "${item.startTime}" />
                                             </div>
                                         </td> 
-                                        <td><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
+                                        <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                         <td>
-                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success ">
+                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
                                             </a>                                            
                                             &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width">
+                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
                                             </a>
                                             &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width"> 
+                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
                                                 <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
                                             </a>                                        
 
@@ -254,9 +257,8 @@
 
                             </tbody>
                         </table>
-                        </c:if> 
-                          
-
+                        </c:if>                           
+                                    
 
                     </div>
 

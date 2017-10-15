@@ -9,6 +9,7 @@ import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
+import com.kunleawotunbo.gameplay.model.GameAnswer;
 import com.kunleawotunbo.gameplay.model.GameWinner;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
@@ -16,11 +17,17 @@ import com.kunleawotunbo.gameplay.model.MatchPredictionResult;
 import com.kunleawotunbo.gameplay.model.MatchPredictionWinner;
 import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.VerificationToken;
+import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
+import com.kunleawotunbo.gameplay.model.WeeklyGamesWinner;
+import com.kunleawotunbo.gameplay.service.GameAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionResultService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
+import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
+import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
+import com.kunleawotunbo.gameplay.service.WeeklyGamesWinnerService;
 import freemarker.template.Configuration;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -108,6 +115,19 @@ public class TunborUtility {
 
     @Autowired
     private MatchPredictionWinnerService matchPredictionWinnerService;
+    
+    @Autowired
+    private GameAnswerService gameAnswerService; 
+    
+    @Autowired
+    private WeeklyGamesAnswersService weeklyGamesAnswersService;
+    
+    @Autowired
+    private WeeklyGamesWinnerService weeklyGamesWinnerService;
+    
+    @Autowired
+    private WeeklyGamesService weeklyGamesService;
+    
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -546,7 +566,44 @@ public class TunborUtility {
 
         return gameWinners;
     }
+    
+    public List<WeeklyGamesWinner> weeklyGamesListToGameWinnerList(List<WeeklyGamesAnswers> weeklyGamesAnswersList) {
+        List<WeeklyGamesWinner> gameWinners = null;
+        System.out.println("I am here 1");
+        if (weeklyGamesAnswersList != null && !weeklyGamesAnswersList.isEmpty()) {
+            System.out.println("I am here 2");
+            gameWinners = new ArrayList<WeeklyGamesWinner>();
+            WeeklyGamesWinner gameWinner = null;
 
+            for (WeeklyGamesAnswers item : weeklyGamesAnswersList) {
+                System.out.println("I am here");
+
+                gameWinner = new WeeklyGamesWinner();
+                System.out.println("item.getGameId() :: " + item.getGameId());
+                gameWinner.setGameId(item.getGameId());
+                gameWinner.setDateAnswered(item.getDateAnswered());
+                gameWinner.setProccessedDate(getDate(Definitions.TIMEZONE));
+                gameWinner.setUserAnswer(item.getUserAnswer());
+                gameWinner.setUserPhoneNo(item.getUserPhoneNo());
+                gameWinner.setAnswerId(item.getId());
+                gameWinner.setCity(item.getCity());
+                gameWinner.setCountry(item.getPlayersCountry());
+                gameWinner.setCountryCode(item.getCountryCode());
+                gameWinner.setIpAddress(item.getIpAddress());
+                
+
+                gameWinners.add(gameWinner);
+            }
+
+            logger.info("gameWinners.size() :: " + gameWinners.size());
+        } else {
+            logger.info("matchPredictionAnswerList is null or empty");
+        }
+
+        return gameWinners;
+    }
+
+    
     @Async
     public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage) {
 
@@ -591,7 +648,7 @@ public class TunborUtility {
                         matchPrediction.setStatus(processedStatus);
                         matchPredictionService.updatePrediction(matchPrediction);
 
-                        logger.info("Finished weeklyGameId :: " + matchPrediction.getId());
+                        logger.info("Finished matchPredictionId :: " + matchPrediction.getId());
                     } else {
                         logger.info("randomMatchPredictionWinnersList is null or empty for matchPredictionId :: " + matchPrediction.getId());
                     }
@@ -609,6 +666,75 @@ public class TunborUtility {
             e.printStackTrace();
         }
     }
+    
+    
+    @Async
+    public void processWinnerWeeklyGameId(WeeklyGames weeklyGames) {
+
+        //List<MatchPredictionAnswer> randomMatchPredictionWinnersList = null;
+        List<WeeklyGamesAnswers> randomWeeklyGamesWinnersList = null;
+        String gameAnswer = "";
+
+        try {
+            // Get game answer by weeklyGame id
+            //MatchPredictionResult matchPResultObj = matchPredictionResultService.findByMatchPredictionId(matchPrediction.getId());
+            GameAnswer gameAnswerObj = gameAnswerService.findByGameId(weeklyGames.getId());
+            logger.info("gameAnswerObj :: " + gameAnswerObj);
+            if (gameAnswerObj != null) {
+
+                gameAnswer = gameAnswerObj.getGameAnswer();
+                if (gameAnswer != null && "" != gameAnswer) {
+                    int noOfWinners = weeklyGames.getNoOfWinners();
+                    logger.info("noOfWinners :: " + noOfWinners);
+                    // Generate list of random winners
+                    //randomMatchPredictionWinnersList = matchPredictionAnswerService.listCorrectAnswersByGameId(gameAnswer, matchPrediction.getId(), noOfWinners);
+                    randomWeeklyGamesWinnersList = weeklyGamesAnswersService.listCorrectAnswersForJPByGameId(gameAnswer, weeklyGames.getId(), noOfWinners);
+                    logger.info("randomWeeklyGamesWinnersList.size() up :: " + randomWeeklyGamesWinnersList.size());
+                    if (!randomWeeklyGamesWinnersList.isEmpty()) {
+                        logger.info("randomMatchPredictionWinnersList.size() :: " + randomWeeklyGamesWinnersList.size());
+                        // Persist list of random winners for weekly game
+                        //List<MatchPredictionWinner> winnersList = tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
+                        //List<MatchPredictionWinner> winnersList = matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
+                        List<WeeklyGamesWinner> winnersList = weeklyGamesListToGameWinnerList(randomWeeklyGamesWinnersList);
+                        
+                        //matchPredictionWinnerService.saveBulkMatchPredictionWinners(winnersList);
+                         weeklyGamesWinnerService.saveBulkWeeklyGamesWinners(winnersList);
+
+                        // send sms to list of winners.                             
+                        String message = "This is to notify you that you have won for the match prediction";
+
+                        for (WeeklyGamesWinner item : winnersList) {
+                            //tunborUtility.sendSMSSingle(item.getUserPhoneNo(), message);
+                            sendSMSSingle(item.getUserPhoneNo(), message);
+                            logger.info("SMS sent to :: " + item.getUserPhoneNo());
+                        }
+
+                        // set proccessed to 1.
+                        int processedStatus = 1;
+                        weeklyGames.setStatus(processedStatus);
+                        //matchPredictionService.updatePrediction(matchPrediction);
+                        weeklyGamesService.updateWeeklyGame(weeklyGames);
+
+                        logger.info("Finished weeklyGameId :: " + weeklyGames.getId());
+                    } else {
+                        logger.info("randomWeeklyGamesWinnersList is null or empty for matchPredictionId :: " + weeklyGames.getId());
+                    }
+
+                } else {
+                    logger.info("Answer not yet set for weekly game with ID :: " + weeklyGames.getId());
+                }
+
+            } else {
+                logger.info("gameAnswerObj object is null for game Id :: " + weeklyGames.getId());
+            }
+
+        } catch (Exception e) {
+            logger.info("Error Occurred while processing match with id :: " + weeklyGames.getId());
+            e.printStackTrace();
+        }
+    }
+    
+
 
     /**
      * Generate 4 digits random number

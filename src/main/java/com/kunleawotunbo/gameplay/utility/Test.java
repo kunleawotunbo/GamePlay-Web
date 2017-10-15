@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.utility;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -42,8 +43,13 @@ public class Test {
     }
     
     public String  forSMS (){
-         
-         
+         boolean result =  false;
+         String[] v1 = "FN,CT,ST;".replace(";", "").split(",");
+            String[] v2 = "FN,ST,CT;".replace(";", "").split(",");
+            Arrays.sort(v1);
+            Arrays.sort(v2);
+            System.out.println(Arrays.equals(v1, v2));
+            
          return "";
     }
     

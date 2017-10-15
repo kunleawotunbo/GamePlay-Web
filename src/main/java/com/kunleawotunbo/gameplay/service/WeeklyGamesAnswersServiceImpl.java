@@ -101,5 +101,17 @@ public class WeeklyGamesAnswersServiceImpl implements WeeklyGamesAnswersService{
     public List<WeeklyGamesAnswers> listAnswersByUserPhoneNo(String userPhoneNo) {
         return weeklyGamesAnswersDao.listAnswersByUserPhoneNo(userPhoneNo);
     }
+
+    public List<WeeklyGamesAnswers> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners) {
+        return weeklyGamesAnswersDao.listCorrectAnswersForJPByGameId(gameAnswer, gameId, noOfWinners);
+    }
+
+    public void updateBulkWeeklyGamesAnswers(List<WeeklyGamesAnswers> items) {
+        weeklyGamesAnswersDao.updateBulkWeeklyGamesAnswers(items);
+    }
+
+    public List<WeeklyGamesAnswers> listAllWeeklyGameAnswersByGameId(int gameId) {
+        return weeklyGamesAnswersDao.listAllWeeklyGameAnswersByGameId(gameId);
+    }
     
 }

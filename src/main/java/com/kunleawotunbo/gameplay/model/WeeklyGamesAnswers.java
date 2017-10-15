@@ -30,7 +30,6 @@ public class WeeklyGamesAnswers implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-
     private Long id;
 
     @Basic(optional = false)
@@ -96,6 +95,9 @@ public class WeeklyGamesAnswers implements Serializable {
      @Size(max = 10)
     @Column(name = "city")
     private String city;
+     
+     @Column(name = "correct") 
+    private boolean correct;
     
 
     public WeeklyGamesAnswers() {
@@ -303,5 +305,19 @@ public class WeeklyGamesAnswers implements Serializable {
      */
     public void setCity(String city) {
         this.city = city;
+    }
+
+    /**
+     * @return the correct
+     */
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    /**
+     * @param correct the correct to set
+     */
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 }

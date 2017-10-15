@@ -65,7 +65,7 @@
                                 <c:forEach items="${matchPredictionList}" var="item" varStatus = "status">  
                                     <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
-                                        <td><c:out value="${item.homeTeamName}"/> vs <c:out value="${item.awayTeamName}"/></td>  
+                                        <td><c:out value="${item.homeTeamName}"/> vs <c:out value="${item.awayTeamName}"/>  [${item.code}]</td>  
                                         <td><c:out value="${item.prizeOfWinners}"/></td>                                          
                                         <td>
                                             <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.startTime}" />

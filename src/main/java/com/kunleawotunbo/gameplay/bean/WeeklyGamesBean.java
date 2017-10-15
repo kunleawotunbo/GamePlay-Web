@@ -34,6 +34,7 @@ public class WeeklyGamesBean {
     private String gameCatCode;
     private String gameCatName;
     private String gameTypeName;
+    private int code;
 
     /**
      * @return the id
@@ -327,5 +328,19 @@ public class WeeklyGamesBean {
      */
     public void setGameTypeName(String gameTypeName) {
         this.gameTypeName = gameTypeName;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 }

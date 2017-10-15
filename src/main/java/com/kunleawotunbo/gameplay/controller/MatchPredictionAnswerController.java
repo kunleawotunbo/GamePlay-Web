@@ -140,6 +140,7 @@ public class MatchPredictionAnswerController {
             matchStarted = false;
             System.out.println("Current time is not after start time");
         }
+        matchPredictionAnswer.setCode(matchPredictionObject.getCode());
         if (matchPredictionAnswerService.saveMatchPredictionAnswer(matchPredictionAnswer)) {
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer submitted");
