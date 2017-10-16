@@ -36,6 +36,7 @@
                             <form:hidden path="gameId" value="${matchPredictionObject.id}" id="gameId" name="gameId" />
                             <form:hidden path="userAnswer" value="${selectedAnswer}" id="userAnswer" name="userAnswer" />
                             <form:hidden path="weekNo" value="${matchPredictionObject.weekNo}" id="weekNo" name="weekNo" />
+                            <form:hidden path="code" value="${matchPredictionObject.code}" id="code" name="code" />
                             <div class="form-group row text-left">
                                 <label for="match" class="col-sm-3 form-control-label m-t-5">Match</label>
                                 <div class="col-sm-9">
@@ -114,17 +115,18 @@
 
 <script>
                                         // https://github.com/jackocnr/intl-tel-input
-
-                                        $("#userPhoneNo").intlTelInput({
-                                            initialCountry: "auto",
-                                            geoIpLookup: function (callback) {
-                                                $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
-                                                    var countryCode = (resp && resp.country) ? resp.country : "";
-                                                    callback(countryCode);
-                                                });
-                                            },
-
-                                        });
+                                        /*
+                                         $("#userPhoneNo").intlTelInput({
+                                         initialCountry: "auto",
+                                         geoIpLookup: function (callback) {
+                                         $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
+                                         var countryCode = (resp && resp.country) ? resp.country : "";
+                                         callback(countryCode);
+                                         });
+                                         },
+                                         
+                                         });
+                                         */
 </script>
 
 
@@ -133,12 +135,25 @@
 
     jQuery(document).ready(function ($) {
         $('#cantPlay').hide();
-          $.get("http://ipinfo.io", function (response) {
+        $("#userPhoneNo").intlTelInput({
+            initialCountry: "auto",
+            geoIpLookup: function (callback) {
+                $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "";
+                    $("#ipAddress").val(resp.ip);
+                    callback(countryCode);
+                });
+            },
+
+        });
+        /*
+        $.get("http://ipinfo.io", function (response) {
             //alert(response.ip);
-             //ipAddress = response.ip;
-             //$("#ipAddress").html("" + response.ip);
-             $("#ipAddress").val(response.ip);
+            //ipAddress = response.ip;
+            //$("#ipAddress").html("" + response.ip);
+            $("#ipAddress").val(response.ip);
         }, "jsonp");
+        */
 
         var matchStarted = $('#matchStarted').val();
 
@@ -175,8 +190,8 @@
     function submitViaAjax() {
 
 
-       
-        
+
+
         var id = $('#id').val();
         //var userPhoneNo = $('#userPhoneNo').val();
         var userAnswer = $('#userAnswer').val();
@@ -186,12 +201,13 @@
         var weekNo = $('#weekNo').val();
         var ipAddress = $('#ipAddress').val();
         var countryCode = countryData.iso2;
-       
+        var code = $('#code').val();
+
 
         console.log("countryData  " + countryData);
-         console.log("countryData.name  " + countryData.name);
-         console.log("countryData.iso2s  " + countryData.iso2);
-         //alert(countryData.iso2);
+        console.log("countryData.name  " + countryData.name);
+        console.log("countryData.iso2s  " + countryData.iso2);
+        //alert(countryData.iso2);
         // console.log("userAnswer:  " + userAnswer)
 
         // set a variable
@@ -205,7 +221,8 @@
             "gameId": gameId,
             "weekNo": weekNo,
             "ipAddress": ipAddress,
-            "countryCode": countryCode
+            "countryCode": countryCode,
+            "code": code
 
 
         };

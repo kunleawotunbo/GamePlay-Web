@@ -164,6 +164,12 @@
                                     <th></th>
                                     <th style="width: 400px">${england} - ${epl}</th>
                                     
+                                        <!--                 
+                                        <th>&nbsp; &nbsp; &nbsp;
+                                        Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                        Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                        Away                                        
+                                    </th>-->
                                     <th>&nbsp; &nbsp; &nbsp;
                                         Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                                         Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;

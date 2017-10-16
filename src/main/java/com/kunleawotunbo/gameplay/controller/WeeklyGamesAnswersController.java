@@ -49,6 +49,9 @@ public class WeeklyGamesAnswersController {
     @Autowired
     private TunborUtility tunborUtility;
     
+    @Autowired
+    private WeeklyGamesService weeklyGamesService;
+    
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();
     
@@ -121,6 +124,7 @@ public class WeeklyGamesAnswersController {
         weeklyGamesAnswers.setPlayersCountry(country);
         weeklyGamesAnswers.setCountryCode(countryCode);
         weeklyGamesAnswers.setCity(city);
+        //weeklyGamesAnswers.setCode(Wee);
                      
         weeklyGamesAnswers.setDateAnswered(tunborUtility.getDate(Definitions.TIMEZONE));
 

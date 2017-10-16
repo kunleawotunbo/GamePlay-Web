@@ -122,11 +122,12 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>GAME NAME</th>
-                                    <th>GAME CODE</th>
-                                    <th>ENABLED</th>
-<!--                                    <th></th>
-                                    <th></th>-->
+                                    <!--<th>GAME NAME</th>-->
+                                    <th>DATE SUBMITTED</th>
+                                    <th>USER ANSWER</th>
+                                    <th>IP ADDRESS</th>
+                                    <th>PHONE NO</th>
+                                    <th>COUNTRY</th>
 
                                 </tr>
                             </thead>
@@ -134,29 +135,13 @@
                                 <c:forEach items="${list}" var="item">  
                                     <tr>  
                                         <td><c:out value="${item.id}"/></td>  
-                                        <td><c:out value="${item.gameName}"/></td>  
-                                        <td><c:out value="${item.gameCode}"/></td> 
-                                        <%--   <td><c:out value="${item.enabled}"/></td>  --%>
-                                        <c:choose>
-                                            <c:when test="${item.enabled==true}">
-                                                <td><c:out value="YES"/></td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td><c:out value="NO"/></td>
-                                            </c:otherwise>
-                                        </c:choose> 
-                                        <%--  
-                                        <td>
-                                            <a href="<c:url value='/admin/edit-gameCategory-${item.id}' />" class="btn btn-success custom-width">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="<c:url value='/admin/delete-gameCategory-${item.id}' />" class="btn btn-danger custom-width">
-                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Delete
-                                            </a>
-                                        </td>
-                                        --%>
+                                       
+                                        <td><c:out value="${item.dateAnswered}"/></td> 
+                                         <td><c:out value="${item.userAnswer}"/></td> 
+                                        <td> <c:out value="${item.ipAddress}"/></td>
+                                        <td> <c:out value="${item.userPhoneNo}"/></td>
+                                        <td><c:out value="${item.playersCountry}"/></td>
+                                        
                                     </tr>  
                                 </c:forEach>  
                             </tbody>

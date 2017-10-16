@@ -95,11 +95,12 @@
                                                             ALL ANSWERS
                                                         </a>
                                                     </li>
+                                                    <!--                                             
                                                     <li><a href="#">Something else here</a>
                                                     </li>
                                                     <li class="divider"></li>
                                                     <li><a href="#">Separated link</a>
-                                                    </li>
+                                                    </li>-->
                                                 </ul>
                                             </div>
                                         </td>
