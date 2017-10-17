@@ -297,7 +297,13 @@ public class AdminController {
         logger.info("Edit  editWeeklyGames id :: " + id);
         //byte status = 1;
         boolean status = true;
-        WeeklyGames weeklyGame = weeklyGamesService.findById(id);
+         WeeklyGames weeklyGame = null;
+        try {
+            weeklyGame = weeklyGamesService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         model.addAttribute("weeklyGame", weeklyGame);
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
@@ -358,11 +364,15 @@ public class AdminController {
         GameAnswer gameAnswerObj = null;
         Game gameCategory = null;
         
-
-        weeklyGames = weeklyGamesService.findById(gameId);
+        try {
+            weeklyGames = weeklyGamesService.findById(gameId);
         weeklyGamesAnswersList = weeklyGamesAnswersService.listAllWeeklyGameAnswersByGameId(gameId);
         gameAnswerObj = gameAnswerService.findByGameId(gameId);
-        gameCategory = gameService.findById(gameAnswerObj.getGameCategoryId());
+        gameCategory = gameService.findById(weeklyGames.getGameCategory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         
         model.addAttribute("weeklyGames", weeklyGames);
         model.addAttribute("gameAnswerObj", gameAnswerObj);

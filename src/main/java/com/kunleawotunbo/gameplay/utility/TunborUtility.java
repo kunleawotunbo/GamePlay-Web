@@ -667,7 +667,10 @@ public class TunborUtility {
         }
     }
     
-    
+    /**
+     * For processing random winners
+     * @param weeklyGames 
+     */
     @Async
     public void processWinnerWeeklyGameId(WeeklyGames weeklyGames) {
 

@@ -25,7 +25,7 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public Game findById(int id) {
-        logger.info("id : {}", id);
+        logger.info("id :: " + id);
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));

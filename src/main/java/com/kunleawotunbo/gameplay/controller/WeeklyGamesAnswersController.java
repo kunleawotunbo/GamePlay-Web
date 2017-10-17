@@ -137,6 +137,13 @@ public class WeeklyGamesAnswersController {
             return ResponseEntity.badRequest().body(result);
 
         }
+
+        // check if game has expire before saving/submitting          
+            /*
+            if(gameExpired){
+                // return failure
+            }
+            */
         if (weeklyGamesAnswersService.saveWeeklyGamesAnswer(weeklyGamesAnswers)) {           
             result.setCode("" + HttpStatus.OK);
             result.setMessage("Answer submitted");

@@ -190,11 +190,12 @@ public class MatchPredictionProcessing {
     }
     
      */
-    // @Scheduled(fixedDelay = 10000)
-    // @Scheduled(cron = "0 0 0/1 1/1 * ? *") // Run every hour
-    @Scheduled(cron = "0 0/16 0 ? * * ") // Every 16mins
-    //@Scheduled(cron = "0 0 0/4 ? *  *", zone = "Africa/Nigeria") // At second :00, at minute :00, every 4 hours starting at 00am, of every day
-    // @Scheduled(cron = "0 0 0/4 ? *  *") 
+ 
+    /**
+     * This is a schduling job for processing match prediction winner
+     * Its currently not in use. Uncomment to use
+     */
+    //@Scheduled(cron = "0 0/16 0 ? * * ") // Every 16mins    
     public void processMatchPredictionWinners() {
         logger.info("Inside processMatchPredictionWinners to process Match Prediction winners");
         List<MatchPrediction> matchPredictionList = null;

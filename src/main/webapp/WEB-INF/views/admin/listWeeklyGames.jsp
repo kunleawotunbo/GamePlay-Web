@@ -25,7 +25,8 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
+            -->
         </div>
 
         <div class="clearfix"></div>
@@ -33,7 +34,7 @@
 
         <div class="row">
             <!-- form input mask -->
-            <!--              <div class="col-md-6 col-sm-12 col-xs-12">--> 
+           
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -44,7 +45,6 @@
                     <div class="x_content">
                         <br />
 
-                        <!--<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">-->
                         <table id="datatable-responsive" class="table table-striped table-bordered " cellspacing="0" width="100%">       
                             <thead>
                                 <tr>
@@ -57,8 +57,7 @@
                                     <th>VIEW WINNERS</th>
                                     <th></th>
                                     <th></th
-                                    <!--<th></th>-->
-
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,7 +99,8 @@
                                                     </li>
                                                     <li class="divider"></li>
                                                     <li><a href="#">Separated link</a>
-                                                    </li>-->
+                                                    </li>
+                                                    -->
                                                 </ul>
                                             </div>
                                         </td>
@@ -116,7 +116,6 @@
                                 </c:forEach>  
                             </tbody>
                         </table>
-
 
                     </div>
                 </div>

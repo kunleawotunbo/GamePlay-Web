@@ -429,7 +429,7 @@ public class WeeklyGamesController {
                 //tunborUtility.processWinnerByMatchPredictionId(matchPredictionObject);
                 tunborUtility.processWinnerWeeklyGameId(weeklyGamesObject);
             } else {
-                logger.info("Match winners has been processed before :: " + weeklyGamesObject.getId());
+                logger.info("Game winners has been processed before :: " + weeklyGamesObject.getId());
             }
             
             result.setCode("" + HttpStatus.OK);

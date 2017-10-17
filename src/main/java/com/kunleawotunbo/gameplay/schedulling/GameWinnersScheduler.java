@@ -54,7 +54,7 @@ public class GameWinnersScheduler {
     public void printMessage() {
         List<User> userList = userService.findAllUsers();
         for (User item : userList) {
-            System.out.println("First Name :: " + item.getFirstName());
+           // System.out.println("First Name :: " + item.getFirstName());
         }
         System.out.println("I am called by Spring scheduler");
     }

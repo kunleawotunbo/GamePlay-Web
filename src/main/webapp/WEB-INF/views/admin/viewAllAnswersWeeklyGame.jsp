@@ -57,8 +57,7 @@
                                     <th>PHONE NO </th>
                                     <th>DATE ANSWERED</th>  
                                     <th>USER ANSWER</th>                                    
-                                    <th>STATUS</th>
-                                   
+                                    <!--<th>STATUS</th>-->                                 
 
                                 </tr>
                             </thead>
@@ -71,7 +70,7 @@
                                             <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.dateAnswered}" />
                                         </td> 
                                         <td>${item.userAnswer}</td>   
-                                        <td></td>   
+                                        <!--<td></td>-->   
                                        
                                        
                                     </tr>  
