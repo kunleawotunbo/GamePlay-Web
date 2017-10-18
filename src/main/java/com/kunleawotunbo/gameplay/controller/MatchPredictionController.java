@@ -98,15 +98,18 @@ public class MatchPredictionController {
         List<MatchPrediction> eplMatchesList = null;
         List<MatchPrediction> laligaMatchesList = null;
         List<MatchPrediction> otherLeagueMatchesList = null;
+        List<MatchPrediction> champLeaguesMatchesList = null;
         String england = "England";
         String epl = "Premier League";
         String spain = "Spanin";
         String laliga = "La Liga";
+        String championsLeagues = "Champions League";
         
         activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
         eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
         laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
         otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
+        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
         
         model.addAttribute("activeMatchesList", activeMatchesList);
         
@@ -114,11 +117,13 @@ public class MatchPredictionController {
         model.addAttribute("spain", spain);
         model.addAttribute("epl", epl);
         model.addAttribute("laliga", laliga);
+        model.addAttribute("championsLeagues", championsLeagues);
         
         
         model.addAttribute("eplMatchesList", eplMatchesList);
         model.addAttribute("laligaMatchesList", laligaMatchesList);
-        model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
+         model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
+        model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
         
         return "prediction";
     }

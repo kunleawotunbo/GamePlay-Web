@@ -263,8 +263,61 @@
 
                             </tbody>
                         </table>
-                        </c:if>                           
+                        </c:if>  
                                     
+                                    <!--Champions League-->
+
+                           <c:if test="${!empty champLeaguesMatchesList}">             
+                        <table class="table">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th></th>
+                                    <th style="width: 400px">${championsLeagues} - ${championsLeagues}</th>
+                                    
+                                    <th>
+                                        <!--                                    
+                                        &nbsp; &nbsp; &nbsp;
+                                        Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                        Draw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                        Away
+                                        -->
+                                    </th>
+                                </tr>
+                            </thead>
+                                
+                            <tbody>
+                                 <c:forEach items="${champLeaguesMatchesList}" var="item" varStatus = "status">    
+                                <tr>                                   
+                                    <tr>  
+                                        <td>
+                                            <div class="dataInizio"> 
+                                                <fmt:formatDate pattern="HH:mm" value = "${item.startTime}" />
+                                            </div>
+                                        </td> 
+                                        <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
+
+                                        <td>
+                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                            </a>                                            
+                                            &nbsp;
+                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                            </a>
+                                            &nbsp;
+                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                            </a>                                        
+
+                                        </td>                                    
+                                    </tr>  
+                                    
+                                </tr>
+                                 </c:forEach>  
+
+                            </tbody>
+                        </table>
+                        </c:if>                
 
                     </div>
 
