@@ -474,8 +474,8 @@ public class WeeklyGamesController {
      * @param errors
      * @return
      */
-    @PostMapping(value = "/setUserAnswerForMatcPrediction")
-    public ResponseEntity setUserAnswerForMatcPrediction(@RequestBody MatchPredictionResult mPResult, Errors errors) {
+    @PostMapping(value = "/setMatchPredictionAnswerByAdmin")
+    public ResponseEntity setMatchPredictionAnswerByAdmin(@RequestBody MatchPredictionResult mPResult, Errors errors) {
         boolean saved;
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {

@@ -74,3 +74,6 @@ New task JACKPOT MODULE 26-09-2017
 10. total number of SELECTED winners for a particular game and for all games on a module. - Olakunle
 
 
+16/10/2017
+
+1. Match setup. First item in the dropdown does not list teams when selected

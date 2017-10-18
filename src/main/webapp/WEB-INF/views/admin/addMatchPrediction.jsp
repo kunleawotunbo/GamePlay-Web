@@ -132,7 +132,7 @@
                                 --%>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">HomeTeam<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Away Team<span class="required">*</span></label>
                                     <div class="col-sm-4">                                         
                                         <form:select id="awayTeamId" path="awayTeamId" title="Choose Away Team" class="form-control">                                           
                                             <form:option value="0" label="Choose Away Team" />

@@ -242,7 +242,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "${pageContext.request.contextPath}/api/weeklygames/setUserAnswerForMatcPrediction",
+                    url: "${pageContext.request.contextPath}/api/weeklygames/setMatchPredictionAnswerByAdmin",
                     data: JSON.stringify(json),
                     dataType: 'json',
                     timeout: 100000,
