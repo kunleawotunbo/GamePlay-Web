@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.dao.MatchPredictionAnswerDao;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,34 @@ public class MatchPredictionAnswerServiceImpl implements MatchPredictionAnswerSe
         
         return matchPredictionAnswerDao.listByCountry(countryCode);
         
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
+        return matchPredictionAnswerDao.listAnswerByPhoneAndDate(userPhoneNo, startDate, endDate);
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByCodeAndCountry(int code, String countryCode) {
+        return matchPredictionAnswerDao.listAnswerByCodeAndCountry(code, countryCode);
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByCode(int code) {
+        return matchPredictionAnswerDao.listAnswerByCode(code);
+    }
+
+    public List<MatchPredictionAnswer> listAnswersByUserPhoneNo(String userPhoneNo) {
+        return matchPredictionAnswerDao.listAnswersByUserPhoneNo(userPhoneNo);
+    }
+
+    public List<MatchPredictionAnswer> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners) {
+        return matchPredictionAnswerDao.listCorrectAnswersForJPByGameId(gameAnswer, gameId, noOfWinners);
+    }
+
+    public void updateBulkMatchPredictionAnswers(List<MatchPredictionAnswer> items) {
+        matchPredictionAnswerDao.updateBulkMatchPredictionAnswers(items);
+    }
+
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswerByGameId(int gameId) {
+        return matchPredictionAnswerDao.listAllMatchPredictionAnswerByGameId(gameId);
     }
     
 }

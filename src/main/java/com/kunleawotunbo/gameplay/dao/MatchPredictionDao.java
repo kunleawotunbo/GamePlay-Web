@@ -23,7 +23,7 @@ public interface MatchPredictionDao {
 
     public void deleteMatchPrediction(MatchPrediction matchPrediction);
 
-    public List<MatchPrediction> listAllMatchPredictions();
+    public List<MatchPrediction> listAllMatchPredictions(int start, int limit);
     
     List<MatchPrediction> listActiveMatches( Date date);
     

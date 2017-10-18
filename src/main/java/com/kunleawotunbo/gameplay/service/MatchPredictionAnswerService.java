@@ -6,6 +6,7 @@
 package com.kunleawotunbo.gameplay.service;
 
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,4 +40,18 @@ public interface MatchPredictionAnswerService {
     List<MatchPredictionAnswer> listAllMatchPredictionAnswersByGameId(int gameId);
     
     public List<MatchPredictionAnswer> listByCountry(String countryCode);
+    
+    public List<MatchPredictionAnswer> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate);
+    
+    public List<MatchPredictionAnswer> listAnswerByCodeAndCountry(int code, String countryCode);
+    
+    public List<MatchPredictionAnswer> listAnswerByCode(int code);
+    
+    public List<MatchPredictionAnswer> listAnswersByUserPhoneNo(String userPhoneNo);
+    
+    public List<MatchPredictionAnswer> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners);
+    
+    public void updateBulkMatchPredictionAnswers(List<MatchPredictionAnswer> items);
+    
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswerByGameId(int gameId);
 }

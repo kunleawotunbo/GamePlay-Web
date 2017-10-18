@@ -71,7 +71,18 @@
                                         <td>
                                             <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.dateAnswered}" />
                                         </td> 
-                                        <td>${item.userAnswer}</td>    
+                                        <c:if test="${item.userAnswer=='1'}">
+                                            <c:set var="userAnswer" value="Home Win" />
+                                        </c:if>
+
+                                        <c:if test="${item.userAnswer=='X'}">
+                                            <c:set var="userAnswer" value="Draw" />
+                                        </c:if>
+                                        
+                                        <c:if test="${item.userAnswer=='2'}">
+                                            <c:set var="userAnswer" value="Away Win" />
+                                        </c:if>
+                                        <td>${userAnswer}</td>    
                                         <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value = "${item.proccessedDate}" /></td> 
 
                                     </tr>  

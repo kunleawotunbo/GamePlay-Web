@@ -1,7 +1,7 @@
 <%-- 
-    Document   : jpReportByWinners
-    Created on : Oct 2, 2017, 6:55:42 PM
-    Author     : Olakunle Awotunbo
+    Document   : mpReportByPeriod
+    Created on : Oct 18, 2017, 11:12:22 PM
+    Author     : OLAKUNLE
 --%>
 
 <%@ include file="../includes/header.jsp" %>
@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Reports</h3>
+                <h3>Match Prediction</h3>
             </div>
             <!--
                         <div class="title_right">
@@ -60,17 +60,36 @@
                         </c:if>  
 
                         <div id="feedback"></div>
-                        
-                        <form:form modelAttribute="weeklyGamesAnswers" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
+
+                        <%--<form:form modelAttribute="game" class="form-horizontal form-label-left" id="gameCategory-form" data-parsley-validate="">--%>
+                        <form:form modelAttribute="matchPredictionAnswer" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
                             <form:hidden path="id" id="id" name="id" />
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code<span class="required">*</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone Number<span class="required">*</span></label>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <form:input path="code" id="code" type="text" class="form-control" name="code" placeholder="Game Code" required ="required" />                                  
+                                    <form:input path="userPhoneNo" id="userPhoneNo" type="text" class="form-control" name="userPhoneNo" placeholder="User Phone number" required ="required" />                                  
                                 </div>
                             </div>  
 
 
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3 ">Game Start Date<span class="required">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <form:input path="startDate" id="startDate" name="startDate" type="text" class="form-control "  placeholder=" Start date" required ="required" />                                 
+                                    <!--<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>-->
+                                    <!--<span class="fa fa-user form-control-calendar right" aria-hidden="true"></span>-->
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Expiry Date<span class="required">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <form:input path="endDate" id="endDate" name="endDate" type="text" class="form-control"  placeholder=" Expiry date" required ="required" />                                 
+                                    <!--<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>-->
+                                </div>
+                            </div>        
+
+                        
 
 
                             <div class="ln_solid"></div>
@@ -81,7 +100,7 @@
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
-                                        <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" /> 
+                                        <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +146,18 @@
                                     <tr>  
                                         <td><c:out value="${status.index + 1}"/></td> 
                                         <td><c:out value="${item.userPhoneNo}"/></td>  
-                                        <td><c:out value="${item.userAnswer}"/></td> 
+                                        <c:if test="${item.userAnswer=='1'}">
+                                            <c:set var="userAnswer" value="Home Win" />
+                                        </c:if>
+
+                                        <c:if test="${item.userAnswer=='X'}">
+                                            <c:set var="userAnswer" value="Draw" />
+                                        </c:if>
+                                        
+                                        <c:if test="${item.userAnswer=='2'}">
+                                            <c:set var="userAnswer" value="Away Win" />
+                                        </c:if>
+                                        <td><c:out value="${userAnswer}"/></td> 
                                         <td><c:out value="${item.dateAnswered}"/></td> 
                                         
                                     </tr>  
@@ -147,4 +177,28 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
-      
+         <script>
+
+                // Date time picker
+                $(function () {
+                //  var temp = $(this).datepicker('getDate');
+                // var d = new Date(temp);
+                // d.setDate(d.getDate() + 1);
+                $('#startDate').datetimepicker({
+                //autoclose: true,
+                format: 'DD-MM-YYYY HH:mm:ss'
+                        //format: 'dd MMM yyyy HH:mm:ss zzz'
+                        // startDate: d
+
+                });
+                $('#endDate').datetimepicker({
+                //autoclose: true,
+                format: 'DD-MM-YYYY HH:mm:ss'
+                        //format: 'dd MMM yyyy HH:mm:ss zzz'
+                        // startDate: d
+
+                });
+                });
+            
+            
+        </script>    

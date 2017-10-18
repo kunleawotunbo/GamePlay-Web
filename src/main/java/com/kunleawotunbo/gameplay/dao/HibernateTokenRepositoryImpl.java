@@ -8,6 +8,7 @@ package com.kunleawotunbo.gameplay.dao;
 import com.kunleawotunbo.gameplay.model.PersistentLogin;
 import com.kunleawotunbo.gameplay.dao.AbstractDao;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -21,14 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author olakunle
  */
-
 @Repository("tokenRepositoryDao")
 @Transactional
 public class HibernateTokenRepositoryImpl extends AbstractDao<String, PersistentLogin>
-    implements PersistentTokenRepository{
+        implements PersistentTokenRepository {
 
     static final Logger logger = LoggerFactory.getLogger(HibernateTokenRepositoryImpl.class);
-    
+
     @Override
     public void createNewToken(PersistentRememberMeToken token) {
         logger.info("Creating Token for user : {}", token.getUsername());
@@ -47,7 +47,7 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
             Criteria crit = createEntityCriteria();
             crit.add(Restrictions.eq("series", seriesId));
             PersistentLogin persistentLogin = (PersistentLogin) crit.uniqueResult();
-            
+
             return new PersistentRememberMeToken(persistentLogin.getUsername(), persistentLogin.getSeries(),
                     persistentLogin.getToken(), persistentLogin.getLastUsed());
         } catch (Exception e) {
@@ -61,13 +61,22 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
         logger.info("Removing Token if any for user : {}", username);
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("username", username));
-        PersistentLogin persistentLogin = (PersistentLogin) crit.uniqueResult();
+        /*
+        PersistentLogin persistentLogin = (PersistentLogin) crit.uniqueResult(); 
         if (persistentLogin != null){
             logger.info("rememberMe was selected");
             delete(persistentLogin);
         }
+         */
+        List<PersistentLogin> persistentLoginList = (List<PersistentLogin>) crit.list();
+        if (persistentLoginList != null) {
+            for (PersistentLogin persistentLogin : persistentLoginList) {
+                logger.info("rememberMe was selected");
+                delete(persistentLogin);
+            }
+        }
     }
-    
+
     @Override
     public void updateToken(String seriesId, String tokenValue, Date lastUsed) {
         logger.info("Updating Token for seriesId : {}", seriesId);
@@ -75,6 +84,6 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
         persistentLogin.setToken(tokenValue);
         persistentLogin.setLastUsed(lastUsed);
         update(persistentLogin);
-    }   
-    
+    }
+
 }

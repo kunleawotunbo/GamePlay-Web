@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Jackpot</h3>
+                <h3>Reports</h3>
             </div>
             <!--
                         <div class="title_right">
@@ -64,7 +64,7 @@
                         <form:form modelAttribute="weeklyGamesAnswers" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
                             <form:hidden path="id" id="id" name="id" />
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Jackpot Code<span class="required">*</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code<span class="required">*</span></label>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <form:input path="code" id="code" type="text" class="form-control" name="code" placeholder="Game Code" required ="required" />                                  
                                 </div>
@@ -123,9 +123,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${list}" var="item">  
+                                <c:forEach items="${list}" var="item" varStatus = "status">  
                                     <tr>  
-                                        <td><c:out value="${item.id}"/></td>  
+                                        <td><c:out value="${status.index + 1}"/></td> 
                                         <td><c:out value="${item.userPhoneNo}"/></td>  
                                         <td><c:out value="${item.userAnswer}"/></td> 
                                         <td><c:out value="${item.dateAnswered}"/></td> 

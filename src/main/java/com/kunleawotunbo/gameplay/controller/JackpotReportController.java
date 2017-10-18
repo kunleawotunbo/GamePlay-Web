@@ -5,10 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
-import com.kunleawotunbo.gameplay.bean.GameBean;
 import com.kunleawotunbo.gameplay.bean.WeeklyGamesAnswersBean;
-import com.kunleawotunbo.gameplay.model.Game;
-import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.CountryService;
 import com.kunleawotunbo.gameplay.service.GameService;

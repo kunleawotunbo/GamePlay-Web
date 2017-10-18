@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.MatchPredictionAnswerBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
@@ -280,7 +281,9 @@ public class MatchPredictionController {
         List<MatchPrediction> matchPredictionList = null;
 
         //matchPredictionList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
-        matchPredictionList = matchPredictionService.listAllMatchPredictions();
+        int start = 0;
+        int limit = 50;
+        matchPredictionList = matchPredictionService.listAllMatchPredictions(start, limit);
 
         model.addAttribute("matchPredictionList", matchPredictionList);
         //model.addAttribute("loggedinuser", getPrincipal());
@@ -460,6 +463,97 @@ public class MatchPredictionController {
          return "/admin/answersByPlayerCountryList";
 
       }
+    
+    
+    /**
+     * Get mpReportByPeriod page
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/mpReportByPeriod", method = RequestMethod.GET)
+    public String getMpReportByPeriod(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("matchPredictionAnswer", new MatchPredictionAnswerBean());
+               
+        return "/admin/mpReportByPeriod";
+    }
+    
+    @RequestMapping(value = "/admin/mpReportByPeriod", method = RequestMethod.POST)
+    public String mpReportByPeriod(MatchPredictionAnswerBean matchPredictionAnswerBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("To report on match prediction game");
+        
+        System.out.println("getUserPhoneNo :: " + matchPredictionAnswerBean.getUserPhoneNo());
+        System.out.println("getStartDate :: " + matchPredictionAnswerBean.getStartDate());
+        System.out.println("getStartDate :: " + matchPredictionAnswerBean.getEndDate());
+        
+        List<MatchPredictionAnswer> list = null;
+        
+        list = matchPredictionAnswerService.listAnswerByPhoneAndDate(
+                matchPredictionAnswerBean.getUserPhoneNo(),                
+                matchPredictionAnswerBean.getStartDate(), matchPredictionAnswerBean.getEndDate());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("matchPredictionAnswer", matchPredictionAnswerBean);
+        model.addAttribute("userPhoneNo", matchPredictionAnswerBean.getUserPhoneNo());
+
+        return "admin/mpReportByPeriod";
+
+    }
+    
+    
+    /**
+     * Get JpReportByPeriodCountry page
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/mpReportByCountry", method = RequestMethod.GET)
+    public String getMpReportByCountry(ModelMap model, HttpServletRequest request) {
+
+       
+        model.addAttribute("matchPredictionAnswer", new MatchPredictionAnswerBean());
+        model.addAttribute("countriesList", countryService.listCountries());
+              
+        return "/admin/mpReportByCountry";
+    }
+    
+    /**
+     * Fetch reports by game code and country code
+     * @param weeklyGamesAnswersBean
+     * @param result
+     * @param model
+     * @param req
+     * @return 
+     */
+    @RequestMapping(value = "/admin/mpReportByCountry", method = RequestMethod.POST)
+    public String mpReportByCountry(MatchPredictionAnswerBean matchPredictionAnswerBean, BindingResult result,
+            ModelMap model, HttpServletRequest req) {        
+        
+        logger.info("Report on mpReportByCountry");
+     
+        System.out.println("getCode :: " + matchPredictionAnswerBean.getCode());
+        System.out.println("getCountryCode :: " + matchPredictionAnswerBean.getCountryCode());       
+        
+        List<MatchPredictionAnswer> list = null;
+        
+        list = matchPredictionAnswerService.listAnswerByCodeAndCountry(matchPredictionAnswerBean.getCode(),
+                matchPredictionAnswerBean.getCountryCode());
+        
+        model.addAttribute("list", list);
+        model.addAttribute("total", list.size());
+        model.addAttribute("matchPredictionAnswer", matchPredictionAnswerBean);
+        model.addAttribute("userPhoneNo", matchPredictionAnswerBean.getUserPhoneNo());
+        model.addAttribute("countriesList", countryService.listCountries());
+
+        return "admin/mpReportByCountry";
+
+    }
+    
 
 
 }

@@ -38,8 +38,8 @@ public class MatchPredictionServiceImpl implements MatchPredictionService{
         matchPredictionDao.deleteMatchPrediction(matchPrediction);
     }
 
-    public List<MatchPrediction> listAllMatchPredictions() {
-        return matchPredictionDao.listAllMatchPredictions();
+    public List<MatchPrediction> listAllMatchPredictions(int start, int limit) {
+        return matchPredictionDao.listAllMatchPredictions(start, limit);
     }
 
     public List<MatchPrediction> listActiveMatches( Date date) {

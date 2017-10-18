@@ -1,7 +1,7 @@
 <%-- 
-    Document   : jpReportByWinners
-    Created on : Oct 2, 2017, 6:55:42 PM
-    Author     : Olakunle Awotunbo
+    Document   : mpReportByCountry
+    Created on : Oct 18, 2017, 11:48:52 PM
+    Author     : OLAKUNLE
 --%>
 
 <%@ include file="../includes/header.jsp" %>
@@ -60,18 +60,29 @@
                         </c:if>  
 
                         <div id="feedback"></div>
-                        
-                        <form:form modelAttribute="weeklyGamesAnswers" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
+
+                        <form:form modelAttribute="matchPredictionAnswer" method="POST" class="form-horizontal form-label-left" id="report-form" data-parsley-validate="">  
                             <form:hidden path="id" id="id" name="id" />
-                            <div class="form-group">
+                            
+                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code<span class="required">*</span></label>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <form:input path="code" id="code" type="text" class="form-control" name="code" placeholder="Game Code" required ="required" />                                  
                                 </div>
                             </div>  
 
-
-
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Country<span class="required">*</span></label>
+                                <div class="col-sm-4">                                         
+                                    <form:select id="countryCode" path="countryCode" title="Choose Country" class="form-control">
+                                        <option value="">Choose Country</option>
+                                        <form:options items="${countriesList}" itemValue="countryCode" itemLabel="countryName"/>
+                                    </form:select>   
+                                </div>
+                            </div>
+                            
+                           
 
                             <div class="ln_solid"></div>
 
@@ -81,7 +92,7 @@
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <!--<button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>-->
-                                        <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" /> 
+                                        <input type="submit" id="bth-submit" class="btn btn-success" value="Submit" onclick="return submitForm();"/> 
                                     </div>
                                 </div>
                             </div>
@@ -147,4 +158,4 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
-      
+        

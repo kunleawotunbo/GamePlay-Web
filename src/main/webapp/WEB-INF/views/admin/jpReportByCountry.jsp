@@ -13,7 +13,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Jackpot</h3>
+                <h3>Reports</h3>
             </div>
             <!--
                         <div class="title_right">
@@ -134,9 +134,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${list}" var="item">  
+                                <c:forEach items="${list}" var="item" varStatus = "status">  
                                     <tr>  
-                                        <td><c:out value="${item.id}"/></td>  
+                                        <td><c:out value="${status.index + 1}"/></td> 
                                         <td><c:out value="${item.userPhoneNo}"/></td>  
                                         <td><c:out value="${item.userAnswer}"/></td> 
                                         <td><c:out value="${item.dateAnswered}"/></td> 

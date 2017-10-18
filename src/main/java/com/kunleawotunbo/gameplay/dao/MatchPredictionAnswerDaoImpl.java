@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.dao;
 
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.hibernate.Criteria;
@@ -155,6 +156,55 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
         System.out.println("crit.toString() :: " + crit.toString());
 
         return crit.list();
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
+         logger.info("userPhoneNo :: " + userPhoneNo);
+
+        Criteria crit = createEntityCriteria();
+
+        crit.add(Restrictions.eq("userPhoneNo", userPhoneNo));
+
+        // crit.add(Restrictions.ge("gameStartDate", date));
+        // crit.add(Restrictions.le("gameExpiryDate", date));
+        // To get game based on the game expiry date
+        crit.add(Restrictions.ge("dateAnswered", startDate));
+        crit.add(Restrictions.le("dateAnswered", endDate));
+
+        //System.out.println("crit.toString() :: " + crit.toString());
+
+        return crit.list();
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByCodeAndCountry(int code, String countryCode) {
+        logger.info("code :: " + code);
+        logger.info("countryCode :: " + countryCode);
+
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("code", code));
+        crit.add(Restrictions.eq("countryCode", countryCode));
+
+        return crit.list();
+    }
+
+    public List<MatchPredictionAnswer> listAnswerByCode(int code) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<MatchPredictionAnswer> listAnswersByUserPhoneNo(String userPhoneNo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<MatchPredictionAnswer> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void updateBulkMatchPredictionAnswers(List<MatchPredictionAnswer> items) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<MatchPredictionAnswer> listAllMatchPredictionAnswerByGameId(int gameId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -66,10 +66,12 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
         delete(matchPrediction);
     }
 
-    public List<MatchPrediction> listAllMatchPredictions() {
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("startTime"));
+    public List<MatchPrediction> listAllMatchPredictions(int start, int limit) {
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("id"));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.setFirstResult(start);
+        criteria.setMaxResults(limit);
         List<MatchPrediction> matchPredictionList = (List<MatchPrediction>) criteria.list();
 
         return matchPredictionList;
