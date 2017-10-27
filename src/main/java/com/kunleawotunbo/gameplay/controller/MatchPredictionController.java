@@ -19,10 +19,17 @@ import com.kunleawotunbo.gameplay.service.MatchPredictionService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionWinnerService;
 import com.kunleawotunbo.gameplay.service.TeamService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +76,8 @@ public class MatchPredictionController {
     private LeagueService leagueService;
     
     final Logger logger = LoggerFactory.getLogger(getClass());
+    
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -76,21 +85,6 @@ public class MatchPredictionController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-    
-    /*
-    @RequestMapping(value = "/prediction", method = RequestMethod.GET)
-    public String getPredictionPage(ModelMap model, HttpServletRequest request) {
-
-        List<MatchPrediction> activeMatchesList = null;
-
-        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
-
-        model.addAttribute("activeMatchesList", activeMatchesList);
-        //  model.addAttribute("lastWeekTotalAnswers", weeklyGamesAnswersService.submittedAnswersByWeek(tunborUtility.gameWeek() - 1));
-
-        return "prediction";
-    }
-    */
     
       @RequestMapping(value = "/prediction", method = RequestMethod.GET)
     public String getPredictionPage(ModelMap model, HttpServletRequest request) {
@@ -102,15 +96,81 @@ public class MatchPredictionController {
         List<MatchPrediction> champLeaguesMatchesList = null;
         String england = "England";
         String epl = "Premier League";
-        String spain = "Spanin";
+        String spain = "Spani";
         String laliga = "La Liga";
         String championsLeagues = "Champions League";
+        
+        //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+       
         
         activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
         eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
         laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
         otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
         champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
+        
+        model.addAttribute("activeMatchesList", activeMatchesList);
+        
+        model.addAttribute("england", england);
+        model.addAttribute("spain", spain);
+        model.addAttribute("epl", epl);
+        model.addAttribute("laliga", laliga);
+        model.addAttribute("championsLeagues", championsLeagues);
+        
+        
+        model.addAttribute("eplMatchesList", eplMatchesList);
+        model.addAttribute("laligaMatchesList", laligaMatchesList);
+         model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
+        model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
+        
+        return "prediction";
+    }
+    
+     @RequestMapping(value = "/soccer/{dateString}", method = RequestMethod.GET)
+    public String getMatchByDate(@PathVariable String dateString, ModelMap model, HttpServletRequest request) {
+
+        List<MatchPrediction> activeMatchesList = null;
+        List<MatchPrediction> eplMatchesList = null;
+        List<MatchPrediction> laligaMatchesList = null;
+        List<MatchPrediction> otherLeagueMatchesList = null;
+        List<MatchPrediction> champLeaguesMatchesList = null;
+        String england = "England";
+        String epl = "Premier League";
+        String spain = "Spani";
+        String laliga = "La Liga";
+        String championsLeagues = "Champions League";
+        
+        //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+       
+        /*
+        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
+        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
+        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
+        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
+        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
+        */
+        logger.info("dateString :: " + dateString);
+        DateFormat inputFormat = new SimpleDateFormat(
+                "yyyy MMM dd", Locale.ENGLISH);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date date = null;
+        try {
+            System.out.println("format1.parse(dateString) :: " + format1.parse(dateString));
+            date =  format1.parse(dateString);
+            //date = inputFormat.parse(dateString);
+            
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("date :: " + date);
+        
+        activeMatchesList = matchPredictionService.listActiveMatches(date);
+        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "EPL");
+        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "LaLiga");
+        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "");
+        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "Champions League");
+        
         
         model.addAttribute("activeMatchesList", activeMatchesList);
         

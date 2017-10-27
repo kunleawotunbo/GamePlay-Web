@@ -73,7 +73,7 @@
                                             <div class="form-group row text-left" id="gameText">
                                                 <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Text</label>
                                                 <div class="col-sm-9">
-                                                    <p class="form-control-static">${weeklyGame.gameText}</p>
+                                                    <h1 class="text-center">   <p class="form-control-static">${weeklyGame.gameText}</p> </h1>
                                                 </div>
                                             </div> 
 

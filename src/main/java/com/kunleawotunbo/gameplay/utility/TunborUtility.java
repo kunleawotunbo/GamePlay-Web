@@ -406,7 +406,8 @@ public class TunborUtility {
         Date currentDate = calendar.getTime();
 
         logger.info("date :: " + currentDate);
-
+        
+        /*
         String startDateString = "2017/08/09";
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         Date startDate;
@@ -418,6 +419,7 @@ public class TunborUtility {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        */
 
         return currentDate;
     }

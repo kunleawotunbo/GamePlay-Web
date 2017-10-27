@@ -5,8 +5,11 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
+import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -81,11 +84,19 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
 
         boolean enabled = true;
 
-        //Criteria crit = createEntityCriteria();
+        // Set toDate. This will be used in to get match between starttime and the midgnigh. 
+        // Since Hibrenate doesn't provide function to query by date another (without time)
+         Calendar calendar = Calendar.getInstance();
+        
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Date toDate = calendar.getTime();
+        
         Criteria crit = createEntityCriteria().addOrder(Order.asc("countryCode"));
         crit.add(Restrictions.eq("enabled", enabled));
-
-        crit.add(Restrictions.ge("endTime", date));
+         crit.add(Restrictions.between("startTime", date, toDate));
 
         // group by
         //crit.add(Projections.groupProperty("countryCode"));
@@ -105,11 +116,20 @@ public class MatchPredictionDaoImpl extends AbstractDao<Integer, MatchPrediction
     public List<MatchPrediction> listActiveMatchesByLeagueCode(Date date, String leagueCode) {
         boolean enabled = true;
 
+         // Set toDate. This will be used in to get match between starttime and the midgnigh. 
+        // Since Hibrenate doesn't provide function to query by date another (without time)
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Date toDate = calendar.getTime();
+        
         Criteria crit = createEntityCriteria().addOrder(Order.asc("leagueCode"));
         crit.add(Restrictions.eq("leagueCode", leagueCode));
         crit.add(Restrictions.eq("enabled", enabled));
 
-        crit.add(Restrictions.ge("endTime", date));
+        crit.add(Restrictions.between("startTime", date, toDate));
 
         return crit.list();
     }

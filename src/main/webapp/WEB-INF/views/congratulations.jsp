@@ -46,9 +46,9 @@
                             Go to <a href="<c:url value='/' />">Homepage</a>
                         </span>
                         <span class="well floatLeft">
-                            <!--<a href="##" onclick="window.history.back()">Try another answer</a>-->
+                            <a href="##" onclick="window.history.back()">Try another answer</a>
                            
-                            <a href="<c:url value='/' />">Try another answer</a>
+                            <!--<a href="<c:url value='/' />">Try another answer</a>-->
                         </span>
                         <br><br>
                        
