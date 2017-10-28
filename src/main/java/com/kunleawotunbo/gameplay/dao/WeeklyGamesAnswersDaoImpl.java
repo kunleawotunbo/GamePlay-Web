@@ -499,8 +499,12 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
             logger.info("Checking WeeklyGamesAnswers id ::  " + item.getId());
            // String[] v1 = gameAnswer.replace(";", "").split(",");
             //String[] v2 = item.getUserAnswer().replace(";", "").split(",");
-            String[] v1 = gameAnswer.split(",");
-            String[] v2 = item.getUserAnswer().split(",");
+            
+            //String[] v1 = gameAnswer.split(",");
+            //String[] v2 = item.getUserAnswer().split(",");
+            // Changed separator to -
+            String[] v1 = gameAnswer.split("-");
+            String[] v2 = item.getUserAnswer().split("-");
             Arrays.sort(v1);
             Arrays.sort(v2);
             answerCorrect = Arrays.equals(v1, v2);

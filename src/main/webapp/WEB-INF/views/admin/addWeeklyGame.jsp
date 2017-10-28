@@ -8,6 +8,14 @@
 <%@ include file="../includes/sidebar-menu.jsp" %>
 <%@ include file="../includes/top-navigation.jsp" %>
 
+<style type="text/css">
+.smallbox { 
+    width: 50px;
+    margin:  1px;
+    display: inline-block;
+    border: 3px solid powderblue;
+}
+</style>
 
 <div class="right_col" role="main">
     <div class="">
@@ -66,7 +74,7 @@
 
 
                         <%--<form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">--%>
-                        <form:form modelAttribute="weeklyGame" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="">  
+                        <form:form modelAttribute="weeklyGame" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="" >  
                             <form:hidden path="id" id="id" name="id" />
 
                             <div class="form-group">
@@ -89,19 +97,35 @@
                                             <option value="">Choose Game Type</option>
                                             <form:options items="${gamePlayTypeList}" itemValue="id" itemLabel="typeName"/>
                                         </form:select>   
-
-                                        <%--<form:radiobuttons id="gameType" path="gamePlayType" items="${gamePlayTypeList}"  itemValue="id" itemLabel="typeName"/>--%>
-
-
-                                        <%--
-                                        <form:radiobutton id="gameType" path="gamePlayType" value="1" />Image Game 
-                                           <form:radiobutton id="gameType2" path="gamePlayType" value="2" />Text 
-                                        --%>
                                         </select>                                                          
                                     </div>
                                 </div>        
 
-
+                                <div class="form-group" id="gameTextJackpot">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 ">
+                                    <%--                                   
+                                        <form:input path="gameText" id="gameTextJackpot1" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <form:input path="gameText" id="gameTextJackpot2" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <form:input path="gameText" id="gameTextJackpot3" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <form:input path="gameText" id="gameTextJackpot4" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <form:input path="gameText" id="gameTextJackpot5" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <form:input path="gameText" id="gameTextJackpot6" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <form:input path="gameText" id="gameTextJackpot7" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <form:input path="gameText" id="gameTextJackpot8" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
+                                    --%>
+                                        <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                        <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        
+                                   </div>
+                                </div>
+                                    
                                 <div class="form-group" id="gameText">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -246,21 +270,14 @@
 
                 // Date time picker
                 $(function () {
-                //  var temp = $(this).datepicker('getDate');
-                // var d = new Date(temp);
-                // d.setDate(d.getDate() + 1);
                 $('#gameExpiryDate').datetimepicker({
                 //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
+                format: 'DD-MM-YYYY HH:mm:ss'                        
 
                 });
                 $('#gameStartDate').datetimepicker({
                 //autoclose: true,
-                format: 'DD-MM-YYYY HH:mm:ss'
-                        //format: 'dd MMM yyyy HH:mm:ss zzz'
-                        // startDate: d
+                format: 'DD-MM-YYYY HH:mm:ss'                      
 
                 });
                 });
@@ -291,11 +308,14 @@
 
                 var gameType1 = $('#gameType').val();
                 //console.log(" gameType1 ::" + gameType);
-                if (gameType1 == "1") {
+                if (gameType1 === "1") {
+                     console.log(" gameType is Question ::" + gameType1);
                 // Since gameType is Picutre, then Hide gameText div and remove required attribute
                 $('#gameText').hide();
-                $('#gameText2').hide();
+                $('#gameText2').hide();  
                 $("#gameText1").prop("required", false);
+                $('#gameTextJackpot').hide(); 
+                $("#gameTextJackpot").prop("required", false);                
                 // Show gameImage since gameType is picture and sett attribute required = true
                 $('#gameImage').show();
                 $('#gameImage1edit').show();
@@ -304,12 +324,13 @@
                 $('#gameImage2').show();
                 $('#gameImage2edit').show();
                 $("#gameImage2").prop("required", true);
-                } else {
-                // console.log(" gameType is Question ::" + gameText);
+                } else if (gameType1 === "2"){
+                 console.log(" gameType is Question ::" + gameType1);
 
                 // Since gameType is text question, then Hide gameImage div and remove required attribute
                 $('#gameImage').hide();
                 $('#gameImage1edit').hide();
+                 $('#gameTextJackpot').hide();  
                 $("#gameImage1").prop("required", false);
                 // Hide the second image upload field
                 $('#gameImage2').hide();
@@ -320,24 +341,57 @@
                 //$('#gameText2').show();
                 //$('#gameText2').hide();
                 $("#gameText1").prop("required", true);
-                }
+                }   else if (gameType === "3")   {
+                console.log("3 gameType is Question ::" + gameType);
+
+                // Since gameType is text question, then Hide gameImage div and remove required attribute
+                $('#gameImage').hide();
+                $('#gameImage1edit').hide();
+                 $('#gameText').hide();
+                  $("#gameText").prop("required", false);
+                $("#gameImage1").prop("required", false);
+                // Hide the second image field
+                $('#gameImage2').hide();
+                $('#gameImage2edit').hide();
+                $("#gameImage2").prop("required", false);
+                // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                $('#gameTextJackpot').show();
+                //$('#gameText2').show();
+               // $("#gameText1").prop("required", true);
+                }  else {
+                 console.log(" gameType is Question ::" + gameType1);
+
+                // Since gameType is text question, then Hide gameImage div and remove required attribute
+                $('#gameImage').hide();
+                $('#gameImage1edit').hide();
+                 $('#gameTextJackpot').hide();  
+                $("#gameImage1").prop("required", false);
+                // Hide the second image upload field
+                $('#gameImage2').hide();
+                $('#gameImage2edit').hide();
+                $("#gameImage2").prop("required", false);
+                // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                $('#gameText').show();
+                //$('#gameText2').show();
+                //$('#gameText2').hide();
+               // $("#gameText1").prop("required", true);
+                }             
+                
 
                 
-                
-
-
                 $("#gameType").change(function (event) {
 
 
                 //console.log("else gameText ::" + gameText);
                 var gameType = $('#gameType').val();
                 //console.log(" gameType ::" + gameType);
-                if (gameType == "1") {
-                // console.log(" gameType is Picture ::" + gameText);
+                if (gameType === "1") {
+                  console.log("1 gameType is Question ::" + gameType);
                 // 
                 // Since gameType is Picutre, then Hide gameText div and remove required attribute
-                $('#gameText').hide();
+                $('#gameText').hide().prop("required", false);
                 $('#gameText2').hide();
+                 $('#gameTextJackpot').hide();  
                 $("#gameText1").prop("required", false);
                 // Show gameImage since gameType is picture and sett attribute required = true
                 $('#gameImage').show();
@@ -347,12 +401,13 @@
                 $('#gameImage2').show();
                 $('#gameImage2edit').show();
                 $("#gameImage2").prop("required", true);
-                } else {
-                // console.log(" gameType is Question ::" + gameText);
+                } else if (gameType === "2")   {
+                console.log("2 gameType is Question ::" + gameType);
 
                 // Since gameType is text question, then Hide gameImage div and remove required attribute
                 $('#gameImage').hide();
                 $('#gameImage1edit').hide();
+                 $('#gameTextJackpot').hide();  
                 $("#gameImage1").prop("required", false);
                 // Hide the second image field
                 $('#gameImage2').hide();
@@ -362,7 +417,23 @@
                 $('#gameText').show();
                 //$('#gameText2').show();
                 $("#gameText1").prop("required", true);
-                }
+                } else if (gameType === "3")   {
+                console.log("3 gameType is Question ::" + gameType);
+
+                // Since gameType is text question, then Hide gameImage div and remove required attribute
+                $('#gameText').hide().prop("required", false);
+                $('#gameImage').hide();
+                $('#gameImage1edit').hide();
+                $("#gameImage1").prop("required", false);
+                // Hide the second image field
+                $('#gameImage2').hide();
+                $('#gameImage2edit').hide();
+                $("#gameImage2").prop("required", false);
+                // Show gameText since gameType is picture and sett attribute gameText1 required = true
+                $('#gameTextJackpot').show();
+                //$('#gameText2').show();
+               // $("#gameText1").prop("required", true);
+                } 
 
 
                 });
@@ -380,6 +451,17 @@
                 var gameText = $('#gameText1').val();
                 var gameImage = $('#gameImage1').val();
                 var createdBy = $('#createdBy').val();
+                if (gameType === "3") {
+                    var gameTextJackpot1 = $('#gameTextJackpot1').val();
+                    var gameTextJackpot2 = $('#gameTextJackpot2').val();
+                    alert("gameTextJackpot1 :: " + gameTextJackpot1);
+                    alert("gameTextJackpot2 :: " + gameTextJackpot2);
+                    
+                }else {
+                    alert("not 3 :: " + gameTextJackpot1);
+                    
+                }
+                
                 // console.log("gamePlayType ::" + gameType);
                 console.log("gameImage ::" + gameImage);
                 /*
@@ -465,7 +547,7 @@
 
             <script type="text/javascript">
                 function submitForm() {
-
+                    
                 // getting the user form values
                 var gameCategory = $('#gameCategory').val();
                 var gameType = $('#gameType').val();
@@ -494,10 +576,81 @@
                 $('#noOfWinners').focus();
                 return false;
                 }
+                
+                if (gameType === "3") {
+                    var gameTextJackpot1 = $('#gameTextJackpot1').val();
+                    var gameTextJackpot2 = $('#gameTextJackpot2').val();
+                    var gameTextJackpot3 = $('#gameTextJackpot3').val();
+                    var gameTextJackpot4 = $('#gameTextJackpot4').val();
+                    var gameTextJackpot5 = $('#gameTextJackpot5').val();
+                    var gameTextJackpot6 = $('#gameTextJackpot6').val();
+                    var gameTextJackpot7 = $('#gameTextJackpot7').val();
+                    var gameTextJackpot8 = $('#gameTextJackpot8').val();
+                   // alert("gameTextJackpot1 :: " + gameTextJackpot1);
+                   // alert("gameTextJackpot2 :: " + gameTextJackpot2);
+                    var allTinyFields =  "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
+                    + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
+                     + " - " + gameTextJackpot7 + " - " + gameTextJackpot8 ;
+                    //alert("allTinyFields :: " + allTinyFields);
 
+                    gameText = $('#gameText1').val("" + allTinyFields);
+                    
+                }else {
+                   // alert("not 3 :: " + gameTextJackpot1);
+                    
+                }
+                
+                
+                /*
 
+                if (file.length == 0) {
+                alert('Please upload a passport');
+                $('#file').focus();
+                return false;
+                } else {
+
+                var checkimg = image.toLowerCase();
+                if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                console.log("I am insie checking");
+                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                $('#file').focus();
+                return false;
+                }
+                console.log("Outside checking");
                 }
 
+                if (file2.length == 0) {
+                alert('Please upload an item');
+                $('#file2').focus();
+                return false;
+                } else {
+
+                var checkimg = image.toLowerCase();
+                if (!checkimg.match(/(\.jpg|\.png|\.JPG|\.PNG|\.jpeg|\.JPEG)$/)) {
+                console.log("I am insie checking");
+                alert("Please upload Image File Extensions .jpg,.png,.jpeg");
+                $('#file2').focus();
+                return false;
+                }
+                console.log("Outside checking");
+                }
+
+                var r = confirm("Do you want to Submit?");
+                if (r == true) {
+                frm.submit();
+                } else {
+                return false;
+                }
+                
+                */
+                
+                
+                return true;
+                }
+                
+                //end
+                
+                /*
                 if (file.length == 0) {
                 alert('Please upload a passport');
                 $('#file').focus();
@@ -540,5 +693,6 @@
                 return true;
                 }
                 ;
+                */
 
             </script>

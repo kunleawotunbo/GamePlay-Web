@@ -682,7 +682,7 @@ public class TunborUtility {
 
         try {
             // Get game answer by weeklyGame id
-            //MatchPredictionResult matchPResultObj = matchPredictionResultService.findByMatchPredictionId(matchPrediction.getId());
+            
             GameAnswer gameAnswerObj = gameAnswerService.findByGameId(weeklyGames.getId());
             logger.info("gameAnswerObj :: " + gameAnswerObj);
             if (gameAnswerObj != null) {
@@ -692,14 +692,12 @@ public class TunborUtility {
                     int noOfWinners = weeklyGames.getNoOfWinners();
                     logger.info("noOfWinners :: " + noOfWinners);
                     // Generate list of random winners
-                    //randomMatchPredictionWinnersList = matchPredictionAnswerService.listCorrectAnswersByGameId(gameAnswer, matchPrediction.getId(), noOfWinners);
+                    
                     randomWeeklyGamesWinnersList = weeklyGamesAnswersService.listCorrectAnswersForJPByGameId(gameAnswer, weeklyGames.getId(), noOfWinners);
                     logger.info("randomWeeklyGamesWinnersList.size() up :: " + randomWeeklyGamesWinnersList.size());
                     if (!randomWeeklyGamesWinnersList.isEmpty()) {
                         logger.info("randomMatchPredictionWinnersList.size() :: " + randomWeeklyGamesWinnersList.size());
                         // Persist list of random winners for weekly game
-                        //List<MatchPredictionWinner> winnersList = tunborUtility.matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
-                        //List<MatchPredictionWinner> winnersList = matchPredictionsListToGameWinnerList(randomMatchPredictionWinnersList);
                         List<WeeklyGamesWinner> winnersList = weeklyGamesListToGameWinnerList(randomWeeklyGamesWinnersList);
                         
                         //matchPredictionWinnerService.saveBulkMatchPredictionWinners(winnersList);
@@ -717,12 +715,12 @@ public class TunborUtility {
                         // set proccessed to 1.
                         int processedStatus = 1;
                         weeklyGames.setStatus(processedStatus);
-                        //matchPredictionService.updatePrediction(matchPrediction);
+                        
                         weeklyGamesService.updateWeeklyGame(weeklyGames);
 
                         logger.info("Finished weeklyGameId :: " + weeklyGames.getId());
                     } else {
-                        logger.info("randomWeeklyGamesWinnersList is null or empty for matchPredictionId :: " + weeklyGames.getId());
+                        logger.info("randomWeeklyGamesWinnersList is null or empty for weeklyGamesId :: " + weeklyGames.getId());
                     }
 
                 } else {

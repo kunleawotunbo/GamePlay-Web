@@ -8,13 +8,11 @@ package com.kunleawotunbo.gameplay.controller;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody2;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
-import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import io.swagger.annotations.Api;
-import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +45,8 @@ public class WeeklyGamesAnswersController {
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
     
     @Autowired
-    private TunborUtility tunborUtility;
+    private TunborUtility tunborUtility;   
     
-    @Autowired
-    private WeeklyGamesService weeklyGamesService;
     
     CustomResponseBody result = new CustomResponseBody();
     CustomResponseBody2 result2 = new CustomResponseBody2();

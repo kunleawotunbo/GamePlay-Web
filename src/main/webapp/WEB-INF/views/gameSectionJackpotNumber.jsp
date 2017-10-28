@@ -13,7 +13,14 @@
 <!--intl-tel-input-->
 <link href="<c:url value='/resources/css/intlTelInput.css' />"  rel="stylesheet"></link> 
 
-
+<style type="text/css">
+    .smallbox { 
+        width: 50px;
+        margin:  1px;
+        display: inline-block;
+        border: 3px solid powderblue;
+    }
+</style>
 <div class="container">
     <div class="row content">
 
@@ -76,6 +83,8 @@
                                                     <h1 class="text-center">   <p class="form-control-static">${weeklyGame.gameText}</p> </h1>
                                                 </div>
                                             </div> 
+                                            <input type="hidden" id="gameText" name="gameText" value="${weeklyGame.gameText}">                                                
+
 
                                         </c:otherwise>
                                     </c:choose>
@@ -84,37 +93,38 @@
                                 <div class="form-group row text-left" id="weekNo">
                                     <label for="weekNo" class="col-sm-3 form-control-label m-t-5">Week No</label>
                                     <div class="col-sm-9">
-                                       <p class="form-control-static">${weeklyGame.weekNo}</p>
+                                        <p class="form-control-static">${weeklyGame.weekNo}</p>
                                     </div>
                                 </div> 
-                                    
-                                 <div class="form-group row text-left" id="prizeOfWinner">
+
+                                <div class="form-group row text-left" id="prizeOfWinner">
                                     <label for="prizeOfWinner" class="col-sm-3 form-control-label m-t-5">Prize to Winner</label>
                                     <div class="col-sm-9">
-                                       <p class="form-control-static"> &#x20a6; ${weeklyGame.prizeOfWinners}</p>
+                                        <p class="form-control-static"> &#x20a6; ${weeklyGame.prizeOfWinners}</p>
                                     </div>
                                 </div>    
 
-                                  <div class="form-group row text-left" id="noOfWinners">
+                                <div class="form-group row text-left" id="noOfWinners">
                                     <label for="noOfWinners" class="col-sm-3 form-control-label m-t-5">No Of Winners</label>
                                     <div class="col-sm-9">
                                         <p class="form-control-static">${weeklyGame.noOfWinners}</p>
                                     </div>
                                 </div>  
-                                    
-                                 <div class="form-group row text-left" id="gameExpiryDate">
+
+                                <div class="form-group row text-left" id="gameExpiryDate">
                                     <label for="gameExpiryDate" class="col-sm-3 form-control-label m-t-5">Game Expiry Date</label>
                                     <div class="col-sm-9">
                                         <p class="form-control-static">${weeklyGame.gameExpiryDate}</p>
                                     </div>
                                 </div>  
 
-                                 <div class="form-group row text-left" id="gameRules">
+                                <div class="form-group row text-left" id="gameRules">
                                     <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
                                     <div class="col-sm-9">
                                         <p class="form-control-static">${weeklyGame.gameRules}</p>
                                     </div>
                                 </div>  
+                                <input type="hidden" id="gamePlayType" name="gamePlayType" value="${weeklyGame.gamePlayType}">
 
 
                             </form>
@@ -123,35 +133,68 @@
                             <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
                                 <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
                                 <form:hidden path="weekNo" value="${weeklyGame.weekNo}" id="weekNo2" name="weekNo2" />
-                                <form:hidden path="code" value="${weeklyGame.code}" id="code" name="code" />
-                                <%--              
-                                                <div class="form-group" >
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone No<span class="required">*</span></label>
-                                                <div class="col-md-9 col-sm-9 col-xs-9">
-                                                    <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="number" class="form-control" required ="required" />                                 
-                                                </div>
-                                            </div>
-                                --%>
-                                
+                                <form:hidden path="code" value="${weeklyGame.code}" id="code" name="code" />                               
+
+
                                 <div class="form-group row text-left" id="userPhoneNo2">
                                     <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
                                     <div class="col-sm-9">
-                                         <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
+                                        <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                         <p>Your phone number will be used to contact you if you win.</p> 
                                     </div>
                                 </div>  
 
-                                
-                                 <div class="form-group row text-left" id="userAnswer">
+
+                                <%--                             
+                                    <div class="form-group row text-left" id="userAnswer">
                                     <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
                                     <div class="col-sm-9">
-                                          <form:textarea path="userAnswer" id="userAnswer2" name="userAnswer2" type="textarea" class="form-control" rows="4"  placeholder="Input your answer to this question" required ="required" />                                 
+                                        <form:textarea path="userAnswer" id="userAnswer2" name="userAnswer2" type="textarea" class="form-control" rows="4"  placeholder="Input your answer to this question" required ="required" />                                 
 
                                     </div>
-                                </div>  
-                                          <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
+                                </div> 
+                                --%>
 
+                                <!--                                <div class="form-group row text-left" id="gameTextJackpot">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-9 ">                                   
+                                                                        <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                                                        <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                                                        <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                                                        <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                                                        <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                                                        <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                                                        <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                                                        <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  /> 
                                 
+                                                                    </div>
+                                                                </div>        -->
+
+
+                                <div class="form-group row text-left" id="gameTextJackpot">
+                                    <!--<label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>-->
+                                     <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 ">           
+                                        <c:forEach items="${numberList}" var="item" varStatus = "status">  
+                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}"/> 
+                                            <%--                                      
+                                                <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
+                                                <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
+                                                <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
+                                            --%>
+                                        </c:forEach>  
+                                    </div>
+                                </div>       
+
+
+                                <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
+
+
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
@@ -205,9 +248,10 @@
     $("#userPhoneNo").intlTelInput({
         initialCountry: "auto",
         geoIpLookup: function (callback) {
-            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {                
+            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "";
-                callback(countryCode);                
+                $("#ipAddress").val(resp.ip);
+                //callback(countryCode);                
             });
         },
         //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
@@ -217,13 +261,14 @@
 <script>
 
     jQuery(document).ready(function ($) {
-        
+        /*
          $.get("http://ipinfo.io", function (response) {
-            //alert(response.ip);
-             //ipAddress = response.ip;
-             //$("#ipAddress").html("" + response.ip);
-             $("#ipAddress").val(response.ip);
-        }, "jsonp");
+         //alert(response.ip);
+         //ipAddress = response.ip;
+         //$("#ipAddress").html("" + response.ip);
+         $("#ipAddress").val(response.ip);
+         }, "jsonp");
+         */
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
@@ -242,23 +287,39 @@
     function searchViaAjax() {
 
 
-       // var id = $('#id').val();
+        // var id = $('#id').val();
         //var userPhoneNo = $('#userPhoneNo').val();
-        if ($('#userAnswer2') != undefined) {
-        var userAnswer = $('#userAnswer2').val();
-                      }
+       
         var gameId = $('#gameId').val();
         var userPhoneNo = $("#userPhoneNo").intlTelInput("getNumber");
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
         var weekNo = $('#weekNo2').val();
-         var code = $('#code').val();
+        var code = $('#code').val();
         var countryName = countryData.name;
-         var ipAddress = $('#ipAddress').val();
-      
+        var ipAddress = $('#ipAddress').val();
+
+        var gameTextJackpot1 = $('#gameTextJackpot1').val();
+        var gameTextJackpot2 = $('#gameTextJackpot2').val();
+        var gameTextJackpot3 = $('#gameTextJackpot3').val();
+        var gameTextJackpot4 = $('#gameTextJackpot4').val();
+        var gameTextJackpot5 = $('#gameTextJackpot5').val();
+        var gameTextJackpot6 = $('#gameTextJackpot6').val();
+        var gameTextJackpot7 = $('#gameTextJackpot7').val();
+        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+       
+        var userAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
+                + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
+                + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
+        //alert("allTinyFields :: " + userAnswer);
+
+        //userAnswer = $('#userAnswer2').val("" + allTinyFields);
+        // var userAnswer = $('#userAnswer2').val();
+
+
         var json = {
 
             "userPhoneNo": userPhoneNo,
-            "userAnswer": userAnswer,
+            "userAnswer": userAnswer,           
             "gameId": gameId,
             "weekNo": weekNo,
             "playersCountry": countryName,
