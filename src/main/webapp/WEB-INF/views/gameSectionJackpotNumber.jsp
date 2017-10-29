@@ -242,20 +242,25 @@
 <script src="<c:url value='/resources/js/utils.js' />"></script> 
 
 <script>
-    // https://github.com/jackocnr/intl-tel-input
+    /* https://github.com/jackocnr/intl-tel-input */
 //                                    $("#phone").intlTelInput();
-    //$("#userPhoneNo").intlTelInput();
+    $("#userPhoneNo").intlTelInput();
+    /*
     $("#userPhoneNo").intlTelInput({
         initialCountry: "auto",
+        
         geoIpLookup: function (callback) {
             $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "";
                 $("#ipAddress").val(resp.ip);
-                //callback(countryCode);                
+                callback(countryCode);                
             });
         },
+        
         //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
     });
+    */    
+   
 </script>
 
 <script>
