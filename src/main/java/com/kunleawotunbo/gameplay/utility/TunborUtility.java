@@ -688,6 +688,7 @@ public class TunborUtility {
             if (gameAnswerObj != null) {
 
                 gameAnswer = gameAnswerObj.getGameAnswer();
+                logger.info("gameAnswer :: " + gameAnswer);
                 if (gameAnswer != null && "" != gameAnswer) {
                     int noOfWinners = weeklyGames.getNoOfWinners();
                     logger.info("noOfWinners :: " + noOfWinners);

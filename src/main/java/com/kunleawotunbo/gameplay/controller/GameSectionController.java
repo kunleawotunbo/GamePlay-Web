@@ -61,7 +61,7 @@ public class GameSectionController {
      */
     @RequestMapping(value = {"/gameSection-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameCatSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
-        logger.info("gameCatSection- id ::  " + id);
+        logger.info("gameCatSection - id ::  " + id);
 
         List<WeeklyGames> weeklyGameList = null;
 
@@ -104,6 +104,20 @@ public class GameSectionController {
                     isPicture = true;
                 } else {
                     logger.info("No image");
+                }
+
+                if (null != weeklyGame && weeklyGame.getGamePlayType() == 3) {
+                    // Since itsJackpot game, we need to put the numbers in tiny fields
+                    
+                    System.out.println("weeklyGame.getGameText() :: " + weeklyGame.getGameText());
+                    String[] numberList = weeklyGame.getGameText().split("-");
+                    
+
+                    System.out.println("numberList :: " + numberList.toString());
+                    
+                     map.addAttribute("numberList", numberList);
+                } else {
+                    logger.info("Not Jackpot game");
                 }
 
                 map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
@@ -178,9 +192,9 @@ public class GameSectionController {
         logger.info("gameSection");
 
         Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
-
+        logger.info("jackpotNumberGame.getId() :: " + jackpotNumberGame.getId());
         if (weeklyGamesService.findById(id).getGameCategory() == jackpotNumberGame.getId()) {
-
+            logger.info("Inside here ... ");
             WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
 
             boolean isPicture = false;
@@ -199,19 +213,6 @@ public class GameSectionController {
             String[] numberList = weeklyGame.getGameText().split("-");
 
             System.out.println("numberList :: " + numberList.toString());
-            //int i = 0;
-            for (String item : numberList) {
-                //item.charAt(i);
-                
-                logger.info("item :: " + item);
-               // i++;
-            }
-
-          
-            for (int i = 0; i < numberList.length; i++) {
-                String num = numberList[i];
-                // Do work.
-            }
 
             map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
             map.addAttribute("weeklyGame", weeklyGame);

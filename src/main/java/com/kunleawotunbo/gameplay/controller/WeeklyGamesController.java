@@ -427,6 +427,9 @@ public class WeeklyGamesController {
             if (weeklyGamesObject.getStatus() != 1) {
                 // Call the asyc match prediction winner processing method        
                 //tunborUtility.processWinnerByMatchPredictionId(matchPredictionObject);
+                if(weeklyGamesObject.getGamePlayType() == 3){
+                    
+                }
                 tunborUtility.processWinnerWeeklyGameId(weeklyGamesObject);
             } else {
                 logger.info("Game winners has been processed before :: " + weeklyGamesObject.getId());
