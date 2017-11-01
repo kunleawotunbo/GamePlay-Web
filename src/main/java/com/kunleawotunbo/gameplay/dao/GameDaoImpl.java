@@ -115,4 +115,12 @@ public class GameDaoImpl extends AbstractDao<Integer, Game> implements GameDao {
         return gameList;
     }
 
+    public List<Game> listGames(boolean enabled, String gameCode) {
+         Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("enabled", enabled));
+         crit.add(Restrictions.not(Restrictions.eq("gameCode", gameCode)));
+
+        return crit.list();
+    }
+
 }

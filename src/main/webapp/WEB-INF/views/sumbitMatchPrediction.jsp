@@ -52,6 +52,7 @@
                             <div class="form-group row text-left">
                                 <label for="phone-h-f" class="col-sm-3 form-control-label m-t-5">Phone Number</label>
                                 <div class="col-sm-9">
+                                    <p>Choose your country flag.</p> 
                                     <input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                          
                                     <p>Your phone number will be used to contact you if you win.</p> 
                                 </div>
@@ -136,6 +137,7 @@
     jQuery(document).ready(function ($) {
         $('#cantPlay').hide();
         $("#userPhoneNo").intlTelInput({
+            /*
             initialCountry: "auto",
             geoIpLookup: function (callback) {
                 $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
@@ -144,6 +146,7 @@
                     callback(countryCode);
                 });
             },
+            */
 
         });
         /*
@@ -162,7 +165,7 @@
         if (matchStarted === 'true') {
 
             // disable button
-            console.log(" matchStarted has started::" + matchStarted);
+            //console.log(" matchStarted has started::" + matchStarted);
             // $("#bth-submit").button("enable");
             $('#cantPlay').show();
             $("#bth-submit").prop("disabled", true);
@@ -252,7 +255,11 @@
             error: function (e) {
                 console.log("ERROR: ", e);
                 //  display(e);
-                notification("Notification", "Unable to save your answer. Please try again later", "error");
+                //console.log("message ", e.message);
+                //console.log("e.responseJSON ", e.responseJSON.message);
+                
+                //notification("Notification", "Unable to save your answer. Please try again later", "error");
+                notification("Notification", e.responseJSON.message, "error");
 
             },
             done: function (e) {

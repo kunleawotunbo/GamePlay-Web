@@ -33,4 +33,6 @@ public interface GameService {
     List<Game> listAllGames();
     
     public List<Game> GamesCategory(int id) ;
+    
+     List<Game> listGames(boolean enabled, String gameCode);
 }

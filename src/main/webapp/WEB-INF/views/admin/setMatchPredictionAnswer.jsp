@@ -127,6 +127,7 @@
                             </div>
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
+                             <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
                             <div class="ln_solid"></div>
 
 
@@ -136,6 +137,9 @@
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
                                     </div>
+                                    <br>
+                                    <br>
+                                        <p id="cantPlay">${msg}</p>
                                 </div>
 
                             </div>
@@ -200,6 +204,21 @@
         <script>
 
             jQuery(document).ready(function ($) {
+                 $('#cantPlay').hide();
+                 
+                  var matchStarted = $('#matchStarted').val();
+
+                //console.log(" matchStarted :: " + matchStarted);
+
+                if (matchStarted === 'true') {
+
+                    $('#cantPlay').show();
+                    $("#bth-submit").prop("disabled", true);
+
+                } else {
+                    $("#bth-submit").prop("disabled", false);
+                }
+                
 
                 $("#setMatchPredictionAnswer-form").submit(function (event) {
 
@@ -252,12 +271,13 @@
                         //   notify(data);
                         notification("Notification", "Answer added successfully.", "success");
                         //window.location = "/admin/listWeeklyGames";
-                        location.href = "<%=request.getContextPath()%>/admin/listMatchPredictions";
+                       // location.href = "<%=request.getContextPath()%>/admin/listMatchPredictions";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
-                        notification("Notification", "Failed to set answer game.", "error");
+                        //notification("Notification", "Failed to set answer game.", "error");
+                        notification("Notification", e.responseJSON.message, "error");
                     },
                     done: function (e) {
                         console.log("DONE");

@@ -77,12 +77,14 @@
                                         </c:when>
                                         <c:otherwise>
 
+                                            <!--                                            
                                             <div class="form-group row text-left" id="gameText">
                                                 <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Text</label>
                                                 <div class="col-sm-9">
                                                     <h1 class="text-center">   <p class="form-control-static">${weeklyGame.gameText}</p> </h1>
                                                 </div>
-                                            </div> 
+                                            </div>
+                                            -->
                                             <input type="hidden" id="gameText" name="gameText" value="${weeklyGame.gameText}">                                                
 
 
@@ -125,7 +127,7 @@
                                     </div>
                                 </div>  
                                 <input type="hidden" id="gamePlayType" name="gamePlayType" value="${weeklyGame.gamePlayType}">
-
+                                <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
 
                             </form>
 
@@ -139,6 +141,7 @@
                                 <div class="form-group row text-left" id="userPhoneNo2">
                                     <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
                                     <div class="col-sm-9">
+                                        <p>Choose your country flag.</p>
                                         <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                         <p>Your phone number will be used to contact you if you win.</p> 
                                     </div>
@@ -155,28 +158,15 @@
                                 </div> 
                                 --%>
 
-                                <!--                                <div class="form-group row text-left" id="gameTextJackpot">
-                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
-                                                                    <div class="col-md-9 col-sm-9 col-xs-9 ">                                   
-                                                                        <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
-                                                                        <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                                                        <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" /> 
-                                                                        <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                                                        <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                                                        <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" /> 
-                                                                        <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                                                        <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                
-                                                                    </div>
-                                                                </div>        -->
+                               
 
 
                                 <div class="form-group row text-left" id="gameTextJackpot">
                                     <!--<label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>-->
-                                     <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
+                                    <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9 ">           
                                         <c:forEach items="${numberList}" var="item" varStatus = "status">  
-                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}"/> 
+                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" required="required"/> 
                                             <%--                                      
                                                 <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
                                                 <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
@@ -199,6 +189,7 @@
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                        <p id="cantPlay">${msg}</p>
                                     </div>
                                 </div>
 
@@ -246,21 +237,21 @@
 //                                    $("#phone").intlTelInput();
     $("#userPhoneNo").intlTelInput();
     /*
-    $("#userPhoneNo").intlTelInput({
-        initialCountry: "auto",
-        
-        geoIpLookup: function (callback) {
-            $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
-                var countryCode = (resp && resp.country) ? resp.country : "";
-                $("#ipAddress").val(resp.ip);
-                callback(countryCode);                
-            });
-        },
-        
-        //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
-    });
-    */    
-   
+     $("#userPhoneNo").intlTelInput({
+     initialCountry: "auto",
+     
+     geoIpLookup: function (callback) {
+     $.get('http://ipinfo.io', function () {}, "jsonp").always(function (resp) {
+     var countryCode = (resp && resp.country) ? resp.country : "";
+     $("#ipAddress").val(resp.ip);
+     callback(countryCode);                
+     });
+     },
+     
+     //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
+     });
+     */
+
 </script>
 
 <script>
@@ -274,6 +265,29 @@
          $("#ipAddress").val(response.ip);
          }, "jsonp");
          */
+        $('#cantPlay').hide();
+        //$("#gameTextJackpot2").prop("readonly", true);
+        
+        // set fields to readonly if not empty or is a numbers
+        setToReadOnly();
+        
+        
+        
+        
+        
+
+        var matchStarted = $('#matchStarted').val();
+
+        console.log(" matchStarted :: " + matchStarted);
+
+        if (matchStarted === 'true') {
+
+            $('#cantPlay').show();
+            $("#bth-submit").prop("disabled", true);
+
+        } else {
+            $("#bth-submit").prop("disabled", false);
+        }
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
@@ -288,13 +302,55 @@
         });
 
     });
+    
+    function setToReadOnly(){
+        
+         var gameTextJackpot1 = $('#gameTextJackpot1').val();
+        var gameTextJackpot2 = $('#gameTextJackpot2').val();
+        var gameTextJackpot3 = $('#gameTextJackpot3').val();
+        var gameTextJackpot4 = $('#gameTextJackpot4').val();
+        var gameTextJackpot5 = $('#gameTextJackpot5').val();
+        var gameTextJackpot6 = $('#gameTextJackpot6').val();
+        var gameTextJackpot7 = $('#gameTextJackpot7').val();
+        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+        
+//        if (gameTextJackpot1.trim() !== "") {
+//                $("#gameTextJackpot1").prop("readonly", true); 
+//        }
+        if (!isNaN(gameTextJackpot1.trim()) && gameTextJackpot1.trim() !== "") {
+                $("#gameTextJackpot1").prop("readonly", true); 
+              //  alert(gameTextJackpot1.trim());
+        }
+        if (!isNaN(gameTextJackpot2.trim()) && gameTextJackpot2.trim() !== "") {  
+                $("#gameTextJackpot2").prop("readonly", true); 
+        }
+         if (!isNaN(gameTextJackpot3.trim()) && gameTextJackpot3.trim() !== "") {  
+               $("#gameTextJackpot3").prop("readonly", true); 
+        }
+         if (!isNaN(gameTextJackpot4.trim())  && gameTextJackpot4.trim() !== "") {   
+               $("#gameTextJackpot4").prop("readonly", true); 
+        }
+         if (!isNaN(gameTextJackpot5.trim()) && gameTextJackpot5.trim() !== "") {               
+                $("#gameTextJackpot5").prop("readonly", true); 
+        }
+         if (!isNaN(gameTextJackpot6.trim()) && gameTextJackpot6.trim() !== "") {       
+             //alert("in :: " + gameTextJackpot6.trim());
+               $("#gameTextJackpot6").prop("readonly", true);                
+        }
+         if (!isNaN(gameTextJackpot7.trim()) && gameTextJackpot7.trim() !== "") { 
+               $("#gameTextJackpot7").prop("readonly", true); 
+        }
+         if (!isNaN(gameTextJackpot8.trim()) && gameTextJackpot8.trim() !== "") {    
+            $("#gameTextJackpot8").prop("readonly", true); 
+        }
+    }
 
     function searchViaAjax() {
 
 
         // var id = $('#id').val();
         //var userPhoneNo = $('#userPhoneNo').val();
-       
+
         var gameId = $('#gameId').val();
         var userPhoneNo = $("#userPhoneNo").intlTelInput("getNumber");
         var countryData = $("#userPhoneNo").intlTelInput("getSelectedCountryData");
@@ -311,7 +367,46 @@
         var gameTextJackpot6 = $('#gameTextJackpot6').val();
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
         var gameTextJackpot8 = $('#gameTextJackpot8').val();
-       
+        
+        if (isNaN(gameTextJackpot1.trim()) || gameTextJackpot1.trim() === "") {
+                alert('Please fill out this field.');
+                $('#gameTextJackpot1').focus();
+                return false;
+        }
+        if (isNaN(gameTextJackpot2.trim()) || gameTextJackpot2.trim() === "") {  
+                alert('Please fill out this field.');
+                $('#gameTextJackpot2').focus();
+                return false;
+        }
+         if (isNaN(gameTextJackpot3.trim()) || gameTextJackpot3.trim() === "") {  
+                alert('Please fill out this field.');
+                $('#gameTextJackpot3').focus();
+                return false;
+        }
+         if (isNaN(gameTextJackpot4.trim()) || gameTextJackpot4.trim() === "") {   
+                alert('Please fill out this field.');
+                $('#gameTextJackpot4').focus();
+                return false;
+        }
+         if (isNaN(gameTextJackpot5.trim()) || gameTextJackpot5.trim() === "") {               
+                alert('Please fill out this field.');
+                return false;
+        }
+         if (isNaN(gameTextJackpot6.trim()) || gameTextJackpot6.trim() === "") {  
+                alert('Please fill out this field.');
+                $('#gameTextJackpot6').focus();
+                return false;
+        }
+         if (isNaN(gameTextJackpot7.trim()) || gameTextJackpot7.trim() === "") { 
+                alert('Please fill out this field.');
+                $('#gameTextJackpot7').focus();
+                return false;
+        }
+         if (isNaN(gameTextJackpot8.trim()) || gameTextJackpot8.trim() === "") {    
+             alert('Field is required');
+                alert('Please fill out this field.');
+                return false;
+        }
         var userAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
                 + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
                 + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
@@ -324,7 +419,7 @@
         var json = {
 
             "userPhoneNo": userPhoneNo,
-            "userAnswer": userAnswer,           
+            "userAnswer": userAnswer,
             "gameId": gameId,
             "weekNo": weekNo,
             "playersCountry": countryName,

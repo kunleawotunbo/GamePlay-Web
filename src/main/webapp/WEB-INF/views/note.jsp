@@ -77,3 +77,15 @@ New task JACKPOT MODULE 26-09-2017
 16/10/2017
 
 1. Match setup. First item in the dropdown does not list teams when selected
+
+
+30/10/2017
+
+1. User should not be able to submit answer if match has started. - Resolved
+2. Admin should not be able to submit answer if game has not expired. - Resolved
+3. Edit button for match prediction not working. - Resolved
+4. If game is more than one, show the latest game and add a button that allows user to navigate to other games.
+5. If Jackpot game is selected, allow user to also upload . - Resolved
+6. Validate Jackpot tiny fields before submitting. - Resolved
+7. The populated fields should not be editable by players....they should be disabled. When user is submitting answer - Resolved.
+8. Remove Match Prediction drop game category dropdown on the add weekly game. Resolved

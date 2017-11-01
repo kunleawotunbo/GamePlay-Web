@@ -109,6 +109,7 @@
                             </div>          
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
+                             <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
                             <div class="ln_solid"></div>
 
 
@@ -117,7 +118,11 @@
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                        
                                     </div>
+                                    <br>
+                                    <br>
+                                        <p id="cantPlay">${msg}</p>
                                 </div>
 
                             </div>
@@ -169,9 +174,10 @@
 
             jQuery(document).ready(function ($) {
                 var gamePlayType = $('#gamePlayType').val();
+                 $('#cantPlay').hide();                
 
                 if (gamePlayType === "3") {
-                    console.log(" gamePlayType is Question ::" + gamePlayType);
+                    //console.log(" gamePlayType is Question ::" + gamePlayType);
 
                     // Since gameType is text question, then Hide gameImage div and remove required attribute
 
@@ -186,6 +192,20 @@
 
                     $('#gameAnswer').show();
                 }
+
+                var matchStarted = $('#matchStarted').val();
+
+                console.log(" matchStarted :: " + matchStarted);
+
+                if (matchStarted === 'true') {
+
+                    $('#cantPlay').show();
+                    $("#bth-submit").prop("disabled", true);
+
+                } else {
+                    $("#bth-submit").prop("disabled", false);
+                }
+                
                 $("#setWeeklyGameAnswer-form").submit(function (event) {
                     //var formData = $('addGame-form').serialize();
                     // Disble the search button
@@ -222,7 +242,7 @@
                     gameAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
                             + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
                             + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
-                   
+
 
                 } else {
                     gameAnswer = $('#gameAnswer').val();
@@ -250,14 +270,16 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
-                        notification("Notification", "Answer added successfully.", "success");
+                        notification("Notification", "Answer added successfully, winners will be processed.", "success");
                         //window.location = "/admin/listWeeklyGames";
-                        location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                        //location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                        // location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);
                         //  display(e);
-                        notification("Notification", "Failed to set answer game.", "error");
+                        //notification("Notification", "Failed to set answer game.", "error");
+                        notification("Notification", e.responseJSON.message, "error");
                     },
                     done: function (e) {
                         console.log("DONE");

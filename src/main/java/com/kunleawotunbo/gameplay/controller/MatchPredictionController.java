@@ -5,6 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.controller;
 
+import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.MatchPredictionAnswerBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.MatchPrediction;
@@ -22,10 +23,8 @@ import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -327,6 +326,73 @@ public class MatchPredictionController {
         return "admin/addMatchPrediction";
 
     }
+    
+    /**
+     * This method will provide the medium to update an game category user.
+     */
+    @RequestMapping(value = {"/admin/edit-matchPrediction-{id}"}, method = RequestMethod.GET)
+    public String editMatchPrediction(@PathVariable int id, ModelMap model) {
+
+        logger.info("Edit  editMatchPrediction id :: " + id);
+
+      
+        
+        MatchPrediction matchPrediction = matchPredictionService.findById(id);
+        
+        if(null == matchPrediction){
+            System.out.println("match prediction is null");
+            return "/admin/addMatchPrediction";
+        }else {
+             
+        boolean status = true;
+        model.addAttribute("matchPrediction", matchPrediction);
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+        model.addAttribute("countriesList", countryService.listCountries());       
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "/admin/addMatchPrediction";
+
+        }
+       
+     
+    }
+    
+    
+        
+         @RequestMapping(value = "/admin/edit-matchPrediction-{id}", method = RequestMethod.POST)
+    public String updateMatchPrediction(MatchPrediction matchPrediction, BindingResult result,
+            ModelMap model, HttpServletRequest req) {    
+        
+        logger.info("Edit  editMatchPrediction id :: " + matchPrediction.getId());
+        
+         matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
+        matchPrediction.setLeagueName(leagueService.getLeagueByCode(matchPrediction.getLeagueCode()).getLeagueName());
+        matchPrediction.setHomeTeamName(teamService.getTeamById(matchPrediction.getHomeTeamId()).getTeamName());
+        matchPrediction.setAwayTeamName(teamService.getTeamById(matchPrediction.getAwayTeamId()).getTeamName());
+        matchPrediction.setCode(tunborUtility.getRandomNumber());
+        boolean saved = matchPredictionService.save(matchPrediction);
+        // If not saved
+        if (!saved) {
+            logger.error("Error occured, unable to update match predcition");
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Match prediction update failed");
+
+            return "admin/addMatchPrediction";
+        }
+
+        boolean status = true;
+
+        model.addAttribute("saved", saved);
+        model.addAttribute("message", "Match prediction  updated successfully");
+        model.addAttribute("matchPrediction", new MatchPrediction());
+        model.addAttribute("weekNo", tunborUtility.gameWeek());
+        model.addAttribute("countriesList", countryService.listCountries());
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "admin/addMatchPrediction";
+    }
+
+
 
     /**
      * List weekly games
@@ -360,6 +426,22 @@ public class MatchPredictionController {
         logger.info("Get setMatchPredictionAnswer answer page id :: " + id);
 
         MatchPrediction matchPrediction = matchPredictionService.findById(id);
+        
+        boolean matchStarted = false;
+         // If match has expired, if not, admin can not set answer until game expire        
+        if (tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+            matchStarted = true;
+           
+            logger.info("Game has not ended, Please wait till match ends before setting answer");
+            
+            model.addAttribute("matchStarted", matchStarted);
+            model.addAttribute("msg", "Match has not ended, Please wait till match ends before setting answer");
+           
+        } else {
+            matchStarted = false;
+            
+            logger.info("Game has expired, admin can set answer");
+        }
 
         model.addAttribute("matchPrediction", matchPrediction);
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());

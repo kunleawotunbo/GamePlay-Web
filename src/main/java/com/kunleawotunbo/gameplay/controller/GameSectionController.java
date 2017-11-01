@@ -108,17 +108,31 @@ public class GameSectionController {
 
                 if (null != weeklyGame && weeklyGame.getGamePlayType() == 3) {
                     // Since itsJackpot game, we need to put the numbers in tiny fields
-                    
+
                     System.out.println("weeklyGame.getGameText() :: " + weeklyGame.getGameText());
                     String[] numberList = weeklyGame.getGameText().split("-");
-                    
 
                     System.out.println("numberList :: " + numberList.toString());
-                    
-                     map.addAttribute("numberList", numberList);
+
+                    map.addAttribute("numberList", numberList);
                 } else {
                     logger.info("Not Jackpot game");
                 }
+
+                 boolean matchStarted = false;
+            // If match has expired, if not, admin can not set answer until game expire       
+
+            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+                matchStarted = true;
+
+                logger.info("Game already started, you can't play this game. Please try another game");
+
+                map.addAttribute("matchStarted", matchStarted);
+                map.addAttribute("msg", "Game already started, you can't play this game. Please try another game");
+            } else {
+                matchStarted = false;
+                logger.info("Game has expired, admin can set answer");
+            }
 
                 map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
                 map.addAttribute("weeklyGame", weeklyGame);
@@ -214,6 +228,20 @@ public class GameSectionController {
 
             System.out.println("numberList :: " + numberList.toString());
 
+            boolean matchStarted = false;
+            // If match has expired, if not, admin can not set answer until game expire        
+            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+                matchStarted = true;
+
+                logger.info("Game already started, you can't play this game. Please try another game");
+
+                map.addAttribute("matchStarted", matchStarted);
+                map.addAttribute("msg", "Game already started, you can't play this game. Please try another game");
+            } else {
+                matchStarted = false;
+                logger.info("Game has expired, admin can set answer");
+            }
+
             map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
             map.addAttribute("weeklyGame", weeklyGame);
             map.addAttribute("numberList", numberList);
@@ -234,6 +262,21 @@ public class GameSectionController {
                 isPicture = true;
             } else {
                 logger.info("No image");
+            }
+
+            boolean matchStarted = false;
+            // If match has expired, if not, admin can not set answer until game expire       
+
+            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+                matchStarted = true;
+
+                logger.info("Game already started, you can't play this game. Please try another game");
+
+                map.addAttribute("matchStarted", matchStarted);
+                map.addAttribute("msg", "Game already started, you can't play this game. Please try another game");
+            } else {
+                matchStarted = false;
+                logger.info("Game has expired, admin can set answer");
             }
 
             map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());

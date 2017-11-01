@@ -196,7 +196,8 @@ public class AdminController {
         model.addAttribute("weeklyGame", new FileBucket());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
         model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
-        model.addAttribute("gameList", gameService.listGames(status));
+        //model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("gameList", gameService.listGames(status, "MPP"));
         model.addAttribute("loggedinuser", getPrincipal());
 
         return "/admin/addWeeklyGame";
@@ -210,7 +211,7 @@ public class AdminController {
     public String createWeeklyGame(FileBucket fileBucket, BindingResult result,
             ModelMap model, HttpServletRequest req) {
 
-        System.out.println("Inside registerUser :: ");
+        System.out.println("Inside create weeklygame ");
 
         WeeklyGames weeklyGames = new WeeklyGames();
         //If error, just return a 400 bad request, along with the error message
@@ -224,7 +225,7 @@ public class AdminController {
         }
         FileBucket fb = new FileBucket();
 
-        if (fileBucket.getGamePlayType() == 1) {
+        if (fileBucket.getGamePlayType() == 1 || fileBucket.getGamePlayType() == 3) {
             byte yesPicture = 1;
             fileBucket.setIsPicture(yesPicture);
             logger.info("Is picture : " + yesPicture);
@@ -294,7 +295,7 @@ public class AdminController {
     @RequestMapping(value = {"/set-weeklyGames-Answer-{id}"}, method = RequestMethod.GET)
     public String setWeeklyGamesAnswer(@PathVariable int id, ModelMap model) {
 
-        logger.info("Edit  editWeeklyGames id :: " + id);
+        logger.info("set-weeklyGames-Answer id :: " + id);
         //byte status = 1;
         boolean status = true;
         WeeklyGames weeklyGame = null;
@@ -312,6 +313,20 @@ public class AdminController {
             model.addAttribute("numberList", numberList);
         } else {
             logger.info("Not Jackpot game");
+        }
+        
+        boolean matchStarted = false;
+         // If match has expired, if not, admin can not set answer until game expire        
+        if (tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGame.getGameExpiryDate()) ) {
+            matchStarted = true;
+            
+            logger.info("Game has not ended, Please wait till match ends before setting answer");
+           
+            model.addAttribute("matchStarted", matchStarted);
+            model.addAttribute("msg", "Game has not ended, Please wait till match ends before setting answer");           
+        } else {
+            matchStarted = false;            
+            logger.info("Game has expired, admin can set answer");
         }
 
         model.addAttribute("weeklyGame", weeklyGame);
@@ -414,7 +429,7 @@ public class AdminController {
             FileBucket fbWeeklyGame = new FileBucket();
 
             // If type is picture
-            if (weeklyGame.getIsPicture() == 1) {
+            if (weeklyGame.getIsPicture() == 1 || weeklyGame.getGamePlayType() == 3) {
 
                 encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
 
@@ -440,9 +455,7 @@ public class AdminController {
             fbWeeklyGame.setEnabled(weeklyGame.isEnabled());
             fbWeeklyGame.setCode(weeklyGame.getCode());
 
-            String gamePlayType = "Text Game";
-
-            //model.addAttribute("weeklyGame", weeklyGamesService.findById(id));
+            
             model.addAttribute("weeklyGame", fbWeeklyGame);
             model.addAttribute("weekNo", tunborUtility.gameWeek());
             model.addAttribute("gamePlayTypeList", gamePlayTypeService.getGamePlayType());
@@ -528,7 +541,7 @@ public class AdminController {
         }
         FileBucket fb = new FileBucket();
 
-        if (fileBucket.getGamePlayType() == 1) {
+        if (fileBucket.getGamePlayType() == 1 || fileBucket.getGamePlayType() == 3) {
             byte yesPicture = 1;
             fileBucket.setIsPicture(yesPicture);
             logger.info("Is picture : " + yesPicture);
@@ -704,7 +717,7 @@ public class AdminController {
         System.out.println("req.getRemoteHost() :: " + req.getRemoteHost());
         
         System.out.println("tunborUtility.getTimeZone(req).toString() :: " + tunborUtility.getTimeZone(req).toString());
-        
+        e
         activityLogService.save(activityLog);
         
          */
@@ -723,7 +736,7 @@ public class AdminController {
     }
 
     /**
-     * This method will provide the medium to update an existing user.
+     * This method will provide the medium to update an game category user.
      */
     @RequestMapping(value = {"/edit-gameCategory-{id}"}, method = RequestMethod.GET)
     public String editgameCategory(@PathVariable int id, ModelMap model) {

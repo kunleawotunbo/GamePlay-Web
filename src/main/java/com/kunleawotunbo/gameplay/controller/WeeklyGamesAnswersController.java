@@ -148,21 +148,5 @@ public class WeeklyGamesAnswersController {
        
         return ResponseEntity.ok(result);
     }   
-    
-    
-    
-  private String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        System.out.println("Logged in user :: " + userName);
-        return userName;
-    }
-      
       
 }

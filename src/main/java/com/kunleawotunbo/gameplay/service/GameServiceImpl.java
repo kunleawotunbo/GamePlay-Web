@@ -62,5 +62,9 @@ public class GameServiceImpl implements GameService{
     public List<Game> GamesCategory(int id) {
        return gameDao.GamesCategory(id); 
     }
+
+    public List<Game> listGames(boolean enabled, String gameCode) {
+        return gameDao.listGames(enabled, gameCode);
+    }
     
 }

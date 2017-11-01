@@ -386,6 +386,22 @@ public class WeeklyGamesController {
         if (weeklyGames == null) {
             return new ResponseEntity("No WeeklyGames found for ID " + wGames.getId(), HttpStatus.NOT_FOUND);
         }
+        
+        //boolean matchStarted = false;
+        // If match has expired, if not, admin can not set answer until game expire        
+        if (tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGames.getGameExpiryDate()) ) {
+            //matchStarted = true;
+           // System.out.println("start time is after current time");
+            logger.info("Game has not ended, Please wait till match ends before setting answer");
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Game has not ended, Please wait till match ends before setting answer");
+
+            return ResponseEntity.badRequest().body(result);
+        } else {
+            //matchStarted = false;
+            //System.out.println("Match has expired");
+            logger.info("Game has expired, admin can set answer");
+        }
 
         GameAnswer gameAnswer = new GameAnswer();
         GameAnswer findGame = gameAnswerService.findByGameId(wGames.getId());
@@ -494,6 +510,21 @@ public class WeeklyGamesController {
 
         if (matchPrediction == null) {
             return new ResponseEntity("No MatchPrediction answer found for ID " + mPResult.getId(), HttpStatus.NOT_FOUND);
+        }
+        //boolean matchStarted = false;
+        // If match has expired, if not, admin can not set answer until game expire        
+        if (tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+            //matchStarted = true;
+           // System.out.println("start time is after current time");
+            logger.info("Match has not ended, Please wait till match ends before setting answer");
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Match has not ended, Please wait till match ends before setting answer");
+
+            return ResponseEntity.badRequest().body(result);
+        } else {
+            //matchStarted = false;
+            //System.out.println("Match has expired");
+            logger.info("Match has expired, admin can set answer");
         }
 
         MatchPredictionResult matchPredictionResult = new MatchPredictionResult();
