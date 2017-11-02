@@ -128,7 +128,7 @@ public class MatchPredictionAnswerController {
 
         MatchPrediction matchPredictionObject = matchPredictionService.findById(matchPredictionAnswer.getGameId());
         boolean matchStarted = false;
-        if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())) {
+        if (null != matchPredictionObject &&  tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())) {
             matchStarted = true;
             System.out.println("start time is after current time");
             result.setCode("" + HttpStatus.BAD_REQUEST);

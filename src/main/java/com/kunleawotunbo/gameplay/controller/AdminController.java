@@ -317,7 +317,7 @@ public class AdminController {
         
         boolean matchStarted = false;
          // If match has expired, if not, admin can not set answer until game expire        
-        if (tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGame.getGameExpiryDate()) ) {
+        if (null != weeklyGame && tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGame.getGameExpiryDate()) ) {
             matchStarted = true;
             
             logger.info("Game has not ended, Please wait till match ends before setting answer");

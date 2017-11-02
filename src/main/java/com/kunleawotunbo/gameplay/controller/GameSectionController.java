@@ -122,7 +122,8 @@ public class GameSectionController {
                  boolean matchStarted = false;
             // If match has expired, if not, admin can not set answer until game expire       
 
-            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+            //System.out.println("weeklyGame.getGameStartDate() :: " + weeklyGame.getGameStartDate());
+            if (null != weeklyGame && tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
                 matchStarted = true;
 
                 logger.info("Game already started, you can't play this game. Please try another game");
@@ -230,7 +231,7 @@ public class GameSectionController {
 
             boolean matchStarted = false;
             // If match has expired, if not, admin can not set answer until game expire        
-            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+            if (null != weeklyGame && tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
                 matchStarted = true;
 
                 logger.info("Game already started, you can't play this game. Please try another game");
@@ -267,7 +268,7 @@ public class GameSectionController {
             boolean matchStarted = false;
             // If match has expired, if not, admin can not set answer until game expire       
 
-            if (tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+            if (null != weeklyGame && tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
                 matchStarted = true;
 
                 logger.info("Game already started, you can't play this game. Please try another game");

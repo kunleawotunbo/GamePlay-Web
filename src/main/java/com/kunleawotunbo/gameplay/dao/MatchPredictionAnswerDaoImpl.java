@@ -160,6 +160,10 @@ public class MatchPredictionAnswerDaoImpl extends AbstractDao<Long, MatchPredict
 
     public List<MatchPredictionAnswer> listAnswerByPhoneAndDate(String userPhoneNo, Date startDate, Date endDate) {
          logger.info("userPhoneNo :: " + userPhoneNo);
+         
+          System.out.println("startDate :: " + startDate);
+        System.out.println("endDate :: " + endDate);
+
 
         Criteria crit = createEntityCriteria();
 

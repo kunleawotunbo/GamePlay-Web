@@ -147,20 +147,6 @@
                                     </div>
                                 </div>  
 
-
-                                <%--                             
-                                    <div class="form-group row text-left" id="userAnswer">
-                                    <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
-                                    <div class="col-sm-9">
-                                        <form:textarea path="userAnswer" id="userAnswer2" name="userAnswer2" type="textarea" class="form-control" rows="4"  placeholder="Input your answer to this question" required ="required" />                                 
-
-                                    </div>
-                                </div> 
-                                --%>
-
-                               
-
-
                                 <div class="form-group row text-left" id="gameTextJackpot">
                                     <!--<label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>-->
                                     <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>

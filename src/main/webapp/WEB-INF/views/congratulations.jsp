@@ -46,8 +46,8 @@
                             Go to <a href="<c:url value='/' />">Homepage</a>
                         </span>
                         <span class="well floatLeft">
-                            <a href="##" onclick="window.history.back()">Try another answer</a>
-                           
+                            <!--<a href="##" onclick="window.history.back()">Try another answer</a>-->
+                            <a href="#" id="tryanotheranswer">Try another answer</a>
                             <!--<a href="<c:url value='/' />">Try another answer</a>-->
                         </span>
                         <br><br>
@@ -87,3 +87,9 @@
 
 <!--Include outside footer-->
 <%@ include file="includes/outside/footer.jsp" %>
+<script>
+    $("#tryanotheranswer").click(function(e) {
+    e.preventDefault(); // stop browser from doing native logic
+    history.back(1);
+})
+    </script>

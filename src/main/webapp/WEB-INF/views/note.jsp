@@ -89,3 +89,4 @@ New task JACKPOT MODULE 26-09-2017
 6. Validate Jackpot tiny fields before submitting. - Resolved
 7. The populated fields should not be editable by players....they should be disabled. When user is submitting answer - Resolved.
 8. Remove Match Prediction drop game category dropdown on the add weekly game. Resolved
+9. Try another game not working on mobile.

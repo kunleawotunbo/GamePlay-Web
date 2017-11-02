@@ -204,7 +204,7 @@ public class MatchPredictionController {
         // Check if match has started. Disable submit button if match has started.        
     
          
-        if(tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())){
+        if(null != matchPredictionObject &&  tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())){
             matchStarted = true;
             System.out.println("start time is after current time");
         }else {
@@ -429,7 +429,7 @@ public class MatchPredictionController {
         
         boolean matchStarted = false;
          // If match has expired, if not, admin can not set answer until game expire        
-        if (tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+        if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
             matchStarted = true;
            
             logger.info("Game has not ended, Please wait till match ends before setting answer");

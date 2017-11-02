@@ -389,7 +389,7 @@ public class WeeklyGamesController {
         
         //boolean matchStarted = false;
         // If match has expired, if not, admin can not set answer until game expire        
-        if (tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGames.getGameExpiryDate()) ) {
+        if (null != weeklyGames &&  tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGames.getGameExpiryDate()) ) {
             //matchStarted = true;
            // System.out.println("start time is after current time");
             logger.info("Game has not ended, Please wait till match ends before setting answer");
@@ -513,7 +513,7 @@ public class WeeklyGamesController {
         }
         //boolean matchStarted = false;
         // If match has expired, if not, admin can not set answer until game expire        
-        if (tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+        if (null != matchPrediction &&  tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
             //matchStarted = true;
            // System.out.println("start time is after current time");
             logger.info("Match has not ended, Please wait till match ends before setting answer");

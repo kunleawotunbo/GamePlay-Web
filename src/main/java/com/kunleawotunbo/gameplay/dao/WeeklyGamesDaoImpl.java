@@ -155,7 +155,7 @@ public class WeeklyGamesDaoImpl extends AbstractDao<Integer, WeeklyGames> implem
 
     public List<WeeklyGames> listWeekActiveGamesByDate(Date date) {
         //logger.info("gameCategory : {}", gameCategory);
-        logger.info("date : {}", date);
+        logger.info("date :: " + date);
 
         //Date date  = tunborUtility.getDate("Africa/Nigeria");
         Date newDate = subtractDays(date, 7);

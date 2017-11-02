@@ -48,8 +48,10 @@
                         </span>
                         <span class="well floatLeft">
                             <!--<a href="##" onclick="window.history.back()">Try another answer</a>-->
-                           
-                            <a href="<c:url value='/prediction' />">Try another answer</a>
+                            <a href="#" id="tryanotheranswer">Try another answer</a>
+                            <!--<a href="#" onClick="goBack();">return false;">Go back</a>-->
+
+                            <%--<a href="<c:url value='/prediction' />">Try another answer</a>--%>
                         </span>
                         <br><br>
                        
@@ -88,3 +90,14 @@
 
 <!--Include outside footer-->
 <%@ include file="includes/outside/footer.jsp" %>
+
+<script>
+    $("#tryanotheranswer").click(function(e) {
+    e.preventDefault();
+    history.back(1);
+});
+
+function goBack() {
+    window.history.back();
+  }
+    </script>
