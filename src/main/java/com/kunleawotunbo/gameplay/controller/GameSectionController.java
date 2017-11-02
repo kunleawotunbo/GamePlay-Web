@@ -17,6 +17,7 @@ import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,8 @@ public class GameSectionController {
         logger.info("gameCatSection - id ::  " + id);
 
         List<WeeklyGames> weeklyGameList = null;
+        List<WeeklyGames> remainingWeeklyGameList = null;
+        WeeklyGames weeklyGame;
 
         // Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
         // gameService.
@@ -74,19 +77,23 @@ public class GameSectionController {
 
             //}    
             //if(id == jackpotNumberGame.getId()){
-            // weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(jackpotNumberGame.getId(), tunborUtility.getDate(Definitions.TIMEZONE));
+            
             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
+            boolean forTest = false;
             // check if weeklyGameList is greater than 1
-            if (null != weeklyGameList && weeklyGameList.size() > 1) {
+            if (null != weeklyGameList && weeklyGameList.size() > 1 && forTest) {
                 // Show list of games on the page
                 map.addAttribute("weeklyGameList", weeklyGameList);
                 map.addAttribute("gameCode", gameCode);
 
+                //weeklyGameList.
+                weeklyGame = weeklyGameList.get(0);
+                // remainingWeeklyGameList = weeklyGameList.re
                 return new ModelAndView("gameSectionListJackpotNumber", map);
 
             } else {
-                WeeklyGames weeklyGame;
+                // WeeklyGames weeklyGame;
 
                 weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
                 System.out.println("weeklyGame Jackpot Number :: " + weeklyGame);
@@ -119,21 +126,21 @@ public class GameSectionController {
                     logger.info("Not Jackpot game");
                 }
 
-                 boolean matchStarted = false;
-            // If match has expired, if not, admin can not set answer until game expire       
+                boolean matchStarted = false;
+                // If match has expired, if not, admin can not set answer until game expire       
 
-            //System.out.println("weeklyGame.getGameStartDate() :: " + weeklyGame.getGameStartDate());
-            if (null != weeklyGame && tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
-                matchStarted = true;
+                //System.out.println("weeklyGame.getGameStartDate() :: " + weeklyGame.getGameStartDate());
+                if (null != weeklyGame && tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), weeklyGame.getGameStartDate())) {
+                    matchStarted = true;
 
-                logger.info("Game already started, you can't play this game. Please try another game");
+                    logger.info("Game already started, you can't play this game. Please try another game");
 
-                map.addAttribute("matchStarted", matchStarted);
-                map.addAttribute("msg", "Game already started, you can't play this game. Please try another game");
-            } else {
-                matchStarted = false;
-                logger.info("Game has expired, admin can set answer");
-            }
+                    map.addAttribute("matchStarted", matchStarted);
+                    map.addAttribute("msg", "Game already started, you can't play this game. Please try another game");
+                } else {
+                    matchStarted = false;
+                    logger.info("Game has expired, admin can set answer");
+                }
 
                 map.addAttribute("weeklyGamesAnswers", new WeeklyGamesAnswers());
                 map.addAttribute("weeklyGame", weeklyGame);
@@ -142,6 +149,7 @@ public class GameSectionController {
                 map.addAttribute("encodedGameImage2", encodedGameImage2);
                 map.addAttribute("hasGameImage2", hasGameImage2);
                 map.addAttribute("gameCode", gameCode);
+                map.addAttribute("weeklyGameList", weeklyGameList);
 
                 return new ModelAndView("gameSectionJackpotNumber", map);
             }
@@ -150,8 +158,9 @@ public class GameSectionController {
 
             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
+            boolean forTest = false;
             // check if weeklyGameList is greater than 1
-            if (null != weeklyGameList && weeklyGameList.size() > 1) {
+            if (null != weeklyGameList && weeklyGameList.size() > 1 && forTest) {
                 // Show list of games on the page
                 map.addAttribute("weeklyGameList", weeklyGameList);
                 map.addAttribute("gameCode", gameCode);
@@ -159,7 +168,7 @@ public class GameSectionController {
                 return new ModelAndView("gameSectionList", map);
 
             } else {
-                WeeklyGames weeklyGame;
+                // WeeklyGames weeklyGame;
 
                 weeklyGame = weeklyGameList.size() == 0 ? null : (WeeklyGames) weeklyGameList.get(0);
                 System.out.println("weeklyGame :: " + weeklyGame);
@@ -186,6 +195,8 @@ public class GameSectionController {
                 map.addAttribute("encodedGameImage2", encodedGameImage2);
                 map.addAttribute("hasGameImage2", hasGameImage2);
                 map.addAttribute("gameCode", gameCode);
+                
+                 map.addAttribute("weeklyGameList", weeklyGameList);
 
                 return new ModelAndView("gameSection", map);
             }
@@ -205,13 +216,18 @@ public class GameSectionController {
     @RequestMapping(value = {"/gameSectionx-{id}-{gameCode}"}, method = RequestMethod.GET)
     public ModelAndView gameSection(@PathVariable("id") int id, @PathVariable("gameCode") String gameCode, ModelMap map) {
         logger.info("gameSection");
-
+        
+         List<WeeklyGames> weeklyGameList = null;
+         
         Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
         logger.info("jackpotNumberGame.getId() :: " + jackpotNumberGame.getId());
         if (weeklyGamesService.findById(id).getGameCategory() == jackpotNumberGame.getId()) {
             logger.info("Inside here ... ");
             WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
-
+            
+            // To get the list for pagination
+            weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(weeklyGame.getGameCategory(), tunborUtility.getDate(Definitions.TIMEZONE));
+            
             boolean isPicture = false;
             String encodedPictureString = "";
 
@@ -248,13 +264,18 @@ public class GameSectionController {
             map.addAttribute("numberList", numberList);
             map.addAttribute("isPicture", isPicture);
             map.addAttribute("encodedPictureString", encodedPictureString);
+            
+            map.addAttribute("weeklyGameList", weeklyGameList);
 
             return new ModelAndView("gameSectionJackpotNumber", map);
 
         } else {
 
             WeeklyGames weeklyGame = weeklyGamesService.getWeekGameByWeekNo(id, tunborUtility.gameWeekNoByDate(tunborUtility.getDate(Definitions.TIMEZONE)));
+           
+            weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(weeklyGame.getGameCategory(), tunborUtility.getDate(Definitions.TIMEZONE));
 
+            boolean forTest = false;
             boolean isPicture = false;
             String encodedPictureString = "";
 
@@ -284,6 +305,8 @@ public class GameSectionController {
             map.addAttribute("weeklyGame", weeklyGame);
             map.addAttribute("isPicture", isPicture);
             map.addAttribute("encodedPictureString", encodedPictureString);
+            
+             map.addAttribute("weeklyGameList", weeklyGameList);
 
             return new ModelAndView("gameSection", map);
         }

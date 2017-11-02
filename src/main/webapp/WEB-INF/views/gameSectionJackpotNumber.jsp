@@ -85,7 +85,8 @@
                                                 </div>
                                             </div>
                                             -->
-                                            <input type="hidden" id="gameText" name="gameText" value="${weeklyGame.gameText}">                                                
+                                            <input type="hidden" id="gameText" name="gameText" value="${weeklyGame.gameText}">
+                                            <input type="hidden" id="gameId" name="gameText" value="${weeklyGame.id}">
 
 
                                         </c:otherwise>
@@ -186,6 +187,13 @@
 
                 </div>    
 
+                <ul class="pagination  pagination-lg">
+                    <c:forEach items="${weeklyGameList}" var="item" varStatus = "status">                      
+                        <li><a id="${item.id}" href="<c:url value='/gameSectionx-${item.id}-${gameCode}' />">${status.index + 1}</a></li>
+                        <!--<li class="active"><a href="#">2</a></li>-->
+                    </c:forEach>  
+                </ul>  
+
             </div><br>
 
 
@@ -243,6 +251,15 @@
 <script>
 
     jQuery(document).ready(function ($) {
+        
+         var gameId = $('#gameId').val();
+         
+        // $('#' + gameId).addClass('active');
+         //$('#' + gameId).hide();
+        $('.pagination li').click(function () {
+            $('.pagination li').removeClass('active');
+            $(this).addClass('active');
+        });
         /*
          $.get("http://ipinfo.io", function (response) {
          //alert(response.ip);
@@ -253,14 +270,14 @@
          */
         $('#cantPlay').hide();
         //$("#gameTextJackpot2").prop("readonly", true);
-        
+
         // set fields to readonly if not empty or is a numbers
         setToReadOnly();
-        
-        
-        
-        
-        
+
+
+
+
+
 
         var matchStarted = $('#matchStarted').val();
 
@@ -288,10 +305,10 @@
         });
 
     });
-    
-    function setToReadOnly(){
-        
-         var gameTextJackpot1 = $('#gameTextJackpot1').val();
+
+    function setToReadOnly() {
+
+        var gameTextJackpot1 = $('#gameTextJackpot1').val();
         var gameTextJackpot2 = $('#gameTextJackpot2').val();
         var gameTextJackpot3 = $('#gameTextJackpot3').val();
         var gameTextJackpot4 = $('#gameTextJackpot4').val();
@@ -299,35 +316,35 @@
         var gameTextJackpot6 = $('#gameTextJackpot6').val();
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
         var gameTextJackpot8 = $('#gameTextJackpot8').val();
-        
+
 //        if (gameTextJackpot1.trim() !== "") {
 //                $("#gameTextJackpot1").prop("readonly", true); 
 //        }
         if (!isNaN(gameTextJackpot1.trim()) && gameTextJackpot1.trim() !== "") {
-                $("#gameTextJackpot1").prop("readonly", true); 
-              //  alert(gameTextJackpot1.trim());
+            $("#gameTextJackpot1").prop("readonly", true);
+            //  alert(gameTextJackpot1.trim());
         }
-        if (!isNaN(gameTextJackpot2.trim()) && gameTextJackpot2.trim() !== "") {  
-                $("#gameTextJackpot2").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot2.trim()) && gameTextJackpot2.trim() !== "") {
+            $("#gameTextJackpot2").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot3.trim()) && gameTextJackpot3.trim() !== "") {  
-               $("#gameTextJackpot3").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot3.trim()) && gameTextJackpot3.trim() !== "") {
+            $("#gameTextJackpot3").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot4.trim())  && gameTextJackpot4.trim() !== "") {   
-               $("#gameTextJackpot4").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot4.trim()) && gameTextJackpot4.trim() !== "") {
+            $("#gameTextJackpot4").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot5.trim()) && gameTextJackpot5.trim() !== "") {               
-                $("#gameTextJackpot5").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot5.trim()) && gameTextJackpot5.trim() !== "") {
+            $("#gameTextJackpot5").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot6.trim()) && gameTextJackpot6.trim() !== "") {       
-             //alert("in :: " + gameTextJackpot6.trim());
-               $("#gameTextJackpot6").prop("readonly", true);                
+        if (!isNaN(gameTextJackpot6.trim()) && gameTextJackpot6.trim() !== "") {
+            //alert("in :: " + gameTextJackpot6.trim());
+            $("#gameTextJackpot6").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot7.trim()) && gameTextJackpot7.trim() !== "") { 
-               $("#gameTextJackpot7").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot7.trim()) && gameTextJackpot7.trim() !== "") {
+            $("#gameTextJackpot7").prop("readonly", true);
         }
-         if (!isNaN(gameTextJackpot8.trim()) && gameTextJackpot8.trim() !== "") {    
-            $("#gameTextJackpot8").prop("readonly", true); 
+        if (!isNaN(gameTextJackpot8.trim()) && gameTextJackpot8.trim() !== "") {
+            $("#gameTextJackpot8").prop("readonly", true);
         }
     }
 
@@ -353,45 +370,45 @@
         var gameTextJackpot6 = $('#gameTextJackpot6').val();
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
         var gameTextJackpot8 = $('#gameTextJackpot8').val();
-        
+
         if (isNaN(gameTextJackpot1.trim()) || gameTextJackpot1.trim() === "") {
-                alert('Please fill out this field.');
-                $('#gameTextJackpot1').focus();
-                return false;
+            alert('Please fill out this field.');
+            $('#gameTextJackpot1').focus();
+            return false;
         }
-        if (isNaN(gameTextJackpot2.trim()) || gameTextJackpot2.trim() === "") {  
-                alert('Please fill out this field.');
-                $('#gameTextJackpot2').focus();
-                return false;
+        if (isNaN(gameTextJackpot2.trim()) || gameTextJackpot2.trim() === "") {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot2').focus();
+            return false;
         }
-         if (isNaN(gameTextJackpot3.trim()) || gameTextJackpot3.trim() === "") {  
-                alert('Please fill out this field.');
-                $('#gameTextJackpot3').focus();
-                return false;
+        if (isNaN(gameTextJackpot3.trim()) || gameTextJackpot3.trim() === "") {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot3').focus();
+            return false;
         }
-         if (isNaN(gameTextJackpot4.trim()) || gameTextJackpot4.trim() === "") {   
-                alert('Please fill out this field.');
-                $('#gameTextJackpot4').focus();
-                return false;
+        if (isNaN(gameTextJackpot4.trim()) || gameTextJackpot4.trim() === "") {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot4').focus();
+            return false;
         }
-         if (isNaN(gameTextJackpot5.trim()) || gameTextJackpot5.trim() === "") {               
-                alert('Please fill out this field.');
-                return false;
+        if (isNaN(gameTextJackpot5.trim()) || gameTextJackpot5.trim() === "") {
+            alert('Please fill out this field.');
+            return false;
         }
-         if (isNaN(gameTextJackpot6.trim()) || gameTextJackpot6.trim() === "") {  
-                alert('Please fill out this field.');
-                $('#gameTextJackpot6').focus();
-                return false;
+        if (isNaN(gameTextJackpot6.trim()) || gameTextJackpot6.trim() === "") {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot6').focus();
+            return false;
         }
-         if (isNaN(gameTextJackpot7.trim()) || gameTextJackpot7.trim() === "") { 
-                alert('Please fill out this field.');
-                $('#gameTextJackpot7').focus();
-                return false;
+        if (isNaN(gameTextJackpot7.trim()) || gameTextJackpot7.trim() === "") {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot7').focus();
+            return false;
         }
-         if (isNaN(gameTextJackpot8.trim()) || gameTextJackpot8.trim() === "") {    
-             alert('Field is required');
-                alert('Please fill out this field.');
-                return false;
+        if (isNaN(gameTextJackpot8.trim()) || gameTextJackpot8.trim() === "") {
+            alert('Field is required');
+            alert('Please fill out this field.');
+            return false;
         }
         var userAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
                 + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6

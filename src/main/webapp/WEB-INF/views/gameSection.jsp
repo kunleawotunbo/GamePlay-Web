@@ -136,6 +136,7 @@
                                 <div class="form-group row text-left" id="userPhoneNo2">
                                     <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
                                     <div class="col-sm-9">
+                                        <p>Choose your country flag.</p>
                                          <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
                                         <p>Your phone number will be used to contact you if you win.</p> 
                                     </div>
@@ -165,6 +166,13 @@
                     </c:choose>       
 
                 </div>    
+                
+                <ul class="pagination  pagination-lg">
+                <c:forEach items="${weeklyGameList}" var="item" varStatus = "status">                      
+                    <li><a id="${item.id}" href="<c:url value='/gameSectionx-${item.id}-${gameCode}' />">${status.index + 1}</a></li>
+                        <!--<li class="active"><a href="#">2</a></li>-->
+                </c:forEach>  
+                </ul>  
 
             </div><br>
 
@@ -201,7 +209,8 @@
 <script>
     // https://github.com/jackocnr/intl-tel-input
 //                                    $("#phone").intlTelInput();
-    //$("#userPhoneNo").intlTelInput();
+    $("#userPhoneNo").intlTelInput();
+    /*
     $("#userPhoneNo").intlTelInput({
         initialCountry: "auto",
         geoIpLookup: function (callback) {
@@ -212,6 +221,7 @@
         },
         //utilsScript: "../../build/js/utils.js" // just for formatting/placeholders etc
     });
+    */
 </script>
 
 <script>
