@@ -208,9 +208,10 @@
                  
                   var matchStarted = $('#matchStarted').val();
 
-                //console.log(" matchStarted :: " + matchStarted);
+                console.log(" matchStarted :: " + matchStarted);
 
-                if (matchStarted === 'true') {
+                //if (matchStarted === 'true') {
+                 if (matchStarted) {
 
                     $('#cantPlay').show();
                     $("#bth-submit").prop("disabled", true);

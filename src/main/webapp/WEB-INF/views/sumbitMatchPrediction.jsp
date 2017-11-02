@@ -162,7 +162,8 @@
 
         //console.log(" matchStarted :: " + matchStarted);
 
-        if (matchStarted === 'true') {
+       // if (matchStarted === 'true') {
+            if (matchStarted) {
 
             // disable button
             //console.log(" matchStarted has started::" + matchStarted);

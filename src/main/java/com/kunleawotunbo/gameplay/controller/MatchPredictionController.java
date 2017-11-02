@@ -429,6 +429,7 @@ public class MatchPredictionController {
         
         boolean matchStarted = false;
          // If match has expired, if not, admin can not set answer until game expire        
+         System.out.println("outcome :: " + tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()));
         if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
             matchStarted = true;
            

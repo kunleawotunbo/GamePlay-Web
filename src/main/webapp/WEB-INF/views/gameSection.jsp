@@ -157,6 +157,7 @@
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
                                         <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                         <p id="cantPlay">${msg}</p>
                                     </div>
                                 </div>
 
@@ -228,12 +229,30 @@
 
     jQuery(document).ready(function ($) {
         
+        $('#cantPlay').hide();
+        /*
          $.get("http://ipinfo.io", function (response) {
             //alert(response.ip);
              //ipAddress = response.ip;
              //$("#ipAddress").html("" + response.ip);
              $("#ipAddress").val(response.ip);
         }, "jsonp");
+        
+        */
+       
+        var matchStarted = $('#matchStarted').val();
+
+        console.log(" matchStarted :: " + matchStarted);
+
+        //if (matchStarted === 'true') {
+            if (matchStarted) {
+
+            $('#cantPlay').show();
+            $("#bth-submit").prop("disabled", true);
+
+        } else {
+            $("#bth-submit").prop("disabled", false);
+        }
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
