@@ -220,36 +220,37 @@
 
                             <tbody>
                                 <c:forEach items="${eplMatchesList}" var="item" varStatus = "status">    
-                                    <div class="row">
-                                        
+                                <div class="row">
+
                                     <tr>  
-                                         <div class="col-sm-4">
+                                    <div class="col-sm-4">
                                         <td>
                                             <div class="dataInizio"> 
                                                 <fmt:formatDate pattern="HH:mm" value = "${item.startTime}" />
                                             </div>
                                         </td> 
                                         <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
-                                        </div>
-                                        <td>
+                                    </div>
+                                    <td>
+                                           
                                             <div class="row">
-                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                            </a>                                            
-                                            &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                            </a>
-                                            &nbsp;
-                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                            </a>                                        
-                                             </div>   
-                                        </td>                                    
+                                                <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                </a>                                            
+                                                &nbsp;
+                                                <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                </a>
+                                                &nbsp;
+                                                <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                    <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                </a>                                        
+                                            </div>                                       
+                                    </td>                                    
                                     </tr>  
 
-                                     </div>
-                                </c:forEach>  
+                                </div>
+                            </c:forEach>  
 
                             </tbody>
                         </table>
@@ -276,7 +277,7 @@
 
                                 <tbody>
                                     <c:forEach items="${laligaMatchesList}" var="item" varStatus = "status">    
-                                                                        
+
                                         <tr>  
                                             <td>
                                                 <div class="dataInizio"> 
@@ -300,7 +301,7 @@
 
                                             </td>                                    
                                         </tr>  
-                                     
+
                                     </c:forEach>  
 
                                 </tbody>
@@ -329,7 +330,7 @@
 
                                 <tbody>
                                     <c:forEach items="${champLeaguesMatchesList}" var="item" varStatus = "status">    
-                                                                      
+
                                         <tr>  
                                             <td>
                                                 <div class="dataInizio"> 
@@ -339,21 +340,25 @@
                                             <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                             <td>
-                                                <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                                </a>                                            
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                                </a>
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                    <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                </a>                                        
+                                                <%--<c:if test="!${currentDate gt item.startTime}">--%>    
+                                                <%--<c:if test="${ item.startTime gt currentDate}">--%>    
+                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                    </a>                                            
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                        <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                    </a>  
+                                                <%--</c:if>--%>
+                                               
 
                                             </td>                                    
                                         </tr>  
-                                       
+
                                     </c:forEach>  
 
                                 </tbody>

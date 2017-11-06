@@ -242,8 +242,9 @@ public class GameSectionController {
             JackpotFieldsBean jackpotFieldsBean = new JackpotFieldsBean();
             System.out.println("weeklyGame.getGameText() :: " + weeklyGame.getGameText());
             String[] numberList = weeklyGame.getGameText().split("-");
+            
 
-            System.out.println("numberList :: " + numberList.toString());
+            //System.out.println("numberList :: " + numberList.toString());
 
             boolean matchStarted = false;
             // If match has expired, if not, admin can not set answer until game expire        

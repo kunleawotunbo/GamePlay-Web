@@ -100,6 +100,8 @@ public class MatchPredictionController {
         String championsLeagues = "Champions League";
         
         //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+        
+        Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
        
         
         activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
@@ -121,6 +123,7 @@ public class MatchPredictionController {
         model.addAttribute("laligaMatchesList", laligaMatchesList);
          model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
         model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
+        model.addAttribute("currentDate", currentDate);
         
         return "prediction";
     }
@@ -140,6 +143,7 @@ public class MatchPredictionController {
         String championsLeagues = "Champions League";
         
         //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+        Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
        
         /*
         activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
@@ -184,6 +188,8 @@ public class MatchPredictionController {
         model.addAttribute("laligaMatchesList", laligaMatchesList);
          model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
         model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
+        
+        model.addAttribute("currentDate", currentDate);
         
         return "prediction";
     }

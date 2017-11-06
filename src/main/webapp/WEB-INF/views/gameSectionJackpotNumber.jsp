@@ -153,7 +153,7 @@
                                     <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9 ">           
                                         <c:forEach items="${numberList}" var="item" varStatus = "status">  
-                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" required="required"/> 
+                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="5" value="${item}" required="required"/> 
                                             <%--                                      
                                                 <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
                                                 <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
