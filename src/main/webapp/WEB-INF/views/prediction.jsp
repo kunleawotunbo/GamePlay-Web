@@ -250,13 +250,13 @@
                                                     <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
                                                         <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
                                                     </a>     
-                                                       
+
                                                 </div> 
                                             </c:otherwise>
 
                                         </c:choose>       
                                     </td>
-                                  </tr>  
+                                    </tr>  
 
                                 </div>
                             </c:forEach>  
@@ -296,29 +296,29 @@
                                             <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                             <td>
-                                                  <c:choose>
-                                            <c:when test="${item.matchExpired}">
-                                                <p>Match not available to play.</p>                        
-                                            </c:when>
-                                            <c:otherwise>                                            
+                                                <c:choose>
+                                                    <c:when test="${item.matchExpired}">
+                                                        <p>Match not available to play.</p>                        
+                                                    </c:when>
+                                                    <c:otherwise>                                            
 
-                                                <div class="row">
-                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                                    </a>                                            
-                                                    &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                                    </a>
-                                                    &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                        <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                    </a>     
-                                                       
-                                                </div> 
-                                            </c:otherwise>
+                                                        <div class="row">
+                                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                            </a>                                            
+                                                            &nbsp;
+                                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                            </a>
+                                                            &nbsp;
+                                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                            </a>     
 
-                                        </c:choose>                                   
+                                                        </div> 
+                                                    </c:otherwise>
+
+                                                </c:choose>                                   
 
                                             </td>                                    
                                         </tr>  
@@ -361,29 +361,29 @@
                                             <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                             <td>
-                                                  <c:choose>
-                                            <c:when test="${item.matchExpired}">
-                                                <p>Match not available to play.</p>                        
-                                            </c:when>
-                                            <c:otherwise>                                            
+                                                <c:choose>
+                                                    <c:when test="${item.matchExpired}">
+                                                        <p>Match not available to play.</p>                        
+                                                    </c:when>
+                                                    <c:otherwise>                                            
 
-                                                <div class="row">
-                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                                    </a>                                            
-                                                    &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                                    </a>
-                                                    &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                        <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                    </a>     
-                                                       
-                                                </div> 
-                                            </c:otherwise>
+                                                        <div class="row">
+                                                            <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                            </a>                                            
+                                                            &nbsp;
+                                                            <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                            </a>
+                                                            &nbsp;
+                                                            <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                                <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                            </a>     
 
-                                        </c:choose>   
+                                                        </div> 
+                                                    </c:otherwise>
+
+                                                </c:choose>   
 
 
                                             </td>                                    
@@ -429,6 +429,7 @@
 
 <!--Include outside footer-->
 <%@ include file="includes/outside/footer.jsp" %>
+<script src="<c:url value='/resources/js/moment.min.js' />"></script> 
 <script>
 
     jQuery(document).ready(function ($) {
@@ -439,18 +440,38 @@
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
         // var monthName = d.getMonthName();
-        var objDate = new Date().toLocaleString("en-us", {month: "short"}); // result: Aug
-
-        document.getElementById("d1").innerHTML = " " + objDate.toString() + ". " + (day - 3);
-        document.getElementById("d2").innerHTML = " " + objDate.toString() + ". " + (day - 2);
-        document.getElementById("d3").innerHTML = " " + objDate.toString() + ". " + (day - 1);
-        document.getElementById("today").innerHTML = "Today";
-        document.getElementById("d4").innerHTML = " " + objDate.toString() + ". " + (day + 1);
-        document.getElementById("d5").innerHTML = " " + objDate.toString() + ". " + (day + 2);
-        document.getElementById("d6").innerHTML = " " + objDate.toString() + ". " + (day + 3);
         
-        console.log("date :: " + objDate.toString() + " " + (day + 3));
-         console.log("date2 :: " + objDate + " " + (day + 3));
+        //var objDate = new Date().toLocaleString("en-us", {month: "short"}); // result: Aug
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+       // var d = new Date();
+        var monthShortName = monthNames[d.getMonth()];
+        //document.write("The current month is " + monthNames[d.getMonth()]);
+        /*
+        document.getElementById("d1").innerHTML = " " + objDate + " " + (day - 3);
+        document.getElementById("d2").innerHTML = " " + objDate + " " + (day - 2);
+        document.getElementById("d3").innerHTML = " " + objDate + " " + (day - 1);
+        document.getElementById("today").innerHTML = "Today";
+        document.getElementById("d4").innerHTML = " " + objDate + " " + (day + 1);
+        document.getElementById("d5").innerHTML = " " + objDate + " " + (day + 2);
+        document.getElementById("d6").innerHTML = " " + objDate + " " + (day + 3);
+        */
+       
+        document.getElementById("d1").innerHTML = " " + monthShortName + " " + (day - 3);
+        document.getElementById("d2").innerHTML = " " + monthShortName + " " + (day - 2);
+        document.getElementById("d3").innerHTML = " " + monthShortName + " " + (day - 1);
+        document.getElementById("today").innerHTML = "Today";
+        document.getElementById("d4").innerHTML = " " + monthShortName + " " + (day + 1);
+        document.getElementById("d5").innerHTML = " " + monthShortName + " " + (day + 2);
+        document.getElementById("d6").innerHTML = " " + monthShortName + " " + (day + 3);
+
+
+       // console.log("moment :: " + moment.monthsShort());
+        //document.write("The current month is " + monthNames[d.getMonth()]);
+        //console.log("date :: " + objDate.toString() + " " + (day + 3));
+        //console.log("date2 :: " + objDate + " " + (day + 3));
 
         //document.getElementById("date1").innerHTML =  year + "-" + month + "-" + (day - 3);
         $("#d1").prop("href", "${pageContext.request.contextPath}/soccer/" + year + "-" + month + "-" + (day - 3));
