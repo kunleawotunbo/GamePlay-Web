@@ -232,22 +232,31 @@
                                         <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
                                     </div>
                                     <td>
-                                           
-                                            <div class="row">
-                                                <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                                </a>                                            
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                                </a>
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                    <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                </a>                                        
-                                            </div>                                       
-                                    </td>                                    
-                                    </tr>  
+                                        <c:choose>
+                                            <c:when test="${item.matchExpired}">
+                                                <p>Match not available to play.</p>                        
+                                            </c:when>
+                                            <c:otherwise>                                            
+
+                                                <div class="row">
+                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                    </a>                                            
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                        <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                    </a>     
+                                                       
+                                                </div> 
+                                            </c:otherwise>
+
+                                        </c:choose>       
+                                    </td>
+                                  </tr>  
 
                                 </div>
                             </c:forEach>  
@@ -287,17 +296,29 @@
                                             <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                             <td>
-                                                <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
-                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
-                                                </a>                                            
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
-                                                </a>
-                                                &nbsp;
-                                                <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
-                                                    <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                </a>                                        
+                                                  <c:choose>
+                                            <c:when test="${item.matchExpired}">
+                                                <p>Match not available to play.</p>                        
+                                            </c:when>
+                                            <c:otherwise>                                            
+
+                                                <div class="row">
+                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
+                                                    </a>                                            
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
+                                                        <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
+                                                    </a>     
+                                                       
+                                                </div> 
+                                            </c:otherwise>
+
+                                        </c:choose>                                   
 
                                             </td>                                    
                                         </tr>  
@@ -340,8 +361,13 @@
                                             <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
 
                                             <td>
-                                                <%--<c:if test="!${currentDate gt item.startTime}">--%>    
-                                                <%--<c:if test="${ item.startTime gt currentDate}">--%>    
+                                                  <c:choose>
+                                            <c:when test="${item.matchExpired}">
+                                                <p>Match not available to play.</p>                        
+                                            </c:when>
+                                            <c:otherwise>                                            
+
+                                                <div class="row">
                                                     <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
                                                         <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
                                                     </a>                                            
@@ -352,9 +378,13 @@
                                                     &nbsp;
                                                     <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win"> 
                                                         <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
-                                                    </a>  
-                                                <%--</c:if>--%>
-                                               
+                                                    </a>     
+                                                       
+                                                </div> 
+                                            </c:otherwise>
+
+                                        </c:choose>   
+
 
                                             </td>                                    
                                         </tr>  

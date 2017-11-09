@@ -318,17 +318,22 @@ public class AdminController {
             logger.info("Not Jackpot game");
         }
         
-        boolean matchStarted = false;
+        boolean hasExpired = false;
          // If match has expired, if not, admin can not set answer until game expire        
         if (null != weeklyGame && tunborUtility.getDate(Definitions.TIMEZONE).before(weeklyGame.getGameExpiryDate()) ) {
-            matchStarted = true;
-            
+            hasExpired = false;
+            logger.info("hasExpired :: " + hasExpired);
             logger.info("Game has not ended, Please wait till match ends before setting answer");
            
-            model.addAttribute("matchStarted", matchStarted);
-            model.addAttribute("msg", "Game has not ended, Please wait till match ends before setting answer");           
+            model.addAttribute("hasExpired", hasExpired);
+             model.addAttribute("msg", "Game has not ended, Please wait till game ends before setting answer");    
+           // model.addAttribute("msg", "Game has expired, admin can set answer");      
         } else {
-            matchStarted = false;            
+            hasExpired = true;   
+             logger.info("hasExpired :: " + hasExpired);
+             model.addAttribute("hasExpired", hasExpired);
+              
+             
             logger.info("Game has expired, admin can set answer");
         }
 

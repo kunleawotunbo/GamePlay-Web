@@ -7,6 +7,7 @@ package com.kunleawotunbo.gameplay.utility;
 
 import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.bean.GameBean;
+import com.kunleawotunbo.gameplay.bean.MatchPredictionBean;
 import com.kunleawotunbo.gameplay.bean.SMSConfigBean;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
@@ -751,5 +752,66 @@ public class TunborUtility {
         randomNumber = ((1 + r.nextInt(9)) * 10000 + r.nextInt(10000));        
         return randomNumber;
     }
+     
+     public List<MatchPredictionBean> matchPredictionBeanMapper(List<MatchPrediction> matchPredictionList){
+         List<MatchPredictionBean> matchPredictionBeanList = null;
+         MatchPredictionBean matchPredictionBean = null;
+         
+         matchPredictionBeanList = new ArrayList<MatchPredictionBean>();
+         for(MatchPrediction item : matchPredictionList){             
+             
+             matchPredictionBean = new MatchPredictionBean();
+             
+              matchPredictionBean.setId(item.getId());
+              matchPredictionBean.setHomeTeamId(item.getHomeTeamId());
+              matchPredictionBean.setHomeTeamName(item.getHomeTeamName());
+              matchPredictionBean.setWeekNo(item.getWeekNo());
+              matchPredictionBean.setPrizeOfWinners(item.getPrizeOfWinners());
+              matchPredictionBean.setNoOfWinners(item.getNoOfWinners());
+              matchPredictionBean.setAwayTeamId(item.getAwayTeamId());
+              matchPredictionBean.setAwayTeamName(item.getAwayTeamName());
+              matchPredictionBean.setCountryCode(item.getCountryCode());
+              matchPredictionBean.setCountryName(item.getCountryName());
+              matchPredictionBean.setLeagueCode(item.getLeagueCode());
+              matchPredictionBean.setLeagueName(item.getLeagueName());
+              matchPredictionBean.setStartTime(item.getStartTime());
+              matchPredictionBean.setEndTime(item.getEndTime());
+              matchPredictionBean.setWinner(item.getWinner());
+              matchPredictionBean.setMatchResult(item.getMatchResult());
+              matchPredictionBean.setModifiedDate(item.getModifiedDate());
+              matchPredictionBean.setCreatedBy(item.getCreatedBy());
+              matchPredictionBean.setEnabled(item.isEnabled());
+              matchPredictionBean.setStatus(item.getStatus());
+              matchPredictionBean.setCode(item.getCode());
+              matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+              //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
+              //matchPredictionBean.setMatchExpired(hasExpired(item));
+ 
+              matchPredictionBeanList.add(matchPredictionBean);
+             
+         }
+         
+         return matchPredictionBeanList;
+     }
+     
+     
+     public boolean hasExpired(MatchPrediction matchPredictionObject){
+        // boolean matchExpired = false;
+         boolean matchExpired = matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE));
+         /*
+          //if (null != matchPredictionObject && getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime()) ) {
+           if (null != matchPredictionObject && matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
+              matchExpired = true;
+              logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+              logger.info("matchExpired :: " + matchExpired);
+          }else {
+                matchExpired = false;
+                logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+                 logger.info("matchExpired :: " + matchExpired);
+          }
+           */
+          return matchExpired;
+         
+     }
 
 }

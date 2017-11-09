@@ -57,7 +57,15 @@
                         <form:form modelAttribute="weeklyGame" class="form-horizontal form-label-left" id="setWeeklyGameAnswer-form" data-parsley-validate="">
                             <form:hidden path="id" id="id" name="id" />
 
-
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code <span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weeklyGame.code}">
+                                    
+                                </div>
+                            </div>  
+                                
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
@@ -80,7 +88,15 @@
                                     <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weeklyGame.createdDate}">
                                     <form:hidden path="createdDate" id="createdDate" class="form-control" name="createdDate"  value="${createdDate}" />
                                 </div>
-                            </div>           
+                            </div> 
+                                
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Expiry Date<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${weeklyGame.gameExpiryDate}">
+                                    <%--<form:hidden path="createdDate" id="createdDate" class="form-control" name="createdDate"  value="${createdDate}" />--%>
+                                </div>
+                            </div> 
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize Of Winners<span class="required">*</span></label>
@@ -102,30 +118,41 @@
                                 <label for="userAnswer" class="control-label col-md-3 col-sm-3 col-xs-3">Game Answer </label>
                                 <div class="col-md-9 col-sm-9 col-xs-9 ">           
                                     <c:forEach items="${numberList}" var="item" varStatus = "status">  
-                                        <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="5" value="${item}"/> 
+                                        <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}"/> 
 
                                     </c:forEach>  
                                 </div>
                             </div>          
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
-                             <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
+                            <input type="hidden" class="form-control" id="hasExpired" name="hasExpired"  value="${hasExpired}">
                             <div class="ln_solid"></div>
 
+                            <c:choose>
+                                <c:when test="${hasExpired}">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="reset" class="btn btn-primary">Cancel</button>
+                                                <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                            </div>        
+                                        </div>
+                                    </div>                                   
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" id="bth-submit"  class="btn btn-success" disabled>Submit</button>
+                                                <br>
+                                                 <br>
+                                                <p>${msg}</p>
+                                            </div>  
+                                        </div>
+                                    </div>  
+                                </c:otherwise>
 
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <div class="col-md-9 col-md-offset-3">
-                                        <button type="reset" class="btn btn-primary">Cancel</button>
-                                        <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
-                                        
-                                    </div>
-                                    <br>
-                                    <br>
-                                        <p id="cantPlay">${msg}</p>
-                                </div>
-
-                            </div>
+                            </c:choose>                           
 
                         </form:form>
 
@@ -174,7 +201,7 @@
 
             jQuery(document).ready(function ($) {
                 var gamePlayType = $('#gamePlayType').val();
-                 $('#cantPlay').hide();                
+                $('#cantPlay').hide();
 
                 if (gamePlayType === "3") {
                     //console.log(" gamePlayType is Question ::" + gamePlayType);
@@ -193,12 +220,13 @@
                     $('#gameAnswer').show();
                 }
 
+                /*
                 var matchStarted = $('#matchStarted').val();
 
                 console.log(" matchStarted :: " + matchStarted);
 
-               // if (matchStarted === 'true') {
-                     if (matchStarted === 'true') {
+                // if (matchStarted === 'true') {
+                if (matchStarted === 'true') {
 
                     $('#cantPlay').show();
                     $("#bth-submit").prop("disabled", true);
@@ -207,6 +235,8 @@
                     $("#bth-submit").prop("disabled", false);
                 }
                 
+                */
+
                 $("#setWeeklyGameAnswer-form").submit(function (event) {
                     //var formData = $('addGame-form').serialize();
                     // Disble the search button
@@ -271,9 +301,9 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
-                        notification("Notification", "Answer added successfully, winners will be processed.", "success");
+                        // notification("Notification", "Answer added successfully, winners will be processed.", "success");
                         //window.location = "/admin/listWeeklyGames";
-                        //location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                        location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
                         // location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
                     },
                     error: function (e) {

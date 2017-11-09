@@ -13,12 +13,9 @@ import com.kunleawotunbo.gameplay.model.MatchPrediction;
 import com.kunleawotunbo.gameplay.model.MatchPredictionAnswer;
 import com.kunleawotunbo.gameplay.service.MatchPredictionAnswerService;
 import com.kunleawotunbo.gameplay.service.MatchPredictionService;
-import com.kunleawotunbo.gameplay.service.WeeklyGamesAnswersService;
-import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
 import io.swagger.annotations.Api;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,6 +136,26 @@ public class MatchPredictionAnswerController {
             matchStarted = false;
             System.out.println("Current time is not after start time");
         }
+        
+        boolean canPlayGame = false;
+        if (null != matchPredictionObject && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime()) ) {
+            canPlayGame = true;
+            logger.info("canPlayGame :: " + canPlayGame);
+            //logger.info("Game has not ended, Please wait till match ends before setting answer");
+           
+           // model.addAttribute("canPlayGame", canPlayGame);
+            result.setCode("" + HttpStatus.BAD_REQUEST);
+            result.setMessage("Match already started, play another game");
+           //  model.addAttribute("msg", "Game has not ended, Please wait till game ends before setting answer");    
+            System.out.println("start time is after current time");
+        }else {
+            canPlayGame = false;
+            logger.info("canPlayGame :: " + canPlayGame);            
+            System.out.println("Current time is not after start time");
+        }
+        
+        
+        
         matchPredictionAnswer.setCode(matchPredictionObject.getCode());
         if (matchPredictionAnswerService.saveMatchPredictionAnswer(matchPredictionAnswer)) {
             result.setCode("" + HttpStatus.OK);

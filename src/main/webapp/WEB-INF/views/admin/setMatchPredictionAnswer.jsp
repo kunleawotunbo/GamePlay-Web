@@ -52,6 +52,14 @@
 
 
                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Code <span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${matchPrediction.code}">
+                                    
+                                </div>
+                            </div>  
+                                    
+                            <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Week No<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
                                     <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${matchPrediction.weekNo}">
@@ -65,7 +73,21 @@
                                 <div class="col-md-9 col-sm-9 col-xs-9">
                                     <p class="form-control-static"><strong>${matchPrediction.homeTeamName} - ${matchPrediction.awayTeamName}</strong></p>
                                 </div>
-                            </div>           
+                            </div>         
+                                
+                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Start Time<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${matchPrediction.startTime}">                                  
+                                </div>
+                            </div> 
+                                
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-3">Expiry Date<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="${matchPrediction.endTime}">                                    
+                                </div>
+                            </div> 
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Prize Of Winners<span class="required">*</span></label>
@@ -92,32 +114,15 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Match Winner<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <!--<input type="text" class="form-control"  id="winner" required="required">-->
-
-                                    <!--                               
-                                        <select class="form-control" name="winner" >
-                                        <option value="0"> Select Match Outcome</option>
-                                        <option value="1">Home Win - 1</option>
-                                        <option value="X">Draw - X </option>
-                                        <option value="2">Away Win - 2</option>
-
-                                    </select>-->
+                                    
 
                                     <div class="form-group">
-                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <!--
-                                        <input type="radio" class="flat" name="winner" value="1"> <strong> Home Win </strong>
-                                            &nbsp;
-                                            <input type="radio" class="flat" name="winner" value="X"> <strong> Draw </strong>
-                                            &nbsp;
-                                            <input type="radio" class="flat" name="winner" value="2"> <strong>  Away Win </strong>
-                                        -->
+                                        <div class="col-md-9 col-sm-9 col-xs-9">                                        
                                         <input type="radio" name="winner" value="1"> <strong> Home Win </strong>
                                             &nbsp;
                                             <input type="radio"  name="winner" value="X"> <strong> Draw </strong>
                                             &nbsp;
                                             <input type="radio"  name="winner" value="2"> <strong>  Away Win </strong>
-
                                         </div>
                                     </div>
 
@@ -127,11 +132,37 @@
                             </div>
 
                             <form:input path="createdBy" name="createdBy" value="${loggedinuser}" type="hidden" /> 
-                             <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
+                             <input type="hidden" class="form-control" id="hasExpired" name="hasExpired"  value="${hasExpired}">
                             <div class="ln_solid"></div>
+                            
+                            <c:choose>
+                                <c:when test="${hasExpired}">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="reset" class="btn btn-primary">Cancel</button>
+                                                <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                            </div>        
+                                        </div>
+                                    </div>                                   
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" id="bth-submit"  class="btn btn-success" disabled>Submit</button>
+                                                <br>
+                                                 <br>
+                                                <p>${msg}</p>
+                                            </div>  
+                                        </div>
+                                    </div>  
+                                </c:otherwise>
+
+                            </c:choose>         
 
 
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Cancel</button>
@@ -142,7 +173,7 @@
                                         <p id="cantPlay">${msg}</p>
                                 </div>
 
-                            </div>
+                            </div>-->
 
                         </form:form>
 
@@ -204,22 +235,7 @@
         <script>
 
             jQuery(document).ready(function ($) {
-                 $('#cantPlay').hide();
-                 
-                  var matchStarted = $('#matchStarted').val();
-
-                console.log(" matchStarted :: " + matchStarted);
-
-                //if (matchStarted === 'true') {
-                 if (matchStarted) {
-
-                    $('#cantPlay').show();
-                    $("#bth-submit").prop("disabled", true);
-
-                } else {
-                    $("#bth-submit").prop("disabled", false);
-                }
-                
+                 $('#cantPlay').hide();                
 
                 $("#setMatchPredictionAnswer-form").submit(function (event) {
 
@@ -272,7 +288,7 @@
                         //   notify(data);
                         notification("Notification", "Answer added successfully.", "success");
                         //window.location = "/admin/listWeeklyGames";
-                       // location.href = "<%=request.getContextPath()%>/admin/listMatchPredictions";
+                       location.href = "<%=request.getContextPath()%>/admin/listMatchPredictions";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);

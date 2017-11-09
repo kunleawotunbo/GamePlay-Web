@@ -100,17 +100,39 @@ public class MatchPredictionController {
         String championsLeagues = "Champions League";
         
         //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
-        
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
        
         
+        /*
         activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
         eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
         laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
         otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
         champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
+        */
         
-        model.addAttribute("activeMatchesList", activeMatchesList);
+        Date date = null;
+        try {
+            date =  formatter.parse(formatter.format(currentDate));
+            //date = inputFormat.parse(dateString);
+            System.out.println("date :: " + date);
+
+            
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("date :: " + date);
+        
+        activeMatchesList = matchPredictionService.listActiveMatches(date);
+        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "EPL");
+        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "LaLiga");
+        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "");
+        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "Champions League");
+        
+        //tunborUtility.matchPredictionBeanMapper(eplMatchesList)
+        
+       
         
         model.addAttribute("england", england);
         model.addAttribute("spain", spain);
@@ -118,11 +140,20 @@ public class MatchPredictionController {
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
         
-        
+        /*
+         model.addAttribute("activeMatchesList", activeMatchesList);
         model.addAttribute("eplMatchesList", eplMatchesList);
         model.addAttribute("laligaMatchesList", laligaMatchesList);
          model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
         model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
+        */
+        
+         model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
+        model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
+        model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
+         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
+        model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
+        
         model.addAttribute("currentDate", currentDate);
         
         return "prediction";
@@ -183,11 +214,18 @@ public class MatchPredictionController {
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
         
-        
+        /*
         model.addAttribute("eplMatchesList", eplMatchesList);
         model.addAttribute("laligaMatchesList", laligaMatchesList);
          model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
         model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
+        
+        */
+          model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
+        model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
+        model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
+         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
+        model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
         
         model.addAttribute("currentDate", currentDate);
         
@@ -203,18 +241,27 @@ public class MatchPredictionController {
         logger.info("Set answer for matchPrediction id :: " + id);
 
         MatchPrediction matchPredictionObject = matchPredictionService.findById(id);
-        boolean matchStarted = false;
+        //boolean matchStarted = false;
+         boolean canPlayGame = false;
         String userAnswer = "";
 
         MatchPredictionAnswer matchPredictionAnswer = new MatchPredictionAnswer();
         // Check if match has started. Disable submit button if match has started.        
     
          
-        if(null != matchPredictionObject &&  tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())){
-            matchStarted = true;
-            System.out.println("start time is after current time");
+        //if(null != matchPredictionObject &&  tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())){
+        if (null != matchPredictionObject && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime()) ) {
+            canPlayGame = true;
+            logger.info("canPlayGame :: " + canPlayGame);
+            //logger.info("Game has not ended, Please wait till match ends before setting answer");
+           
+            model.addAttribute("canPlayGame", canPlayGame);              
+           
         }else {
-            matchStarted = false;
+            canPlayGame = false;
+             logger.info("canPlayGame :: " + canPlayGame);
+             model.addAttribute("canPlayGame", canPlayGame);
+              model.addAttribute("msg", "You can't play this game, Game has started, Please another game");    
             System.out.println("Current time is not after start time");
         }
         
@@ -233,7 +280,7 @@ public class MatchPredictionController {
         model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
         model.addAttribute("selectedAnswer", selectedAnswer);
         model.addAttribute("userAnswer", userAnswer);
-        model.addAttribute("matchStarted", matchStarted);
+        //model.addAttribute("matchStarted", matchStarted);
 
         return "sumbitMatchPrediction";
     }
@@ -433,9 +480,28 @@ public class MatchPredictionController {
 
         MatchPrediction matchPrediction = matchPredictionService.findById(id);
         
-        boolean matchStarted = false;
+       
          // If match has expired, if not, admin can not set answer until game expire        
-         System.out.println("outcome :: " + tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()));
+         //System.out.println("outcome :: " + tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()));
+         boolean hasExpired = false;
+         // If match has expired, if not, admin can not set answer until game expire        
+        if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+            hasExpired = false;
+            logger.info("hasExpired :: " + hasExpired);
+            logger.info("Game has not ended, Please wait till match ends before setting answer");
+           
+            model.addAttribute("hasExpired", hasExpired);
+             model.addAttribute("msg", "Game has not ended, Please wait till game ends before setting answer");    
+           // model.addAttribute("msg", "Game has expired, admin can set answer");      
+        } else {
+            hasExpired = true;   
+             logger.info("hasExpired :: " + hasExpired);
+             model.addAttribute("hasExpired", hasExpired);
+              
+             
+            logger.info("Game has expired, admin can set answer");
+        }
+         /*
         if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
             matchStarted = true;
            
@@ -449,6 +515,7 @@ public class MatchPredictionController {
             
             logger.info("Game has expired, admin can set answer");
         }
+        */
 
         model.addAttribute("matchPrediction", matchPrediction);
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());

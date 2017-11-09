@@ -49,6 +49,12 @@
                                     <p> <strong> ${userAnswer}  </strong></p> 
                                 </div>
                             </div>
+                             <div class="form-group row text-left">
+                                <label for="match" class="col-sm-3 form-control-label m-t-5">Match End </label>
+                                <div class="col-sm-9">
+                                    <p> <strong> ${matchPredictionObject.endTime} </strong></p> 
+                                </div>
+                            </div>
                             <div class="form-group row text-left">
                                 <label for="phone-h-f" class="col-sm-3 form-control-label m-t-5">Phone Number</label>
                                 <div class="col-sm-9">
@@ -57,17 +63,44 @@
                                     <p>Your phone number will be used to contact you if you win.</p> 
                                 </div>
                             </div>
-                            <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
+                            <input type="hidden" class="form-control" id="canPlayGame" name="canPlayGame"  value="${canPlayGame}">
                             <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
                             <!--<p id="ipAddress">This is another paragraph.</p>-->
+                            
+                            <c:choose>
+                                <c:when test="${canPlayGame}">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <!--<button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>-->
+                                                <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
+                                            </div>        
+                                        </div>
+                                    </div>                                   
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" id="bth-submit"  class="btn btn-success" disabled>Submit</button>
+                                                <br>
+                                                 <br>
+                                                <p>${msg}</p>
+                                            </div>  
+                                        </div>
+                                    </div>  
+                                </c:otherwise>
 
+                            </c:choose>                           
+
+<!--
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
                                     <button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button>
                                     <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
                                     <p id="cantPlay">Match already started, you can't play this game. Please try another game</p>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group row text-left">
 
@@ -158,24 +191,7 @@
         }, "jsonp");
         */
 
-        var matchStarted = $('#matchStarted').val();
-
-        //console.log(" matchStarted :: " + matchStarted);
-
-       // if (matchStarted === 'true') {
-            if (matchStarted === 'true') {
-
-            // disable button
-            console.log(" matchStarted has started::" + matchStarted);
-            // $("#bth-submit").button("enable");
-            $('#cantPlay').show();
-            $("#bth-submit").prop("disabled", true);
-
-        } else {
-            console.log(" Mactch not  ::" + matchStarted);
-            $("#bth-submit").prop("disabled", false);
-
-        }
+      
 
         $("#matchPredictionAnswer-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
