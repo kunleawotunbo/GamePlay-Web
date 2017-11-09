@@ -308,7 +308,10 @@ public class AdminController {
         if (null != weeklyGame && weeklyGame.getGamePlayType() == 3) {
            
             String[] numberList = weeklyGame.getGameText().split("-");
-            //System.out.println("numberList :: " + numberList.toString());
+            System.out.println("numberList :: " + numberList.toString());
+            for (String item : numberList){
+                System.out.print(item);
+            }
 
             model.addAttribute("numberList", numberList);
         } else {

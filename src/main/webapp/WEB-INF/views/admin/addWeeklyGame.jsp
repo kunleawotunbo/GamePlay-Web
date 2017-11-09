@@ -584,19 +584,19 @@
                     }
 
                     if (gameType === "3") {
-                        var gameTextJackpot1 = $('#gameTextJackpot1').val();
-                        var gameTextJackpot2 = $('#gameTextJackpot2').val();
-                        var gameTextJackpot3 = $('#gameTextJackpot3').val();
-                        var gameTextJackpot4 = $('#gameTextJackpot4').val();
-                        var gameTextJackpot5 = $('#gameTextJackpot5').val();
-                        var gameTextJackpot6 = $('#gameTextJackpot6').val();
-                        var gameTextJackpot7 = $('#gameTextJackpot7').val();
-                        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+                        var gameTextJackpot1 = $('#gameTextJackpot1').val().trim();
+                        var gameTextJackpot2 = $('#gameTextJackpot2').val().trim();
+                        var gameTextJackpot3 = $('#gameTextJackpot3').val().trim();
+                        var gameTextJackpot4 = $('#gameTextJackpot4').val().trim();
+                        var gameTextJackpot5 = $('#gameTextJackpot5').val().trim();
+                        var gameTextJackpot6 = $('#gameTextJackpot6').val().trim();
+                        var gameTextJackpot7 = $('#gameTextJackpot7').val().trim();
+                        var gameTextJackpot8 = $('#gameTextJackpot8').val().trim();
                         // alert("gameTextJackpot1 :: " + gameTextJackpot1);
                         // alert("gameTextJackpot2 :: " + gameTextJackpot2);
-                        var allTinyFields = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
-                                + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
-                                + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
+                        var allTinyFields = "" + gameTextJackpot1 + "-" + gameTextJackpot2 + "-" + gameTextJackpot3
+                                + "-" + gameTextJackpot4 + "-" + gameTextJackpot5 + "-" + gameTextJackpot6
+                                + "-" + gameTextJackpot7 + "-" + gameTextJackpot8;
                         //alert("allTinyFields :: " + allTinyFields);
 
                         gameText = $('#gameText1').val("" + allTinyFields);
