@@ -102,7 +102,7 @@
                                 <label for="userAnswer" class="control-label col-md-3 col-sm-3 col-xs-3">Game Answer </label>
                                 <div class="col-md-9 col-sm-9 col-xs-9 ">           
                                     <c:forEach items="${numberList}" var="item" varStatus = "status">  
-                                        <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}"/> 
+                                        <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="5" value="${item}"/> 
 
                                     </c:forEach>  
                                 </div>
@@ -198,7 +198,7 @@
                 console.log(" matchStarted :: " + matchStarted);
 
                // if (matchStarted === 'true') {
-                     if (matchStarted) {
+                     if (matchStarted === 'true') {
 
                     $('#cantPlay').show();
                     $("#bth-submit").prop("disabled", true);
