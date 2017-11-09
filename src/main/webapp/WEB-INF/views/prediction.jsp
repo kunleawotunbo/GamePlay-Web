@@ -441,13 +441,13 @@
         // var monthName = d.getMonthName();
         var objDate = new Date().toLocaleString("en-us", {month: "short"}); // result: Aug
 
-        document.getElementById("d1").innerHTML = " " + objDate.toString() + " " + (day - 3);
-        document.getElementById("d2").innerHTML = " " + objDate.toString() + " " + (day - 2);
-        document.getElementById("d3").innerHTML = " " + objDate.toString() + " " + (day - 1);
+        document.getElementById("d1").innerHTML = " " + objDate.toString() + ". " + (day - 3);
+        document.getElementById("d2").innerHTML = " " + objDate.toString() + ". " + (day - 2);
+        document.getElementById("d3").innerHTML = " " + objDate.toString() + ". " + (day - 1);
         document.getElementById("today").innerHTML = "Today";
-        document.getElementById("d4").innerHTML = " " + objDate.toString() + " " + (day + 1);
-        document.getElementById("d5").innerHTML = " " + objDate.toString() + " " + (day + 2);
-        document.getElementById("d6").innerHTML = " " + objDate.toString() + " " + (day + 3);
+        document.getElementById("d4").innerHTML = " " + objDate.toString() + ". " + (day + 1);
+        document.getElementById("d5").innerHTML = " " + objDate.toString() + ". " + (day + 2);
+        document.getElementById("d6").innerHTML = " " + objDate.toString() + ". " + (day + 3);
         
         console.log("date :: " + objDate.toString() + " " + (day + 3));
          console.log("date2 :: " + objDate + " " + (day + 3));
