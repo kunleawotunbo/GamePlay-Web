@@ -400,7 +400,7 @@ public class TunborUtility {
         }
     }
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    //@DateTimeFormat(pattern = "yyyy/MM/dd")
     public Date getDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
 
