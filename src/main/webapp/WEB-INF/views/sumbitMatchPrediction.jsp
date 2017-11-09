@@ -163,16 +163,16 @@
         //console.log(" matchStarted :: " + matchStarted);
 
        // if (matchStarted === 'true') {
-            if (matchStarted) {
+            if (matchStarted === 'true') {
 
             // disable button
-            //console.log(" matchStarted has started::" + matchStarted);
+            console.log(" matchStarted has started::" + matchStarted);
             // $("#bth-submit").button("enable");
             $('#cantPlay').show();
             $("#bth-submit").prop("disabled", true);
 
         } else {
-            //console.log(" Mactch not  ::" + matchStarted);
+            console.log(" Mactch not  ::" + matchStarted);
             $("#bth-submit").prop("disabled", false);
 
         }
