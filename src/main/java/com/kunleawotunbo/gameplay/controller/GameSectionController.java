@@ -15,9 +15,7 @@ import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.WeeklyGamesService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import com.kunleawotunbo.gameplay.utility.WebServiceUtility;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,9 +102,11 @@ public class GameSectionController {
 
                 if (null != weeklyGame && weeklyGame.getIsPicture() == 1) {
                     encodedPictureString = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage());
-                    if (weeklyGame.getGameImage2() != null) {
+                    logger.info("weeklyGame.getGameImage2() :: " + weeklyGame.getGameImage2());
+                    if (weeklyGame.getGameImage2() != null && !"".equalsIgnoreCase(weeklyGame.getGameImage2())) {
                         encodedGameImage2 = tunborUtility.imageToBase64String(weeklyGame.getGameImgLocation() + weeklyGame.getGameImage2());
                         hasGameImage2 = true;
+                        logger.info("hasGameImage2 :: " + hasGameImage2);
                     }
                     isPicture = true;
                 } else {
@@ -119,7 +119,7 @@ public class GameSectionController {
                     System.out.println("weeklyGame.getGameText() :: " + weeklyGame.getGameText());
                     String[] numberList = weeklyGame.getGameText().split("-");
 
-                    System.out.println("numberList :: " + numberList.toString());
+                    //System.out.println("numberList :: " + numberList.toString());
 
                     map.addAttribute("numberList", numberList);
                 } else {

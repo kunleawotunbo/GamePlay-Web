@@ -50,7 +50,8 @@
                         <c:otherwise>        
                             <br>
 
-                            <form >
+                            <!--<form >-->
+                            <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
 
                                 <div class="form-group">
                                     <c:choose>
@@ -76,22 +77,48 @@
 
                                         </c:when>
                                         <c:otherwise>
-
-                                            <!--                                            
-                                            <div class="form-group row text-left" id="gameText">
-                                                <label for="gameImage" class="col-sm-3 form-control-label m-t-5">Game Text</label>
-                                                <div class="col-sm-9">
-                                                    <h1 class="text-center">   <p class="form-control-static">${weeklyGame.gameText}</p> </h1>
-                                                </div>
-                                            </div>
-                                            -->
                                             <input type="hidden" id="gameText" name="gameText" value="${weeklyGame.gameText}">
-                                            <input type="hidden" id="gameId" name="gameText" value="${weeklyGame.id}">
 
+                                            <input type="hidden" id="gameId" name="gameText" value="${weeklyGame.id}">
+                                            <div class="form-group row text-left" id="gameRules">
+                                                <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
+                                                <div class="col-sm-9">
+                                                    <p class="form-control-static">${weeklyGame.gameRules}</p>
+                                                </div>
+                                            </div>  
 
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
+
+                                <div class="form-group row text-left" id="gameExpiryDate">
+                                    <label for="gameExpiryDate" class="col-sm-3 form-control-label m-t-5">Game Expiry Date</label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static">${weeklyGame.gameExpiryDate}</p>
+                                    </div>
+                                </div>  
+
+
+                                <div class="form-group row text-left" id="gameTextJackpot">
+                                    <!--<label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>-->
+                                    <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 ">           
+                                        <c:forEach items="${numberList}" var="item" varStatus = "status">  
+                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" required="required"/> 
+
+                                        </c:forEach>  
+                                    </div>
+                                </div>   
+
+
+                                <div class="form-group row text-left" id="userPhoneNo2">
+                                    <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
+                                    <div class="col-sm-9">
+                                        <p>Choose your country flag.</p>
+                                        <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
+                                        <p>Your phone number will be used to contact you if you win.</p> 
+                                    </div>
+                                </div> 
 
                                 <div class="form-group row text-left" id="weekNo">
                                     <label for="weekNo" class="col-sm-3 form-control-label m-t-5">Week No</label>
@@ -114,59 +141,22 @@
                                     </div>
                                 </div>  
 
-                                <div class="form-group row text-left" id="gameExpiryDate">
-                                    <label for="gameExpiryDate" class="col-sm-3 form-control-label m-t-5">Game Expiry Date</label>
-                                    <div class="col-sm-9">
-                                        <p class="form-control-static">${weeklyGame.gameExpiryDate}</p>
-                                    </div>
-                                </div>  
 
-                                <div class="form-group row text-left" id="gameRules">
-                                    <label for="gameRules" class="col-sm-3 form-control-label m-t-5">Game Rules </label>
-                                    <div class="col-sm-9">
-                                        <p class="form-control-static">${weeklyGame.gameRules}</p>
-                                    </div>
-                                </div>  
+
+
                                 <input type="hidden" id="gamePlayType" name="gamePlayType" value="${weeklyGame.gamePlayType}">
                                 <input type="hidden" class="form-control" id="matchStarted" name="matchStarted"  value="${matchStarted}">
 
-                            </form>
+                                <!--</form>-->
 
 
-                            <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
+                                <%--<form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">--%>
                                 <form:hidden path="gameId" value="${weeklyGame.id}" id="gameId" name="gameId" />
                                 <form:hidden path="weekNo" value="${weeklyGame.weekNo}" id="weekNo2" name="weekNo2" />
                                 <form:hidden path="code" value="${weeklyGame.code}" id="code" name="code" />                               
 
 
-                                <div class="form-group row text-left" id="userPhoneNo2">
-                                    <label for="userPhoneNo" class="col-sm-3 form-control-label m-t-5">Phone No </label>
-                                    <div class="col-sm-9">
-                                        <p>Choose your country flag.</p>
-                                        <form:input path="userPhoneNo"  id="userPhoneNo" name="userPhoneNo" type="tel" class="form-control" required ="required" placeholder="Enter your phone number"/>                                 
-                                        <p>Your phone number will be used to contact you if you win.</p> 
-                                    </div>
-                                </div>  
 
-                                <div class="form-group row text-left" id="gameTextJackpot">
-                                    <!--<label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>-->
-                                    <label for="userAnswer" class="col-sm-3 form-control-label m-t-5">Answer To Question </label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9 ">           
-                                        <c:forEach items="${numberList}" var="item" varStatus = "status">  
-                                            <input name="gameTextJackpot${status.index + 1}" id="gameTextJackpot${status.index + 1}"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" required="required"/> 
-                                            <%--                                      
-                                                <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
-                                                <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
-                                                <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2" value="${item}" /> 
-                                            --%>
-                                        </c:forEach>  
-                                    </div>
-                                </div>       
 
 
                                 <input type="hidden" class="form-control" id="ipAddress" name="ipAddress"  >
@@ -174,7 +164,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
-                                        <button type="reset" class="btn btn-primary">Cancel</button>
+                                        <!--<button type="reset" class="btn btn-primary">Cancel</button>-->
                                         <button type="submit" id="bth-submit"  class="btn btn-success">Submit</button>
                                         <p id="cantPlay">${msg}</p>
                                     </div>
@@ -251,11 +241,11 @@
 <script>
 
     jQuery(document).ready(function ($) {
-        
-         var gameId = $('#gameId').val();
-         
+
+        var gameId = $('#gameId').val();
+
         // $('#' + gameId).addClass('active');
-         //$('#' + gameId).hide();
+        //$('#' + gameId).hide();
         $('.pagination li').click(function () {
             $('.pagination li').removeClass('active');
             $(this).addClass('active');
@@ -284,7 +274,7 @@
         console.log(" matchStarted :: " + matchStarted);
 
         //if (matchStarted === 'true') {
-            if (matchStarted) {
+        if (matchStarted) {
 
             $('#cantPlay').show();
             $("#bth-submit").prop("disabled", true);
