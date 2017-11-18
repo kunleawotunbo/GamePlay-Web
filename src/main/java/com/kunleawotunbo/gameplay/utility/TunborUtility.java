@@ -783,10 +783,15 @@ public class TunborUtility {
               matchPredictionBean.setEnabled(item.isEnabled());
               matchPredictionBean.setStatus(item.getStatus());
               matchPredictionBean.setCode(item.getCode());
-              matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+             // matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+              //matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+              matchPredictionBean.setMatchExpired(canPlayMatch(item));
               
-              System.out.println("for id :: " + item.getId() + "Match expired ::  "  + getDate(Definitions.TIMEZONE).after((item.getStartTime()))); 
-              //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
+              
+              //System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).after((item.getStartTime()))); 
+             // System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).before(item.getStartTime())); 
+              //System.out.println("******");
+                //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
               //matchPredictionBean.setMatchExpired(hasExpired(item));
  
               matchPredictionBeanList.add(matchPredictionBean);
@@ -814,6 +819,25 @@ public class TunborUtility {
            */
           return matchExpired;
          
+     }
+     
+     public boolean canPlayMatch(MatchPrediction matchPredictionObject){
+         boolean status = false;
+         status = getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime());
+         
+           if (null != matchPredictionObject && matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
+              status = false;
+              //logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+              //logger.info("status :: " + status);
+          }else {
+                status = true;
+               // logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+                // logger.info("status :: " + status);
+          }
+           
+           System.out.println("for id :: " + matchPredictionObject.getId() + " canPlayMatch ::  "  + status);
+            System.out.println("******");
+           return status;
      }
 
 }
