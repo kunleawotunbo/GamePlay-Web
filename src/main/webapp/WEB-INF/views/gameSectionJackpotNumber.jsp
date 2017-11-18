@@ -52,7 +52,7 @@
 
                             <!--<form >-->
                             <form:form modelAttribute="weeklyGamesAnswers" class="form-horizontal form-label-left" id="weeklyGamesAnswers-form" data-parsley-validate="">
-
+                                
                                 <div class="form-group">
                                     <c:choose>
                                         <c:when test="${isPicture}">
@@ -241,7 +241,7 @@
 <script>
 
     jQuery(document).ready(function ($) {
-
+        //alert("I am here 1 " );
         var gameId = $('#gameId').val();
 
         // $('#' + gameId).addClass('active');
@@ -262,8 +262,9 @@
         //$("#gameTextJackpot2").prop("readonly", true);
 
         // set fields to readonly if not empty or is a numbers
-        setToReadOnly();
-
+       // setToReadOnly();
+       setToReadOnly2();
+        //alert("I am here 2 " );
 
 
 
@@ -282,6 +283,8 @@
         } else {
             $("#bth-submit").prop("disabled", false);
         }
+        
+        
 
         $("#weeklyGamesAnswers-form").submit(function (event) {
             //var formData = $('addGame-form').serialize();
@@ -296,7 +299,51 @@
         });
 
     });
+    /*
+        function setToReadOnly() {
 
+            var gameTextJackpot1 = $('#gameTextJackpot1').val();
+            var gameTextJackpot2 = $('#gameTextJackpot2').val();
+            var gameTextJackpot3 = $('#gameTextJackpot3').val();
+            var gameTextJackpot4 = $('#gameTextJackpot4').val();
+            var gameTextJackpot5 = $('#gameTextJackpot5').val();
+            var gameTextJackpot6 = $('#gameTextJackpot6').val();
+            var gameTextJackpot7 = $('#gameTextJackpot7').val();
+            var gameTextJackpot8 = $('#gameTextJackpot8').val();
+
+    //        if (gameTextJackpot1.trim() !== "") {
+    //                $("#gameTextJackpot1").prop("readonly", true); 
+    //        }
+            if (!isNaN(gameTextJackpot1.trim()) && gameTextJackpot1.trim() !== "") {
+                $("#gameTextJackpot1").prop("readonly", true);
+                //  alert(gameTextJackpot1.trim());
+            }
+            if (!isNaN(gameTextJackpot2.trim()) && gameTextJackpot2.trim() !== "") {
+                $("#gameTextJackpot2").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot3.trim()) && gameTextJackpot3.trim() !== "") {
+                $("#gameTextJackpot3").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot4.trim()) && gameTextJackpot4.trim() !== "") {
+                $("#gameTextJackpot4").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot5.trim()) && gameTextJackpot5.trim() !== "") {
+                $("#gameTextJackpot5").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot6.trim()) && gameTextJackpot6.trim() !== "") {
+                //alert("in :: " + gameTextJackpot6.trim());
+                $("#gameTextJackpot6").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot7.trim()) && gameTextJackpot7.trim() !== "") {
+                $("#gameTextJackpot7").prop("readonly", true);
+            }
+            if (!isNaN(gameTextJackpot8.trim()) && gameTextJackpot8.trim() !== "") {
+                $("#gameTextJackpot8").prop("readonly", true);
+            }
+        }
+    */
+   
+  /* 
     function setToReadOnly() {
 
         var gameTextJackpot1 = $('#gameTextJackpot1').val();
@@ -311,6 +358,8 @@
 //        if (gameTextJackpot1.trim() !== "") {
 //                $("#gameTextJackpot1").prop("readonly", true); 
 //        }
+    //alert("gameTextJackpot6 :: " + gameTextJackpot6);
+    // alert("gameTextJackpot6.trim() :: " + gameTextJackpot6 === undefined ? '' :  gameTextJackpot6.trim());
         if (!isNaN(gameTextJackpot1.trim()) && gameTextJackpot1.trim() !== "") {
             $("#gameTextJackpot1").prop("readonly", true);
             //  alert(gameTextJackpot1.trim());
@@ -331,6 +380,8 @@
             //alert("in :: " + gameTextJackpot6.trim());
             $("#gameTextJackpot6").prop("readonly", true);
         }
+       
+      
         if (!isNaN(gameTextJackpot7.trim()) && gameTextJackpot7.trim() !== "") {
             $("#gameTextJackpot7").prop("readonly", true);
         }
@@ -338,7 +389,57 @@
             $("#gameTextJackpot8").prop("readonly", true);
         }
     }
+*/
 
+ function setToReadOnly2() {
+
+        var gameTextJackpot1 = $('#gameTextJackpot1').val();
+        var gameTextJackpot2 = $('#gameTextJackpot2').val();
+        var gameTextJackpot3 = $('#gameTextJackpot3').val();
+        var gameTextJackpot4 = $('#gameTextJackpot4').val();
+        var gameTextJackpot5 = $('#gameTextJackpot5').val();
+        var gameTextJackpot6 = $('#gameTextJackpot6').val();
+        var gameTextJackpot7 = $('#gameTextJackpot7').val();
+        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+
+//        if (gameTextJackpot1.trim() !== "") {
+//                $("#gameTextJackpot1").prop("readonly", true); 
+//        }
+    //alert("gameTextJackpot6 :: " + gameTextJackpot6);
+    // alert("gameTextJackpot6.trim() :: " + gameTextJackpot6 === undefined ? '' :  gameTextJackpot6.trim());
+        if (gameTextJackpot1) {
+            $("#gameTextJackpot1").prop("readonly", true);
+            //  alert(gameTextJackpot1.trim());
+        }
+        if (gameTextJackpot2) {
+            $("#gameTextJackpot2").prop("readonly", true);
+        }
+        if (gameTextJackpot3) {
+            $("#gameTextJackpot3").prop("readonly", true);
+        }
+        if (gameTextJackpot4) {
+            $("#gameTextJackpot4").prop("readonly", true);
+        }
+        if (gameTextJackpot5) {
+            $("#gameTextJackpot5").prop("readonly", true);
+        }
+       /* if (!isNaN(gameTextJackpot6.trim()) && gameTextJackpot6.trim() !== "") {
+            //alert("in :: " + gameTextJackpot6.trim());
+            $("#gameTextJackpot6").prop("readonly", true);
+        }
+        */
+       if ( gameTextJackpot6) {
+            //alert("in :: " + gameTextJackpot6.trim());
+            $("#gameTextJackpot6").prop("readonly", true);
+        }
+        if (gameTextJackpot7) {
+            $("#gameTextJackpot7").prop("readonly", true);
+        }
+        if (gameTextJackpot8) {
+            $("#gameTextJackpot8").prop("readonly", true);
+        }
+    }
+   
     function searchViaAjax() {
 
 
@@ -362,6 +463,7 @@
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
         var gameTextJackpot8 = $('#gameTextJackpot8').val();
 
+        /*
         if (isNaN(gameTextJackpot1.trim()) || gameTextJackpot1.trim() === "") {
             alert('Please fill out this field.');
             $('#gameTextJackpot1').focus();
@@ -398,6 +500,57 @@
         }
         if (isNaN(gameTextJackpot8.trim()) || gameTextJackpot8.trim() === "") {
             alert('Field is required');
+            alert('Please fill out this field.');
+            return false;
+        }
+        */
+       
+       /*
+        alert("gameTextJackpot1 :: " + gameTextJackpot1);
+        alert("gameTextJackpot2 :: " + gameTextJackpot2);
+         alert("gameTextJackpot3 :: " + gameTextJackpot3);
+         alert("gameTextJackpot4 :: " + gameTextJackpot4);
+        alert("gameTextJackpot5 :: " + gameTextJackpot5);
+         alert("gameTextJackpot6 :: " + gameTextJackpot6);
+         alert("gameTextJackpot7 :: " + gameTextJackpot7);
+        alert("gameTextJackpot8 :: " + gameTextJackpot8);
+        */
+       if (!gameTextJackpot1) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot1').focus();
+            return false;
+        }
+        if (!gameTextJackpot2) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot2').focus();
+            return false;
+        }
+        if (!gameTextJackpot3) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot3').focus();
+            return false;
+        }
+        if (!gameTextJackpot4) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot4').focus();
+            return false;
+        }
+        if (!gameTextJackpot5) {
+            alert('Please fill out this field.');
+            return false;
+        }
+        if (!gameTextJackpot6) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot6').focus();
+            return false;
+        }
+        if (!gameTextJackpot7) {
+            alert('Please fill out this field.');
+            $('#gameTextJackpot7').focus();
+            return false;
+        }
+        if (!gameTextJackpot8) {
+           // alert('Field is required');
             alert('Please fill out this field.');
             return false;
         }

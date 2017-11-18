@@ -39,7 +39,7 @@ public class WeeklyGamesAnswers implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(max = 15)
+    @Size(max = 30)
     @Column(name = "user_phone_no")
     private String userPhoneNo;
 

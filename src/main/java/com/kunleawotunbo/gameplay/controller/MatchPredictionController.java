@@ -444,6 +444,18 @@ public class MatchPredictionController {
 
         return "admin/addMatchPrediction";
     }
+    
+    /**
+     * This method will delete matchPrediction by it's id value.
+     */
+    @RequestMapping(value = {"/admin/delete-matchPrediction-{id}"}, method = RequestMethod.GET)
+    public String deleteMatchPrediction(@PathVariable int id) {
+        logger.info("Delete  matchPrediction id :: " + id);
+        MatchPrediction matchPrediction = matchPredictionService.findById(id);
+        matchPredictionService.deleteMatchPrediction(matchPrediction);
+
+        return "redirect:/admin/listMatchPredictions";
+    }
 
 
 

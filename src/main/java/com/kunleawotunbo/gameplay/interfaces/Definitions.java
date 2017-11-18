@@ -21,8 +21,8 @@ public interface Definitions {
     public String  SUCCESS = "SUCCESS";
     public String  FAILED  = "FAILED";
     
-    //public String  TIMEZONE  = "Africa/Lagos";
-     public String  TIMEZONE  = "GMT+1";
+    public String  TIMEZONE  = "Africa/Lagos";
+    // public String  TIMEZONE  = "GMT+1";
     
     // API url
     // https://freegeoip.net/json/197.255.170.0
