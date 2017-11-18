@@ -70,6 +70,9 @@
 
                         <form:form modelAttribute="weeklyGame" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="" >  
                             <form:hidden path="id" id="id" name="id" />
+                            <%--<form:hidden path="code" id="code" name="code" />                            
+                            <form:hidden path="modifiedDate" id="modifiedDate" name="modifiedDate" />
+                            --%>
 
                             <div class="form-group">
 

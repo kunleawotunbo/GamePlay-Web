@@ -107,7 +107,7 @@
                             </div>               
 
                             <input type="hidden" id="gamePlayType" name="gamePlayType" value="${weeklyGame.gamePlayType}">     
-                            <div class="form-group" id="gameAnswer">
+                            <div class="form-group" id="gameAnswerDiv">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Answer<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 col-xs-9">
                                     <form:input path="gameAnswer" id="gameAnswer" type="text" class="form-control" name="gameAnswer" placeholder="Set game answer here"  />                                  
@@ -204,38 +204,25 @@
                 $('#cantPlay').hide();
 
                 if (gamePlayType === "3") {
-                    //console.log(" gamePlayType is Question ::" + gamePlayType);
+                    console.log(" gamePlayType is Question ::" + gamePlayType);
 
                     // Since gameType is text question, then Hide gameImage div and remove required attribute
 
-                    $('#gameAnswer').hide();
+                    $('#gameAnswerDiv').hide();
+                    //$('#gameAnswer').hide();
                     $("#gameAnswer").prop("required", false);
 
                     $('#gameTextJackpot').show();
 
                 } else {
+                    console.log("gameAnswer box show");
                     $('#gameTextJackpot').hide();
                     $("#gameTextJackpot").prop("required", false);
-
-                    $('#gameAnswer').show();
+                    
+                    $('#gameAnswerDiv').show();
+                    //$('#gameAnswer').show();
                 }
 
-                /*
-                var matchStarted = $('#matchStarted').val();
-
-                console.log(" matchStarted :: " + matchStarted);
-
-                // if (matchStarted === 'true') {
-                if (matchStarted === 'true') {
-
-                    $('#cantPlay').show();
-                    $("#bth-submit").prop("disabled", true);
-
-                } else {
-                    $("#bth-submit").prop("disabled", false);
-                }
-                
-                */
 
                 $("#setWeeklyGameAnswer-form").submit(function (event) {
                     //var formData = $('addGame-form').serialize();
@@ -258,9 +245,9 @@
                 // var gameAnswer = $('#gameAnswer').val();
                 var gameAnswer;
                 var createdBy = $('#createdBy').val();
-                var gamePlayType = $('#gamePlayType').val();
-
-                if (gamePlayType === "3") {
+                var gamePlayType = $('#gamePlayType').val();               
+                
+                if (gamePlayType === "3") {                   
                     var gameTextJackpot1 = $('#gameTextJackpot1').val();
                     var gameTextJackpot2 = $('#gameTextJackpot2').val();
                     var gameTextJackpot3 = $('#gameTextJackpot3').val();
@@ -275,7 +262,7 @@
                             + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
 
 
-                } else {
+                } else {   
                     gameAnswer = $('#gameAnswer').val();
                 }
 
@@ -301,10 +288,9 @@
                         console.log("SUCCESS: ", data);
                         //  display(data);
                         //   notify(data);
-                        // notification("Notification", "Answer added successfully, winners will be processed.", "success");
-                        //window.location = "/admin/listWeeklyGames";
-                        location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
-                        // location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                        // notification("Notification", "Answer added successfully, winners will be processed.", "success");                      
+                       // location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
+                         location.href = "<%=request.getContextPath()%>/admin/listWeeklyGames";
                     },
                     error: function (e) {
                         console.log("ERROR: ", e);

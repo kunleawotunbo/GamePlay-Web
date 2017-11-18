@@ -37,9 +37,9 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Game Answer ${matchPrediction.code} 
+                        <h2>Game Answer 
 
-                            <strong>${matchPrediction.code} 
+                            <strong>
                                 ${gameAnswerObj.gameAnswer}
                             </strong>
                         </h2>
@@ -48,6 +48,13 @@
                     </div>
                     <div class="x_content">
                         <br />
+                        <h2>Game Code 
+
+                            <strong>
+                               ${weeklyGames.code} 
+                            </strong>
+                        </h2>
+                        
 
                         <!--<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">-->
                         <table id="datatable-responsive" class="table table-striped table-bordered " cellspacing="0" width="100%">       

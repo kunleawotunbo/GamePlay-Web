@@ -30,8 +30,8 @@
                         <ul class="nav child_menu">
                                 <li><a href="addWeeklyGame">Add Weekly Game</a></li>   
                                <li><a href="listWeeklyGames">Weekly Games List</a></li>
-                               <li><a href="latestrandomwinners">All Weekly Game Latest Random Winners</a></li>
-                                <li><a href="allrandomwinners">All Time Weekly Game Random Winners</a></li>
+<!--                               <li><a href="latestrandomwinners">All Weekly Game Latest Random Winners</a></li>
+                                <li><a href="allrandomwinners">All Time Weekly Game Random Winners</a></li>-->
                         </ul>
                     </li>
                     <li><a><i class="fa fa-futbol-o"></i> Match Prediction <span class="fa fa-chevron-down"></span></a>

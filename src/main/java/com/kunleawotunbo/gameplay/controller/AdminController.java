@@ -531,7 +531,7 @@ public class AdminController {
     public String updateWeeklyGames(FileBucket fileBucket, BindingResult result,
             ModelMap model, HttpServletRequest req) {
 
-        System.out.println("Inside registerUser :: ");
+        System.out.println("updateWeeklyGames :: " + fileBucket.getId());
 
         WeeklyGames weeklyGames = new WeeklyGames();
         //If error, just return a 400 bad request, along with the error message
@@ -566,8 +566,10 @@ public class AdminController {
         }
 
         //fb = fileUpload(fileBucket);
+        weeklyGames = weeklyGamesService.findById(fb.getId());
+        
         System.out.println("fb.getIsPicture() :: " + fb.getIsPicture());
-        weeklyGames.setId(fb.getId());
+        //weeklyGames.setId(fb.getId());
         weeklyGames.setWeekNo(fb.getWeekNo());
         weeklyGames.setPrizeOfWinners(fb.getPrizeOfWinners());
         weeklyGames.setNoOfWinners(fb.getNoOfWinners());
@@ -579,14 +581,14 @@ public class AdminController {
         weeklyGames.setGameImage(fb.getGameImage());
         weeklyGames.setGameImage2(fb.getGameImage2());
         weeklyGames.setGameImgLocation(fb.getGameImgLocation());
-        weeklyGames.setCreatedDate(fb.getCreatedDate());
+        //weeklyGames.setCreatedDate(fb.getCreatedDate());
         weeklyGames.setModifiedDate(tunborUtility.getDate(Definitions.TIMEZONE));
-        weeklyGames.setCreatedBy(fb.getCreatedBy());
+        //weeklyGames.setCreatedBy(fb.getCreatedBy());
         weeklyGames.setIsPicture(fb.getIsPicture());
         weeklyGames.setGameAnswer(fb.getGameAnswer());
         weeklyGames.setGameStartDate(fb.getGameStartDate());
         weeklyGames.setEnabled(fb.isEnabled());
-        weeklyGames.setCode(fb.getCode());
+        //weeklyGames.setCode(fb.getCode());
 
         boolean saved = weeklyGamesService.updateWeeklyGame(weeklyGames);
         if (!saved) {
@@ -854,10 +856,12 @@ public class AdminController {
         String serverFileName = "";
 
         FileBucket fb = new FileBucket();
+        String batchid = null;
 
-        System.out.println("files.length :: " + files.length);
+        //System.out.println("files.length :: " + files.length);
         if (files != null && files.length > 0) {
             for (int i = 0; i < files.length; i++) {
+                batchid = String.valueOf(System.currentTimeMillis());
                 try {
 
                     byte[] bytes = null;
@@ -878,12 +882,14 @@ public class AdminController {
                     if (i == 0) {
                         gameImage = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        serverFileName = imgLocation + gameImage;
+                        //serverFileName = imgLocation + gameImage; 
+                        serverFileName = imgLocation  + "_" + batchid + "_" + gameImage;
                         System.out.println("gameImage:: " + gameImage);
                     } else if (i == 1) {
                         gameImage2 = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        serverFileName = imgLocation + gameImage2;
+                        //serverFileName = imgLocation + gameImage2;
+                        serverFileName = imgLocation +  "_" + batchid + "_" + gameImage2;
                         System.out.println("gameImage2:: " + gameImage2);
                     }
 
