@@ -232,8 +232,11 @@
                                         <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
                                     </div>
                                     <td>
+                                         ${item.matchExpired}
                                         <c:choose>
+                                           
                                             <c:when test="${item.matchExpired}">
+                                                .
                                                 <div class="row">
                                                     <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win" disabled>
                                                         <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
@@ -251,7 +254,7 @@
                                                 <p>Match not available to play.</p>                        
                                             </c:when>
                                             <c:otherwise>                                            
-
+                                                can play
                                                 <div class="row">
                                                     <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win">
                                                         <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win

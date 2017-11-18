@@ -784,6 +784,8 @@ public class TunborUtility {
               matchPredictionBean.setStatus(item.getStatus());
               matchPredictionBean.setCode(item.getCode());
               matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+              
+              System.out.println("for id :: " + item.getId() + "Match expired ::  "  + getDate(Definitions.TIMEZONE).after((item.getStartTime()))); 
               //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
               //matchPredictionBean.setMatchExpired(hasExpired(item));
  
