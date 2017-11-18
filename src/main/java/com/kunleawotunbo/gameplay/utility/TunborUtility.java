@@ -823,9 +823,12 @@ public class TunborUtility {
      
      public boolean canPlayMatch(MatchPrediction matchPredictionObject){
          boolean status = false;
-         status = getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime());
-         
-           if (null != matchPredictionObject && matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
+        // status = getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime());
+         System.out.println("matchPredictionObject.getStartTime() :: " + matchPredictionObject.getStartTime());
+         System.out.println("getDate(Definitions.TIMEZONE)) :: " + getDate(Definitions.TIMEZONE));
+         System.out.println( "id " + matchPredictionObject.getId() +  " matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)) :: " +
+                 matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+           if (matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
               status = false;
               //logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
               //logger.info("status :: " + status);
