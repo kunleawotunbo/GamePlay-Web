@@ -53,6 +53,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.logging.Level;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -116,19 +117,18 @@ public class TunborUtility {
 
     @Autowired
     private MatchPredictionWinnerService matchPredictionWinnerService;
-    
+
     @Autowired
-    private GameAnswerService gameAnswerService; 
-    
+    private GameAnswerService gameAnswerService;
+
     @Autowired
     private WeeklyGamesAnswersService weeklyGamesAnswersService;
-    
+
     @Autowired
     private WeeklyGamesWinnerService weeklyGamesWinnerService;
-    
+
     @Autowired
     private WeeklyGamesService weeklyGamesService;
-    
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -401,13 +401,14 @@ public class TunborUtility {
     }
 
     //@DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getDate(String timeZone) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone));
 
         Date currentDate = calendar.getTime();
 
         logger.info("date :: " + currentDate);
-        
+
         /*
         String startDateString = "2017/08/09";
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -420,8 +421,7 @@ public class TunborUtility {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        */
-
+         */
         return currentDate;
     }
 
@@ -569,7 +569,7 @@ public class TunborUtility {
 
         return gameWinners;
     }
-    
+
     public List<WeeklyGamesWinner> weeklyGamesListToGameWinnerList(List<WeeklyGamesAnswers> weeklyGamesAnswersList) {
         List<WeeklyGamesWinner> gameWinners = null;
         System.out.println("I am here 1");
@@ -593,7 +593,6 @@ public class TunborUtility {
                 gameWinner.setCountry(item.getPlayersCountry());
                 gameWinner.setCountryCode(item.getCountryCode());
                 gameWinner.setIpAddress(item.getIpAddress());
-                
 
                 gameWinners.add(gameWinner);
             }
@@ -606,7 +605,6 @@ public class TunborUtility {
         return gameWinners;
     }
 
-    
     @Async
     public void sendSMSToListOfWinners(List<MatchPredictionAnswer> matchPredictionAnswerList, String smsMessage) {
 
@@ -669,10 +667,11 @@ public class TunborUtility {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * For processing random winners
-     * @param weeklyGames 
+     *
+     * @param weeklyGames
      */
     @Async
     public void processWinnerWeeklyGameId(WeeklyGames weeklyGames) {
@@ -683,7 +682,7 @@ public class TunborUtility {
 
         try {
             // Get game answer by weeklyGame id
-            
+
             GameAnswer gameAnswerObj = gameAnswerService.findByGameId(weeklyGames.getId());
             logger.info("gameAnswerObj :: " + gameAnswerObj);
             if (gameAnswerObj != null) {
@@ -694,16 +693,16 @@ public class TunborUtility {
                     int noOfWinners = weeklyGames.getNoOfWinners();
                     logger.info("noOfWinners :: " + noOfWinners);
                     // Generate list of random winners
-                    
+
                     randomWeeklyGamesWinnersList = weeklyGamesAnswersService.listCorrectAnswersForJPByGameId(gameAnswer, weeklyGames.getId(), noOfWinners);
                     logger.info("randomWeeklyGamesWinnersList.size() up :: " + randomWeeklyGamesWinnersList.size());
                     if (!randomWeeklyGamesWinnersList.isEmpty()) {
                         logger.info("randomMatchPredictionWinnersList.size() :: " + randomWeeklyGamesWinnersList.size());
                         // Persist list of random winners for weekly game
                         List<WeeklyGamesWinner> winnersList = weeklyGamesListToGameWinnerList(randomWeeklyGamesWinnersList);
-                        
+
                         //matchPredictionWinnerService.saveBulkMatchPredictionWinners(winnersList);
-                         weeklyGamesWinnerService.saveBulkWeeklyGamesWinners(winnersList);
+                        weeklyGamesWinnerService.saveBulkWeeklyGamesWinners(winnersList);
 
                         // send sms to list of winners.                             
                         String message = "This is to notify you that you have won for the match prediction";
@@ -717,7 +716,7 @@ public class TunborUtility {
                         // set proccessed to 1.
                         int processedStatus = 1;
                         weeklyGames.setStatus(processedStatus);
-                        
+
                         weeklyGamesService.updateWeeklyGame(weeklyGames);
 
                         logger.info("Finished weeklyGameId :: " + weeklyGames.getId());
@@ -738,74 +737,72 @@ public class TunborUtility {
             e.printStackTrace();
         }
     }
-    
-
 
     /**
      * Generate 4 digits random number
+     *
      * @return random number
      */
-     public int getRandomNumber() {
+    public int getRandomNumber() {
         int randomNumber;
         //Random r = new Random();
         Random r = new Random(System.currentTimeMillis());
-        randomNumber = ((1 + r.nextInt(9)) * 10000 + r.nextInt(10000));        
+        randomNumber = ((1 + r.nextInt(9)) * 10000 + r.nextInt(10000));
         return randomNumber;
     }
-     
-     public List<MatchPredictionBean> matchPredictionBeanMapper(List<MatchPrediction> matchPredictionList){
-         List<MatchPredictionBean> matchPredictionBeanList = null;
-         MatchPredictionBean matchPredictionBean = null;
-         
-         matchPredictionBeanList = new ArrayList<MatchPredictionBean>();
-         for(MatchPrediction item : matchPredictionList){             
-             
-             matchPredictionBean = new MatchPredictionBean();
-             
-              matchPredictionBean.setId(item.getId());
-              matchPredictionBean.setHomeTeamId(item.getHomeTeamId());
-              matchPredictionBean.setHomeTeamName(item.getHomeTeamName());
-              matchPredictionBean.setWeekNo(item.getWeekNo());
-              matchPredictionBean.setPrizeOfWinners(item.getPrizeOfWinners());
-              matchPredictionBean.setNoOfWinners(item.getNoOfWinners());
-              matchPredictionBean.setAwayTeamId(item.getAwayTeamId());
-              matchPredictionBean.setAwayTeamName(item.getAwayTeamName());
-              matchPredictionBean.setCountryCode(item.getCountryCode());
-              matchPredictionBean.setCountryName(item.getCountryName());
-              matchPredictionBean.setLeagueCode(item.getLeagueCode());
-              matchPredictionBean.setLeagueName(item.getLeagueName());
-              matchPredictionBean.setStartTime(item.getStartTime());
-              matchPredictionBean.setEndTime(item.getEndTime());
-              matchPredictionBean.setWinner(item.getWinner());
-              matchPredictionBean.setMatchResult(item.getMatchResult());
-              matchPredictionBean.setModifiedDate(item.getModifiedDate());
-              matchPredictionBean.setCreatedBy(item.getCreatedBy());
-              matchPredictionBean.setEnabled(item.isEnabled());
-              matchPredictionBean.setStatus(item.getStatus());
-              matchPredictionBean.setCode(item.getCode());
-             // matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
-              //matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
-              matchPredictionBean.setMatchExpired(canPlayMatch(item));
-              
-              
-              //System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).after((item.getStartTime()))); 
-             // System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).before(item.getStartTime())); 
-              //System.out.println("******");
-                //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
-              //matchPredictionBean.setMatchExpired(hasExpired(item));
- 
-              matchPredictionBeanList.add(matchPredictionBean);
-             
-         }
-         
-         return matchPredictionBeanList;
-     }
-     
-     
-     public boolean hasExpired(MatchPrediction matchPredictionObject){
+
+    public List<MatchPredictionBean> matchPredictionBeanMapper(List<MatchPrediction> matchPredictionList) {
+        List<MatchPredictionBean> matchPredictionBeanList = null;
+        MatchPredictionBean matchPredictionBean = null;
+
+        matchPredictionBeanList = new ArrayList<MatchPredictionBean>();
+        for (MatchPrediction item : matchPredictionList) {
+
+            matchPredictionBean = new MatchPredictionBean();
+
+            matchPredictionBean.setId(item.getId());
+            matchPredictionBean.setHomeTeamId(item.getHomeTeamId());
+            matchPredictionBean.setHomeTeamName(item.getHomeTeamName());
+            matchPredictionBean.setWeekNo(item.getWeekNo());
+            matchPredictionBean.setPrizeOfWinners(item.getPrizeOfWinners());
+            matchPredictionBean.setNoOfWinners(item.getNoOfWinners());
+            matchPredictionBean.setAwayTeamId(item.getAwayTeamId());
+            matchPredictionBean.setAwayTeamName(item.getAwayTeamName());
+            matchPredictionBean.setCountryCode(item.getCountryCode());
+            matchPredictionBean.setCountryName(item.getCountryName());
+            matchPredictionBean.setLeagueCode(item.getLeagueCode());
+            matchPredictionBean.setLeagueName(item.getLeagueName());
+            matchPredictionBean.setStartTime(item.getStartTime());
+            matchPredictionBean.setEndTime(item.getEndTime());
+            matchPredictionBean.setWinner(item.getWinner());
+            matchPredictionBean.setMatchResult(item.getMatchResult());
+            matchPredictionBean.setModifiedDate(item.getModifiedDate());
+            matchPredictionBean.setCreatedBy(item.getCreatedBy());
+            matchPredictionBean.setEnabled(item.isEnabled());
+            matchPredictionBean.setStatus(item.getStatus());
+            matchPredictionBean.setCode(item.getCode());
+            // matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+            //matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after((item.getStartTime())));
+            // matchPredictionBean.setMatchExpired(canPlayMatch(item));
+            //matchPredictionBean.setMatchExpired(getDate(Definitions.TIMEZONE).after(formatDate("" + item.getStartTime())));
+            matchPredictionBean.setMatchExpired(isCurrentTimeAfter(item));
+
+            //System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).after((item.getStartTime()))); 
+            // System.out.println("for id :: " + item.getId() + " Match expired ::  "  + getDate(Definitions.TIMEZONE).before(item.getStartTime())); 
+            //System.out.println("******");
+            //matchPredictionBean.setMatchExpired(item.getStartTime().after(getDate(Definitions.TIMEZONE)));
+            //matchPredictionBean.setMatchExpired(hasExpired(item));
+            matchPredictionBeanList.add(matchPredictionBean);
+
+        }
+
+        return matchPredictionBeanList;
+    }
+
+    public boolean hasExpired(MatchPrediction matchPredictionObject) {
         // boolean matchExpired = false;
-         boolean matchExpired = matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE));
-         /*
+        boolean matchExpired = matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE));
+        /*
           //if (null != matchPredictionObject && getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime()) ) {
            if (null != matchPredictionObject && matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
               matchExpired = true;
@@ -816,31 +813,54 @@ public class TunborUtility {
                 logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
                  logger.info("matchExpired :: " + matchExpired);
           }
-           */
-          return matchExpired;
-         
-     }
-     
-     public boolean canPlayMatch(MatchPrediction matchPredictionObject){
-         boolean status = false;
+         */
+        return matchExpired;
+
+    }
+
+    public boolean canPlayMatch(MatchPrediction matchPredictionObject) {
+        boolean status = false;
         // status = getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime());
-         System.out.println("matchPredictionObject.getStartTime() :: " + matchPredictionObject.getStartTime());
-         System.out.println("getDate(Definitions.TIMEZONE)) :: " + getDate(Definitions.TIMEZONE));
-         System.out.println( "id " + matchPredictionObject.getId() +  " matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)) :: " +
-                 matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
-           if (matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
-              status = false;
-              //logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
-              //logger.info("status :: " + status);
-          }else {
-                status = true;
-               // logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
-                // logger.info("status :: " + status);
-          }
-           
-           System.out.println("for id :: " + matchPredictionObject.getId() + " canPlayMatch ::  "  + status);
-            System.out.println("******");
-           return status;
-     }
+        System.out.println("matchPredictionObject.getStartTime() :: " + matchPredictionObject.getStartTime());
+        System.out.println("getDate(Definitions.TIMEZONE)) :: " + getDate(Definitions.TIMEZONE));
+        System.out.println("id " + matchPredictionObject.getId() + " matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)) :: "
+                + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+        String dateString = "" + matchPredictionObject.getStartTime();
+        // if (matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE))) {
+        if (formatDate(dateString).after(getDate(Definitions.TIMEZONE))) {
+            status = false;
+            //logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+            //logger.info("status :: " + status);
+        } else {
+            status = true;
+            // logger.info("outcome :: " + matchPredictionObject.getStartTime().after(getDate(Definitions.TIMEZONE)));
+            // logger.info("status :: " + status);
+        }
+
+        System.out.println("for id :: " + matchPredictionObject.getId() + " canPlayMatch ::  " + status);
+        System.out.println("******");
+        return status;
+    }
+
+    public Date formatDate(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+        Date sDate = null;
+        try {
+            sDate = sdf.parse(dateString);
+            // parsedDate = df.parse(startDateString);
+            // System.out.println(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(myDate));
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        return sDate;
+    }
+
+    public boolean isCurrentTimeAfter(MatchPrediction matchPredictionObject) {
+        boolean status = getDate(Definitions.TIMEZONE).after(formatDate("" + matchPredictionObject.getStartTime()));
+                 
+        return status;
+    }
 
 }

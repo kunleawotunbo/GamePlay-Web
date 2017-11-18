@@ -133,7 +133,7 @@ public class MatchPredictionController {
         //tunborUtility.matchPredictionBeanMapper(eplMatchesList)
         
        
-        
+         model.addAttribute("currentDate", currentDate);
         model.addAttribute("england", england);
         model.addAttribute("spain", spain);
         model.addAttribute("epl", epl);
@@ -207,7 +207,7 @@ public class MatchPredictionController {
         
         
         model.addAttribute("activeMatchesList", activeMatchesList);
-        
+         model.addAttribute("currentDate", currentDate);
         model.addAttribute("england", england);
         model.addAttribute("spain", spain);
         model.addAttribute("epl", epl);

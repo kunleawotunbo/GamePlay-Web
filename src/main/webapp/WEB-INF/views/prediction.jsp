@@ -179,7 +179,7 @@
 
 
 
-
+                        <strong>Date : </strong>${{currentDate}}
                         <table class="table">
                             <thead class="thead-inverse">
                                 <tr>
