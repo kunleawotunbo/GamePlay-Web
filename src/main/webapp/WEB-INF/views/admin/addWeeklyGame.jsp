@@ -117,8 +117,8 @@
                                         <input name="gameTextJackpot4" id="gameTextJackpot4"  type="text" class="form-control smallbox" maxlength="2"  /> 
                                         <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2"  /> 
                                         <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" /> 
-                                        <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  /> 
-                                        <input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  /> 
+                                        <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  required="required"/> 
+                                        <!--<input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  />--> 
 
                                     </div>
                                 </div>
@@ -306,7 +306,7 @@
                     var gameType1 = $('#gameType').val();
                     //console.log(" gameType1 ::" + gameType);
                     if (gameType1 === "1") {
-                        console.log(" gameType is Question ::" + gameType1);
+                        //console.log(" gameType is Question ::" + gameType1);
                         // Since gameType is Picutre, then Hide gameText div and remove required attribute
                         $('#gameText').hide();
                         $('#gameText2').hide();
@@ -322,7 +322,7 @@
                         $('#gameImage2edit').show();
                         $("#gameImage2").prop("required", true);
                     } else if (gameType1 === "2") {
-                        console.log(" gameType is Question ::" + gameType1);
+                        //console.log(" gameType is Question ::" + gameType1);
 
                         // Since gameType is text question, then Hide gameImage div and remove required attribute
                         $('#gameImage').hide();
@@ -339,7 +339,7 @@
                         //$('#gameText2').hide();
                         $("#gameText1").prop("required", true);
                     } else if (gameType === "3") {
-                        console.log("on load gameType is Question ::" + gameType);
+                        //console.log("on load gameType is Question ::" + gameType);
 
                         $('#gameText').hide();
                         $("#gameText").prop("required", false);
@@ -356,7 +356,7 @@
                         //$('#gameText2').show();
                         // $("#gameText1").prop("required", true);
                     } else {
-                        console.log(" gameType is Question ::" + gameType1);
+                        //console.log(" gameType is Question ::" + gameType1);
 
                         // Since gameType is text question, then Hide gameImage div and remove required attribute
                         $('#gameImage').hide();
@@ -383,7 +383,7 @@
                         var gameType = $('#gameType').val();
                         //console.log(" gameType ::" + gameType);
                         if (gameType === "1") {
-                            console.log("1 gameType is Question ::" + gameType);
+                            //console.log("1 gameType is Question ::" + gameType);
                             // 
                             // Since gameType is Picutre, then Hide gameText div and remove required attribute
                             $('#gameText').hide().prop("required", false);
@@ -399,7 +399,7 @@
                             $('#gameImage2edit').show();
                             $("#gameImage2").prop("required", true);
                         } else if (gameType === "2") {
-                            console.log("2 gameType is Question ::" + gameType);
+                            //console.log("2 gameType is Question ::" + gameType);
 
                             // Since gameType is text question, then Hide gameImage div and remove required attribute
                             $('#gameImage').hide();
@@ -415,7 +415,7 @@
                             //$('#gameText2').show();
                             $("#gameText1").prop("required", true);
                         } else if (gameType === "3") {
-                            console.log("on change gameType is Question ::" + gameType);
+                            //console.log("on change gameType is Question ::" + gameType);
 
                             // Since gameType is text question, then Hide gameImage div and remove required attribute
                             $('#gameText').hide().prop("required", false);
@@ -472,7 +472,7 @@
                     }
 
                     // console.log("gamePlayType ::" + gameType);
-                    console.log("gameImage ::" + gameImage);
+                    //console.log("gameImage ::" + gameImage);
                     /*
                      if (enabled) {
                      enabled = 1;
@@ -500,7 +500,7 @@
                     };
                     //var data = new FormData(json);
 
-                    console.log(JSON.stringify(json));
+                    //console.log(JSON.stringify(json));
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
@@ -594,12 +594,12 @@
                         var gameTextJackpot5 = $('#gameTextJackpot5').val().trim();
                         var gameTextJackpot6 = $('#gameTextJackpot6').val().trim();
                         var gameTextJackpot7 = $('#gameTextJackpot7').val().trim();
-                        var gameTextJackpot8 = $('#gameTextJackpot8').val().trim();
+                       // var gameTextJackpot8 = $('#gameTextJackpot8').val().trim();
                         // alert("gameTextJackpot1 :: " + gameTextJackpot1);
                         // alert("gameTextJackpot2 :: " + gameTextJackpot2);
                         var allTinyFields = "" + gameTextJackpot1 + "-" + gameTextJackpot2 + "-" + gameTextJackpot3
                                 + "-" + gameTextJackpot4 + "-" + gameTextJackpot5 + "-" + gameTextJackpot6
-                                + "-" + gameTextJackpot7 + "-" + gameTextJackpot8;
+                                + "-" + gameTextJackpot7; // + "-" + gameTextJackpot8;
                         //alert("allTinyFields :: " + allTinyFields);
 
                         gameText = $('#gameText1').val("" + allTinyFields);

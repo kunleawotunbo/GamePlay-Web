@@ -400,7 +400,7 @@
         var gameTextJackpot5 = $('#gameTextJackpot5').val();
         var gameTextJackpot6 = $('#gameTextJackpot6').val();
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
-        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+        //var gameTextJackpot8 = $('#gameTextJackpot8').val();
 
 //        if (gameTextJackpot1.trim() !== "") {
 //                $("#gameTextJackpot1").prop("readonly", true); 
@@ -435,9 +435,11 @@
         if (gameTextJackpot7) {
             $("#gameTextJackpot7").prop("readonly", true);
         }
+        /*
         if (gameTextJackpot8) {
             $("#gameTextJackpot8").prop("readonly", true);
         }
+        */
     }
    
     function searchViaAjax() {
@@ -461,7 +463,7 @@
         var gameTextJackpot5 = $('#gameTextJackpot5').val();
         var gameTextJackpot6 = $('#gameTextJackpot6').val();
         var gameTextJackpot7 = $('#gameTextJackpot7').val();
-        var gameTextJackpot8 = $('#gameTextJackpot8').val();
+        //var gameTextJackpot8 = $('#gameTextJackpot8').val();
 
         /*
         if (isNaN(gameTextJackpot1.trim()) || gameTextJackpot1.trim() === "") {
@@ -549,14 +551,16 @@
             $('#gameTextJackpot7').focus();
             return false;
         }
+        /*
         if (!gameTextJackpot8) {
            // alert('Field is required');
             alert('Please fill out this field.');
             return false;
         }
+        */
         var userAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
                 + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
-                + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
+                + " - " + gameTextJackpot7; // + " - " + gameTextJackpot8;
         //alert("allTinyFields :: " + userAnswer);
 
         //userAnswer = $('#userAnswer2').val("" + allTinyFields);

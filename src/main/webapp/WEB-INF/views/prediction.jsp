@@ -11,6 +11,16 @@
 <!--Include outside navigation-->
 <%@ include file="includes/outside/navigation.jsp" %>
 
+<script type="text/javascript">
+    function setTimeZoneInCookie() {
+        var _myDate = new Date();
+        var _offset = _myDate.getTimezoneOffset();
+        document.cookie = "TIMEZONE_COOKIE=" + _offset; //Cookie name with value
+        console.log("Cookie set :: " + "TIMEZONE_COOKIE=" + _offset);
+    }
+    
+    setTimeZoneInCookie();
+</script>
 
 <div class="container">
     <div class="row content">
@@ -223,14 +233,14 @@
                                 <div class="row">
 
                                     <tr>  
-                                    <div class="col-sm-4">
+                                    <!--<div class="col-sm-4">-->
                                         <td>
                                             <div class="dataInizio"> 
                                                 <fmt:formatDate pattern="HH:mm" value = "${item.startTime}" />
                                             </div>
                                         </td> 
                                         <td style="width: 400px"><strong><c:out value="${item.homeTeamName}"/> - <c:out value="${item.awayTeamName}"/></strong></td>  
-                                    </div>
+                                    <!--</div>-->
                                     <td>
                                          
                                         <c:choose>
@@ -238,20 +248,20 @@
                                             <c:when test="${item.matchExpired}">
                                                 
                                                 <div class="row">
-                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success " title="${item.homeTeamName} Win" disabled>
+                                                    <a href="<c:url value='/set-matchPrediction-1-${item.id}' />" class="btn btn-success btn-xs" title="${item.homeTeamName} Win" disabled>
                                                         <i class="fa fa-check-square-o" aria-hidden="true"></i> Home Win
                                                     </a>                                            
                                                     &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success custom-width" title="Draw" disabled>
+                                                    <a href="<c:url value='/set-matchPrediction-X-${item.id}' />" class="btn btn-success btn-xs " title="Draw" disabled>
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw
                                                     </a>
                                                     &nbsp;
-                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger custom-width" title="${item.awayTeamName} Win" disabled> 
+                                                    <a href="<c:url value='/set-matchPrediction-2-${item.id}' />" class="btn btn-danger btn-xs " title="${item.awayTeamName} Win" disabled> 
                                                         <i class="f fa fa-trash-o" aria-hidden="true"></i> Away Win
                                                     </a>     
-
+                                                        Match not available to play.
                                                 </div> 
-                                                <p>Match not available to play.</p>                        
+                                                <!--<p>Match not available to play.</p>-->                        
                                             </c:when>
                                             <c:otherwise>                                            
                                               
@@ -478,6 +488,13 @@
 <script>
 
     jQuery(document).ready(function ($) {
+        
+        console.log("moment().format() :: " + moment().format());
+       // console.log("moment.tz.guess() :: " + moment.tz.guess());
+       var curdate = new Date();
+var offset = curdate.getTimezoneOffset();
+
+console.log("Offset :: " + offset);
 
         var d = new Date();
         var n = d.getDay();

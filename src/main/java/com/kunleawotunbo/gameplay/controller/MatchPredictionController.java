@@ -25,9 +25,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -64,18 +66,18 @@ public class MatchPredictionController {
 
     @Autowired
     private MatchPredictionAnswerService matchPredictionAnswerService;
-    
+
     @Autowired
     private CountryService countryService;
 
     @Autowired
     private TeamService teamService;
-    
+
     @Autowired
     private LeagueService leagueService;
-    
+
     final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     @InitBinder
@@ -84,8 +86,8 @@ public class MatchPredictionController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-    
-      @RequestMapping(value = "/prediction", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/prediction", method = RequestMethod.GET)
     public String getPredictionPage(ModelMap model, HttpServletRequest request) {
 
         List<MatchPrediction> activeMatchesList = null;
@@ -98,68 +100,77 @@ public class MatchPredictionController {
         String spain = "Spani";
         String laliga = "La Liga";
         String championsLeagues = "Champions League";
-        
-        //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
-       
+        //Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
+        Date currentDate = null;
         
+
+        //String timeZone = tunborUtility.getTimeOffset(request);
+        String timeZone = tunborUtility.getTimeOffset(request) == null ? "" : tunborUtility.getTimeOffset(request);
+        System.out.println("timeZone :: " + timeZone);
+        //Add the offset to the time that you got from server , you have to write the code something like this
+        Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
+       
+        if (timeZone != null && !timeZone.isEmpty()){
+             now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
+        now.getTimeZone();
+        }
         /*
-        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
-        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
-        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
-        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
-        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
+        //Add the offset to the time that you got from server , you have to write the code something like this
+        Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
+        now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
+        now.getTimeZone();
         */
         
+        
+        currentDate = now.getTime();
+        System.out.println("currentDate :: " + currentDate);
+        //System.out.println("now :: " + now.getTime());
+
+        //TimeZone tz = TimeZone.getTimeZone("GMT" + Integer.parseInt(timeZone));
+        //System.out.println("Name :: " +  tz.getDisplayName());
+        //System.out.println("Offset :: " + tz.getRawOffset());
+
+      
         Date date = null;
         try {
-            date =  formatter.parse(formatter.format(currentDate));
+            date = formatter.parse(formatter.format(currentDate));
             //date = inputFormat.parse(dateString);
             System.out.println("date :: " + date);
 
-            
         } catch (ParseException ex) {
-            java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
+            //java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Error occurred" + ex);
         }
         System.out.println("date :: " + date);
-        
+
         activeMatchesList = matchPredictionService.listActiveMatches(date);
         eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "EPL");
         laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "LaLiga");
         otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "");
         champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "Champions League");
-        
+
         //tunborUtility.matchPredictionBeanMapper(eplMatchesList)
-        
-       
-         model.addAttribute("currentDate", currentDate);
+        model.addAttribute("currentDate", currentDate);
         model.addAttribute("england", england);
         model.addAttribute("spain", spain);
         model.addAttribute("epl", epl);
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
-        
-        /*
-         model.addAttribute("activeMatchesList", activeMatchesList);
-        model.addAttribute("eplMatchesList", eplMatchesList);
-        model.addAttribute("laligaMatchesList", laligaMatchesList);
-         model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
-        model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
-        */
-        
-         model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
+
+       
+        model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
         model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
         model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
-         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
+        model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
         model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
-        
-        model.addAttribute("currentDate", currentDate);
+
         
         return "prediction";
     }
-    
-     @RequestMapping(value = "/soccer/{dateString}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/soccer/{dateString}", method = RequestMethod.GET)
     public String getMatchByDate(@PathVariable String dateString, ModelMap model, HttpServletRequest request) {
 
         List<MatchPrediction> activeMatchesList = null;
@@ -172,63 +183,62 @@ public class MatchPredictionController {
         String spain = "Spani";
         String laliga = "La Liga";
         String championsLeagues = "Champions League";
-        
+
         //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
         Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
+
+        
+        //String timeZone = tunborUtility.getTimeOffset(request);
+        String timeZone = tunborUtility.getTimeOffset(request) == null ? "" : tunborUtility.getTimeOffset(request);
+        System.out.println("timeZone :: " + timeZone);
+        //Add the offset to the time that you got from server , you have to write the code something like this
+        Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
        
-        /*
-        activeMatchesList = matchPredictionService.listActiveMatches(tunborUtility.getDate(Definitions.TIMEZONE));
-        eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "EPL");
-        laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "LaLiga");
-        otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "");
-        champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(tunborUtility.getDate(Definitions.TIMEZONE), "Champions League");
-        */
+        if (timeZone != null && !timeZone.isEmpty()){
+             now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
+        now.getTimeZone();
+        }
+             
+        
+        currentDate = now.getTime();
+        System.out.println("currentDate :: " + currentDate);
+        
         logger.info("dateString :: " + dateString);
         DateFormat inputFormat = new SimpleDateFormat(
                 "yyyy MMM dd", Locale.ENGLISH);
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         Date date = null;
         try {
-            System.out.println("format1.parse(dateString) :: " + format1.parse(dateString));
-            date =  format1.parse(dateString);
+            //System.out.println("format1.parse(dateString) :: " + format1.parse(dateString));
+            date = format1.parse(dateString);
             //date = inputFormat.parse(dateString);
-            
+
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(WeeklyGamesController.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("date :: " + date);
-        
+
         activeMatchesList = matchPredictionService.listActiveMatches(date);
         eplMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "EPL");
         laligaMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "LaLiga");
         otherLeagueMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "");
         champLeaguesMatchesList = matchPredictionService.listActiveMatchesByLeagueCode(date, "Champions League");
-        
-        
+
         model.addAttribute("activeMatchesList", activeMatchesList);
-         model.addAttribute("currentDate", currentDate);
+        model.addAttribute("currentDate", currentDate);
         model.addAttribute("england", england);
         model.addAttribute("spain", spain);
         model.addAttribute("epl", epl);
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
         
-        /*
-        model.addAttribute("eplMatchesList", eplMatchesList);
-        model.addAttribute("laligaMatchesList", laligaMatchesList);
-         model.addAttribute("otherLeagueMatchesList", otherLeagueMatchesList);
-        model.addAttribute("champLeaguesMatchesList", champLeaguesMatchesList);
-        
-        */
-          model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
+        model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
         model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
         model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
-         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
+        model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
         model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
-        
-        model.addAttribute("currentDate", currentDate);
-        
+       
         return "prediction";
     }
 
@@ -242,39 +252,37 @@ public class MatchPredictionController {
 
         MatchPrediction matchPredictionObject = matchPredictionService.findById(id);
         //boolean matchStarted = false;
-         boolean canPlayGame = false;
+        boolean canPlayGame = false;
         String userAnswer = "";
 
         MatchPredictionAnswer matchPredictionAnswer = new MatchPredictionAnswer();
         // Check if match has started. Disable submit button if match has started.        
-    
-         
+
         //if(null != matchPredictionObject &&  tunborUtility.isDateAfter(tunborUtility.getDate(Definitions.TIMEZONE), matchPredictionObject.getStartTime())){
-        if (null != matchPredictionObject && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime()) ) {
+        if (null != matchPredictionObject && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPredictionObject.getStartTime())) {
             canPlayGame = true;
             logger.info("canPlayGame :: " + canPlayGame);
             //logger.info("Game has not ended, Please wait till match ends before setting answer");
-           
-            model.addAttribute("canPlayGame", canPlayGame);              
-           
-        }else {
+
+            model.addAttribute("canPlayGame", canPlayGame);
+
+        } else {
             canPlayGame = false;
-             logger.info("canPlayGame :: " + canPlayGame);
-             model.addAttribute("canPlayGame", canPlayGame);
-              model.addAttribute("msg", "You can't play this game, Game has started, Please another game");    
+            logger.info("canPlayGame :: " + canPlayGame);
+            model.addAttribute("canPlayGame", canPlayGame);
+            model.addAttribute("msg", "You can't play this game, Game has started, Please another game");
             System.out.println("Current time is not after start time");
         }
-        
-        if("1".equalsIgnoreCase(selectedAnswer)){
+
+        if ("1".equalsIgnoreCase(selectedAnswer)) {
             userAnswer = "Home Win";
-        }else if ("X".equalsIgnoreCase(selectedAnswer)){
+        } else if ("X".equalsIgnoreCase(selectedAnswer)) {
             userAnswer = "Draw";
-        }else if ("2".equalsIgnoreCase(selectedAnswer)){
+        } else if ("2".equalsIgnoreCase(selectedAnswer)) {
             userAnswer = "Away Win";
-        }else {
+        } else {
             userAnswer = "Unable to determine your selected answer";
         }
-        
 
         model.addAttribute("matchPredictionObject", matchPredictionObject);
         model.addAttribute("matchPredictionAnswer", matchPredictionAnswer);
@@ -307,11 +315,11 @@ public class MatchPredictionController {
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPrediction";
-        */
+         */
         boolean status = true;
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-        model.addAttribute("countriesList", countryService.listCountries());       
+        model.addAttribute("countriesList", countryService.listCountries());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPrediction";
@@ -323,8 +331,8 @@ public class MatchPredictionController {
      */
     @RequestMapping(value = "/admin/addMatchPrediction", method = RequestMethod.POST)
     public String createMatchPrediction(MatchPrediction matchPrediction, BindingResult result,
-            ModelMap model, HttpServletRequest req) {        
-        
+            ModelMap model, HttpServletRequest req) {
+
         logger.info("To create new match prediction game");
 
         System.out.println("matchPrediction.getAwayTeamId() :: " + matchPrediction.getAwayTeamId());
@@ -341,7 +349,7 @@ public class MatchPredictionController {
             return "/admin/addMatchPrediction";
 
         }
-        if(matchPrediction.getHomeTeamId() == matchPrediction.getAwayTeamId()){
+        if (matchPrediction.getHomeTeamId() == matchPrediction.getAwayTeamId()) {
             System.out.println("There is an error");
 
             System.out.println("Error in form:: " + result.getFieldError());
@@ -379,7 +387,7 @@ public class MatchPredictionController {
         return "admin/addMatchPrediction";
 
     }
-    
+
     /**
      * This method will provide the medium to update an game category user.
      */
@@ -388,37 +396,32 @@ public class MatchPredictionController {
 
         logger.info("Edit  editMatchPrediction id :: " + id);
 
-      
-        
         MatchPrediction matchPrediction = matchPredictionService.findById(id);
-        
-        if(null == matchPrediction){
+
+        if (null == matchPrediction) {
             System.out.println("match prediction is null");
             return "/admin/addMatchPrediction";
-        }else {
-             
-        boolean status = true;
-        model.addAttribute("matchPrediction", matchPrediction);
-        model.addAttribute("weekNo", tunborUtility.gameWeek());
-        model.addAttribute("countriesList", countryService.listCountries());       
-        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+        } else {
 
-        return "/admin/addMatchPrediction";
+            boolean status = true;
+            model.addAttribute("matchPrediction", matchPrediction);
+            model.addAttribute("weekNo", tunborUtility.gameWeek());
+            model.addAttribute("countriesList", countryService.listCountries());
+            model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+            return "/admin/addMatchPrediction";
 
         }
-       
-     
+
     }
-    
-    
-        
-         @RequestMapping(value = "/admin/edit-matchPrediction-{id}", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/admin/edit-matchPrediction-{id}", method = RequestMethod.POST)
     public String updateMatchPrediction(MatchPrediction matchPrediction, BindingResult result,
-            ModelMap model, HttpServletRequest req) {    
-        
+            ModelMap model, HttpServletRequest req) {
+
         logger.info("Edit  editMatchPrediction id :: " + matchPrediction.getId());
-        
-         matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
+
+        matchPrediction.setCountryName(countryService.getCountryByCountryCode(matchPrediction.getCountryCode()).getCountryName());
         matchPrediction.setLeagueName(leagueService.getLeagueByCode(matchPrediction.getLeagueCode()).getLeagueName());
         matchPrediction.setHomeTeamName(teamService.getTeamById(matchPrediction.getHomeTeamId()).getTeamName());
         matchPrediction.setAwayTeamName(teamService.getTeamById(matchPrediction.getAwayTeamId()).getTeamName());
@@ -444,7 +447,7 @@ public class MatchPredictionController {
 
         return "admin/addMatchPrediction";
     }
-    
+
     /**
      * This method will delete matchPrediction by it's id value.
      */
@@ -456,8 +459,6 @@ public class MatchPredictionController {
 
         return "redirect:/admin/listMatchPredictions";
     }
-
-
 
     /**
      * List weekly games
@@ -483,7 +484,7 @@ public class MatchPredictionController {
     }
 
     /**
-     * This method will allows to  submit answer for match prediction.
+     * This method will allows to submit answer for match prediction.
      */
     @RequestMapping(value = "/admin/set-matchPrediction-Answer-{id}", method = RequestMethod.GET)
     public String setMatchPredictionAnswer(@PathVariable int id, ModelMap model) {
@@ -491,29 +492,27 @@ public class MatchPredictionController {
         logger.info("Get setMatchPredictionAnswer answer page id :: " + id);
 
         MatchPrediction matchPrediction = matchPredictionService.findById(id);
-        
-       
-         // If match has expired, if not, admin can not set answer until game expire        
-         //System.out.println("outcome :: " + tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()));
-         boolean hasExpired = false;
-         // If match has expired, if not, admin can not set answer until game expire        
-        if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
+
+        // If match has expired, if not, admin can not set answer until game expire        
+        //System.out.println("outcome :: " + tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()));
+        boolean hasExpired = false;
+        // If match has expired, if not, admin can not set answer until game expire        
+        if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime())) {
             hasExpired = false;
             logger.info("hasExpired :: " + hasExpired);
             logger.info("Game has not ended, Please wait till match ends before setting answer");
-           
+
             model.addAttribute("hasExpired", hasExpired);
-             model.addAttribute("msg", "Game has not ended, Please wait till game ends before setting answer");    
-           // model.addAttribute("msg", "Game has expired, admin can set answer");      
+            model.addAttribute("msg", "Game has not ended, Please wait till game ends before setting answer");
+            // model.addAttribute("msg", "Game has expired, admin can set answer");      
         } else {
-            hasExpired = true;   
-             logger.info("hasExpired :: " + hasExpired);
-             model.addAttribute("hasExpired", hasExpired);
-              
-             
+            hasExpired = true;
+            logger.info("hasExpired :: " + hasExpired);
+            model.addAttribute("hasExpired", hasExpired);
+
             logger.info("Game has expired, admin can set answer");
         }
-         /*
+        /*
         if (null != matchPrediction && tunborUtility.getDate(Definitions.TIMEZONE).before(matchPrediction.getEndTime()) ) {
             matchStarted = true;
            
@@ -527,7 +526,7 @@ public class MatchPredictionController {
             
             logger.info("Game has expired, admin can set answer");
         }
-        */
+         */
 
         model.addAttribute("matchPrediction", matchPrediction);
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
@@ -578,7 +577,6 @@ public class MatchPredictionController {
 
         List<MatchPredictionAnswer> matchPredictionAnswerList = null;
         MatchPrediction matchPrediction = null;
-        
 
         matchPrediction = matchPredictionService.findById(gameId);
         matchPredictionAnswerList = matchPredictionAnswerService.listAllMatchPredictionAnswersByGameId(gameId);
@@ -590,21 +588,20 @@ public class MatchPredictionController {
 
         return "/admin/viewAllAnswersMatchPredictions";
     }
-    
-    
+
 //    Version 2 for the match prediction for
-     @RequestMapping(value = "/admin/addMatchPredictionNew", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/addMatchPredictionNew", method = RequestMethod.GET)
     public String getAddMatchPredictionNew(ModelMap model, HttpServletRequest request) {
 
         boolean status = true;
         model.addAttribute("matchPrediction", new MatchPrediction());
         model.addAttribute("weekNo", tunborUtility.gameWeek());
-        model.addAttribute("countriesList", countryService.listCountries());       
+        model.addAttribute("countriesList", countryService.listCountries());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/addMatchPredictionNew";
     }
-    
+
     @RequestMapping(value = "/admin/addMatchPredictionNew", method = RequestMethod.POST)
     public String createMatchPredictionNew(MatchPrediction matchPrediction, BindingResult result,
             ModelMap model, HttpServletRequest req) {
@@ -652,49 +649,46 @@ public class MatchPredictionController {
         return "admin/addMatchPredictionNew";
 
     }
-    
-    
+
     @RequestMapping(value = "/admin/answersByPlayerCountry", method = RequestMethod.GET)
     public String gamePredictionByLeagueReportGet(ModelMap model, HttpServletRequest request) {
-        
-         model.addAttribute("matchPrediction", new MatchPrediction());
+
+        model.addAttribute("matchPrediction", new MatchPrediction());
         //model.addAttribute("urlPath", request.getLocalAddr());
         //model.addAttribute("loggedinuser", getPrincipal());
-       // model.addAttribute("game", new Game());
-       // model.addAttribute("gameList", gameService.listAllGames());
+        // model.addAttribute("game", new Game());
+        // model.addAttribute("gameList", gameService.listAllGames());
         model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
 
         return "/admin/answersByPlayerCountry";
     }
-    
-    
+
     @RequestMapping(value = "/admin/answersByPlayerCountry", method = RequestMethod.POST)
     public String answerByPlayerCountry(MatchPrediction matchPrediction, BindingResult result,
             ModelMap model, HttpServletRequest req) {
-        
-           System.out.println("Inside game prediction by player country controller :: ");
-            
-            logger.info("Country Code :: " + matchPrediction.getCountryCode());
-            
-           List<MatchPredictionAnswer> matchPredictionList = new ArrayList<MatchPredictionAnswer>();
-            
-           matchPredictionList = matchPredictionAnswerService.listByCountry(matchPrediction.getCountryCode());
-            
-             
-           logger.info("List Length :: " + matchPredictionList.size());
-           logger.info("Country Code :: " + matchPredictionList.get(0).getCountryCode());
-            model.addAttribute("matchPredictionList", matchPredictionList);
-            model.addAttribute("CountryName", matchPredictionList.get(0).getCountry());
 
-            model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+        System.out.println("Inside game prediction by player country controller :: ");
 
-         return "/admin/answersByPlayerCountryList";
+        logger.info("Country Code :: " + matchPrediction.getCountryCode());
 
-      }
-    
-    
+        List<MatchPredictionAnswer> matchPredictionList = new ArrayList<MatchPredictionAnswer>();
+
+        matchPredictionList = matchPredictionAnswerService.listByCountry(matchPrediction.getCountryCode());
+
+        logger.info("List Length :: " + matchPredictionList.size());
+        logger.info("Country Code :: " + matchPredictionList.get(0).getCountryCode());
+        model.addAttribute("matchPredictionList", matchPredictionList);
+        model.addAttribute("CountryName", matchPredictionList.get(0).getCountry());
+
+        model.addAttribute("loggedinuser", tunborUtility.getPrincipal());
+
+        return "/admin/answersByPlayerCountryList";
+
+    }
+
     /**
      * Get mpReportByPeriod page
+     *
      * @param model
      * @param request
      * @return
@@ -702,28 +696,27 @@ public class MatchPredictionController {
     @RequestMapping(value = "/admin/mpReportByPeriod", method = RequestMethod.GET)
     public String getMpReportByPeriod(ModelMap model, HttpServletRequest request) {
 
-       
         model.addAttribute("matchPredictionAnswer", new MatchPredictionAnswerBean());
-               
+
         return "/admin/mpReportByPeriod";
     }
-    
+
     @RequestMapping(value = "/admin/mpReportByPeriod", method = RequestMethod.POST)
     public String mpReportByPeriod(MatchPredictionAnswerBean matchPredictionAnswerBean, BindingResult result,
-            ModelMap model, HttpServletRequest req) {        
-        
+            ModelMap model, HttpServletRequest req) {
+
         logger.info("To report on match prediction game");
-        
+
         System.out.println("getUserPhoneNo :: " + matchPredictionAnswerBean.getUserPhoneNo());
         System.out.println("getStartDate :: " + matchPredictionAnswerBean.getStartDate());
         System.out.println("getStartDate :: " + matchPredictionAnswerBean.getEndDate());
-        
+
         List<MatchPredictionAnswer> list = null;
-        
+
         list = matchPredictionAnswerService.listAnswerByPhoneAndDate(
-                matchPredictionAnswerBean.getUserPhoneNo(),                
+                matchPredictionAnswerBean.getUserPhoneNo(),
                 matchPredictionAnswerBean.getStartDate(), matchPredictionAnswerBean.getEndDate());
-        
+
         model.addAttribute("list", list);
         model.addAttribute("total", list.size());
         model.addAttribute("matchPredictionAnswer", matchPredictionAnswerBean);
@@ -732,10 +725,10 @@ public class MatchPredictionController {
         return "admin/mpReportByPeriod";
 
     }
-    
-    
+
     /**
      * Get JpReportByPeriodCountry page
+     *
      * @param model
      * @param request
      * @return
@@ -743,35 +736,35 @@ public class MatchPredictionController {
     @RequestMapping(value = "/admin/mpReportByCountry", method = RequestMethod.GET)
     public String getMpReportByCountry(ModelMap model, HttpServletRequest request) {
 
-       
         model.addAttribute("matchPredictionAnswer", new MatchPredictionAnswerBean());
         model.addAttribute("countriesList", countryService.listCountries());
-              
+
         return "/admin/mpReportByCountry";
     }
-    
+
     /**
      * Fetch reports by game code and country code
+     *
      * @param weeklyGamesAnswersBean
      * @param result
      * @param model
      * @param req
-     * @return 
+     * @return
      */
     @RequestMapping(value = "/admin/mpReportByCountry", method = RequestMethod.POST)
     public String mpReportByCountry(MatchPredictionAnswerBean matchPredictionAnswerBean, BindingResult result,
-            ModelMap model, HttpServletRequest req) {        
-        
+            ModelMap model, HttpServletRequest req) {
+
         logger.info("Report on mpReportByCountry");
-     
+
         System.out.println("getCode :: " + matchPredictionAnswerBean.getCode());
-        System.out.println("getCountryCode :: " + matchPredictionAnswerBean.getCountryCode());       
-        
+        System.out.println("getCountryCode :: " + matchPredictionAnswerBean.getCountryCode());
+
         List<MatchPredictionAnswer> list = null;
-        
+
         list = matchPredictionAnswerService.listAnswerByCodeAndCountry(matchPredictionAnswerBean.getCode(),
                 matchPredictionAnswerBean.getCountryCode());
-        
+
         model.addAttribute("list", list);
         model.addAttribute("total", list.size());
         model.addAttribute("matchPredictionAnswer", matchPredictionAnswerBean);
@@ -781,7 +774,5 @@ public class MatchPredictionController {
         return "admin/mpReportByCountry";
 
     }
-    
-
 
 }

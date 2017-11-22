@@ -55,6 +55,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.logging.Level;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.binary.Base64;
@@ -407,22 +408,46 @@ public class TunborUtility {
 
         Date currentDate = calendar.getTime();
 
+        // Plus 1 hour because of time zone 
+        //Date currentDate = datePlusHours(calendar.getTime(), 1);
         logger.info("date :: " + currentDate);
 
-        /*
-        String startDateString = "2017/08/09";
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        Date startDate;
-        try {
-            startDate = df.parse(startDateString);
-            String newDateString = df.format(currentDate);
-            System.out.println(newDateString);
-            logger.info("newDateString :: " + newDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-         */
         return currentDate;
+    }
+
+    /**
+     * To add hours to date
+     *
+     * @param date Date
+     * @param hours numbers of hours to be added
+     * @return computed date
+     */
+    public Date datePlusHours(Date ddate, int hours) {
+
+        //Date ddate = parseDate(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ddate);
+
+        calendar.add(Calendar.HOUR, hours);
+
+        return calendar.getTime();
+    }
+    
+    /**
+     * To add hours to date
+     *
+     * @param date Date
+     * @param hours numbers of hours to be added
+     * @return computed date
+     */
+    public Date datePlusMinutes(Date ddate, int minutes) {
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ddate);
+
+        calendar.add(Calendar.MINUTE, minutes);
+
+        return calendar.getTime();
     }
 
     public String getFormattedDate(String timeZone) {
@@ -859,8 +884,23 @@ public class TunborUtility {
 
     public boolean isCurrentTimeAfter(MatchPrediction matchPredictionObject) {
         boolean status = getDate(Definitions.TIMEZONE).after(formatDate("" + matchPredictionObject.getStartTime()));
-                 
+
         return status;
+    }
+
+    public String getTimeOffset(HttpServletRequest  request) {
+        Cookie[] cookies = request.getCookies();
+        String timeOffset = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("TIMEZONE_COOKIE")) {
+                    timeOffset = cookie.getValue();
+                    System.out.println("timeOffset :: " + timeOffset);
+                    break;
+                }
+            }
+        }
+        return timeOffset;
     }
 
 }
