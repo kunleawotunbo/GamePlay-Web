@@ -6,6 +6,8 @@
 package com.kunleawotunbo.gameplay.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class ErrorController {
+    
+     final Logger logger = LoggerFactory.getLogger(getClass());
+     
     @RequestMapping(value = "errors", method = RequestMethod.GET)
     public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
          
@@ -24,7 +29,7 @@ public class ErrorController {
         String errorMsg = "";
         String errorCode = "";
         int httpErrorCode = getErrorCode(httpRequest);
- 
+        logger.info("httpErrorCode :: " + httpErrorCode);
         switch (httpErrorCode) {
             case 400: {
                 //errorMsg = "Http Error Code: 400. Bad Request";

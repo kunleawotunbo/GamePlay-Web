@@ -11,6 +11,7 @@ import com.kunleawotunbo.gameplay.utility.TunborUtility;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  *
@@ -45,7 +47,12 @@ public class HomeController implements Controller {
               
         ModelMap model = new ModelMap();
         
-        String test = "This is a test";
+         String offsetString = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
+        System.out.println("offsetString :: " + offsetString);
+        TimeZone timeZone = tunborUtility.getTimeZone2(Integer.parseInt(offsetString));
+        logger.info("timezone :: " + timeZone);
+        request.getSession().setAttribute("timezone", timeZone);
+        
         List<Game> gameList = null;
         List<Game> gameListFinal = null;
          boolean status = true;
@@ -101,13 +108,11 @@ public class HomeController implements Controller {
         }
          
         model.addAttribute("urlPath", request.getLocalAddr());
-        model.addAttribute("request", request);
-        model.addAttribute("test", test);
-        //model.addAttribute("gameList", gameService.listGames(status));
+        model.addAttribute("request", request);        
         model.addAttribute("gameList", gameListFinal);
         
         return new ModelAndView("home", model);
-        //return new ModelAndView("winnerlist", model);
+        
     }
 
     

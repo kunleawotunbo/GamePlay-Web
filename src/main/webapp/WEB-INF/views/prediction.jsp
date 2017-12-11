@@ -11,7 +11,7 @@
 <!--Include outside navigation-->
 <%@ include file="includes/outside/navigation.jsp" %>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     function setTimeZoneInCookie() {
         var _myDate = new Date();
         var _offset = _myDate.getTimezoneOffset();
@@ -20,7 +20,7 @@
     }
     
     setTimeZoneInCookie();
-</script>
+</script>-->
 
 <div class="container">
     <div class="row content">

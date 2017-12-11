@@ -188,6 +188,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
+        
+        registry.addInterceptor(new TimezoneInterceptor());
     }
 
     // beans

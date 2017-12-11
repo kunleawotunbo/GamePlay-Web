@@ -6,20 +6,25 @@
 package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.model.Game;
-import com.kunleawotunbo.gameplay.model.User;
 import com.kunleawotunbo.gameplay.model.UserProfile;
+import com.kunleawotunbo.gameplay.model.WeeklyGames;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.UserProfileService;
 import com.kunleawotunbo.gameplay.service.UserService;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.SimpleTimeZoneAwareLocaleContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,11 +32,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  *
@@ -85,6 +96,73 @@ public class IndexController {
         }else {                     
             return "redirect:/admin/dashboard";
         }        
+    }
+    
+    //@RequestMapping("/tzHandler")
+    @RequestMapping(value = "/tzHandler", method = RequestMethod.GET)
+    public String handleTz () {
+        logger.info("inside tzHandler");
+        return "tzJsPage";
+    }
+    
+     @RequestMapping(value = "/tzValueHandler", method = RequestMethod.POST)
+    public String handleTzValue (
+              Locale locale, HttpServletRequest req,
+              HttpServletResponse res,
+              @RequestParam("requestedUrl") String requestedUrl,
+              @RequestParam("timeZoneOffset") int timeZoneOffset) {
+
+        logger.info("here handleTzValue");
+        ZoneOffset zoneOffset =
+                  ZoneOffset.ofTotalSeconds(-timeZoneOffset * 60);
+
+        TimeZone timeZone = TimeZone.getTimeZone(zoneOffset);
+
+        LocaleContextResolver localeResolver =
+                  (LocaleContextResolver) RequestContextUtils.getLocaleResolver(req);
+
+        localeResolver.setLocaleContext(req, res,
+                                        new SimpleTimeZoneAwareLocaleContext(
+                                                  locale, timeZone));
+        
+        logger.info("timeZone indexController :: " + timeZone);
+        logger.info("redirect:" + requestedUrl);
+        
+        return "redirect:" + requestedUrl;
+
+    }
+    
+    // @RequestMapping(value = "/tzValueHandler2", method = RequestMethod.POST)
+     @GetMapping(value = "/tzValueHandler2")
+    public String handleTzValue2( @RequestParam("requestedUrl") String requestedUrl,
+              @RequestParam("timeZoneOffset") int timeZoneOffset, Locale locale, HttpServletRequest req,
+              HttpServletResponse res) {
+      /*  public String handleTzValue (
+              Locale locale, HttpServletRequest req,
+              HttpServletResponse res,
+              @RequestParam("requestedUrl") String requestedUrl,
+              @RequestParam("timeZoneOffset") int timeZoneOffset) {
+        */
+
+   
+
+        logger.info("here handleTzValue2 ...");
+        ZoneOffset zoneOffset =
+                  ZoneOffset.ofTotalSeconds(-timeZoneOffset * 60);
+
+        TimeZone timeZone = TimeZone.getTimeZone(zoneOffset);
+
+        LocaleContextResolver localeResolver =
+                  (LocaleContextResolver) RequestContextUtils.getLocaleResolver(req);
+
+        localeResolver.setLocaleContext(req, res,
+                                        new SimpleTimeZoneAwareLocaleContext(
+                                                  locale, timeZone));
+        
+        logger.info("timeZone indexController :: " + timeZone);
+        
+        return "redirect:" + requestedUrl;
+
     }
     
     @RequestMapping(value ="/logout", method = RequestMethod.GET)

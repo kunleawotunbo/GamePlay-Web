@@ -5,10 +5,7 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
-import static com.kunleawotunbo.gameplay.dao.WeeklyGamesDaoImpl.subtractDays;
 import com.kunleawotunbo.gameplay.model.WeeklyGamesAnswers;
-import com.kunleawotunbo.gameplay.model.WeeklyGames;
-import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -478,9 +475,8 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
     public List<WeeklyGamesAnswers> listCorrectAnswersForJPByGameId(String gameAnswer, int gameId, int noOfWinners) {
         logger.info("gameAnswer :: " + gameAnswer);
         logger.info("gameId :: " + gameId);
-        // Criteria criteria = createEntityCriteria();
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));
-        //criteria.add(Restrictions.eq("userAnswer", gameAnswer).ignoreCase());
+        
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("dateAnswered"));        
         criteria.add(Restrictions.eq("gameId", gameId));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
@@ -497,14 +493,10 @@ public class WeeklyGamesAnswersDaoImpl extends AbstractDao<Long, WeeklyGamesAnsw
         boolean answerCorrect = false;
         for (WeeklyGamesAnswers item : weeklyGamesAnswersList) {
             logger.info("Checking WeeklyGamesAnswers id ::  " + item.getId());
-           // String[] v1 = gameAnswer.replace(";", "").split(",");
-            //String[] v2 = item.getUserAnswer().replace(";", "").split(",");
-            
-            //String[] v1 = gameAnswer.split(",");
-            //String[] v2 = item.getUserAnswer().split(",");
-            // Changed separator to -
+          
             String[] v1 = gameAnswer.split("-");
             String[] v2 = item.getUserAnswer().split("-");
+           
             Arrays.sort(v1);
             Arrays.sort(v2);
             answerCorrect = Arrays.equals(v1, v2);

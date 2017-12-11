@@ -42,6 +42,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -901,6 +902,21 @@ public class TunborUtility {
             }
         }
         return timeOffset;
+    }
+    
+    public TimeZone getTimeZone2(int timeZoneOffset){
+        //TimeZone tz = RequestContextUtils.getTimeZone(request);
+        
+        
+        
+        ZoneOffset zoneOffset =
+                  ZoneOffset.ofTotalSeconds(-timeZoneOffset * 60);
+
+        TimeZone timeZone = TimeZone.getTimeZone(zoneOffset);
+        logger.info("zoneOffset :: " + zoneOffset);
+        logger.info("timeZone :: " + timeZone);
+        logger.info("zoneOffset.getId :: " + zoneOffset.getId());
+        return timeZone;
     }
 
 }

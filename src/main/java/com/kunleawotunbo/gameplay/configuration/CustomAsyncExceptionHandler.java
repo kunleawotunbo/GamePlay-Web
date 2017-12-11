@@ -11,7 +11,7 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 // http://www.baeldung.com/spring-async
 /**
  *
- * @author OLAKUNLE
+ * @author Olakunle Awotunbo
  */
 public class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
  

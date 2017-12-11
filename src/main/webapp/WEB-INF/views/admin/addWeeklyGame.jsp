@@ -69,10 +69,7 @@
 
 
                         <form:form modelAttribute="weeklyGame" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" id="addWeeklyGame-form" data-parsley-validate="" >  
-                            <form:hidden path="id" id="id" name="id" />
-                            <%--<form:hidden path="code" id="code" name="code" />                            
-                            <form:hidden path="modifiedDate" id="modifiedDate" name="modifiedDate" />
-                            --%>
+                            <form:hidden path="id" id="id" name="id" />                            
 
                             <div class="form-group">
 
@@ -100,17 +97,7 @@
 
                                 <div class="form-group" id="gameTextJackpot">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Game Text <span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 col-xs-9 ">
-                                        <%--                                   
-                                            <form:input path="gameText" id="gameTextJackpot1" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
-                                            <form:input path="gameText" id="gameTextJackpot2" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
-                                            <form:input path="gameText" id="gameTextJackpot3" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
-                                            <form:input path="gameText" id="gameTextJackpot4" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
-                                            <form:input path="gameText" id="gameTextJackpot5" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
-                                            <form:input path="gameText" id="gameTextJackpot6" name="gameText" type="text" class="form-control smallbox"  maxlength="2" /> 
-                                            <form:input path="gameText" id="gameTextJackpot7" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
-                                            <form:input path="gameText" id="gameTextJackpot8" name="gameText" type="text" class="form-control smallbox" maxlength="2"  /> 
-                                        --%>
+                                    <div class="col-md-9 col-sm-9 col-xs-9 ">                                       
                                         <input name="gameTextJackpot1" id="gameTextJackpot1"  type="text" class="form-control smallbox"  maxlength="2" /> 
                                         <input name="gameTextJackpot2" id="gameTextJackpot2"  type="text" class="form-control smallbox" maxlength="2"  /> 
                                         <input name="gameTextJackpot3" id="gameTextJackpot3"  type="text" class="form-control smallbox"  maxlength="2" /> 
@@ -118,9 +105,9 @@
                                         <input name="gameTextJackpot5" id="gameTextJackpot5"  type="text" class="form-control smallbox" maxlength="2"  /> 
                                         <input name="gameTextJackpot6" id="gameTextJackpot6"  type="text" class="form-control smallbox"  maxlength="2" /> 
                                         <input name="gameTextJackpot7" id="gameTextJackpot7"  type="text" class="form-control smallbox" maxlength="2"  required="required"/> 
-                                        <!--<input name="gameTextJackpot8" id="gameTextJackpot8"  type="text" class="form-control smallbox" maxlength="2"  />--> 
-
+                                        <p>Last box should not be empty.</p> 
                                     </div>
+                                    
                                 </div>
 
                                 <div class="form-group" id="gameText">

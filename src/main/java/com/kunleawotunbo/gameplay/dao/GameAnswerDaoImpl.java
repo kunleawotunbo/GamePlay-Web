@@ -5,7 +5,6 @@
  */
 package com.kunleawotunbo.gameplay.dao;
 
-import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.GameAnswer;
 import java.util.List;
 import org.hibernate.Criteria;

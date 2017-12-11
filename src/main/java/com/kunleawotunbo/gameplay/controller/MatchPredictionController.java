@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  *
@@ -104,26 +105,29 @@ public class MatchPredictionController {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         //Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
         Date currentDate = null;
-        
 
         //String timeZone = tunborUtility.getTimeOffset(request);
-        String timeZone = tunborUtility.getTimeOffset(request) == null ? "" : tunborUtility.getTimeOffset(request);
+        String timeZone = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
         System.out.println("timeZone :: " + timeZone);
+        tunborUtility.getTimeZone2(Integer.parseInt(timeZone));
+        logger.info("session timezone :: " + request.getSession().getAttribute("timezone"));
+        
+        TimeZone tz = RequestContextUtils.getTimeZone(request);
+        logger.info("tz Match :: " + tz);
         //Add the offset to the time that you got from server , you have to write the code something like this
         Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
-       
-        if (timeZone != null && !timeZone.isEmpty()){
-             now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
-        now.getTimeZone();
+
+        if (timeZone != null && !timeZone.isEmpty()) {
+            now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
+            now.getTimeZone();
         }
         /*
         //Add the offset to the time that you got from server , you have to write the code something like this
         Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
         now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
         now.getTimeZone();
-        */
-        
-        
+         */
+
         currentDate = now.getTime();
         System.out.println("currentDate :: " + currentDate);
         //System.out.println("now :: " + now.getTime());
@@ -131,8 +135,6 @@ public class MatchPredictionController {
         //TimeZone tz = TimeZone.getTimeZone("GMT" + Integer.parseInt(timeZone));
         //System.out.println("Name :: " +  tz.getDisplayName());
         //System.out.println("Offset :: " + tz.getRawOffset());
-
-      
         Date date = null;
         try {
             date = formatter.parse(formatter.format(currentDate));
@@ -159,14 +161,12 @@ public class MatchPredictionController {
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
 
-       
         model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
         model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
         model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
         model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
 
-        
         return "prediction";
     }
 
@@ -187,22 +187,20 @@ public class MatchPredictionController {
         //LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
         Date currentDate = tunborUtility.getDate(Definitions.TIMEZONE);
 
-        
         //String timeZone = tunborUtility.getTimeOffset(request);
         String timeZone = tunborUtility.getTimeOffset(request) == null ? "" : tunborUtility.getTimeOffset(request);
         System.out.println("timeZone :: " + timeZone);
         //Add the offset to the time that you got from server , you have to write the code something like this
         Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
-       
-        if (timeZone != null && !timeZone.isEmpty()){
-             now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
-        now.getTimeZone();
+
+        if (timeZone != null && !timeZone.isEmpty()) {
+            now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
+            now.getTimeZone();
         }
-             
-        
+
         currentDate = now.getTime();
         System.out.println("currentDate :: " + currentDate);
-        
+
         logger.info("dateString :: " + dateString);
         DateFormat inputFormat = new SimpleDateFormat(
                 "yyyy MMM dd", Locale.ENGLISH);
@@ -232,13 +230,13 @@ public class MatchPredictionController {
         model.addAttribute("epl", epl);
         model.addAttribute("laliga", laliga);
         model.addAttribute("championsLeagues", championsLeagues);
-        
+
         model.addAttribute("activeMatchesList", tunborUtility.matchPredictionBeanMapper(activeMatchesList));
         model.addAttribute("eplMatchesList", tunborUtility.matchPredictionBeanMapper(eplMatchesList));
         model.addAttribute("laligaMatchesList", tunborUtility.matchPredictionBeanMapper(laligaMatchesList));
         model.addAttribute("otherLeagueMatchesList", tunborUtility.matchPredictionBeanMapper(otherLeagueMatchesList));
         model.addAttribute("champLeaguesMatchesList", tunborUtility.matchPredictionBeanMapper(champLeaguesMatchesList));
-       
+
         return "prediction";
     }
 

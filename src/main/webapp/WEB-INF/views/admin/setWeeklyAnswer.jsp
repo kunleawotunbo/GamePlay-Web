@@ -255,11 +255,11 @@
                     var gameTextJackpot5 = $('#gameTextJackpot5').val();
                     var gameTextJackpot6 = $('#gameTextJackpot6').val();
                     var gameTextJackpot7 = $('#gameTextJackpot7').val();
-                    var gameTextJackpot8 = $('#gameTextJackpot8').val();
+                    //var gameTextJackpot8 = $('#gameTextJackpot8').val();
 
                     gameAnswer = "" + gameTextJackpot1 + " - " + gameTextJackpot2 + " - " + gameTextJackpot3
                             + " - " + gameTextJackpot4 + " - " + gameTextJackpot5 + " - " + gameTextJackpot6
-                            + " - " + gameTextJackpot7 + " - " + gameTextJackpot8;
+                            + " - " + gameTextJackpot7;
 
 
                 } else {   
