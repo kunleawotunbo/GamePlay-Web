@@ -107,16 +107,19 @@ public class MatchPredictionController {
         Date currentDate = null;
 
         //String timeZone = tunborUtility.getTimeOffset(request);
-        String timeZone = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
-        System.out.println("timeZone :: " + timeZone);
+        //String timeZone = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
+        String timeZone = tunborUtility.getTimeOffset(request) != null ?  tunborUtility.getTimeOffset(request) : "0";
+        logger.info("timeZone :: " + timeZone);
         tunborUtility.getTimeZone2(Integer.parseInt(timeZone));
         logger.info("session timezone :: " + request.getSession().getAttribute("timezone"));
+        logger.info("session timeOffset :: " + request.getSession().getAttribute("timeOffset"));
         
         TimeZone tz = RequestContextUtils.getTimeZone(request);
         logger.info("tz Match :: " + tz);
         //Add the offset to the time that you got from server , you have to write the code something like this
         Calendar now = Calendar.getInstance(); // in your case now will be the server time after getting from DB
-
+       // Calendar now = Calendar.getInstance(tz); // in your case now will be the server time after getting from DB
+        
         if (timeZone != null && !timeZone.isEmpty()) {
             now.add(Calendar.MINUTE, Integer.parseInt(timeZone) * (-1));
             now.getTimeZone();

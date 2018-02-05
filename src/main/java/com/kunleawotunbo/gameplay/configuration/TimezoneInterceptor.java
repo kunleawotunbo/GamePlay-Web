@@ -7,19 +7,14 @@ package com.kunleawotunbo.gameplay.configuration;
 
 import com.google.common.base.Strings;
 import com.kunleawotunbo.gameplay.utility.TunborUtility;
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.TimeZone;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -48,6 +43,10 @@ public class TimezoneInterceptor extends HandlerInterceptorAdapter {
 
         TimeZone tz = RequestContextUtils.getTimeZone(request);
         logger.info("tz here :: " + tz);
+        
+        //String timeZone = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
+        //String timeZone = tunborUtility.getTimeOffset(request) != null ? tunborUtility.getTimeOffset(request) : "0";
+        //logger.info("timeZone 1 :: " + timeZone);
         
         /*
          String offsetString = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);

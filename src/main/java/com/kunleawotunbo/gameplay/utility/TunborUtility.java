@@ -54,7 +54,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.UUID;
-import java.util.logging.Level;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -896,7 +895,8 @@ public class TunborUtility {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("TIMEZONE_COOKIE")) {
                     timeOffset = cookie.getValue();
-                    System.out.println("timeOffset :: " + timeOffset);
+                    logger.info("timeOffset :: " + timeOffset);
+                    request.getSession().setAttribute(timeOffset, timeOffset);
                     break;
                 }
             }

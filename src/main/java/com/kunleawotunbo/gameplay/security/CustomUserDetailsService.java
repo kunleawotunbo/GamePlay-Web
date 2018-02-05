@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author olakunle
+ * @author Olakunle Awotunbo
  */
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService{
