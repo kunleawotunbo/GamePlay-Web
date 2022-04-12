@@ -125,9 +125,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
      * JavaMailSender Config
      *
      * @return
-     * http://websystique.com/spring/spring-4-email-using-velocity-freemaker-template-library/
-     */
-    /*
+     */    
     @Bean
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -135,30 +133,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         //Using gmail
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("okstar45@gmail.com");
-        mailSender.setPassword("1@Yemisi");
-
-        Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail.smtp.starttls.enable", "true");
-        javaMailProperties.put("mail.smtp.auth", "true");
-        javaMailProperties.put("mail.transport.protocol", "smtp");
-        //javaMailProperties.put("mail.debug", "true");
-
-        mailSender.setJavaMailProperties(javaMailProperties);
-
-        return mailSender;
-    }
-    
-     */
-    @Bean
-    public JavaMailSender getMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
-        //Using gmail
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("okstar45@gmail.com");
-        mailSender.setPassword("1@Yemisi");
+        mailSender.setUsername("myemail@gmail.com");
+        mailSender.setPassword("mYP@sswo998bb");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
@@ -210,13 +186,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return new StandardServletMultipartResolver();
     }
 
-    /*
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-    
-     */
     @Bean
     public SMSConfigBean getSMSConfigBean() {
 

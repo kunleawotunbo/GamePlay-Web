@@ -6,7 +6,6 @@
 package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.CustomResponseBody;
-import com.kunleawotunbo.gameplay.bean.FileBucket;
 import com.kunleawotunbo.gameplay.interfaces.Definitions;
 import com.kunleawotunbo.gameplay.model.ActivityLog;
 import com.kunleawotunbo.gameplay.model.Game;
@@ -60,9 +59,6 @@ public class GameController {
 
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
     public String addGame(ModelMap model, HttpServletRequest request) {
-
-        //model.addAttribute("urlPath", request.getLocalAddr());
-        //model.addAttribute("loggedinuser", getPrincipal());
         model.addAttribute("game", new Game());
 
         return "addCategory";
@@ -93,8 +89,6 @@ public class GameController {
 
             if (item.getGameImgLocation() != null && item.getGameImage() != null) {
                 imageEncodedString = tunborUtility.imageToBase64String(item.getGameImgLocation() + item.getGameImage());
-                //String path = item.getGameImgLocation() + item.getGameImage();
-
             }
 
             game = new Game();
@@ -113,7 +107,6 @@ public class GameController {
 
             gameListFinal.add(game);
         }
-        //return new ResponseEntity<List<Game>>(gameList, HttpStatus.OK);
         return new ResponseEntity<List<Game>>(gameListFinal, HttpStatus.OK);
     }
 
@@ -147,12 +140,6 @@ public class GameController {
         boolean created = false;
 
         System.out.println("Game Id :: " + game.getId());
-        /*
-        if (gameService.isGameCodeExist(game.getGameCode())) {
-            logger.error("Game code " + game.getGameCode() + " already exist");
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-         */
         game.setCreationDate(tunborUtility.getDate(Definitions.TIMEZONE));
         //game.setCreationDate(new Date());
         created = gameService.save(game);
@@ -323,7 +310,6 @@ public class GameController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(game.getId()).toUri());
-        //return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
 

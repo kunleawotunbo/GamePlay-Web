@@ -732,8 +732,6 @@ public class AdminController {
         
          */
         return "redirect:/admin/addGameCategory";
-        // return "admin/addGameCategory";
-
     }
 
     @RequestMapping(value = "/addGameCategory/{id}", method = RequestMethod.GET)
@@ -872,23 +870,16 @@ public class AdminController {
                         dir.mkdirs();
                     }
 
-                    FilenameUtils fileUTIL = new FilenameUtils();
-
-                    //String path = req.getServletContext().getRealPath("/image");
-                    //String ext = fileUTIL.getExtension(file.getOriginalFilename());
-                    //String baseName = fileUTIL.getBaseName(file.getOriginalFilename());
                     imgLocation = dir + File.separator;
                     // get files name in the array
                     if (i == 0) {
                         gameImage = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        //serverFileName = imgLocation + gameImage; 
                         serverFileName = imgLocation  + "_" + batchid + "_" + gameImage;
                         System.out.println("gameImage:: " + gameImage);
                     } else if (i == 1) {
                         gameImage2 = files[i].getOriginalFilename();
                         bytes = files[i].getBytes();
-                        //serverFileName = imgLocation + gameImage2;
                         serverFileName = imgLocation +  "_" + batchid + "_" + gameImage2;
                         System.out.println("gameImage2:: " + gameImage2);
                     }

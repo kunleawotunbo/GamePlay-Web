@@ -1,9 +1,7 @@
 package com.kunleawotunbo.gameplay.controller;
 
 import com.kunleawotunbo.gameplay.bean.UserBean;
-import com.kunleawotunbo.gameplay.model.Game;
 import com.kunleawotunbo.gameplay.model.User;
-import com.kunleawotunbo.gameplay.model.UserProfile;
 import com.kunleawotunbo.gameplay.service.GameService;
 import com.kunleawotunbo.gameplay.service.MailService;
 import com.kunleawotunbo.gameplay.service.UserService;
@@ -14,9 +12,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,31 +20,19 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-//@RestController
-//@RequestMapping("/")
-//@SessionAttributes("roles")
 @Api(value = "users", description = "Endpoint for user management")
 public class AppController {
 
@@ -141,13 +124,7 @@ public class AppController {
     @RequestMapping(value = "/registrationConfirm2", method = RequestMethod.GET)
     public String confirmRegistration2(final Locale locale, final Model model, @RequestParam("token")
             final String token) throws UnsupportedEncodingException {
-        /*
-        System.out.println("Inside confirmRegistration");
-        model.addAttribute("message", "Account varified");
-           // return "redirect:/login?lang=" + locale.getLanguage();
-            return "redirect:/login";
-         */
-
+       
         final String result = userService.validateVerificationToken(token);
         System.out.println("result :: " + result);
         if (result.equals("valid")) {
@@ -163,7 +140,6 @@ public class AppController {
         }
 
         model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
-        //model.addAttribute("message", messages.getMess);
         model.addAttribute("expired", "expired".equals(result));
         model.addAttribute("token", token);
         return "redirect:/badUser.html?lang=" + locale.getLanguage();

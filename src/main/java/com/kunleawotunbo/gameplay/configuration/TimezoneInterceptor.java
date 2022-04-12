@@ -44,64 +44,7 @@ public class TimezoneInterceptor extends HandlerInterceptorAdapter {
         TimeZone tz = RequestContextUtils.getTimeZone(request);
         logger.info("tz here :: " + tz);
         
-        //String timeZone = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
-        //String timeZone = tunborUtility.getTimeOffset(request) != null ? tunborUtility.getTimeOffset(request) : "0";
-        //logger.info("timeZone 1 :: " + timeZone);
-        
-        /*
-         String offsetString = tunborUtility.getTimeOffset(request) == null ? "0" : tunborUtility.getTimeOffset(request);
-        System.out.println("offsetString interceptor :: " + offsetString);
-        TimeZone timeZone = tunborUtility.getTimeZone2(Integer.parseInt(offsetString));
-        logger.info("timezone interceptor:: " + timeZone);
-        */
-        /*
-        if (tz == null) {
-            System.out.println("Forwarding to js to get timezone offset");
-            System.out.println("getRequestURI :: " + request.getRequestURI());
-            request.setAttribute("requestedUrl", request.getRequestURI());
-            //RequestDispatcher dispatcher =  request.getRequestDispatcher("/tzHandler");
-            // RequestDispatcher dispatcher =  request.getRequestDispatcher("/tzHandler");
-            //dispatcher.forward(request, response);
-
-            //RequestDispatcher requestDispatcher = request.getServletContext().getRequestDispatcher("/tzHandler");
-            
-            
-            try {
-               // request.getRequestDispatcher("/tzHandler").forward(request, response);
-                
-               // request.getRequestDispatcher("/WEB-INF/views/tzJsPage.jsp").forward(request, response);
-              
-              // request.getRequestDispatcher("/tzHandler").forward(request, response);
-               response.sendRedirect(request.getContextPath() + "/tzHandler");
-              // response.sendRedirect(request.getContextPath() + "/");
-              //request.getRequestDispatcher(request.getContextPath() + "/tzHandler").forward(request, response);
-                 //RequestDispatcher dispatcher = request.getRequestDispatcher("/tzHandler");
-                // dispatcher.forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
-            
-            
-            //response.sendRedirect(request.getContextPath() + "/tzHandler");
-
-            //tzJsPage
-            // request.getRequestDispatcher("/tzHandler").forward(request, response);
-            //request.getRequestDispatcher("/tzHandler.jsp").forward(request, response); 
-            return false;
-        }
-        */
-
         return true;
-
-        /*
-        String timeZone = tunborUtility.getTimeOffset(request) == null ? "" : tunborUtility.getTimeOffset(request);
-        System.out.println("timeZone prehandler :: " + timeZone);
-
-        logger.info("[preHandle][" + request + "]" + "[" + request.getMethod() + "]" + request.getRequestURI() + getParameters(request));
-
-        return true;
-         */
     }
 
     public boolean preHandle2(HttpServletRequest request,

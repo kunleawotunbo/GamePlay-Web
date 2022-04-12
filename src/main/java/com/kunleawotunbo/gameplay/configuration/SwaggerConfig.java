@@ -22,44 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {                                    
-   // http://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
-    // access to swagger 
-    // http://localhost:8084/Tunbor/swagger-ui.html
-    /*
-      @Bean
-    public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.any())
-            .paths(PathSelectors.regex("/api/.*"))
-            .build()
-            .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("TITLE")
-            .description("DESCRIPTION")
-            .version("VERSION")
-            .termsOfServiceUrl("http://terms-of-services.url")
-            .license("LICENSE")
-            .licenseUrl("http://url-to-license.com")
-            .build();
-    }
-    */
-    
-    /*
-     @Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.any())              
-          .paths(PathSelectors.any())                          
-          .build();                                           
-    }
-    */
-    
-    
+      
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -70,21 +33,6 @@ public class SwaggerConfig {
                 .build();
     }
   
-    /*
-        @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select().
-                apis(RequestHandlerSelectors.basePackage("com.kunleawotunbo.tunbor.controller"))
-                //.paths(PathSelectors.ant("/test/*"))
-                .paths(PathSelectors.ant("/*"))
-                .build().apiInfo(apiInfo()).useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET, newArrayList(new ResponseMessageBuilder()
-                        .code(500).message("500 message").
-                        responseModel(new ModelRef("Error")).build(), new ResponseMessageBuilder()
-                                .code(403).message("Forbidden!!!!!").build()));
-    }
-    */
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
             .title("GamePlay")

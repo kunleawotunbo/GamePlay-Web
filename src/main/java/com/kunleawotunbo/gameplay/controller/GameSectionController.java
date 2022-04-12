@@ -66,16 +66,11 @@ public class GameSectionController {
         List<WeeklyGames> remainingWeeklyGameList = null;
         WeeklyGames weeklyGame;
 
-        // Game jackpotNumberGame = gameService.findByNameReturnGame("Jackpot Number");
-        // gameService.
         logger.info("gameCode ::  " + gameCode);
         if (gameCode.equalsIgnoreCase("MPP")) {
             return new ModelAndView("redirect:/prediction");
         } else if (gameCode.equalsIgnoreCase("JNUM")) {
 
-            //}    
-            //if(id == jackpotNumberGame.getId()){
-            
             weeklyGameList = weeklyGamesService.listWeekGamesByCateAndDate(id, tunborUtility.getDate(Definitions.TIMEZONE));
 
             boolean forTest = false;
@@ -87,7 +82,6 @@ public class GameSectionController {
 
                 //weeklyGameList.
                 weeklyGame = weeklyGameList.get(0);
-                // remainingWeeklyGameList = weeklyGameList.re
                 return new ModelAndView("gameSectionListJackpotNumber", map);
 
             } else {
